@@ -1,0 +1,391 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Viaje a Japón 2026</title>
+<meta name="description" content="Veintiséis noches en Japón, de diciembre de 2026 a enero de 2027. El viaje entero, capítulo a capítulo.">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0f12" media="(prefers-color-scheme: dark)">
+
+<!-- Tema y clase js antes de pintar, para que no haya parpadeo. Si esto falla,
+     la página se ve igual: el tema por defecto sigue al del sistema. -->
+<script>
+  (function () {
+    var r = document.documentElement;
+    r.classList.add('js');
+    try {
+      var t = localStorage.getItem('tema');
+      if (t === 'claro' || t === 'oscuro') r.setAttribute('data-tema', t);
+      if (localStorage.getItem('intro-vista') === 'si') r.classList.add('intro-vista');
+    } catch (e) {}
+  })();
+</script>
+
+<link rel="preload" href="tipo/shippori-mincho-500-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="estilo.css">
+</head>
+
+<body>
+
+<a class="saltar-al-contenido" href="#capitulos">Saltar al contenido</a>
+
+<header class="barra" id="barra">
+  <p class="barra-titulo"><a href="#intro">Japón 2026</a></p>
+  <button class="tema" id="tema" type="button" aria-label="Cambiar a tema oscuro">
+    <span class="tema-glifo" aria-hidden="true"></span>
+    <span class="tema-texto">Tema</span>
+  </button>
+</header>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     INTRO · El globo, el avión y la línea de puntos
+     Sin JavaScript se queda en un fotograma: globo quieto y ruta trazada.
+     ═══════════════════════════════════════════════════════════════════ -->
+<section class="intro" id="intro">
+  <div class="escena">
+
+    <div class="portada" id="portada">
+      <p class="sobre">13 diciembre 2026 &mdash; 10 enero 2027</p>
+      <h1>Viaje a Japón <span>2026</span></h1>
+      <p class="bajada">Tres vuelan desde Madrid. El cuarto espera en Tokio.<br>Veintiséis noches.</p>
+    </div>
+
+    <svg class="globo" id="globo" viewBox="-130 -130 260 260" role="img"
+         aria-label="Un globo terráqueo con la ruta de Madrid a Tokio">
+      <!-- Fondo del planeta -->
+      <circle class="g-disco" cx="0" cy="0" r="100"/>
+      <circle class="g-borde" cx="0" cy="0" r="100"/>
+
+      <!-- Fotograma estático: se ve cuando no hay JavaScript -->
+      <g class="g-estatico">
+        <ellipse cx="0" cy="0" rx="100" ry="34"/>
+        <ellipse cx="0" cy="0" rx="100" ry="70"/>
+        <ellipse cx="0" cy="0" rx="26" ry="100"/>
+        <ellipse cx="0" cy="0" rx="66" ry="100"/>
+        <path class="g-ruta-fija" d="M -62,-24 Q 0,-96 64,-18"/>
+      </g>
+
+      <!-- Lo que dibuja el JavaScript: retícula girada, continentes y ruta -->
+      <g class="g-vivo" id="vivo">
+        <path class="g-retic" id="retic" d=""/>
+        <path class="g-tierra" id="tierra" d=""/>
+        <path class="g-ruta" id="ruta" d=""/>
+        <g class="g-hito" id="hito-mad">
+          <circle r="3.2"/>
+          <text x="-8" y="-9" text-anchor="end">Madrid</text>
+        </g>
+        <g class="g-hito" id="hito-nrt">
+          <circle r="3.2"/>
+          <text x="8" y="-9">Tokio</text>
+        </g>
+        <g class="g-avion" id="avion">
+          <path d="M 0,-7 L 2.1,-1.4 L 8.6,2.6 L 8.6,4.2 L 2.1,2.4 L 1.5,6.4 L 4,8.2 L 4,9.4 L 0,8.4 L -4,9.4 L -4,8.2 L -1.5,6.4 L -2.1,2.4 L -8.6,4.2 L -8.6,2.6 L -2.1,-1.4 Z"/>
+        </g>
+      </g>
+    </svg>
+
+    <p class="pista" id="pista"><span>Baja para volar</span></p>
+    <button class="saltar-intro" id="saltar-intro" type="button">Saltar la intro</button>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════════════
+     RAÍL DE PROGRESO
+     ═══════════════════════════════════════════════════════════════════ -->
+<nav class="rail" id="rail" aria-label="Capítulos del viaje">
+  <ol>
+    <li><a href="#vuelo"   data-rail="vuelo"><span>La ida</span></a></li>
+    <li><a href="#tokio-1" data-rail="tokio-1"><span>Tokio</span></a></li>
+    <li><a href="#nieve"   data-rail="nieve"><span>La nieve</span></a></li>
+    <li><a href="#kioto"   data-rail="kioto"><span>Kioto</span></a></li>
+    <li><a href="#tokio-2" data-rail="tokio-2"><span>Año Nuevo</span></a></li>
+    <li><a href="#vuelta"  data-rail="vuelta"><span>La vuelta</span></a></li>
+  </ol>
+</nav>
+
+<main id="capitulos">
+
+  <!-- ─────────────────────────────  01 · LA IDA  ───────────────────────────── -->
+  <section class="cap" id="vuelo" data-cap="vuelo" aria-labelledby="t-vuelo">
+    <div class="cap-cabecera">
+      <p class="sobre"><span class="num">01</span> La ida</p>
+      <h2 id="t-vuelo">Catorce horas y diez minutos</h2>
+      <p class="entradilla">Un domingo por la noche desde Barajas y un lunes por la tarde
+        aterrizando en Narita, con ocho husos horarios por delante.</p>
+    </div>
+
+    <div class="cap-cuerpo">
+      <!-- Dato: viaje/00-brief.md · investigacion/020-los-vuelos.md -->
+      <div class="trayecto">
+        <div class="punta">
+          <p class="iata">MAD</p>
+          <p class="hora">20:20 <span class="duda">?</span></p>
+          <p class="sitio">Barajas T4S · dom 13 dic</p>
+        </div>
+        <p class="flecha" aria-hidden="true">→</p>
+        <div class="punta">
+          <p class="iata">NRT</p>
+          <p class="hora">18:30 <span class="duda">?</span></p>
+          <p class="sitio">Narita T2 · lun 14 dic</p>
+        </div>
+      </div>
+
+      <dl class="filas">
+        <div class="fila">
+          <dt>Vuelo</dt>
+          <dd>IB0281 · Iberia <span class="marca m-ok">✓ verificado</span></dd>
+        </div>
+        <div class="fila">
+          <dt>Duración</dt>
+          <dd>14 h 10 min <span class="marca m-ok">✓ verificado</span></dd>
+        </div>
+        <div class="fila">
+          <dt>Avión</dt>
+          <dd>Airbus A350-900 <span class="marca m-duda">? por verificar</span></dd>
+        </div>
+        <div class="fila">
+          <dt>Equipaje</dt>
+          <dd>Dos maletas de 23 kg por persona, más cabina de 10 kg
+            <span class="marca m-ok">✓ verificado</span></dd>
+        </div>
+      </dl>
+
+      <div class="aviso">
+        <p><strong>La hora de salida está en duda.</strong> Iberia reprogramó su ruta a Tokio para
+          el invierno de 2026 y Madrid&ndash;Narita pasa a salir a las <strong>21:00</strong> y
+          llegar a las <strong>19:10</strong>. El billete de vuelta ya coincide con ese horario
+          nuevo; el de ida, no. Hay que mirarlo en la reserva.</p>
+      </div>
+
+      <p class="texto">Al aterrizar quedan entre 60 y 90 minutos de pasaporte, equipaje y aduana.
+        Desde la Terminal 2 salen el <strong>Skyliner</strong>, que deja en Ueno en 40 minutos por
+        unos ¥2.500, y el <strong>Narita Express</strong>, que llega a Tokio, Shinagawa y Shinjuku
+        en una hora por ¥3.140.</p>
+    </div>
+
+    <details class="pendiente">
+      <summary>Lo que falta por decidir aquí</summary>
+      <div class="pendiente-cuerpo">
+        <ul>
+          <li><strong>¿20:20 o 21:00?</strong> Se resuelve mirando la reserva. Cambia la llegada a
+            Tokio y el primer trayecto en tren.</li>
+          <li><strong>El último tren desde Narita.</strong> Las fuentes no coinciden: para el
+            Skyliner se citan las 22:30 y las 23:00. Importa solo si el avión se retrasa mucho.</li>
+          <li><strong>Qué se hace la primera noche</strong>, saliendo del aeropuerto pasadas las
+            ocho.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ─────────────────────────────  02 · TOKIO I  ───────────────────────────── -->
+  <section class="cap" id="tokio-1" data-cap="tokio" aria-labelledby="t-tokio-1">
+    <div class="cap-cabecera">
+      <p class="sobre"><span class="num">02</span> Tokio</p>
+      <h2 id="t-tokio-1">Los primeros días</h2>
+      <p class="entradilla">Aterrizar, aguantar el desfase y empezar por la ciudad más grande del
+        mundo.</p>
+    </div>
+
+    <div class="cap-cuerpo">
+      <p class="texto vacio">Este capítulo está por escribir. Aquí irán los días de Tokio: qué se
+        ve, en qué orden y dónde se duerme.</p>
+    </div>
+
+    <details class="pendiente">
+      <summary>Lo que falta por decidir aquí</summary>
+      <div class="pendiente-cuerpo">
+        <ul>
+          <li><strong>Cuántas noches</strong> lleva este bloque: el reparto de los 26 días sigue
+            sin cerrar.</li>
+          <li><strong>Dónde se duerme</strong>, y si es el mismo sitio que al final del viaje.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ─────────────────────────────  03 · LA NIEVE  ───────────────────────────── -->
+  <section class="cap" id="nieve" data-cap="nieve" aria-labelledby="t-nieve">
+    <div class="ambiente ambiente-nieve" aria-hidden="true">
+      <svg viewBox="0 0 1200 90" preserveAspectRatio="none">
+        <path class="hielo" d="M0,0 H1200 V14 L1176,20 1164,52 1152,20 1128,26 1116,68 1104,26 1080,18 1068,44 1056,18 1020,24 1008,60 996,24 960,16 948,38 936,16 900,22 888,74 876,22 840,16 828,46 816,16 780,24 768,56 756,24 720,18 708,40 696,18 660,26 648,70 636,26 600,18 588,50 576,18 540,22 528,62 516,22 480,16 468,44 456,16 420,24 408,58 396,24 360,18 348,48 336,18 300,26 288,66 276,26 240,18 228,42 216,18 180,24 168,54 156,24 120,16 108,46 96,16 60,22 48,60 36,22 12,16 0,20 Z"/>
+      </svg>
+    </div>
+
+    <div class="cap-cabecera">
+      <p class="sobre"><span class="num">03</span> La nieve</p>
+      <h2 id="t-nieve">Los Alpes japoneses</h2>
+      <p class="entradilla">Un coche, cuatro días de montaña, aguas termales y los monos que se
+        bañan en ellas.</p>
+    </div>
+
+    <div class="cap-cuerpo">
+      <p class="texto vacio">Este capítulo está por escribir. Aquí irán el coche, el esquí, el
+        onsen y los monos de Jigokudani.</p>
+    </div>
+
+    <details class="pendiente">
+      <summary>Lo que falta por decidir aquí</summary>
+      <div class="pendiente-cuerpo">
+        <ul>
+          <li><strong>Reservar el coche antes del 21 de noviembre</strong> para no perder el
+            descuento de treinta días.</li>
+          <li><strong>En qué pueblo termal se duerme</strong>, que sigue abierto.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ─────────────────────────────  04 · KIOTO  ───────────────────────────── -->
+  <section class="cap" id="kioto" data-cap="kioto" aria-labelledby="t-kioto">
+    <div class="ambiente ambiente-kioto" aria-hidden="true">
+      <svg viewBox="0 0 200 320" preserveAspectRatio="xMidYMax meet">
+        <g class="pagoda">
+          <path d="M100,8 L100,40"/>
+          <path d="M92,40 H108"/>
+          <path d="M40,70 Q100,44 160,70 Q100,58 40,70 Z"/>
+          <path d="M62,70 V96 M138,70 V96 M62,96 H138"/>
+          <path d="M34,124 Q100,96 166,124 Q100,112 34,124 Z"/>
+          <path d="M58,124 V154 M142,124 V154 M58,154 H142"/>
+          <path d="M28,184 Q100,154 172,184 Q100,170 28,184 Z"/>
+          <path d="M54,184 V218 M146,184 V218 M54,218 H146"/>
+          <path d="M20,250 Q100,216 180,250 Q100,232 20,250 Z"/>
+          <path d="M48,250 V296 M152,250 V296 M40,296 H160"/>
+          <path d="M100,250 V296"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="cap-cabecera">
+      <p class="sobre"><span class="num">04</span> Kioto</p>
+      <h2 id="t-kioto">La capital de antes</h2>
+      <p class="entradilla">Mil años de templos, una casa de madera con suelo radiante y Nara a
+        cuarenta minutos.</p>
+    </div>
+
+    <div class="cap-cuerpo">
+      <p class="texto vacio">Este capítulo está por escribir. Aquí irán los templos, los barrios y
+        la excursión a Nara.</p>
+    </div>
+
+    <details class="pendiente">
+      <summary>Lo que falta por decidir aquí</summary>
+      <div class="pendiente-cuerpo">
+        <ul>
+          <li><strong>Qué machiya se reserva</strong>: hay nueve candidatas con precio en las dos
+            plataformas.</li>
+          <li><strong>El sorteo del Museo Nintendo</strong>, que caduca el 30 de septiembre.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ─────────────────────────────  05 · AÑO NUEVO  ───────────────────────────── -->
+  <section class="cap" id="tokio-2" data-cap="anno" aria-labelledby="t-tokio-2">
+    <div class="ambiente ambiente-anno" aria-hidden="true">
+      <svg viewBox="0 0 400 200" preserveAspectRatio="xMidYMin meet">
+        <circle class="sol" cx="200" cy="150" r="88"/>
+      </svg>
+    </div>
+
+    <div class="cap-cabecera">
+      <p class="sobre"><span class="num">05</span> Año Nuevo</p>
+      <h2 id="t-tokio-2">El país entero se para</h2>
+      <p class="entradilla">Del 29 de diciembre al 3 de enero cierra media ciudad, y lo que abre
+        es lo que no se ve el resto del año.</p>
+    </div>
+
+    <div class="cap-cuerpo">
+      <p class="texto vacio">Este capítulo está por escribir. Aquí irán la nochevieja japonesa, la
+        primera visita al templo y las bolsas de la suerte.</p>
+    </div>
+
+    <details class="pendiente">
+      <summary>Lo que falta por decidir aquí</summary>
+      <div class="pendiente-cuerpo">
+        <ul>
+          <li><strong>Dónde se pasa la nochevieja</strong>, que condiciona todo el bloque.</li>
+          <li><strong>Comiket</strong>, del 29 al 31, que choca con la nieve.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+  <!-- ─────────────────────────────  06 · LA VUELTA  ───────────────────────────── -->
+  <section class="cap" id="vuelta" data-cap="vuelta" aria-labelledby="t-vuelta">
+    <div class="cap-cabecera">
+      <p class="sobre"><span class="num">06</span> La vuelta</p>
+      <h2 id="t-vuelta">Un sábado por la noche</h2>
+      <p class="entradilla">Se despega de Narita casi a medianoche y se aterriza en Madrid el
+        domingo, quince minutos antes de que abra el metro.</p>
+    </div>
+
+    <div class="cap-cuerpo">
+      <!-- Dato: investigacion/020-los-vuelos.md · captura de la reserva, 15 sep 2026 -->
+      <div class="trayecto">
+        <div class="punta">
+          <p class="iata">NRT</p>
+          <p class="hora">22:10</p>
+          <p class="sitio">Narita T2 · sáb 9 ene</p>
+        </div>
+        <p class="flecha" aria-hidden="true">→</p>
+        <div class="punta">
+          <p class="iata">MAD</p>
+          <p class="hora">05:45</p>
+          <p class="sitio">Barajas T4S · dom 10 ene</p>
+        </div>
+      </div>
+
+      <dl class="filas">
+        <div class="fila">
+          <dt>Vuelo</dt>
+          <dd>IB282 · Iberia · nocturno <span class="marca m-ok">✓ verificado</span></dd>
+        </div>
+        <div class="fila">
+          <dt>Duración</dt>
+          <dd>15 h 35 min &mdash; una hora y media más que la ida, por volar contra el viento
+            <span class="marca m-ok">✓ verificado</span></dd>
+        </div>
+        <div class="fila">
+          <dt>Avión</dt>
+          <dd>Airbus A350-900 <span class="marca m-ok">✓ verificado</span></dd>
+        </div>
+        <div class="fila">
+          <dt>Hay que estar en Narita</dt>
+          <dd>A las 19:10, tres horas antes &mdash; mejor a las 18:40, porque ese fin de semana
+            hay puente en Japón <span class="marca m-crit">◆ criterio</span></dd>
+        </div>
+      </dl>
+
+      <p class="texto">Son <strong>veintiséis noches</strong>: la última se duerme en Tokio la del 8
+        al 9 de enero. Desde el centro hay que salir hacia el aeropuerto entre las cinco y media y
+        las seis de la tarde.</p>
+    </div>
+
+    <details class="pendiente">
+      <summary>Lo que falta por decidir aquí</summary>
+      <div class="pendiente-cuerpo">
+        <ul>
+          <li><strong>Cómo vuelve cada uno a su casa</strong> un domingo a las seis de la mañana:
+            el metro de Madrid abre a las 06:00.</li>
+          <li><strong>Si se mandan las maletas al aeropuerto</strong> el día antes, para no cruzar
+            Tokio cargados.</li>
+        </ul>
+      </div>
+    </details>
+  </section>
+
+</main>
+
+<footer class="pie">
+  <p>Veintiséis noches · 13 de diciembre de 2026 &mdash; 10 de enero de 2027</p>
+  <p class="pie-nota">Los datos llevan su marca: <span class="marca m-ok">✓ verificado</span>
+    <span class="marca m-duda">? por verificar</span>
+    <span class="marca m-crit">◆ criterio</span>. Lo que no está marcado, no está comprobado.</p>
+</footer>
+
+<script src="viaje.js" defer></script>
+</body>
+</html>
