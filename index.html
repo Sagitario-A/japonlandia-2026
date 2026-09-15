@@ -5,21 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Viaje a Japón 2026</title>
 <meta name="description" content="Veintiséis noches en Japón, de diciembre de 2026 a enero de 2027. El viaje entero, capítulo a capítulo.">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0e0f12" media="(prefers-color-scheme: dark)">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#ffffff">
 
-<!-- Tema y clase js antes de pintar, para que no haya parpadeo. Si esto falla,
-     la página se ve igual: el tema por defecto sigue al del sistema. -->
+<!-- La clase js, antes de pintar. Si esto falla, la pagina se ve igual. -->
 <script>
   (function () {
-    var r = document.documentElement;
-    r.classList.add('js');
-    try {
-      var t = localStorage.getItem('tema');
-      if (t === 'claro' || t === 'oscuro') r.setAttribute('data-tema', t);
-      if (localStorage.getItem('intro-vista') === 'si') r.classList.add('intro-vista');
-    } catch (e) {}
+    document.documentElement.classList.add('js');
   })();
 </script>
 
@@ -33,11 +25,7 @@
 
 <header class="barra" id="barra">
   <p class="barra-titulo"><a href="#intro">Japón 2026</a></p>
-  <button class="tema" id="tema" type="button" aria-label="Cambiar a tema oscuro">
-    <span class="tema-glifo" aria-hidden="true"></span>
-    <span class="tema-texto">Tema</span>
-  </button>
-</header>
+  </header>
 
 <!-- ═══════════════════════════════════════════════════════════════════
      INTRO · El globo, el avión y la línea de puntos
@@ -87,7 +75,7 @@
     </svg>
 
     <p class="pista" id="pista"><span>Baja para volar</span></p>
-    <button class="saltar-intro" id="saltar-intro" type="button">Saltar la intro</button>
+    <a class="ir-indice" id="ir-indice" href="indice.html">Ver el índice</a>
   </div>
 </section>
 
@@ -386,6 +374,7 @@
     <span class="marca m-crit">◆ criterio</span>. Lo que no está marcado, no está comprobado.</p>
 </footer>
 
+<script src="tierra.js" defer></script>
 <script src="viaje.js" defer></script>
 </body>
 </html>

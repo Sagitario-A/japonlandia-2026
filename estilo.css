@@ -43,50 +43,8 @@
 
   --globo-linea: #c9ced6;
   --globo-tierra: #eef0f3;
-  --globo-tierra-linea: #b9c0ca;
+  --globo-tierra-linea: #a9b2bd;
   --globo-disco: transparent;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root:not([data-tema='claro']) {
-    --papel: #0e0f12;
-    --papel-hondo: #131519;
-    --tinta: #f2f3f5;
-    --tinta-suave: #aab0ba;
-    --tenue: #878d97;
-    --pelo: #24272d;
-    --pelo-fuerte: #343943;
-
-    --acento: #7fb0e6;
-    --ok: #74b894;
-    --duda: #d6b271;
-    --crit: #878d97;
-
-    --globo-linea: #333942;
-    --globo-tierra: #1a1d22;
-    --globo-tierra-linea: #454c57;
-    --globo-disco: #101216;
-  }
-}
-
-:root[data-tema='oscuro'] {
-  --papel: #0e0f12;
-  --papel-hondo: #131519;
-  --tinta: #f2f3f5;
-  --tinta-suave: #aab0ba;
-  --tenue: #878d97;
-  --pelo: #24272d;
-  --pelo-fuerte: #343943;
-
-  --acento: #7fb0e6;
-  --ok: #74b894;
-  --duda: #d6b271;
-  --crit: #878d97;
-
-  --globo-linea: #333942;
-  --globo-tierra: #1a1d22;
-  --globo-tierra-linea: #454c57;
-  --globo-disco: #101216;
 }
 
 /* Acentos por capítulo — solo trazos y detalles, nunca fondos (§ 1) */
@@ -97,18 +55,6 @@
 [data-cap='anno']   { --acento: #8a6a2f; }
 [data-cap='vuelta'] { --acento: #24507e; }
 
-@media (prefers-color-scheme: dark) {
-  :root:not([data-tema='claro']) [data-cap='vuelo'],
-  :root:not([data-tema='claro']) [data-cap='vuelta'] { --acento: #7fb0e6; }
-  :root:not([data-tema='claro']) [data-cap='nieve']  { --acento: #7fc2e4; }
-  :root:not([data-tema='claro']) [data-cap='kioto']  { --acento: #e2806c; }
-  :root:not([data-tema='claro']) [data-cap='anno']   { --acento: #dcbc79; }
-}
-:root[data-tema='oscuro'] [data-cap='vuelo'],
-:root[data-tema='oscuro'] [data-cap='vuelta'] { --acento: #7fb0e6; }
-:root[data-tema='oscuro'] [data-cap='nieve']  { --acento: #7fc2e4; }
-:root[data-tema='oscuro'] [data-cap='kioto']  { --acento: #e2806c; }
-:root[data-tema='oscuro'] [data-cap='anno']   { --acento: #dcbc79; }
 
 /* ==========================================================================
    2 · Base
@@ -210,29 +156,6 @@ a { color: var(--acento); text-underline-offset: .18em; }
 .anim .barra { opacity: 0; transform: translateY(-100%); pointer-events: none; }
 .anim .barra.visible { opacity: 1; transform: none; pointer-events: auto; }
 
-.tema {
-  font: inherit;
-  font-size: .72rem;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  font-weight: 600;
-  color: var(--tenue);
-  background: none;
-  border: 0;
-  padding: .5rem .2rem;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: .5rem;
-}
-.tema:hover { color: var(--tinta); }
-.tema-glifo {
-  width: .85rem;
-  height: .85rem;
-  border-radius: 50%;
-  border: 1.5px solid currentColor;
-  background: linear-gradient(90deg, currentColor 0 50%, transparent 50% 100%);
-}
 
 /* ==========================================================================
    4 · Intro — globo, avión y línea de puntos (§ 9)
@@ -262,7 +185,7 @@ a { color: var(--acento); text-underline-offset: .18em; }
 }
 .anim .portada {
   opacity: var(--p-titulo, 1);
-  transform: translateY(calc(var(--p-subida, 0) * -2.2rem));
+  transform: translateY(calc((1 - var(--p-titulo, 1)) * -2.4rem));
   will-change: opacity, transform;
 }
 .portada h1 {
@@ -291,10 +214,12 @@ a { color: var(--acento); text-underline-offset: .18em; }
 }
 /* Sin JS el globo es un adorno de fondo, para que el título se lea encima */
 .globo { opacity: .2; }
+/* La Tierra sube desde abajo desde el primer píxel de scroll, por detrás del
+   título, y al final se va por arriba. Un solo movimiento continuo. */
 .anim .globo {
   opacity: var(--p-globo, 0);
-  transform: scale(calc(.92 + var(--p-globo-escala, 0) * .08))
-             translateY(calc(var(--p-subida, 0) * -46vh));
+  transform: translateY(calc((1 - var(--p-entrada, 0)) * 36vh - var(--p-salida, 0) * 48vh))
+             scale(calc(.86 + var(--p-entrada, 0) * .14));
   will-change: opacity, transform;
 }
 
@@ -314,10 +239,11 @@ a { color: var(--acento); text-underline-offset: .18em; }
 
 .g-retic { fill: none; stroke: var(--globo-linea); stroke-width: .7; }
 .g-tierra {
-  fill: var(--globo-tierra);
+  fill: none;
   stroke: var(--globo-tierra-linea);
-  stroke-width: .8;
+  stroke-width: .9;
   stroke-linejoin: round;
+  stroke-linecap: round;
 }
 .g-ruta {
   fill: none;
@@ -328,6 +254,8 @@ a { color: var(--acento); text-underline-offset: .18em; }
 }
 .g-hito circle { fill: var(--acento); }
 .g-hito text {
+  /* Las etiquetas entran cuando el titulo se va, para no pisarlo */
+  opacity: calc(1 - var(--p-titulo, 0));
   font-family: var(--f-texto);
   font-size: 9px;
   letter-spacing: .12em;
@@ -358,25 +286,31 @@ a { color: var(--acento); text-underline-offset: .18em; }
   margin: .7rem auto 0;
   background: linear-gradient(var(--tenue), transparent);
 }
-.saltar-intro {
+/* El enlace al índice: para quien no quiera bajarlo todo. Está siempre,
+   también sin JavaScript, porque lleva a otra página */
+.ir-indice {
   position: absolute;
   bottom: max(1rem, env(safe-area-inset-bottom));
   right: var(--lado);
-  font: inherit;
   font-size: .68rem;
   letter-spacing: .14em;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--tenue);
-  background: none;
-  border: 0;
+  text-decoration: none;
   padding: .7rem 0;
-  cursor: pointer;
-  display: none;
-  opacity: var(--p-pista, 1);
+  display: block;
 }
-.anim .saltar-intro { display: block; }
-.saltar-intro:hover { color: var(--tinta); }
+.ir-indice::after {
+  content: '';
+  display: block;
+  height: 1px;
+  margin-top: .35rem;
+  background: var(--pelo-fuerte);
+  transition: background .25s ease;
+}
+.ir-indice:hover { color: var(--tinta); }
+.ir-indice:hover::after { background: var(--tinta); }
 
 /* ==========================================================================
    5 · Raíl de progreso
@@ -720,3 +654,83 @@ main { position: relative; }
   .anim .cap { opacity: 1; transform: none; }
   .anim .globo { transform: none; }
 }
+
+/* ==========================================================================
+   12 · La página de índice
+   Misma voz que el resto: filas de pelo y aire, ninguna caja
+   ========================================================================== */
+.indice {
+  max-width: var(--medida);
+  margin-inline: auto;
+  padding-inline: var(--lado);
+  padding-top: clamp(5rem, 16vh, 9rem);
+  padding-bottom: 2rem;
+}
+.indice-cabecera { margin-bottom: 2.8rem; }
+.indice h1 {
+  font-family: var(--f-display);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 11vw, 3.4rem);
+  margin-block: .7rem .9rem;
+  letter-spacing: -.012em;
+}
+
+.lista-capitulos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: cap;
+}
+.lista-capitulos li { margin: 0; }
+.lista-capitulos a {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr;
+  gap: .1rem 1rem;
+  align-items: baseline;
+  padding-block: 1.25rem;
+  border-top: 1px solid var(--pelo);
+  text-decoration: none;
+  color: var(--tinta);
+  transition: background .2s ease;
+}
+.lista-capitulos li:last-child a { border-bottom: 1px solid var(--pelo); }
+.lista-capitulos .n {
+  font-size: .72rem;
+  letter-spacing: .14em;
+  color: var(--acento);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.lista-capitulos .t {
+  font-family: var(--f-display);
+  font-size: 1.55rem;
+  line-height: 1.15;
+}
+.lista-capitulos .d {
+  grid-column: 2;
+  color: var(--tenue);
+  font-size: .88rem;
+  line-height: 1.5;
+  margin-top: .2rem;
+}
+.lista-capitulos a:hover .t { color: var(--acento); }
+
+/* Cada capítulo con su acento, igual que en la página larga */
+.lista-capitulos li:nth-child(1) a { --acento: #24507e; }
+.lista-capitulos li:nth-child(2) a { --acento: #111213; }
+.lista-capitulos li:nth-child(3) a { --acento: #2e7aa8; }
+.lista-capitulos li:nth-child(4) a { --acento: #b23a2e; }
+.lista-capitulos li:nth-child(5) a { --acento: #8a6a2f; }
+.lista-capitulos li:nth-child(6) a { --acento: #24507e; }
+
+.indice-pie {
+  margin-top: 2.4rem;
+  font-size: .7rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.indice-pie a { color: var(--tenue); text-decoration: none; }
+.indice-pie a:hover { color: var(--tinta); }
+
+.pagina-indice .pie { margin-top: 3rem; }
