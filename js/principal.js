@@ -5,19 +5,19 @@
    Todo lo que este archivo hace es coser: la lógica vive en motor/ y actos/.
    ============================================================================= */
 
-import { registrarGlobal, arrancar } from './motor/escenario.js?v=ee16f646';
-import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=ee16f646';
-import { desvanecerDibujo } from './motor/dibujo.js?v=ee16f646';
-import { nevar } from './motor/nieve.js?v=ee16f646';
+import { registrarGlobal, arrancar } from './motor/escenario.js?v=63830b21';
+import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=63830b21';
+import { desvanecerDibujo } from './motor/dibujo.js?v=63830b21';
+import { nevar } from './motor/nieve.js?v=63830b21';
 /* 🚨 `tope` lo usa el desvanecido del final, ahi abajo. Lo quite una vez al
    limpiar codigo muerto y el final de la pelicula dejo de ejecutarse entero,
    sin que saltara ninguna comprobacion: ver el aviso de capturas-web.js. */
-import { tope } from './motor/util.js?v=ee16f646';
-import { montarActoVuelo } from './actos/01-vuelo.js?v=ee16f646';
-import { montarActoLlegada } from './actos/02-llegada.js?v=ee16f646';
-import { montarActoAlCoche } from './actos/03-al-coche.js?v=ee16f646';
-import { montarActoTakaragawa } from './actos/04-takaragawa.js?v=ee16f646';
-import { montarActoKusatsu } from './actos/05-kusatsu.js?v=ee16f646';
+import { tope } from './motor/util.js?v=63830b21';
+import { montarActoVuelo } from './actos/01-vuelo.js?v=63830b21';
+import { montarActoLlegada } from './actos/02-llegada.js?v=63830b21';
+import { montarActoAlCoche } from './actos/03-al-coche.js?v=63830b21';
+import { montarActoTakaragawa } from './actos/04-takaragawa.js?v=63830b21';
+import { montarActoKusatsu } from './actos/05-kusatsu.js?v=63830b21';
 
 /* --------------------------------------------------------------------------
    1 · El escenario y los actos

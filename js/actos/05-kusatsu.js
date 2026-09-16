@@ -6,10 +6,12 @@
      A · EL MAPA      vuelve el mapa pequeño de la región, «el muñequito sigue
                       ahí esquiando y sigue nevando», y se completa la ruta en
                       coche del primer sitio al segundo
-     B · LA ROCA      «va apareciendo una roca chiquitita por la derecha hasta
-                      que llega al medio y se queda estática»
-     C · EL GOLPE     se choca, SE CAE DE LA TABLA y sale por el aire en
-                      diagonal; la tabla se va dando vueltas y cae a la nieve
+     B · LA ROCA      «va apareciendo una roca chiquitita por la derecha» y se
+                      planta A LA DERECHA DEL MEDIO
+     C · EL GOLPE     ÉL cruza el medio hasta ella, se choca, SE CAE DE LA
+                      TABLA y sale por el aire en diagonal recta HASTA EL MEDIO,
+                      donde le espera el onsen; la tabla se va dando vueltas por
+                      el otro lado y cae a la nieve
      D · EL ONSEN     mientras él cae, el onsen SUBE DESDE DEBAJO DEL BORDE DE
                       ABAJO, se pasa de largo y rebota hasta posarse
      E · DENTRO       atraviesa el agua, desaparece, y vuelve a salir hasta
@@ -47,14 +49,14 @@
    montaña, que ya venía en píxeles.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=ee16f646';
-import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=ee16f646';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=ee16f646';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=ee16f646';
-import { mostrarDibujo, colocar, variable, variableDe, verBanda, desplazarFondo, bajarSuelo } from '../motor/dibujo.js?v=ee16f646';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=ee16f646';
-import { tenderRuta } from '../motor/ruta.js?v=ee16f646';
-import { LUGARES, RUTA_A_KUSATSU, ENCUADRES } from '../datos/rutas.js?v=ee16f646';
+import { registrarActo } from '../motor/escenario.js?v=63830b21';
+import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=63830b21';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=63830b21';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=63830b21';
+import { mostrarDibujo, colocar, variable, variableDe, verBanda, desplazarFondo, bajarSuelo } from '../motor/dibujo.js?v=63830b21';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=63830b21';
+import { tenderRuta } from '../motor/ruta.js?v=63830b21';
+import { LUGARES, RUTA_A_KUSATSU, ENCUADRES } from '../datos/rutas.js?v=63830b21';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -112,8 +114,18 @@ const F = {
   /* C · el golpe. «Se cae de la tabla y sube hacia arriba en diagonal, como
      hacia la llave, ese movimiento más o menos.» La llave del acto 3 subía en
      diagonal perfecta —las dos coordenadas con la misma fase— porque Kiko lo
-     pidió dos veces; aquí es la misma cuenta. */
-  embiste:   [0.455, 0.505],
+     pidió dos veces; aquí es la misma cuenta, y él volvió a nombrar la llave al
+     corregir el acto: «vaya desde donde choca con la roca hasta el medio». */
+  /* 🔁 MÁS ANCHA DESDE LA PRIMERA RONDA DE KIKO: antes recorría nueve unidades
+     y ahora treinta y seis, porque la roca se para a la derecha y es él quien
+     cruza el medio. Con la ventana de antes no era una travesía, era un
+     teletransporte. */
+  /* 🚨 ACABA EXACTAMENTE DONDE EMPIEZA `vuelo`, Y NO UN PELO DESPUÉS. La
+     trayectoria por el aire manda en cuanto empieza su ventana, así que con la
+     embestida terminando más tarde el muñeco despegaba SIN HABER LLEGADO a la
+     roca: se quedaba a cinco unidades y salía volando de un golpe que no había
+     dado. Se vio en la captura de 'justo antes del golpe'. */
+  embiste:   [0.435, 0.505],
   vuelo:     [0.505, 0.570],
   caida:     [0.570, 0.634],
   tablaVuela:[0.505, 0.600],
@@ -149,23 +161,44 @@ const X_ROCA_ENTRA = 78;
    ventana propia con su propia curva. */
 const MUNDO_ROCA = 0.70;
 
+/* 🚨 DÓNDE SE PARA LA ROCA: A LA DERECHA DEL MEDIO, NO EN EL MEDIO.
+   🔁 Lo corrigió Kiko viendo el acto publicado: «en vez de quedarse fija en el
+   medio, que se quede fija como un poco más a la derecha y que sea el muñeco el
+   que atraviesa más del medio, es decir, el que se mueve hacia la roca que ya
+   está estática».
+
+   Y no es un ajuste de gusto: cambia QUIÉN hace la acción. Con la roca en el
+   centro, el que llegaba era el decorado y el muñeco solo esperaba a que le
+   diera. Ahora la roca se planta y es ÉL quien cruza la pantalla hasta ella,
+   que es lo que hace que el golpe sea suyo.
+   25 unidades: lo justo para que quede claramente a la derecha y siga cabiendo
+   entera en un móvil, que mide 100u de ancho. */
+const X_ROCA_PARA = 25;
+
 /* Él va derivando hacia la izquierda mientras miramos el mapa —está rodando, y
-   el mundo se mueve más deprisa que él— y luego se echa encima de la roca. */
-const X_CRUCERO = -20;
-/* 🚨 DONDE TOCA LA ROCA, Y NO ES 0. Su dibujo está descentrado dentro de la
-   caja —el cuerpo cae a unas 2,6u a la derecha del ancla— y la roca mide 13u,
-   o sea 6,5u a cada lado del medio. Con él en -11 las dos siluetas se tocan
-   justo, sin encajarse una en otra. */
-const X_CHOQUE = -11;
-/* Adónde llega por el aire: el onsen. Y el onsen está a la DERECHA de la roca
-   porque el golpe lo manda hacia delante, no hacia atrás. */
-const X_ONSEN = 19;
+   el mundo se mueve más deprisa que él— y luego cruza el medio entero para
+   echarse encima de la roca. Son 36 unidades de travesía, más de un tercio de
+   la pantalla. */
+const X_CRUCERO = -24;
+/* 🚨 DONDE TOCA LA ROCA. Su dibujo está descentrado dentro de la caja —el
+   cuerpo cae a unas 2,6u a la derecha del ancla y su hombro llega a unas 4,9u—
+   y la roca mide 16u, o sea que su falda izquierda está en 17. Con él en 12 las
+   dos siluetas se tocan justo, sin encajarse una en otra. */
+const X_CHOQUE = 12;
+/* 🚨 Y ADÓNDE LLEGA POR EL AIRE: AL MEDIO. Kiko, en la misma corrección: «que
+   al chocar —por eso te decía el movimiento de la llave del coche— vaya desde
+   donde choca con la roca hasta el medio, cayendo en el onsen».
+   O sea que el golpe lo manda HACIA ATRÁS, que además es lo que hace de verdad
+   una piedra: no lo empuja hacia delante, lo frena en seco y lo devuelve. Y el
+   onsen queda centrado en la pantalla, que es donde tiene que estar el remate
+   del acto. */
+const X_ONSEN = 0;
 /* La tabla sale despedida hacia el otro lado y se queda tumbada en la nieve.
    💭 Esto no lo dijo Kiko: dijo que se cae de la tabla, y en algún sitio tiene
    que caer. Dejarla tirada a la vista contesta de paso a lo que el acto 6
    tenía abierto —si el muñeco vuelve a llevar tabla o no—, y si no gusta se
    cambia este número por uno fuera de pantalla y desaparece. */
-const X_TABLA_CAE = -24;
+const X_TABLA_CAE = -30;
 
 /* 🚨 LO ALTO QUE VUELA, CON DOS TOPES Y NO UNO, igual que la montaña del acto
    4. La capa del dibujo se mide en vmin y la pantalla en svh: con solo 56u, en
@@ -410,7 +443,7 @@ export function montarActoKusatsu() {
          se desplaza sola por delante de un fondo que va a otro ritmo. */
       const tRoca = tramo(mundo, MUNDO_ROCA, 1);
       colocar('roca', {
-        x: X_ROCA_ENTRA * (1 - tRoca),
+        x: mezcla(X_ROCA_ENTRA, X_ROCA_PARA, tRoca),
         y: 0,
         op: tRoca > 0 ? 1 : 0,
         escala: 1
@@ -449,11 +482,17 @@ export function montarActoKusatsu() {
         const deriva = mezcla(0, X_CRUCERO, suave(tramo(p, 0, F.rueda[1] * 0.98)));
         xMono = mezcla(deriva, X_CHOQUE, tEmbiste * tEmbiste);
       } else {
-        /* Por el aire: sube en diagonal recta hasta el punto más alto y de ahí
-           cae, con la `x` avanzando sin parar en los dos tramos. */
-        xMono = tCaida > 0
-          ? mezcla(mezcla(X_CHOQUE, X_ONSEN, 0.45), X_ONSEN, suave(tCaida))
-          : mezcla(X_CHOQUE, mezcla(X_CHOQUE, X_ONSEN, 0.45), frena(tVuelo));
+        /* 🚨 LA DIAGONAL ES RECTA Y ACABA EN EL MEDIO, Y DE AHÍ CAE A PLOMO.
+           Kiko lo describió dos veces con la misma imagen —el movimiento de la
+           llave del acto 3— y en la corrección lo cerró del todo: «vaya desde
+           donde choca con la roca hasta el medio, cayendo en el onsen».
+
+           Así que son dos tramos y no una parábola: la SUBIDA lleva las dos
+           coordenadas con la MISMA fase —`frena` aquí y `frena` en la altura,
+           tres líneas más abajo—, que es lo que hace que sea una recta y no una
+           curva; y la CAÍDA es vertical, justo encima del onsen. La llave hizo
+           exactamente esto y él la dio por buena a la segunda. */
+        xMono = tCaida > 0 ? X_ONSEN : mezcla(X_CHOQUE, X_ONSEN, frena(tVuelo));
       }
 
       /* La altura: sube frenando —la gravedad le va quitando— y baja
