@@ -15,10 +15,10 @@
    Narita, Meidaimae— están escritos en el HTML; aquí solo se mueven.
    ============================================================================= */
 
-import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=63830b21';
-import { dibujarCostas, dibujarReticula, opacidadReticula, dibujarCalles, opacidadCalles, dibujarAutopistas, opacidadAutopistas } from './mapa.js?v=63830b21';
-import { trazarRuta, cabezaDeRuta } from './ruta.js?v=63830b21';
-import { r1 } from './util.js?v=63830b21';
+import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=c7302cd0';
+import { dibujarCostas, dibujarReticula, opacidadReticula, dibujarCalles, opacidadCalles, dibujarAutopistas, opacidadAutopistas } from './mapa.js?v=c7302cd0';
+import { trazarRuta, cabezaDeRuta } from './ruta.js?v=c7302cd0';
+import { r1 } from './util.js?v=c7302cd0';
 
 let raiz = null;
 let svg = null;
@@ -233,6 +233,41 @@ export function marcar(nombre, lonlat, opacidad = 1) {
 export function esconder(nombre) {
   const el = hitos.get(nombre);
   if (el) el.style.opacity = '0';
+}
+
+/**
+ * 🚨 APAGA TODOS LOS MARCADORES QUE NO SEAN DE ESTE ACTO. Se le pasan los que
+ * SÍ se ven; el resto se apagan, existan o no cuando se escribió el acto.
+ *
+ * POR QUÉ EXISTE, que es un fallo que encontró Kiko subiendo el scroll:
+ * el punto de Kusatsu se quedaba encendido sobre el mapa hasta el principio de
+ * la película, flotando encima del globo durante el vuelo a Madrid. Y de vez en
+ * cuando también el de Takaragawa, en el mapa del acto 3.
+ *
+ * La causa no era el acto 5: era que cada acto escondía una lista de marcadores
+ * ESCRITA A MANO —`esconder('madrid')`, `esconder('narita')`…—, o sea que cada
+ * acto tenía que saber los nombres de los marcadores de todos los actos
+ * FUTUROS. Kusatsu nació con el acto 5 y no estaba en ninguna de las cuatro
+ * listas anteriores, así que nadie lo apagaba nunca. Con ocho actos eso no es
+ * un descuido: es una cuenta que no se puede llevar.
+ *
+ * Al revés sí se puede: un acto sabe perfectamente cuáles son SUS marcadores.
+ * Es la ley 1 —un acto apaga lo que no usa— dicha de la única forma que
+ * sobrevive a que aparezcan marcadores nuevos. Es lo mismo que hace
+ * `limpiarRutas(n)` con las capas de ruta, y por la misma razón.
+ *
+ * 🚨 EL ACTO 6 VA A AÑADIR YAMANOUCHI, y el 7 y el 8 los suyos: con esto, no
+ * hay que tocar ningún acto anterior. Sin esto, hay que acordarse de tocarlos
+ * todos.
+ */
+export function limpiarHitos() {
+  const dejar = arguments;
+  hitos.forEach(function (el, nombre) {
+    for (let i = 0; i < dejar.length; i++) if (dejar[i] === nombre) return;
+    /* Comparar antes de escribir: esto corre en cada fotograma de la película y
+       casi siempre no hay nada que apagar. */
+    if (el.style.opacity !== '0') el.style.opacity = '0';
+  });
 }
 
 /**

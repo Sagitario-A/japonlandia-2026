@@ -14,14 +14,14 @@
    Guion → web-nueva/DEFINICION.md, acto A2.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=63830b21';
-import { tramo, suave, tope } from '../motor/util.js?v=63830b21';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=63830b21';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo , empequeñecerMapa} from '../motor/lienzo.js?v=63830b21';
-import { tenderRuta } from '../motor/ruta.js?v=63830b21';
-import { apagarDibujo } from '../motor/dibujo.js?v=63830b21';
-import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=63830b21';
-import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=63830b21';
+import { registrarActo } from '../motor/escenario.js?v=c7302cd0';
+import { tramo, suave, tope } from '../motor/util.js?v=c7302cd0';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=c7302cd0';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=c7302cd0';
+import { tenderRuta } from '../motor/ruta.js?v=c7302cd0';
+import { apagarDibujo } from '../motor/dibujo.js?v=c7302cd0';
+import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=c7302cd0';
+import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=c7302cd0';
 
 /* --------------------------------------------------------------------------
    Los encuadres, en el orden en que los recorre la cámara
@@ -186,7 +186,12 @@ export function montarActoLlegada() {
          mapa pequenio, y esta capa es de todos (ley 1). */
       empequeñecerMapa(0);
 
-      esconder('avion');
+      /* 🚨 Y TODO LO DEMÁS SE APAGA, SIN NOMBRARLO. Antes aquí había una lista
+         de `esconder()` escrita a mano, y esa lista tenía que adivinar los
+         marcadores de los actos futuros: cuando el acto 5 estrenó Kusatsu, su
+         punto se quedaba encendido sobre el globo hasta el vuelo a Madrid.
+         Un acto no sabe qué marcadores vendrán; sabe cuáles son suyos. */
+      limpiarHitos('madrid', 'japon', 'narita', 'casa', 'shinjuku', 'meidaimae');
       marcar('madrid', LUGARES.madrid, 1 - suave(tramo(p, 0.01, 0.10)));
       marcar('japon', LUGARES.narita, 1 - suave(tramo(p, 0.07, 0.12)));
       marcar('narita', LUGARES.narita, pNarita);

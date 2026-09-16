@@ -49,14 +49,14 @@
    montaña, que ya venía en píxeles.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=63830b21';
-import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=63830b21';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=63830b21';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=63830b21';
-import { mostrarDibujo, colocar, variable, variableDe, verBanda, desplazarFondo, bajarSuelo } from '../motor/dibujo.js?v=63830b21';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=63830b21';
-import { tenderRuta } from '../motor/ruta.js?v=63830b21';
-import { LUGARES, RUTA_A_KUSATSU, ENCUADRES } from '../datos/rutas.js?v=63830b21';
+import { registrarActo } from '../motor/escenario.js?v=c7302cd0';
+import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=c7302cd0';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=c7302cd0';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=c7302cd0';
+import { mostrarDibujo, colocar, variable, variableDe, verBanda, desplazarFondo, bajarSuelo } from '../motor/dibujo.js?v=c7302cd0';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=c7302cd0';
+import { tenderRuta } from '../motor/ruta.js?v=c7302cd0';
+import { LUGARES, RUTA_A_KUSATSU, ENCUADRES } from '../datos/rutas.js?v=c7302cd0';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -410,13 +410,12 @@ export function montarActoKusatsu() {
            va a ciegas. */
         marcar('takaragawa', LUGARES.takaragawa, 1);
         marcar('kusatsu', LUGARES.kusatsu, 1);
-        esconder('shinjuku');
-        esconder('casa');
-        esconder('madrid');
-        esconder('japon');
-        esconder('narita');
-        esconder('meidaimae');
-        esconder('avion');
+  /* 🚨 Y TODO LO DEMÁS SE APAGA, SIN NOMBRARLO. Antes aquí había una lista
+         de `esconder()` escrita a mano, y esa lista tenía que adivinar los
+         marcadores de los actos futuros: cuando el acto 5 estrenó Kusatsu, su
+         punto se quedaba encendido sobre el globo hasta el vuelo a Madrid.
+         Un acto no sabe qué marcadores vendrán; sabe cuáles son suyos. */
+        limpiarHitos('takaragawa', 'kusatsu');
 
         const avance = tope((p - F.ruta[0]) / (F.ruta[1] - F.ruta[0]));
         pintarRuta(0, RUTA, avance, { color: 'var(--acento)', guion: false });

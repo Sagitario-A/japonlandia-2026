@@ -23,18 +23,18 @@
    podría verlas, la URL no cambiaría nunca y una publicación serviría el dibujo
    viejo durante los diez minutos de caché de GitHub Pages. */
 const PIEZAS = [
-  ['tren', 'arte/tren.svg?v=63830b21'],
-  ['cuatro', 'arte/cuatro.svg?v=63830b21'],
-  ['mostrador', 'arte/mostrador.svg?v=63830b21'],
-  ['llave', 'arte/llave.svg?v=63830b21'],
-  ['coche', 'arte/coche.svg?v=63830b21'],
+  ['tren', 'arte/tren.svg?v=c7302cd0'],
+  ['cuatro', 'arte/cuatro.svg?v=c7302cd0'],
+  ['mostrador', 'arte/mostrador.svg?v=c7302cd0'],
+  ['llave', 'arte/llave.svg?v=c7302cd0'],
+  ['coche', 'arte/coche.svg?v=c7302cd0'],
   /* 🚨 EL ACTO 4 EN ADELANTE. Van aquí y no en el acto por lo de siempre: el
      monigote sigue puesto en el acto 5 («el muñequito sigue ahí esquiando») y
      en el 6. Y estando en esta lista, apagarDibujo() los apaga: sin eso, al
      volver del acto 4 al 3 la montaña se quedaba flotando sobre el bosque,
      porque el acto 3 no sabe que existen.
      El tercer campo dice de qué trazado sale el perfil que se muestrea. */
-  ['monte', 'arte/monte.svg?v=63830b21', '.mo-perfil'],
+  ['monte', 'arte/monte.svg?v=c7302cd0', '.mo-perfil'],
   /* 🚨 LA TABLA ES UNA PIEZA APARTE DESDE EL ACTO 5, y hasta entonces vivía
      dentro del muñeco. La partió Kiko al describir el acto 5: «se cae de la
      tabla y sube hacia arriba en diagonal». A partir del golpe cada uno va por
@@ -42,21 +42,21 @@ const PIEZAS = [
      mueven por separado no pueden ser el mismo dibujo. Comparten `viewBox` y
      tamaño, así que mientras van pegadas basta con darles la misma x, la misma
      y y el mismo giro: ver arte/tabla.svg. */
-  ['tabla', 'arte/tabla.svg?v=63830b21'],
+  ['tabla', 'arte/tabla.svg?v=c7302cd0'],
   /* 🚨 EL ACTO 5. Y EL ORDEN DE ESTAS TRES NO ES NEGOCIABLE: el onsen está
      partido en dos mitades con el muñeco EN MEDIO, que es lo que hace que se le
      vea metido en el agua y no sentado delante de un barreño. Aquí solo se
      declaran; quien manda de verdad en el orden de pintado es el HTML. */
-  ['roca', 'arte/roca.svg?v=63830b21'],
-  ['onsen-fondo', 'arte/onsen-fondo.svg?v=63830b21'],
-  ['monigote', 'arte/monigote.svg?v=63830b21'],
-  ['onsen', 'arte/onsen.svg?v=63830b21']
+  ['roca', 'arte/roca.svg?v=c7302cd0'],
+  ['onsen-fondo', 'arte/onsen-fondo.svg?v=c7302cd0'],
+  ['monigote', 'arte/monigote.svg?v=c7302cd0'],
+  ['onsen', 'arte/onsen.svg?v=c7302cd0']
 ];
 
 const BANDAS = [
-  ['ciudad', 'arte/ciudad.svg?v=63830b21'],
-  ['bosque', 'arte/bosque.svg?v=63830b21'],
-  ['bosque-nevado', 'arte/bosque-nevado.svg?v=63830b21']
+  ['ciudad', 'arte/ciudad.svg?v=c7302cd0'],
+  ['bosque', 'arte/bosque.svg?v=c7302cd0'],
+  ['bosque-nevado', 'arte/bosque-nevado.svg?v=c7302cd0']
 ];
 
 /* Cuántas veces se repite cada banda en fila. Una copia mide 118vmin de ancho,

@@ -10,13 +10,13 @@
    Guion → web-nueva/DEFINICION.md, acto A1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=63830b21';
-import { tramo, suave, tope } from '../motor/util.js?v=63830b21';
-import { mirarA } from '../motor/proyeccion.js?v=63830b21';
-import { pintarMapa, pintarRuta, limpiarRutas, pintarVehiculo, marcar, esconder, mostrarLienzo, opacidadMapa, alzarLienzo , empequeñecerMapa} from '../motor/lienzo.js?v=63830b21';
-import { tenderRuta } from '../motor/ruta.js?v=63830b21';
-import { apagarDibujo } from '../motor/dibujo.js?v=63830b21';
-import { VUELO_IDA, LUGARES } from '../datos/rutas.js?v=63830b21';
+import { registrarActo } from '../motor/escenario.js?v=c7302cd0';
+import { tramo, suave, tope } from '../motor/util.js?v=c7302cd0';
+import { mirarA } from '../motor/proyeccion.js?v=c7302cd0';
+import { pintarMapa, pintarRuta, limpiarRutas, pintarVehiculo, marcar, mostrarLienzo, opacidadMapa, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=c7302cd0';
+import { tenderRuta } from '../motor/ruta.js?v=c7302cd0';
+import { apagarDibujo } from '../motor/dibujo.js?v=c7302cd0';
+import { VUELO_IDA, LUGARES } from '../datos/rutas.js?v=c7302cd0';
 
 /* La ruta real de Iberia, tendida una vez al cargar.
    Se exporta porque el acto 2 la hereda: si desaparece de golpe al cambiar de
@@ -113,10 +113,12 @@ export function montarActoVuelo() {
       const opHitos = 1 - pTitulo;
       marcar('madrid', LUGARES.madrid, opHitos);
       marcar('japon', LUGARES.narita, opHitos * suave(tramo(p, 0.45, 0.70)));
-      esconder('narita');
-      esconder('casa');
-      esconder('shinjuku');
-      esconder('meidaimae');
+      /* 🚨 Y TODO LO DEMÁS SE APAGA, SIN NOMBRARLO. Antes aquí había una lista
+         de `esconder()` escrita a mano, y esa lista tenía que adivinar los
+         marcadores de los actos futuros: cuando el acto 5 estrenó Kusatsu, su
+         punto se quedaba encendido sobre el globo hasta el vuelo a Madrid.
+         Un acto no sabe qué marcadores vendrán; sabe cuáles son suyos. */
+      limpiarHitos('madrid', 'japon', 'avion');
 
       /* ---- El texto ---------------------------------------------------- */
       acto.v('--p-entrada', pEntrada);
