@@ -25,14 +25,14 @@
    está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=235063c6';
-import { tramo, suave, tope } from '../motor/util.js?v=235063c6';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=235063c6';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=235063c6';
-import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura } from '../motor/dibujo.js?v=235063c6';
-import { montarNieve, nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=235063c6';
-import { tenderRuta } from '../motor/ruta.js?v=235063c6';
-import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=235063c6';
+import { registrarActo } from '../motor/escenario.js?v=faa3b2af';
+import { tramo, suave, tope } from '../motor/util.js?v=faa3b2af';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=faa3b2af';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=faa3b2af';
+import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena } from '../motor/dibujo.js?v=faa3b2af';
+import { montarNieve, nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=faa3b2af';
+import { tenderRuta } from '../motor/ruta.js?v=faa3b2af';
+import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=faa3b2af';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -432,6 +432,11 @@ export function montarActoAlCoche() {
          🚨 La POSTURA va igual: se declara la que se enseña, no se apagan las
          otras una a una. Ver motor/dibujo.js. */
       limpiarPiezas('tren', 'cuatro', 'mostrador', 'llave', 'coche');
+      /* 🚨 Y LA ESCENA A SU TAMAÑO. El acto 6 la encoge para su zoom out, y el
+         zoom vive en la capa compartida: sin devolverlo, saltando del 6 al 3 la
+         estación de Shinjuku sale en miniatura. Es la ley 26, la misma de
+         --mezcla, y cuesta lo mismo: escribirlo. */
+      zoomEscena(1);
       postura('monigote', 'tabla');
 
       if (!hayDibujo) {

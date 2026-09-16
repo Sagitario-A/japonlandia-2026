@@ -14,14 +14,14 @@
    Guion → web-nueva/DEFINICION.md, acto A2.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=235063c6';
-import { tramo, suave, tope } from '../motor/util.js?v=235063c6';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=235063c6';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=235063c6';
-import { tenderRuta } from '../motor/ruta.js?v=235063c6';
-import { apagarDibujo } from '../motor/dibujo.js?v=235063c6';
-import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=235063c6';
-import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=235063c6';
+import { registrarActo } from '../motor/escenario.js?v=faa3b2af';
+import { tramo, suave, tope } from '../motor/util.js?v=faa3b2af';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=faa3b2af';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=faa3b2af';
+import { tenderRuta } from '../motor/ruta.js?v=faa3b2af';
+import { apagarDibujo } from '../motor/dibujo.js?v=faa3b2af';
+import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=faa3b2af';
+import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=faa3b2af';
 
 /* --------------------------------------------------------------------------
    Los encuadres, en el orden en que los recorre la cámara

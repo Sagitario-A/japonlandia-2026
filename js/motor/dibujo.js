@@ -23,18 +23,18 @@
    podría verlas, la URL no cambiaría nunca y una publicación serviría el dibujo
    viejo durante los diez minutos de caché de GitHub Pages. */
 const PIEZAS = [
-  ['tren', 'arte/tren.svg?v=235063c6'],
-  ['cuatro', 'arte/cuatro.svg?v=235063c6'],
-  ['mostrador', 'arte/mostrador.svg?v=235063c6'],
-  ['llave', 'arte/llave.svg?v=235063c6'],
-  ['coche', 'arte/coche.svg?v=235063c6'],
+  ['tren', 'arte/tren.svg?v=faa3b2af'],
+  ['cuatro', 'arte/cuatro.svg?v=faa3b2af'],
+  ['mostrador', 'arte/mostrador.svg?v=faa3b2af'],
+  ['llave', 'arte/llave.svg?v=faa3b2af'],
+  ['coche', 'arte/coche.svg?v=faa3b2af'],
   /* 🚨 EL ACTO 4 EN ADELANTE. Van aquí y no en el acto por lo de siempre: el
      monigote sigue puesto en el acto 5 («el muñequito sigue ahí esquiando») y
      en el 6. Y estando en esta lista, apagarDibujo() los apaga: sin eso, al
      volver del acto 4 al 3 la montaña se quedaba flotando sobre el bosque,
      porque el acto 3 no sabe que existen.
      El tercer campo dice de qué trazado sale el perfil que se muestrea. */
-  ['monte', 'arte/monte.svg?v=235063c6', '.mo-perfil'],
+  ['monte', 'arte/monte.svg?v=faa3b2af', '.mo-perfil'],
   /* 🚨 LA TABLA ES UNA PIEZA APARTE DESDE EL ACTO 5, y hasta entonces vivía
      dentro del muñeco. La partió Kiko al describir el acto 5: «se cae de la
      tabla y sube hacia arriba en diagonal». A partir del golpe cada uno va por
@@ -42,27 +42,36 @@ const PIEZAS = [
      mueven por separado no pueden ser el mismo dibujo. Comparten `viewBox` y
      tamaño, así que mientras van pegadas basta con darles la misma x, la misma
      y y el mismo giro: ver arte/tabla.svg. */
-  ['tabla', 'arte/tabla.svg?v=235063c6'],
+  ['tabla', 'arte/tabla.svg?v=faa3b2af'],
   /* 🚨 EL ACTO 5. Y EL ORDEN DE ESTAS TRES NO ES NEGOCIABLE: el onsen está
      partido en dos mitades con el muñeco EN MEDIO, que es lo que hace que se le
      vea metido en el agua y no sentado delante de un barreño. Aquí solo se
      declaran; quien manda de verdad en el orden de pintado es el HTML. */
-  ['roca', 'arte/roca.svg?v=235063c6'],
-  ['onsen-fondo', 'arte/onsen-fondo.svg?v=235063c6'],
-  ['monigote', 'arte/monigote.svg?v=235063c6'],
-  ['onsen', 'arte/onsen.svg?v=235063c6'],
+  /* 🚨 EL ACTO 6 · LA MONTAÑA VA LA PRIMERA DE TODAS, porque es el fondo del
+     fondo: más lejos incluso que el bosque. Kiko: «a la derecha una especie de
+     montaña que se vea como en la mitad». */
+  ['pico', 'arte/pico.svg?v=faa3b2af'],
+  ['roca', 'arte/roca.svg?v=faa3b2af'],
+  ['onsen-fondo', 'arte/onsen-fondo.svg?v=faa3b2af'],
+  ['monigote', 'arte/monigote.svg?v=faa3b2af'],
+  ['onsen', 'arte/onsen.svg?v=faa3b2af'],
   /* 🚨 EL ACTO 6. El mono de Jigokudani va DESPUÉS del onsen en esta lista y en
      el HTML, porque entra por delante de todo: se acerca al onsen por la
      derecha, y quien está dentro del agua es el muñeco. Si fuera por detrás, el
      mono aparecería medio tapado por el barreño justo cuando se le tiene que
      ver entero. */
-  ['mono', 'arte/mono.svg?v=235063c6']
+  /* 🚨 Y LA POZA DE LOS MONOS, PARTIDA EN DOS CON EL MONO EN MEDIO, igual que
+     el onsen del acto 5 y por el mismo motivo: que se le vea DENTRO del agua.
+     poza-fondo · mono · poza, y ese orden no es negociable. */
+  ['poza-fondo', 'arte/poza-fondo.svg?v=faa3b2af'],
+  ['mono', 'arte/mono.svg?v=faa3b2af'],
+  ['poza', 'arte/poza.svg?v=faa3b2af']
 ];
 
 const BANDAS = [
-  ['ciudad', 'arte/ciudad.svg?v=235063c6'],
-  ['bosque', 'arte/bosque.svg?v=235063c6'],
-  ['bosque-nevado', 'arte/bosque-nevado.svg?v=235063c6']
+  ['ciudad', 'arte/ciudad.svg?v=faa3b2af'],
+  ['bosque', 'arte/bosque.svg?v=faa3b2af'],
+  ['bosque-nevado', 'arte/bosque-nevado.svg?v=faa3b2af']
 ];
 
 /* Cuántas veces se repite cada banda en fila. Una copia mide 118vmin de ancho,
@@ -199,6 +208,7 @@ export function apagarDibujo() {
      inferior. Es la ley 16: lo que un acto cambia de una capa compartida, otro
      lo devuelve. */
   bajarSuelo(0);
+  zoomEscena(1);
   piezas.forEach(function (el, nombre) { verSiHaceFalta(el, nombre, 0); });
   bandas.forEach(function (el, nombre) { verSiHaceFalta(el, nombre, 0); });
 }
@@ -321,6 +331,42 @@ export function desvanecerDibujo(v) {
   ultimo.set('--fin', s);
   raiz.style.setProperty('--fin', s);
   if (v >= 0.999) apagarDibujo();
+}
+
+/**
+ * 🚨 EL ZOOM OUT DE LA ESCENA ENTERA. Lo pidió Kiko viendo el acto 6 publicado:
+ * *«cuando se esté acabando Yamanouchi, la escena donde estamos debería hacer
+ * zoom out»*, para que quepan el coche a la izquierda y una montaña a la
+ * derecha. `z` va de 1 (tamaño natural) a menos.
+ *
+ * 🚨 SE ESCRIBE EL `transform` DE LA CAPA, NO UNA VARIABLE CSS, y esa es toda
+ * la diferencia entre que esto cueste algo o no cueste nada. La ley 19 dice que
+ * una variable que cambia en cada fotograma no se escribe en la raíz de una
+ * capa con hijos animados, porque **una propiedad personalizada se hereda** y
+ * al cambiarla el navegador tiene que recalcular el estilo de los cuarenta y
+ * cuatro copos. `transform` no se hereda: se escribe en la capa y no invalida a
+ * nadie de dentro. Es la excepción a la ley 19, y solo lo es porque no es una
+ * variable.
+ *
+ * 🚨 Y EL ORIGEN ESTÁ EN EL CENTRO DE LA PANTALLA, NO EN EL SUELO, que es lo
+ * que hace que la escena funcione: encogiendo desde el borde de abajo, el suelo
+ * se queda pegado al canto y delante del muñeco no hay sitio para nada.
+ * Encogiendo desde el centro, **la línea del suelo sube** y deja una franja de
+ * papel en blanco por delante — que es justo adonde salta el mono cuando «baja
+ * hacia nosotros».
+ */
+export function zoomEscena(z) {
+  if (!raiz) return;
+  const v = z.toFixed(4);
+  if (ultimo.get('zoom') === v) return;
+  ultimo.set('zoom', v);
+  if (z >= 0.9999) {
+    raiz.style.transform = '';
+    raiz.style.transformOrigin = '';
+  } else {
+    raiz.style.transformOrigin = '50% 50%';
+    raiz.style.transform = 'scale(' + v + ')';
+  }
 }
 
 /**

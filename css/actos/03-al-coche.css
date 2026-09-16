@@ -193,8 +193,26 @@ html:not(.anim) .dibujo { display: none; }
    ========================================================================== */
 .d-fondo {
   position: absolute;
-  left: 0;
-  right: 0;
+  /* 🚨 SE SALE 40 UNIDADES POR CADA LADO, Y ESO ES DEL ACTO 6.
+     Esta caja lleva `overflow: hidden`, así que es ella la que decide hasta
+     dónde se pinta el bosque. Mientras la escena estuvo a tamaño natural daba
+     igual que acabara justo en el borde de la pantalla. El acto 6 hace un ZOOM
+     OUT de la capa entera —Kiko, viendo el acto publicado: «la escena donde
+     estamos debería hacer zoom out»— y al encogerla, una caja que medía
+     exactamente la pantalla pasa a medir menos: el bosque se quedaba pintado
+     solo en la franja central y a los lados salía el papel en blanco.
+
+     40u a cada lado es lo que hace falta para el zoom al que llega el acto 6, y
+     no es un número redondo: la fila son tres copias de 118,2u y se desplaza
+     hasta una copia entera, así que el borde izquierdo de la fila tiene que
+     estar por delante del borde visible con el zoom puesto Y el derecho por
+     detrás cuando el desplazamiento está a punto de dar la vuelta. Entre las
+     dos condiciones queda una ventana estrecha, y 40 cae dentro.
+     🚨 A tamaño natural esto NO cambia nada: lo que sobra queda fuera de la
+     pantalla. Y si algún día el zoom baja más, hace falta una copia más de
+     banda, no más caja. */
+  left: calc(-40 * var(--u));
+  right: calc(-40 * var(--u));
   /* 🚨 LA BANDA ACABA EXACTAMENTE EN LA LÍNEA DEL SUELO. Los tres SVG están
      recortados a ras de su propia línea de carretera —viewBox 600×274 y no
      600×300—, así que el coche y los árboles se apoyan en la MISMA línea y por

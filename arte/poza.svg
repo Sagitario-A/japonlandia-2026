@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" class="a-poza" aria-hidden="true" focusable="false">
+  <!-- LA POZA DE LOS MONOS · la mitad de DELANTE. Acto 6.
+       Va POR DELANTE del mono y es la que lo tapa de la cintura para abajo: es
+       lo que hace que se le vea metido en el agua.
+
+       🚨 SU PAREJA ES arte/poza-fondo.svg, y ahi esta la explicacion entera de
+       por que esto es una pieza nueva y no el onsen del acto 5 encogido.
+       SI SE TOCA UNA, SE TOCA LA OTRA. Se parten por el eje del agua, y=104:
+       aqui va todo lo que queda por debajo.
+
+       El vaho va aqui, por delante de todo, igual que en el onsen del acto 5:
+       son dos hilillos y es lo unico que dice que el agua esta caliente y no
+       helada, que en una pantalla llena de nieve azul no se da por hecho. -->
+
+  <!-- El agua, mitad de delante -->
+  <path class="o-agua" d="M42 104 A108 34 0 0 0 258 104 Z"/>
+
+  <!-- Dos rizos, quietos: un agua animada en cada fotograma es la ley 15 -->
+  <path class="o-riza" d="M88 116 q10 -5 20 0 q10 5 20 0"/>
+  <path class="o-riza" d="M176 120 q10 -5 20 0 q10 5 20 0"/>
+
+  <!-- Las rocas del borde de delante, mas bajas para que se vea el agua -->
+  <ellipse class="z-roca" cx="70" cy="126" rx="28" ry="13"/>
+  <ellipse class="z-roca" cx="152" cy="136" rx="34" ry="14"/>
+  <ellipse class="z-roca" cx="234" cy="128" rx="26" ry="13"/>
+  <!-- Nieve encima de las de delante -->
+  <path class="z-nieve" d="M124 128 q28 -12 56 0 q-14 6 -28 6 q-14 0 -28 -6 z"/>
+
+  <!-- El vaho, lo unico de todo el dibujo que va a media tinta: es vapor -->
+  <path class="o-vaho" d="M112 92 q-8 -16 2 -28 q8 -10 2 -22"/>
+  <path class="o-vaho" d="M196 96 q8 -14 -1 -26 q-8 -11 -1 -20"/>
+</svg>

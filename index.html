@@ -9,14 +9,14 @@
 <meta name="theme-color" content="#ffffff">
 
 <link rel="preload" href="tipo/shippori-mincho-500-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/base.css?v=235063c6">
-<link rel="stylesheet" href="css/texto.css?v=235063c6">
-<link rel="stylesheet" href="css/escena.css?v=235063c6">
-<link rel="stylesheet" href="css/color.css?v=235063c6">
-<link rel="stylesheet" href="css/actos/03-al-coche.css?v=235063c6">
-<link rel="stylesheet" href="css/actos/04-takaragawa.css?v=235063c6">
-<link rel="stylesheet" href="css/actos/05-kusatsu.css?v=235063c6">
-<link rel="stylesheet" href="css/actos/06-yamanouchi.css?v=235063c6">
+<link rel="stylesheet" href="css/base.css?v=faa3b2af">
+<link rel="stylesheet" href="css/texto.css?v=faa3b2af">
+<link rel="stylesheet" href="css/escena.css?v=faa3b2af">
+<link rel="stylesheet" href="css/color.css?v=faa3b2af">
+<link rel="stylesheet" href="css/actos/03-al-coche.css?v=faa3b2af">
+<link rel="stylesheet" href="css/actos/04-takaragawa.css?v=faa3b2af">
+<link rel="stylesheet" href="css/actos/05-kusatsu.css?v=faa3b2af">
+<link rel="stylesheet" href="css/actos/06-yamanouchi.css?v=faa3b2af">
 </head>
 
 <body>
@@ -189,6 +189,9 @@
        Mover el monigote de sitio en esta lista rompe la escena entera.
        La tabla va antes que él porque la lleva debajo de los pies, y la roca
        también: se choca contra ella pasándole por delante. -->
+  <!-- 🚨 LA MONTAÑA DEL ACTO 6 VA LA PRIMERA: es el fondo del fondo, por detrás
+       de todo lo demás del dibujo, incluido el bosque que corre por delante. -->
+  <div class="d-pieza" data-pieza="pico"></div>
   <div class="d-pieza" data-pieza="tabla"></div>
   <div class="d-pieza" data-pieza="roca"></div>
   <div class="d-pieza" data-pieza="onsen-fondo"></div>
@@ -200,7 +203,13 @@
        tapado por el barreño justo en el momento en que hay que verlo entero —es
        el susto del acto—. Por delante, además, se lee que está MÁS CERCA de
        nosotros que el agua, que es lo que hace que dé un poco de respeto. -->
+  <!-- 🚨 LA POZA DE LOS MONOS, CON EL MONO EN MEDIO DE SUS DOS MITADES. Es lo
+       mismo que se hizo con el onsen del acto 5 y por lo mismo: la mitad de
+       atrás por detrás de él, la de delante tapándolo de cintura para abajo, y
+       así se le ve DENTRO del agua. Mover una de las tres rompe la escena. -->
+  <div class="d-pieza" data-pieza="poza-fondo"></div>
   <div class="d-pieza" data-pieza="mono"></div>
+  <div class="d-pieza" data-pieza="poza"></div>
   <div class="nieve" id="campo-nieve"></div>
 </div>
 
@@ -556,7 +565,7 @@
     </div>
   </section>
 
-  <section class="acto" id="yamanouchi" style="--largo: 1600" aria-labelledby="t-yamanouchi">
+  <section class="acto" id="yamanouchi" style="--largo: 1900" aria-labelledby="t-yamanouchi">
     <div class="escena">
 
       <div class="titular-acto">
@@ -668,6 +677,6 @@
     <span class="marca m-pend">○ pendiente</span>. Lo que no está marcado, no está comprobado.</p>
 </footer>
 
-<script type="module" src="js/principal.js?v=235063c6"></script>
+<script type="module" src="js/principal.js?v=faa3b2af"></script>
 </body>
 </html>

@@ -105,6 +105,10 @@
      nieve azul pálido, un gris frío se funde con el fondo y el mono deja de
      tener silueta. Es el mismo problema que la nieve blanca sobre papel
      blanco, resuelto al revés. */
+  /* La montaña del fondo: más pálida que la nieve de delante, que es lo único
+     que la manda lejos en un dibujo sin sombras ni degradados */
+  --c-monte-lejos: #eef4f9;
+
   --c-mono-pelo: #a8998a;
   --c-mono-pelo-hondo: #8a7c6e;
   --c-mono-cara: #d2705f;
@@ -277,6 +281,24 @@
 .m-cola   { fill: none; stroke: var(--c-mono-pelo-hondo); stroke-width: 6; stroke-linecap: round; }
 /* Su caperuza de nieve, la misma que la de la roca del acto 5 */
 .m-nieve  { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 1.4; }
+
+/* --- La montaña de la derecha (acto 6) ---
+   🚨 VA MÁS PÁLIDA Y CON EL TRAZO MÁS FINO QUE TODO LO DEMÁS, y no es un
+   descuido: es el fondo del fondo, más lejos que el bosque. En esta película no
+   hay sombras ni degradados (NORMAS § 1), así que la profundidad solo se puede
+   hacer con el peso del trazo. Con el trazo normal, la montaña se ponía a la
+   misma distancia que el coche y la escena se quedaba plana. */
+.p-roca  { fill: var(--c-monte-lejos); stroke: var(--c-nieve-trazo); stroke-width: 1.1; }
+.p-nieve { fill: var(--c-nieve-manto); stroke: none; }
+.p-veta  { fill: none; stroke: var(--c-nieve-trazo); stroke-width: 1; stroke-linecap: round; opacity: .55; }
+
+/* --- La poza de los monos (acto 6) ---
+   El agua es la misma que la del onsen del acto 5 —el mismo verde de aguas
+   termales— porque es la misma clase de agua; lo que cambia es el borde: allí
+   son piedras labradas y aquí son rocas sueltas, que es lo que separa una poza
+   de pueblo de una charca de montaña. */
+.z-roca  { fill: var(--c-roca); stroke: var(--trazo); stroke-width: 1.6; }
+.z-nieve { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 1.4; }
 
 /* --- La roca del acto 5 ---
    Piedra gris fría, que es lo único que no es ni nieve ni personaje en toda la

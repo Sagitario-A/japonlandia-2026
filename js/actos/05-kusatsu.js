@@ -49,14 +49,14 @@
    montaña, que ya venía en píxeles.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=235063c6';
-import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=235063c6';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=235063c6';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=235063c6';
-import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura } from '../motor/dibujo.js?v=235063c6';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=235063c6';
-import { tenderRuta } from '../motor/ruta.js?v=235063c6';
-import { LUGARES, RUTA_A_KUSATSU, ENCUADRES } from '../datos/rutas.js?v=235063c6';
+import { registrarActo } from '../motor/escenario.js?v=faa3b2af';
+import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=faa3b2af';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=faa3b2af';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=faa3b2af';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena } from '../motor/dibujo.js?v=faa3b2af';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=faa3b2af';
+import { tenderRuta } from '../motor/ruta.js?v=faa3b2af';
+import { LUGARES, RUTA_A_KUSATSU, ENCUADRES } from '../datos/rutas.js?v=faa3b2af';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -316,6 +316,8 @@ function apagarLoDeAntes() {
      porque es de una capa compartida y la barata es esta. Con 12 estan los
      nueve arboles puestos (RANURAS, en 03-al-coche.js). */
   variable('--mezcla', 12);
+  /* Y la escena a su tamaño, por lo mismo: el acto 6 la encoge (ley 26) */
+  zoomEscena(1);
 }
 
 export function montarActoKusatsu() {

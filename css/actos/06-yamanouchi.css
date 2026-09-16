@@ -39,6 +39,49 @@
 }
 
 /* ==========================================================================
+   1.bis · La montaña de la derecha y la poza de los monos
+   --------------------------------------------------------------------------
+   Kiko, viendo el acto publicado: «a la derecha una especie de montaña que se
+   vea como en la mitad, es decir, que empiece en la base y el pico se corte
+   justo en el lateral derecho. Y haya como una especie de mini onsen, típico de
+   onsen de montaña donde están los monos estos que se bañan en la nieve».
+
+   🚨 LA MONTAÑA ES ENORME A PROPÓSITO: 96 unidades de ancho, casi la pantalla
+   entera de un móvil. Tiene que serlo para que su pico caiga fuera por la
+   derecha y su base cruce media pantalla: una montaña que cabe entera no se
+   «corta en el lateral», se ve pequeña y lejos. Y su alto va atado a la
+   pantalla y no a la caja, como el monte del acto 4, por lo mismo: en un
+   portátil ancho 96 unidades de alto se salen por arriba.
+   ========================================================================== */
+[data-pieza='pico'] {
+  width: calc(96 * var(--u));
+  height: min(46svh, calc(70 * var(--u)));
+  aspect-ratio: auto;
+  /* 🚨 POR DETRÁS DEL BOSQUE, Y ESTO NO ES UN DETALLE: ES LA PIEZA.
+     Las piezas del dibujo van DESPUÉS de las bandas de fondo en el HTML, así
+     que por defecto se pintan por delante de los árboles. Con la montaña ahí,
+     la mitad derecha del bosque desaparecía debajo de ella: en la captura del
+     zoom out había árboles en la izquierda y nada en la derecha, y parecía que
+     la banda se había acabado.
+     Es la única pieza de la película que va detrás del fondo, porque es la
+     única que está MÁS LEJOS que el bosque. */
+  z-index: -1;
+}
+
+/* 🚨 LAS DOS MITADES DE LA POZA LLEVAN LA MISMA REGLA Y TIENEN QUE SEGUIR
+   LLEVÁNDOLA, exactamente igual que el onsen del acto 5: son un solo dibujo
+   partido por el eje del agua con el mono metido en medio. Cambiarle el tamaño
+   a una y no a la otra parte la poza por la mitad, literalmente.
+   💭 18 unidades: poco más de la mitad que el onsen del muñeco (32). Es la
+   diferencia entre «una poza donde cabe una persona» y «una charca donde cabe
+   un mono», y es lo que hace que se lea que son dos sitios distintos. */
+[data-pieza='poza'],
+[data-pieza='poza-fondo'] {
+  width: calc(18 * var(--u));
+  aspect-ratio: 300 / 150;
+}
+
+/* ==========================================================================
    2 · El texto del acto
    --------------------------------------------------------------------------
    Mismo acento azul frío que los actos 4 y 5: es la misma nieve y no se estrena
