@@ -44,8 +44,8 @@
      casi siempre; a 1, el mapa mide la mitad y se va a la parte de arriba. Ver
      empequenecerMapa() en js/motor/lienzo.js. */
   transform:
-    translateY(calc((1 - var(--p-alzado, 1)) * 34svh - var(--mini, 0) * 17svh))
-    scale(calc((.9 + var(--p-alzado, 1) * .1) * (1 - var(--mini, 0) * .5)));
+    translateY(calc((1 - var(--p-alzado, 1)) * 34svh - var(--mini, 0) * 24svh))
+    scale(calc((.9 + var(--p-alzado, 1) * .1) * (1 - var(--mini, 0) * .58)));
 }
 .escenario svg {
   width: 100%;
@@ -113,14 +113,22 @@ html:not(.anim) .escenario { display: none; }
 .m-hito circle { fill: var(--acento); }
 .m-hito text {
   font-family: var(--f-texto);
-  font-size: 8.5px;
+  /* 🚨 MAS GRANDE EN EL MAPA PEQUENIO, y no es un capricho de tamanio.
+     El rotulo lleva un halo de 2,6 px pintado por debajo de la letra
+     (paint-order) para que se lea sobre el mapa. Al encoger la capa al 42 %,
+     la letra baja a siete pixeles pero el halo se le come por dentro: en
+     pantalla salia una fila de guiones donde ponia TAKARAGAWA. Se vio en la
+     captura del mapa pequenio.
+     Creciendo con --mini, la letra vuelve a medir once pixeles reales y el halo
+     vuelve a ser un halo. */
+  font-size: calc(8.5px + var(--mini, 0) * 9px);
   letter-spacing: .1em;
   text-transform: uppercase;
   fill: var(--tinta-suave);
   font-weight: 600;
   paint-order: stroke;
   stroke: var(--papel);
-  stroke-width: 2.6px;
+  stroke-width: calc(2.6px + var(--mini, 0) * 2.4px);
   stroke-linejoin: round;
 }
 .m-destino .m-halo {
@@ -494,4 +502,11 @@ html:not(.anim) .ir-indice { position: static; margin-top: 2rem; }
    Más pequeños y más tenues que los tres hitos del viaje, porque son referencia
    y no destino. Solo aparecen cuando la cámara está lo bastante cerca. */
 .m-menor circle { fill: var(--tenue); }
-.m-menor text { font-size: 7.5px; fill: var(--tenue); letter-spacing: .08em; }
+/* 🚨 Los menores tambien crecen en el mapa pequenio. Esta regla pisaba el
+   font-size de arriba, asi que Shinjuku seguia a seis pixeles mientras
+   Takaragawa ya era legible: media etiqueta bien y la otra no. */
+.m-menor text {
+  font-size: calc(7.5px + var(--mini, 0) * 8px);
+  fill: var(--tenue);
+  letter-spacing: .08em;
+}

@@ -14,14 +14,14 @@
    Guion → web-nueva/DEFINICION.md, acto A2.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=1b7da4d4';
-import { tramo, suave, tope } from '../motor/util.js?v=1b7da4d4';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=1b7da4d4';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js?v=1b7da4d4';
-import { tenderRuta } from '../motor/ruta.js?v=1b7da4d4';
-import { apagarDibujo } from '../motor/dibujo.js?v=1b7da4d4';
-import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=1b7da4d4';
-import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=1b7da4d4';
+import { registrarActo } from '../motor/escenario.js?v=b6b3f3bf';
+import { tramo, suave, tope } from '../motor/util.js?v=b6b3f3bf';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=b6b3f3bf';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo , empequeñecerMapa} from '../motor/lienzo.js?v=b6b3f3bf';
+import { tenderRuta } from '../motor/ruta.js?v=b6b3f3bf';
+import { apagarDibujo } from '../motor/dibujo.js?v=b6b3f3bf';
+import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=b6b3f3bf';
+import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=b6b3f3bf';
 
 /* --------------------------------------------------------------------------
    Los encuadres, en el orden en que los recorre la cámara
@@ -181,6 +181,10 @@ export function montarActoLlegada() {
          Tokio. Es la linea de puntos suelta del 16 de septiembre con otro
          nombre, y se arregla igual: un acto apaga lo que no usa. */
       apagarDibujo();
+
+      /* 🚨 Y devuelve el mapa a su tamanio: el acto 3 lo deja encogido para su
+         mapa pequenio, y esta capa es de todos (ley 1). */
+      empequeñecerMapa(0);
 
       esconder('avion');
       marcar('madrid', LUGARES.madrid, 1 - suave(tramo(p, 0.01, 0.10)));

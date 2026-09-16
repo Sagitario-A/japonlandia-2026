@@ -5,14 +5,14 @@
    Todo lo que este archivo hace es coser: la lógica vive en motor/ y actos/.
    ============================================================================= */
 
-import { registrarGlobal, arrancar } from './motor/escenario.js?v=1b7da4d4';
-import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=1b7da4d4';
-import { desvanecerDibujo } from './motor/dibujo.js?v=1b7da4d4';
-import { nevar } from './motor/nieve.js?v=1b7da4d4';
-import { montarActoVuelo } from './actos/01-vuelo.js?v=1b7da4d4';
-import { montarActoLlegada } from './actos/02-llegada.js?v=1b7da4d4';
-import { montarActoAlCoche } from './actos/03-al-coche.js?v=1b7da4d4';
-import { tope } from './motor/util.js?v=1b7da4d4';
+import { registrarGlobal, arrancar } from './motor/escenario.js?v=b6b3f3bf';
+import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=b6b3f3bf';
+import { desvanecerDibujo } from './motor/dibujo.js?v=b6b3f3bf';
+import { nevar } from './motor/nieve.js?v=b6b3f3bf';
+import { montarActoVuelo } from './actos/01-vuelo.js?v=b6b3f3bf';
+import { montarActoLlegada } from './actos/02-llegada.js?v=b6b3f3bf';
+import { montarActoAlCoche } from './actos/03-al-coche.js?v=b6b3f3bf';
+import { tope } from './motor/util.js?v=b6b3f3bf';
 
 /* --------------------------------------------------------------------------
    1 · El escenario y los actos
@@ -61,17 +61,28 @@ registrarGlobal(function (scroll, alto, sinMovimiento) {
      de desvanecido. */
   if (finPelicula) {
     const caja = finPelicula.getBoundingClientRect();
-    /* Una pantalla entera de desvanecido: el dibujo se queda quieto y del
-       mismo tamaño mientras el capítulo siguiente aparece por encima, hasta que
-       lo de atrás ya no está. */
+    /* 🚨 EL MAPA Y EL DIBUJO NO SE VAN A LA VEZ, y el orden importa.
+
+       Kiko, el 17 de septiembre, corrigiéndose a sí mismo: «el coche no tiene
+       que desaparecer, ni la nieve, ni la carretera, hasta que ya haya entrado
+       bastante la otra sección… pero en el momento en que empieza a entrar la
+       sección nueva, quitar el mapa, para que solamente se quede el coche con
+       la nieve y el paisaje».
+
+       O sea: el mapa de Japón ha contado lo suyo y estorba en cuanto llega el
+       alojamiento, así que se va enseguida. El coche, la nieve y el bosque son
+       el sitio donde estamos, y se quedan hasta que el capítulo ya está puesto.
+
+       🚨 Cuando exista el acto 4 esto cambia de sitio, no de idea: el mapa se
+       irá igual y el paisaje seguirá, pero el relevo lo hará el acto. */
     const fin = tope((alto - caja.bottom) / alto);
-    desvanecerDibujo(fin);
-    desvanecerMapa(fin);
+    desvanecerMapa(tope(fin / 0.25));
+    desvanecerDibujo(tope((fin - 0.45) / 0.55));
     /* La nieve se va con él. Y además se va PORQUE se va: sesenta copos
        animados dentro de una capa a la que se le está bajando la opacidad
        obligan al navegador a componer el grupo aparte en cada fotograma
        (ley 15). Menos copos, menos factura. */
-    if (fin > 0) nevar(1 - fin);
+    if (fin > 0) nevar(1 - tope((fin - 0.45) / 0.55));
     if (caja.bottom < 0) mostrarLienzo(false);
   }
 });

@@ -25,14 +25,14 @@
    está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=1b7da4d4';
-import { tramo, suave, tope } from '../motor/util.js?v=1b7da4d4';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=1b7da4d4';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=1b7da4d4';
-import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=1b7da4d4';
-import { montarNieve, nevar } from '../motor/nieve.js?v=1b7da4d4';
-import { tenderRuta } from '../motor/ruta.js?v=1b7da4d4';
-import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=1b7da4d4';
+import { registrarActo } from '../motor/escenario.js?v=b6b3f3bf';
+import { tramo, suave, tope } from '../motor/util.js?v=b6b3f3bf';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=b6b3f3bf';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=b6b3f3bf';
+import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=b6b3f3bf';
+import { montarNieve, nevar } from '../motor/nieve.js?v=b6b3f3bf';
+import { tenderRuta } from '../motor/ruta.js?v=b6b3f3bf';
+import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=b6b3f3bf';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -97,7 +97,13 @@ const F = {
   llave:      [0.548, 0.585],
   seVan:      [0.582, 0.630],
   centrar:    [0.625, 0.668],
-  sube:       [0.666, 0.706],
+  /* 🚨 SUBE A LA VEZ QUE EL COCHE CRECE, no después. Empezaba justo cuando el
+     coche terminaba de centrarse y Kiko lo vio raro: el coche se plantaba, y
+     solo entonces la llave se acordaba de subir. Sus palabras: «debería empezar
+     a moverse hacia arriba en diagonal cuando el coche se empieza a hacer
+     grande, no después, porque crea un efecto raro». Las dos cosas son el mismo
+     gesto, así que empiezan juntas. */
+  sube:       [0.626, 0.702],
   luces:      [0.704, 0.728],
   consume:    [0.720, 0.756],
 
@@ -316,7 +322,13 @@ export function montarActoAlCoche() {
            que en los actos 1 y 2. */
         const pMini = suave(tramo(p, MAPA_NORTE[0], MAPA_NORTE[1]));
         viajarDeVista(V_NORTE, V_NORTE, 0);
-        empequeñecerMapa(pMini);
+        /* 🚨 APARECE YA EN SU SITIO, no viajando hasta él. Antes el encogido se
+           interpolaba con la aparición, así que el mapa empezaba a tamaño
+           completo —o sea, por detrás del coche y de los árboles— y subía
+           encogiéndose. Kiko: «que se empiece a aparecer ya directamente en la
+           posición en la que está, para que no venga debajo de los árboles ni
+           del coche». Lo único que entra es la opacidad. */
+        empequeñecerMapa(1);
         mostrarLienzo(true);
         alzarLienzo(1);
         opacidadMapa(pMini * 0.92);
