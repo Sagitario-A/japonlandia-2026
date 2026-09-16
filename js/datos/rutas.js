@@ -17,7 +17,8 @@
    [lon, lat]. Se guardan sueltos porque unos son marcadores y otros solo son
    puntos de paso por los que la línea tiene que doblar.
    -------------------------------------------------------------------------- */
-import { EJE_KANETSU } from './carretera-norte.js?v=c1cd755c';
+import { EJE_KANETSU } from './carretera-norte.js?v=ee16f646';
+import { RUTA_KUSATSU } from './carretera-kusatsu.js?v=ee16f646';
 
 export const LUGARES = {
   /* España */
@@ -205,6 +206,28 @@ export const TRAMO_AL_COCHE = {
 export const RUTA_NORTE = [L.shinjuku].concat(EJE_KANETSU).concat([L.takaragawa]);
 
 /* --------------------------------------------------------------------------
+   5.bis · De Takaragawa a Kusatsu · la ruta del coche del acto 5
+   --------------------------------------------------------------------------
+   🚨 TAMPOCO ES UNA LÍNEA A OJO, y esta ni siquiera se podía sacar como la de
+   arriba. La Kan-Etsu sube sin volver nunca hacia el sur, así que se resolvió
+   promediando longitudes por franjas de latitud; de Takaragawa a Kusatsu se
+   BAJA el valle del Tone hasta Tsukiyono, se va al OESTE por el del Agatsuma y
+   se vuelve a SUBIR, o sea que en una misma latitud hay tres trozos de ruta que
+   no tienen nada que ver. Se sacó buscando el camino de verdad sobre las
+   carreteras de OpenStreetMap: ver herramientas/generar-carreteras.js § 3.
+
+   Son 88 km por Minakami, Tsukiyono, la 145 del valle y Naganohara. La ele que
+   hace en el mapa no es un capricho del dibujo: en medio hay montaña sin
+   carretera.
+
+   🚨 Y NO PASA POR LA 292 DE LA MONTAÑA, que es la que cierra de noviembre a
+   abril. Esa es la de Kusatsu a Yamanouchi —el acto 6— y ahí sí habrá que tener
+   cuidado: por donde parece se tardan cuarenta minutos y por donde se puede en
+   invierno, dos horas y media rodeando por Ueda.
+   -------------------------------------------------------------------------- */
+export const RUTA_A_KUSATSU = [L.takaragawa].concat(RUTA_KUSATSU).concat([L.kusatsu]);
+
+/* --------------------------------------------------------------------------
    6 · Encuadres de la cámara
    --------------------------------------------------------------------------
    [lon, lat, gradosDeAncho]. El radio lo calcula `encuadrar()`, porque pensar
@@ -264,5 +287,14 @@ export const ENCUADRES = {
 
      💭 Los actos 5 y 6 se pueden quedar con este mismo encuadre: los tres
      destinos ya están dentro. */
-  region: [139.20, 36.30, 1.9]
+  region: [139.20, 36.30, 1.9],
+
+  /* 🚨 Y EL ACTO 5 NO SE QUEDA CON EL DE LA REGIÓN, aunque Kusatsu cayera
+     dentro. Se probó, y en pantalla pasaba exactamente lo que Kiko ya había
+     corregido en el acto 3: «al final no hace falta abarcar tanto». El tramo
+     Takaragawa - Kusatsu son 88 km, la quinta parte del viaje desde Tokio, así
+     que en el encuadre de la región salía un rasguño en la esquina de arriba y
+     además la etiqueta de Kusatsu se cortaba contra el borde izquierdo.
+     Centrado entre los dos extremos y con sitio para las dos etiquetas. */
+  kusatsu: [138.82, 36.735, 0.95]
 };

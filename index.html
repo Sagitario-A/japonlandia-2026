@@ -9,12 +9,13 @@
 <meta name="theme-color" content="#ffffff">
 
 <link rel="preload" href="tipo/shippori-mincho-500-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/base.css?v=c1cd755c">
-<link rel="stylesheet" href="css/texto.css?v=c1cd755c">
-<link rel="stylesheet" href="css/escena.css?v=c1cd755c">
-<link rel="stylesheet" href="css/color.css?v=c1cd755c">
-<link rel="stylesheet" href="css/actos/03-al-coche.css?v=c1cd755c">
-<link rel="stylesheet" href="css/actos/04-takaragawa.css?v=c1cd755c">
+<link rel="stylesheet" href="css/base.css?v=ee16f646">
+<link rel="stylesheet" href="css/texto.css?v=ee16f646">
+<link rel="stylesheet" href="css/escena.css?v=ee16f646">
+<link rel="stylesheet" href="css/color.css?v=ee16f646">
+<link rel="stylesheet" href="css/actos/03-al-coche.css?v=ee16f646">
+<link rel="stylesheet" href="css/actos/04-takaragawa.css?v=ee16f646">
+<link rel="stylesheet" href="css/actos/05-kusatsu.css?v=ee16f646">
 </head>
 
 <body>
@@ -76,18 +77,43 @@
       <!-- Debajo del punto: arriba competia con la propia linea de la ruta -->
       <circle r="3"/><text x="10" y="14">Narita</text>
     </g>
+    <!-- 🚨 CENTRADA ENCIMA, por lo mismo que Takaragawa. Salía a la derecha
+         del punto y en el mapa pequeño del viaje al norte se leía SHINJUK: en
+         ese encuadre Shinjuku cae pegada al borde derecho de la ventana del
+         mapa, que al 42 % mide 164 px en un móvil. Estaba así desde que se
+         montó el mapa pequeño y estaba publicado; se vio al fotografiar el acto
+         5, no antes. -->
     <g data-hito="shinjuku" class="m-hito m-menor">
-      <circle r="2.4"/><text x="8" y="-7">Shinjuku</text>
+      <circle r="2.4"/><text x="0" y="-11" text-anchor="middle">Shinjuku</text>
     </g>
     <g data-hito="meidaimae" class="m-hito m-menor">
       <circle r="2.4"/><text x="8" y="15">Meidaimae</text>
     </g>
 
     <!-- Takaragawa, el primer sitio de la nieve. Se enciende ANTES de que la
-         carretera llegue hasta él, como todos los destinos de esta web. -->
+         carretera llegue hasta él, como todos los destinos de esta web.
+
+         🚨 LA ETIQUETA VA CENTRADA ENCIMA DEL PUNTO, Y NO A UN LADO, y esto no
+         es gusto: es la única forma de que quepa. El mapa pequeño es el mapa de
+         siempre encogido al 42 %, así que su ventana en un móvil mide 164 px de
+         ancho y un rótulo como este ocupa 75. Con la etiqueta saliendo hacia la
+         derecha, en cuanto el encuadre se cierra para enseñar un tramo corto
+         —el acto 5— se lee TAKARAG y se acaba el mundo. Centrada solo necesita
+         la mitad a cada lado. Se vio en la captura, no en el código. -->
     <g data-hito="takaragawa" class="m-hito m-destino">
       <circle class="m-halo" r="10"/><circle r="3.4"/>
-      <text x="10" y="-9">Takaragawa</text>
+      <text x="0" y="-14" text-anchor="middle">Takaragawa</text>
+    </g>
+
+    <!-- Kusatsu, el segundo sitio de la nieve. Centrada como la de Takaragawa y
+         por lo mismo, pero DEBAJO del punto: las dos están a 88 km la una de la
+         otra, que en el encuadre del acto 5 son sesenta píxeles, y una encima y
+         otra debajo es lo que las separa. Debajo y no encima porque por encima
+         de Kusatsu no pasa nada y por debajo tampoco, mientras que la carretera
+         sale de ella hacia la derecha. -->
+    <g data-hito="kusatsu" class="m-hito m-destino">
+      <circle class="m-halo" r="10"/><circle r="3.4"/>
+      <text x="0" y="22" text-anchor="middle">Kusatsu</text>
     </g>
 
     <g data-hito="casa" class="m-hito m-destino">
@@ -132,7 +158,20 @@
        página, no en el suelo del paisaje—, y el monigote delante de ella porque
        la baja por encima. -->
   <div class="d-pieza" data-pieza="monte"></div>
+  <!-- 🚨 EL ACTO 5, Y AQUÍ EL ORDEN ES LA MITAD DEL TRUCO.
+       El onsen está partido en dos mitades —arte/onsen-fondo.svg y
+       arte/onsen.svg— y el muñeco va EN MEDIO de las dos: la de atrás por
+       detrás de él y la de delante tapándolo de la cintura para abajo. Eso es
+       lo que hace que se le vea metido en el agua y no sentado delante de un
+       barreño, que es lo que pidió Kiko: «sale hasta la mitad del torso».
+       Mover el monigote de sitio en esta lista rompe la escena entera.
+       La tabla va antes que él porque la lleva debajo de los pies, y la roca
+       también: se choca contra ella pasándole por delante. -->
+  <div class="d-pieza" data-pieza="tabla"></div>
+  <div class="d-pieza" data-pieza="roca"></div>
+  <div class="d-pieza" data-pieza="onsen-fondo"></div>
   <div class="d-pieza" data-pieza="monigote"></div>
+  <div class="d-pieza" data-pieza="onsen"></div>
   <div class="nieve" id="campo-nieve"></div>
 </div>
 
@@ -145,6 +184,7 @@
     <li><a href="#llegada" data-rail="llegada"><span>La llegada</span></a></li>
     <li><a href="#al-coche" data-rail="al-coche"><span>Al coche</span></a></li>
     <li><a href="#takaragawa" data-rail="takaragawa"><span>Takaragawa</span></a></li>
+    <li><a href="#kusatsu" data-rail="kusatsu"><span>Kusatsu</span></a></li>
   </ol>
 </nav>
 
@@ -414,6 +454,78 @@
     </div>
   </section>
 
+
+  <!-- ══════════════════  A5 · KUSATSU  ══════════════════
+       Empieza en el fotograma exacto en que acaba el 4 —monigote centrado y de
+       pie en su tabla, bosque nevado detrás, nevando fuerte, y EL PAISAJE
+       BAJADO: el suelo es el borde de abajo de la pantalla—.
+
+       Vuelve el mapa pequeño con la ruta de Takaragawa a Kusatsu dibujándose,
+       entra una roca por la derecha hasta el medio y se para, el muñeco se
+       choca con ella y se cae de la tabla, sale por el aire en diagonal, y
+       mientras cae sube desde debajo del borde de abajo un onsen que rebota y
+       se posa. Cae dentro, desaparece y sale hasta media espalda, relajado. Y
+       ahí se queda mientras se muestran los datos del segundo alojamiento.
+
+       🚨 TODO EL CONTENIDO VA EN PLACEHOLDER, por orden de Kiko. Ni una fecha,
+       ni un precio, ni un nombre de ryokan inventado: de Kusatsu lo único
+       decidido es que se duerme allí.
+       Dato: web-nueva/DEFINICION.md, «A5 · Kusatsu» · viaje/00-brief.md -->
+  <section class="acto" id="kusatsu" style="--largo: 1000" aria-labelledby="t-kusatsu">
+    <div class="escena">
+
+      <div class="titular-acto">
+        <p class="sobre"><span class="num">05</span> Kusatsu</p>
+        <h2 id="t-kusatsu">La segunda parada de la nieve</h2>
+      </div>
+
+      <!-- Lo que dura el tramo en coche, debajo del mapa pequeño. Misma pieza y
+           mismo sitio que en el acto 3, que es donde Kiko la colocó: «debería
+           ser debajo del coche y del paisaje».
+
+           🚨 EL TIEMPO ES UNA ESTIMACIÓN Y VA MARCADA COMO TAL, igual que la
+           del acto 3. Sale de medir la carretera real de OpenStreetMap a
+           velocidad libre de catálogo: no cuenta el tráfico, ni el hielo, ni
+           que esto se hace en Año Nuevo subiendo a la nieve por un puerto.
+           Los 88 km sí son los de la carretera de verdad, medidos sobre la
+           geometría que se dibuja en el mapa.
+           Dato: js/datos/carretera-kusatsu.js · PENDIENTE.md, fila W5. -->
+      <p class="viaje" data-viaje>
+        <span class="v-dato">1 h 32</span>
+        <span class="v-pie">Takaragawa <span aria-hidden="true">&rarr;</span> Kusatsu ·
+          88 km por Numata y la 145
+          <span class="marca m-duda">? por verificar</span></span>
+      </p>
+
+      <!-- El panel del segundo alojamiento. Es el mismo del acto 2 y del 4, sin
+           tocar una línea de su CSS: aquí lo único propio es que se queda
+           ARRIBA, porque abajo está el onsen con el muñeco dentro.
+           ⬜ De Kusatsu no hay nada elegido todavía: ni sitio, ni noches, ni
+           precio. Se dice así en vez de rellenarlo con algo bonito. -->
+      <div class="panel">
+        <div class="panel-cabecera">
+          <p class="sobre">Segunda parada de la nieve</p>
+          <h3>Kusatsu Onsen</h3>
+          <p class="entradilla">El pueblo de aguas termales, y el alojamiento todavía
+            sin elegir.</p>
+        </div>
+
+        <!-- ⬜ Fotos por decidir (NORMAS § 4). Hasta entonces, huecos honestos -->
+        <div class="fotos">
+          <div class="foto-hueco"><span>foto 1</span></div>
+          <div class="foto-hueco"><span>foto 2</span></div>
+          <div class="foto-hueco"><span>foto 3</span></div>
+        </div>
+
+        <dl class="filas">
+          <div class="fila"><dt>Dónde</dt><dd>Sin elegir <span class="marca m-pend">○ pendiente</span></dd></div>
+          <div class="fila"><dt>Noches</dt><dd>Por decidir <span class="marca m-pend">○ pendiente</span></dd></div>
+          <div class="fila"><dt>Precio</dt><dd>Por decidir <span class="marca m-pend">○ pendiente</span></dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
   <!-- ══════════════════  Y AQUÍ SE CORTA  ══════════════════
        🚨 AQUÍ HABÍA CUATRO CAPÍTULOS DE TEXTO —la nieve, Kioto, Año Nuevo y la
        vuelta— y los quitó Kiko el 17 de septiembre: «que borre "la nieve" o las
@@ -455,6 +567,6 @@
     <span class="marca m-pend">○ pendiente</span>. Lo que no está marcado, no está comprobado.</p>
 </footer>
 
-<script type="module" src="js/principal.js?v=c1cd755c"></script>
+<script type="module" src="js/principal.js?v=ee16f646"></script>
 </body>
 </html>

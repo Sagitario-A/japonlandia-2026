@@ -77,7 +77,17 @@
    Kiko. Sigue puesto en el acto 5 y en el 6, por eso vive en la capa del dibujo
    y no en el acto.
    ========================================================================== */
-[data-pieza='monigote'] {
+/* 🚨 EL MUÑECO Y SU TABLA SON DOS PIEZAS Y UNA SOLA REGLA, y eso no es por
+   ahorrar líneas: es lo que las mantiene pegadas.
+   La tabla salió de dentro del muñeco al construir el acto 5 —«se cae de la
+   tabla y sube hacia arriba en diagonal»—, y mientras van juntas, en todo el
+   acto 4 y el principio del 5, el acto les da la misma x, la misma y y el mismo
+   giro. Con el mismo viewBox (arte/tabla.svg lo dice) y el mismo tamaño, eso
+   basta para que encajen EXACTAS sin cuadrar ningún desfase a mano.
+   🚨 Si alguien le cambia el ancho a una, se lo cambia a la otra o el muñeco
+   se queda montado en el aire. */
+[data-pieza='monigote'],
+[data-pieza='tabla'] {
   /* Se apoya en lo mismo que la montaña, porque va montado en ella */
   top: var(--suelo);
   width: calc(20 * var(--u));
@@ -175,7 +185,8 @@
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   [data-pieza='monte'],
-  [data-pieza='monigote'] { display: none !important; }
+  [data-pieza='monigote'],
+  [data-pieza='tabla'] { display: none !important; }
   #takaragawa .panel { transform: none !important; }
 }
 html:not(.anim) #takaragawa .panel { transform: none; }

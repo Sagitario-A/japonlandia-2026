@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 84" class="a-roca" aria-hidden="true" focusable="false">
+  <!-- La roca del acto 5. Kiko: «va apareciendo una roca chiquitita por la
+       derecha hasta que llega al medio y se queda estática», y contra ella se
+       choca el muñeco.
+
+       🚨 CHIQUITITA DE VERDAD, y esa es toda la gracia: la pieza mide 13
+       unidades de ancho —dos tercios del muñeco, que ya es pequeño— porque lo
+       que tiene que dar risa es que semejante piedrecita lo mande por el aire.
+       Una roca grande sería un accidente; una pequeña es un tropiezo.
+
+       🚨 SE APOYA EN EL BORDE DE ABAJO DE LA CAJA, como todas las piezas de la
+       capa: la base tiene que llegar a y=84 o la roca flota sobre la nieve.
+
+       Va con su caperuza de nieve encima, que es lo que la mete en el mismo
+       mundo que el bosque nevado y la montaña del acto 4: está nevando desde
+       hace tres actos, todo lo que lleva un rato quieto tiene nieve encima. -->
+
+  <!-- El pedrusco: un canto rodado con dos mordiscos, ni redondo ni puntiagudo -->
+  <path class="r-piedra"
+        d="M8 84
+           C 2 66 10 44 28 33
+           C 44 23 62 20 80 28
+           C 100 37 114 60 112 84
+           Z"/>
+  <!-- Una grieta, lo justo para que no parezca una patata -->
+  <path class="r-grieta" d="M62 47 L54 62 L68 66"/>
+  <!-- La nieve que se le ha ido posando arriba -->
+  <path class="r-nieve"
+        d="M22 38
+           C 34 25 54 20 72 24
+           C 84 27 94 33 100 41
+           C 88 36 76 40 64 38
+           C 48 35 34 32 22 38
+           Z"/>
+</svg>

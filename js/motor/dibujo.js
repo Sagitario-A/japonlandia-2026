@@ -23,25 +23,40 @@
    podría verlas, la URL no cambiaría nunca y una publicación serviría el dibujo
    viejo durante los diez minutos de caché de GitHub Pages. */
 const PIEZAS = [
-  ['tren', 'arte/tren.svg?v=c1cd755c'],
-  ['cuatro', 'arte/cuatro.svg?v=c1cd755c'],
-  ['mostrador', 'arte/mostrador.svg?v=c1cd755c'],
-  ['llave', 'arte/llave.svg?v=c1cd755c'],
-  ['coche', 'arte/coche.svg?v=c1cd755c'],
+  ['tren', 'arte/tren.svg?v=ee16f646'],
+  ['cuatro', 'arte/cuatro.svg?v=ee16f646'],
+  ['mostrador', 'arte/mostrador.svg?v=ee16f646'],
+  ['llave', 'arte/llave.svg?v=ee16f646'],
+  ['coche', 'arte/coche.svg?v=ee16f646'],
   /* 🚨 EL ACTO 4 EN ADELANTE. Van aquí y no en el acto por lo de siempre: el
      monigote sigue puesto en el acto 5 («el muñequito sigue ahí esquiando») y
      en el 6. Y estando en esta lista, apagarDibujo() los apaga: sin eso, al
      volver del acto 4 al 3 la montaña se quedaba flotando sobre el bosque,
      porque el acto 3 no sabe que existen.
      El tercer campo dice de qué trazado sale el perfil que se muestrea. */
-  ['monte', 'arte/monte.svg?v=c1cd755c', '.mo-perfil'],
-  ['monigote', 'arte/monigote.svg?v=c1cd755c']
+  ['monte', 'arte/monte.svg?v=ee16f646', '.mo-perfil'],
+  /* 🚨 LA TABLA ES UNA PIEZA APARTE DESDE EL ACTO 5, y hasta entonces vivía
+     dentro del muñeco. La partió Kiko al describir el acto 5: «se cae de la
+     tabla y sube hacia arriba en diagonal». A partir del golpe cada uno va por
+     su lado —él por el aire hasta el onsen, ella a la nieve— y dos cosas que se
+     mueven por separado no pueden ser el mismo dibujo. Comparten `viewBox` y
+     tamaño, así que mientras van pegadas basta con darles la misma x, la misma
+     y y el mismo giro: ver arte/tabla.svg. */
+  ['tabla', 'arte/tabla.svg?v=ee16f646'],
+  /* 🚨 EL ACTO 5. Y EL ORDEN DE ESTAS TRES NO ES NEGOCIABLE: el onsen está
+     partido en dos mitades con el muñeco EN MEDIO, que es lo que hace que se le
+     vea metido en el agua y no sentado delante de un barreño. Aquí solo se
+     declaran; quien manda de verdad en el orden de pintado es el HTML. */
+  ['roca', 'arte/roca.svg?v=ee16f646'],
+  ['onsen-fondo', 'arte/onsen-fondo.svg?v=ee16f646'],
+  ['monigote', 'arte/monigote.svg?v=ee16f646'],
+  ['onsen', 'arte/onsen.svg?v=ee16f646']
 ];
 
 const BANDAS = [
-  ['ciudad', 'arte/ciudad.svg?v=c1cd755c'],
-  ['bosque', 'arte/bosque.svg?v=c1cd755c'],
-  ['bosque-nevado', 'arte/bosque-nevado.svg?v=c1cd755c']
+  ['ciudad', 'arte/ciudad.svg?v=ee16f646'],
+  ['bosque', 'arte/bosque.svg?v=ee16f646'],
+  ['bosque-nevado', 'arte/bosque-nevado.svg?v=ee16f646']
 ];
 
 /* Cuántas veces se repite cada banda en fila. Una copia mide 118vmin de ancho,
@@ -251,6 +266,24 @@ export function bajarSuelo(px) {
   if (fondo) fondo.style.setProperty('--baja-px', v);
   if (suelo) suelo.style.setProperty('--baja-px', v);
   piezas.forEach(function (el) { el.style.setProperty('--baja-px', v); });
+}
+
+/**
+ * Una variable de UNA pieza, no de la capa entera.
+ *
+ * 🚨 ES LA LEY 19, Y ES LA ÚNICA RAZÓN POR LA QUE ESTO EXISTE. `variable()`
+ * escribe en la raíz de la capa, y de la raíz cuelgan los cuarenta y cuatro
+ * copos animados: cada escritura les recalcula el estilo a todos. Para algo que
+ * cambia una vez por acto da igual, pero el acto 5 mueve la postura del muñeco
+ * y el rebote del onsen DENTRO de la caída, o sea en cada fotograma durante
+ * pantalla y media. Escrito en la pieza, la nevada no se entera.
+ *
+ * Lo mismo que hace bajarSuelo() con el paisaje, pero para una sola pieza.
+ */
+export function variableDe(pieza, nombre, valor) {
+  const el = piezas.get(pieza);
+  if (!el) return;
+  poner(el, pieza, nombre, typeof valor === 'number' ? valor.toFixed(3) : valor);
 }
 
 /** Una variable suelta de la capa entera: --puertas, --halo, --luces. */

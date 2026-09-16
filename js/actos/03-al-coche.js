@@ -25,14 +25,14 @@
    está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=c1cd755c';
-import { tramo, suave, tope } from '../motor/util.js?v=c1cd755c';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=c1cd755c';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=c1cd755c';
-import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=c1cd755c';
-import { montarNieve, nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=c1cd755c';
-import { tenderRuta } from '../motor/ruta.js?v=c1cd755c';
-import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=c1cd755c';
+import { registrarActo } from '../motor/escenario.js?v=ee16f646';
+import { tramo, suave, tope } from '../motor/util.js?v=ee16f646';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=ee16f646';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=ee16f646';
+import { montarDibujo, mostrarDibujo, colocar, variable, variableDe, verBanda, desplazarFondo, bajarSuelo } from '../motor/dibujo.js?v=ee16f646';
+import { montarNieve, nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=ee16f646';
+import { tenderRuta } from '../motor/ruta.js?v=ee16f646';
+import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=ee16f646';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -400,6 +400,33 @@ export function montarActoAlCoche() {
          exactamente el fallo que se arregló recortándola. Es la ley 1: un acto
          apaga lo que no usa, aunque lo haya encendido otro. */
       nieveHastaElSuelo(0);
+      /* 🚨 Y EL PAISAJE TAMBIÉN VUELVE ARRIBA, que es la otra mitad de lo
+         mismo. Hasta hoy lo hacía el acto 4 al salir por arriba y bastaba,
+         porque para llegar aquí desde la nieve había que pasar por él. Con el
+         acto 5 detrás ya no: DESDE EL RAÍL SE SALTA DEL 5 AL 3 sin que el 4
+         llegue a pintar ni a salir, así que su recogida no ocurre nunca y el
+         bosque se quedaba pegado al canto de abajo con los copos cayendo por
+         debajo de la carretera. Lo cazó inspeccionar-escena.js en su bloque de
+         saltos nuevo, no leyendo el código. */
+      bajarSuelo(0);
+
+      /* 🚨 Y LAS PIEZAS DE LA NIEVE, POR EL MISMO MOTIVO EXACTO.
+         La montaña, el muñeco, su tabla, la roca y el onsen son de los actos 4
+         y 5 y viven en esta misma capa compartida. Saltando del 5 al 3, nadie
+         las apagaba: el muñeco y su tabla se quedaban flotando sobre la estación
+         de Shinjuku. Es la ley 1 —un acto apaga lo que no usa— y la razón por la
+         que no basta con que las recoja el acto que las encendió: para eso
+         tendría que haberse ejecutado, y saltando no se ejecuta.
+         🚨 La POSTURA cuenta como una pieza más: el acto 5 deja al muñeco
+         sentado en un onsen, y una variable olvidada no se ve en ninguna
+         opacidad. */
+      colocar('monte', { op: 0 });
+      colocar('monigote', { op: 0 });
+      colocar('tabla', { op: 0 });
+      colocar('roca', { op: 0 });
+      colocar('onsen', { op: 0 });
+      colocar('onsen-fondo', { op: 0 });
+      variableDe('monigote', '--pose', 0);
 
       if (!hayDibujo) {
         /* Todavía estamos en el mapa: el dibujo no existe */

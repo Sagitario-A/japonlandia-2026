@@ -82,6 +82,18 @@
   --c-mono-ropa: #c8503f;
   --c-mono-gorro: #3f7fa8;
   --c-tabla: #d99b2b;
+
+  /* ♨️ El acto 5. La roca es el único gris de piedra de toda la nieve, y así
+     se distingue del manto a la primera.
+     🚨 Y EL AGUA DEL ONSEN NO PUEDE SER AZUL. Sobre una pantalla de nieve azul
+     pálido, un agua azul es más nieve: lo que hace falta es que se lea que
+     está CALIENTE. Se va a un verde de aguas termales —el único verde azulado
+     de la película— y se remata con dos hilillos de vaho. */
+  --c-roca: #97a0aa;
+  --c-roca-hondo: #6f7982;
+  --c-agua: #7fc6bd;
+  --c-agua-trazo: #4e9a92;
+  --c-vaho: #b8c6cf;
 }
 
 /* ==========================================================================
@@ -195,7 +207,7 @@
 
 /* --- El monigote, que baja la montaña en tabla ---
    🚨 Trazo de 1.6 y no --grosor: con non-scaling-stroke el trazo mide lo mismo
-   en pantalla para todas las piezas, y esta es la más pequeña de las diez. */
+   en pantalla para todas las piezas, y esta es la más pequeña de las once. */
 .e-cabeza { fill: var(--c-piel); stroke: var(--trazo); stroke-width: 1.6; }
 .e-cuerpo { fill: var(--c-mono-ropa); stroke: var(--trazo); stroke-width: 1.6; }
 .e-brazo  { fill: var(--c-mono-ropa); stroke: var(--trazo); stroke-width: 1.6; }
@@ -207,3 +219,35 @@
 .e-gorro  { fill: var(--c-mono-gorro); stroke: var(--trazo); stroke-width: 1.6; }
 .e-pompon { fill: var(--c-mono-gorro); stroke: var(--trazo); stroke-width: 1.6; }
 .e-tabla  { fill: var(--c-tabla); stroke: var(--trazo); stroke-width: 1.6; }
+
+/* --- Las dos posturas del monigote (acto 5) ---
+   🚨 NO ES UN FUNDIDO, ES UN INTERRUPTOR, y se apaga la que no toca del todo.
+   El cambio pasa mientras está debajo del agua, así que no hay nada que fundir;
+   y `visibility` además de `opacity` porque una postura a opacidad 0 sigue
+   costando capa, igual que las piezas apagadas de motor/dibujo.js.
+   La escribe el acto en el ELEMENTO de la pieza, no en la capa: ver la ley 19. */
+.a-monigote .e-pose-tabla { opacity: calc(1 - var(--pose, 0)); }
+.a-monigote .e-pose-onsen { opacity: var(--pose, 0); }
+.a-monigote .e-pose-tabla[data-fuera], .a-monigote .e-pose-onsen[data-fuera] { visibility: hidden; }
+
+/* --- La roca del acto 5 ---
+   Piedra gris fría, que es lo único que no es ni nieve ni personaje en toda la
+   secuencia. Y su caperuza de nieve con el mismo manto que la montaña: lleva
+   nevando tres actos, lo que está quieto tiene nieve encima. */
+.r-piedra { fill: var(--c-roca); stroke: var(--trazo); stroke-width: 1.6; }
+.r-grieta { fill: none; stroke: var(--c-roca-hondo); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.r-nieve  { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 1.4; }
+
+/* --- El onsen del acto 5, sus dos mitades ---
+   🚨 LAS DOS SE PINTAN IGUAL, y tienen que seguir pintándose igual: son un solo
+   dibujo partido por la cintura del muñeco (ver arte/onsen.svg). Por eso las
+   reglas valen para las dos clases a la vez y no hay ni un color que solo tenga
+   una de ellas.
+   🚨 EL AGUA NO ES AZUL DE NIEVE. Sobre una pantalla llena de nieve azul
+   pálido, un agua azul es más nieve: se va a un verde de aguas termales, que es
+   el único sitio de toda la película donde entra ese color. */
+.o-agua  { fill: var(--c-agua); stroke: var(--c-agua-trazo); stroke-width: 1.6; }
+.o-borde { fill: none; stroke: var(--c-roca); stroke-width: 7; stroke-linecap: round; }
+.o-riza  { fill: none; stroke: var(--c-agua-trazo); stroke-width: 1.8; stroke-linecap: round; }
+/* El vaho, lo único de todo el dibujo que va a media tinta: es vapor */
+.o-vaho  { fill: none; stroke: var(--c-vaho); stroke-width: 2.6; stroke-linecap: round; opacity: .65; }

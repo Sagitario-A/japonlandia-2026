@@ -42,14 +42,14 @@
    -50 a +50—. La explicación larga está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=c1cd755c';
-import { tramo, suave, tope, frena } from '../motor/util.js?v=c1cd755c';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=c1cd755c';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=c1cd755c';
-import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, perfilDe, altura, bajarSuelo } from '../motor/dibujo.js?v=c1cd755c';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=c1cd755c';
-import { tenderRuta } from '../motor/ruta.js?v=c1cd755c';
-import { LUGARES, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=c1cd755c';
+import { registrarActo } from '../motor/escenario.js?v=ee16f646';
+import { tramo, suave, tope, frena } from '../motor/util.js?v=ee16f646';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=ee16f646';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=ee16f646';
+import { mostrarDibujo, colocar, variable, variableDe, verBanda, desplazarFondo, perfilDe, altura, bajarSuelo } from '../motor/dibujo.js?v=ee16f646';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=ee16f646';
+import { tenderRuta } from '../motor/ruta.js?v=ee16f646';
+import { LUGARES, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=ee16f646';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -288,6 +288,7 @@ export function montarActoTakaragawa() {
       if (acto.el.getBoundingClientRect().top > 0) {
         colocar('monte', { op: 0 });
         colocar('monigote', { op: 0 });
+        colocar('tabla', { op: 0 });
         /* 🚨 Y EL SUELO VUELVE ARRIBA. El acto 3 no sabe que esta variable
            existe, así que volviendo hacia atrás se quedaría con el bosque
            pegado al canto de abajo y el coche con él. Es la ley 16. */
@@ -474,7 +475,30 @@ export function montarActoTakaragawa() {
          se sale de debajo, él se queda de pie sobre la misma línea en la que se
          apoya el bosque. Una idea suya que se llevó por delante diez líneas
          mías, que es la mejor clase de idea. */
+      /* 🚨 Y LA POSTURA, QUE ES UNA VARIABLE Y SE OLVIDA IGUAL QUE UNA PIEZA.
+         Desde el acto 5 el muñeco tiene dos: en tabla y relajado en el onsen.
+         El acto 5 la cambia, y esta capa es compartida, así que volviendo hacia
+         atrás bajaría la montaña sentado en una bañera que ya no está. Es la
+         ley 16 aplicada a algo que no es una pieza. Cuesta una comparación por
+         fotograma y no se escribe si no ha cambiado. */
+      variableDe('monigote', '--pose', 0);
+
       colocar('monigote', {
+        x: xEsq,
+        y: -altoAqui,
+        op: p >= F.esqui[0] ? 1 : 0,
+        escala: 1,
+        giro: giro
+      });
+
+      /* 🚨 Y LA TABLA, QUE DESDE EL ACTO 5 ES UNA PIEZA APARTE.
+         Vivía dentro del dibujo del muñeco hasta que Kiko describió el acto 5
+         —«se cae de la tabla y sube hacia arriba en diagonal»—: a partir de ahí
+         cada uno va por su lado, y dos cosas que se mueven por separado no
+         pueden ser el mismo dibujo. Aquí van pegadas, y para eso comparten
+         `viewBox` y tamaño: con la misma x, la misma y y el mismo giro encajan
+         exactas. Lo que se ve en este acto no cambió ni un píxel. */
+      colocar('tabla', {
         x: xEsq,
         y: -altoAqui,
         op: p >= F.esqui[0] ? 1 : 0,

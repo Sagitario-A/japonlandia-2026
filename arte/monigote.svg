@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 150" class="a-monigote" aria-hidden="true" focusable="false">
-  <!-- El monigote que baja la montaña de nieve. Kiko, el 18 de septiembre:
-       «el muñeco, en vez de esquí, que haga snowboard».
+  <!-- El monigote de toda la nieve. Kiko, el 18 de septiembre: «el muñeco, en
+       vez de esquí, que haga snowboard».
 
        🚨 SE LLAMA `monigote` Y NO `esquiador`, y el cambio de nombre es a
        propósito: en el acto 5 se choca con una roca, se cae y acaba metido en
@@ -14,50 +14,86 @@
        uno de ellos, con el rojo del primero. Cuando diga cómo son, se cambian
        los dos archivos y ninguno más.
 
-       🚨 VA DE LADO, QUE ES COMO SE VA EN TABLA: los dos pies en la misma
-       tabla, las rodillas dobladas y los brazos abiertos haciendo equilibrio.
-       Sin bastones. La tabla mira hacia la derecha, que es hacia donde baja; la
-       inclinación de la pendiente se la pone el acto por fuera, con --g.
+       🚨 LA TABLA YA NO ESTÁ AQUÍ: se fue a arte/tabla.svg el 16 de septiembre,
+       cuando Kiko describió el acto 5 —«se cae de la tabla y sube hacia arriba
+       en diagonal»—. A partir del golpe cada uno va por su lado, y dos cosas
+       que se mueven por separado no pueden ser el mismo dibujo. Las dos piezas
+       comparten `viewBox` y tamaño, así que mientras van pegadas basta con
+       darles la misma `x`, la misma `y` y el mismo giro.
+
+       🚨 DOS POSTURAS EN EL MISMO ARCHIVO, y se cambia con la variable «pose»
+       (0 la tabla, 1 el onsen). No es un fundido: el cambio pasa MIENTRAS ESTÁ
+       DEBAJO DEL AGUA, que es la tapadera perfecta. Kiko: «el muñeco atraviesa
+       el agua del onsen y ya sale en posición de estar apoyado así, tipo con
+       los brazos como relajándose, que se le ve solamente el torso hacia arriba».
+       Van las dos en el mismo archivo porque es el mismo personaje: partirlo en
+       `monigote.svg` y `monigote-onsen.svg` sería tener la cabeza escrita dos
+       veces en dos sitios, y el día que tenga cara habría que acordarse de las
+       dos.
 
        🚨 SE APOYA EN EL BORDE DE ABAJO DE LA CAJA. La capa del dibujo ancla las
-       piezas por su base, así que la suela de la tabla tiene que estar en y=150
-       o el muñeco flota sobre la nieve.
+       piezas por su base. En la postura del onsen eso no importa: ahí el acto
+       lo hunde a propósito con «y» y lo de abajo queda por debajo del agua.
 
-       🚨 Y EL TRAZO ES FINO (1.6 y no --grosor). Con non-scaling-stroke el
-       trazo mide lo mismo en pantalla para todas las piezas, y esta es la más
-       pequeña de las diez: con 2,6 px parecía dibujada con rotulador gordo al
-       lado del coche. Es el mismo peso que ya usan los cristales y los brazos. -->
+       🚨 Y EL TRAZO ES FINO (1.6 y no el «grosor» de la paleta). Con
+       non-scaling-stroke el trazo mide lo mismo en pantalla para todas las
+       piezas, y esta es la más pequeña de las once: con 2,6 px parecía dibujada
+       con rotulador gordo al lado del coche.
 
-  <!-- El brazo de atrás va DETRÁS del cuerpo -->
-  <rect class="e-brazo e-brazo-atras" x="-6" y="-13" width="12" height="27" rx="6"
-        transform="translate(40,74) rotate(46)"/>
+       📄 Y una convención de escritura, que parece una tontería y no lo es: en
+       los comentarios de un `.svg` las variables de CSS se nombran ENTRECOMILLADAS
+       y sin sus dos guiones. Dos guiones seguidos dentro de un comentario son
+       XML inválido, y estos archivos existen para poder abrirlos en un editor
+       vectorial (NORMAS § 9): un editor los rechaza aunque el navegador, que
+       los recibe por `innerHTML`, se los trague sin rechistar. -->
 
-  <!-- La tabla: cola a la izquierda, punta a la derecha, las dos levantadas -->
-  <g class="e-tabla">
-    <rect x="12" y="136" width="106" height="11" rx="5.5"/>
-    <path d="M110 142 q15 -2 19 -9 q-10 -4 -19 1 z"/>
-    <path d="M20 142 q-15 -2 -19 -9 q10 -4 19 1 z"/>
+  <!-- ══════ POSTURA 1 · EN TABLA ══════
+       De lado, los dos pies en la tabla, las rodillas dobladas y los brazos
+       abiertos haciendo equilibrio. Sin bastones. Actos 4 y el principio del 5. -->
+  <g class="e-pose e-pose-tabla">
+    <!-- El brazo de atrás va DETRÁS del cuerpo -->
+    <rect class="e-brazo e-brazo-atras" x="-6" y="-13" width="12" height="27" rx="6"
+          transform="translate(40,74) rotate(46)"/>
+    <!-- Las fijaciones: los dos pies van en la misma tabla -->
+    <rect class="e-bota" x="36" y="124" width="21" height="14" rx="5"/>
+    <rect class="e-bota" x="73" y="124" width="21" height="14" rx="5"/>
+    <!-- Las piernas, dobladas y abiertas -->
+    <rect class="e-pierna" x="-7.5" y="-17" width="15" height="35" rx="7.5"
+          transform="translate(52,110) rotate(17)"/>
+    <rect class="e-pierna" x="-7.5" y="-17" width="15" height="35" rx="7.5"
+          transform="translate(79,110) rotate(-19)"/>
+    <!-- El cuerpo, agachado y girado un pelo hacia la bajada -->
+    <rect class="e-cuerpo" x="-15" y="-23" width="30" height="46" rx="14"
+          transform="translate(65,80) rotate(7)"/>
+    <!-- El brazo de delante, abierto haciendo equilibrio -->
+    <rect class="e-brazo" x="-6" y="-14" width="12" height="29" rx="6"
+          transform="translate(90,72) rotate(-52)"/>
+    <!-- La cabeza y el gorro -->
+    <circle class="e-cabeza" cx="69" cy="42" r="14"/>
+    <path class="e-gorro" d="M55 40 a14 14 0 0 1 28 0 q-14 -5 -28 0 z"/>
+    <circle class="e-pompon" cx="69" cy="25" r="5"/>
   </g>
-  <!-- Las fijaciones: los dos pies van en la misma tabla -->
-  <rect class="e-bota" x="36" y="124" width="21" height="14" rx="5"/>
-  <rect class="e-bota" x="73" y="124" width="21" height="14" rx="5"/>
 
-  <!-- Las piernas, dobladas y abiertas -->
-  <rect class="e-pierna" x="-7.5" y="-17" width="15" height="35" rx="7.5"
-        transform="translate(52,110) rotate(17)"/>
-  <rect class="e-pierna" x="-7.5" y="-17" width="15" height="35" rx="7.5"
-        transform="translate(79,110) rotate(-19)"/>
-
-  <!-- El cuerpo, agachado y girado un pelo hacia la bajada -->
-  <rect class="e-cuerpo" x="-15" y="-23" width="30" height="46" rx="14"
-        transform="translate(65,80) rotate(7)"/>
-
-  <!-- El brazo de delante, abierto haciendo equilibrio -->
-  <rect class="e-brazo" x="-6" y="-14" width="12" height="29" rx="6"
-        transform="translate(90,72) rotate(-52)"/>
-
-  <!-- La cabeza y el gorro -->
-  <circle class="e-cabeza" cx="69" cy="42" r="14"/>
-  <path class="e-gorro" d="M55 40 a14 14 0 0 1 28 0 q-14 -5 -28 0 z"/>
-  <circle class="e-pompon" cx="69" cy="25" r="5"/>
+  <!-- ══════ POSTURA 2 · RELAJADO EN EL ONSEN ══════
+       «Apoyado así, tipo con los brazos como relajándose en el onsen.»
+       De frente, recto y con los dos brazos abiertos sobre el borde. De cintura
+       para abajo no hay nada dibujado: ahí está el agua, y el acto lo hunde
+       hasta que la superficie le cruza por media espalda.
+       🚨 EL CUERPO VA RECTO, sin el giro de 7° de la postura de tabla: ese giro
+       es el de quien está bajando, y aquí no baja nadie. -->
+  <g class="e-pose e-pose-onsen">
+    <!-- Los brazos, tendidos sobre el borde y con las manos por fuera -->
+    <rect class="e-brazo" x="-6" y="-13" width="12" height="30" rx="6"
+          transform="translate(45,84) rotate(74)"/>
+    <rect class="e-brazo" x="-6" y="-13" width="12" height="30" rx="6"
+          transform="translate(89,84) rotate(-74)"/>
+    <!-- El torso, recto y un pelo echado hacia atrás -->
+    <rect class="e-cuerpo" x="-15" y="-24" width="30" height="48" rx="14"
+          transform="translate(67,96)"/>
+    <!-- La cabeza, el gorro y el pompón, en el mismo sitio que en la otra
+         postura para que el cambio bajo el agua no dé un salto -->
+    <circle class="e-cabeza" cx="67" cy="52" r="14"/>
+    <path class="e-gorro" d="M53 50 a14 14 0 0 1 28 0 q-14 -5 -28 0 z"/>
+    <circle class="e-pompon" cx="67" cy="35" r="5"/>
+  </g>
 </svg>

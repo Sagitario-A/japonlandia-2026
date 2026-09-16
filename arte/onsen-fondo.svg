@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" class="a-onsen-fondo" aria-hidden="true" focusable="false">
+  <!-- EL ONSEN · la mitad de ATRÁS. Va DETRÁS del muñeco.
+
+       🚨 POR QUÉ EL ONSEN ESTÁ PARTIDO EN DOS ARCHIVOS, que es lo único raro
+       que tiene esta pieza. Kiko: «el muñeco atraviesa el agua del onsen y ya
+       sale hasta la mitad del torso». Para que se le vea METIDO en el agua y no
+       sentado delante de un barreño, la mitad de atrás de la poza tiene que
+       pintarse por detrás de él y la de delante por delante. En esta capa el
+       orden de pintado es el orden del HTML, así que son dos piezas con el
+       muñeco en medio: onsen-fondo · monigote · onsen.
+
+       🚨 LAS DOS MITADES COMPARTEN `viewBox` Y TAMAÑO, hasta la coma, y se
+       colocan las dos en el mismo sitio con la misma `x`: así encajan sin que
+       nadie tenga que cuadrar nada a mano. SI SE TOCA UNA, SE TOCA LA OTRA.
+
+       🚨 DÓNDE SE PARTE: por el eje horizontal de la poza, y=104. Ese es el
+       borde de arriba del agua, o sea la línea por la que el agua le cruza al
+       muñeco. Todo lo que hay en este archivo queda POR ENCIMA de esa línea, y
+       todo lo del otro por debajo.
+
+       «De forma muy minimalista», dijo. Así que la poza es una elipse, el borde
+       son cuatro piedras y no hay nada más: ni edificio, ni farolillos, ni
+       vallas de bambú. Lo que cuenta la escena es que ahí dentro hay agua
+       caliente mientras cae nieve.
+
+       🚨 SE APOYA EN EL BORDE DE ABAJO DE LA CAJA, como todas las piezas. -->
+
+  <!-- El agua, mitad de atrás. Es la elipse entera recortada por su eje: se
+       dibuja el arco de arriba y se cierra en recto por el eje. -->
+  <path class="o-agua" d="M42 104 A108 34 0 0 1 258 104 Z"/>
+
+  <!-- El borde de piedra de atrás: un arco grueso que asoma por encima del
+       agua. Va en tres trozos para que se lean como piedras y no como un aro. -->
+  <path class="o-borde" d="M48 96 A108 34 0 0 1 108 74"/>
+  <path class="o-borde" d="M120 71 A108 34 0 0 1 182 71"/>
+  <path class="o-borde" d="M194 74 A108 34 0 0 1 252 96"/>
+</svg>

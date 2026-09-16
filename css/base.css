@@ -51,6 +51,20 @@
      dos cosas era mentira aunque el código dijera lo contrario. */
   --suelo: 68%;
 
+  /* 🚨 Y LO ALTO QUE ES EL PAISAJE, por el mismo motivo exacto. Es la altura de
+     las bandas de fondo —la ciudad, el bosque y el bosque nevado—, que cuelgan
+     hacia arriba desde la línea del suelo. La declara `.d-fondo` en
+     actos/03-al-coche.css y la necesita también el texto del acto 5, que en ese
+     acto NO puede ponerse debajo del suelo —ahí el suelo es el borde de abajo
+     de la pantalla y no hay debajo— y tiene que ponerse por encima de las
+     copas. Escrito dos veces, el día que el bosque cambie de alto el texto se
+     queda dentro de los árboles y nadie sabe por qué.
+     Va en vmin, como todo el dibujo: ver la nota de la unidad en 03-al-coche.css.
+     🚨 Y NO SE TOCA SOLA: el ancho de cada copia de banda (118,2u) sale de esta
+     altura por la proporción 600/274 de su viewBox. Si esto cambia, cambia
+     `.d-banda svg` en 03-al-coche.css o el bucle del fondo se ve. */
+  --banda-alto: 54vmin;
+
   /* El mapa: línea de pelo, nunca mancha */
   --mapa-linea: #c9ced6;
   --mapa-costa: #a9b2bd;

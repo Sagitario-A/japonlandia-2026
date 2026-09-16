@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" class="a-onsen" aria-hidden="true" focusable="false">
+  <!-- EL ONSEN · la mitad de DELANTE. Va POR DELANTE del muñeco, y es la que
+       lo tapa de la cintura para abajo: es lo que hace que se le vea metido en
+       el agua y no sentado detrás de un barreño.
+
+       🚨 SU PAREJA ES arte/onsen-fondo.svg y las dos comparten `viewBox`, caja
+       y posición. La explicación entera está allí. SI SE TOCA UNA, SE TOCA LA
+       OTRA. La línea por la que se parten es el eje de la poza, y=104: aquí va
+       todo lo que queda por debajo.
+
+       🚨 Y ES LA QUE MANDA EN DÓNDE SE HUNDE EL MUÑECO. El acto lo baja hasta
+       que esta mitad le cruza por media espalda —«que se le ve solamente el
+       torso hacia arriba»—, y esa cuenta sale de y=104 de esta caja. Si se
+       cambia la altura de la poza, se mira otra vez en pantalla.
+
+       El vaho va aquí, por delante de todo: son dos hilillos y es lo único que
+       dice que el agua está caliente y no helada, que en una pantalla llena de
+       nieve azul no se da por hecho. -->
+
+  <!-- El agua, mitad de delante: la elipse recortada por su eje -->
+  <path class="o-agua" d="M42 104 A108 34 0 0 0 258 104 Z"/>
+
+  <!-- Tres rizos en la superficie, cortos y planos. Quietos: un agua animada
+       en cada fotograma es justo lo que prohíbe la ley 15. -->
+  <path class="o-riza" d="M76 114 q10 -5 20 0 q10 5 20 0"/>
+  <path class="o-riza" d="M186 118 q10 -5 20 0 q10 5 20 0"/>
+  <path class="o-riza" d="M120 130 q11 -5 22 0"/>
+
+  <!-- El borde de piedra de delante, en tres trozos como el de atrás -->
+  <path class="o-borde" d="M46 110 A108 34 0 0 0 106 136"/>
+  <path class="o-borde" d="M118 139 A108 34 0 0 0 182 139"/>
+  <path class="o-borde" d="M194 136 A108 34 0 0 0 254 110"/>
+
+  <!-- El vaho: dos hilillos subiendo por los lados, lejos de donde está la
+       cabeza del muñeco para no cruzársele por la cara -->
+  <path class="o-vaho" d="M62 92 q-9 -13 0 -25 q9 -12 1 -24"/>
+  <path class="o-vaho" d="M240 96 q9 -13 0 -25 q-9 -12 -1 -24"/>
+</svg>

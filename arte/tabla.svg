@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 150" class="a-tabla" aria-hidden="true" focusable="false">
+  <!-- La tabla de snowboard, SOLA y en su propia pieza.
+
+       🚨 POR QUÉ ESTÁ SEPARADA DEL MUÑECO, que es donde vivía hasta el acto 5.
+       Kiko, describiendo el acto 5: «el muñeco se choca con ella y al chocarse
+       con ella, como que se cae de la tabla y sube hacia arriba en diagonal».
+       Se cae DE la tabla: a partir del golpe, la tabla y el muñeco van cada uno
+       por su lado —él por el aire hasta el onsen, ella dando vueltas hasta
+       quedarse tumbada en la nieve—, y dos cosas que se mueven por separado no
+       pueden ser el mismo dibujo.
+
+       🚨 Y POR ESO COMPARTE EL `viewBox` CON arte/monigote.svg, HASTA LA COMA.
+       Las dos piezas se declaran con el mismo ancho y la misma proporción en
+       css/actos/04-takaragawa.css, y las dos se anclan por la base en la línea
+       del suelo, así que con el mismo `viewBox` se superponen EXACTAS sin que
+       nadie tenga que cuadrar un desfase a mano. Mientras en los actos 4 y 5
+       vayan pegadas, se les da la misma `x`, la misma `y` y el mismo giro y
+       casan solas.
+       🚨 SI SE TOCA EL `viewBox` DE UNA, SE TOCA EL DE LA OTRA. Un dibujo
+       partido en dos archivos es exactamente esto: dos mitades de una sola
+       caja, cada una escrita una sola vez.
+
+       Las coordenadas son LAS MISMAS que tenía dentro del muñeco antes de
+       partirlo, para que el acto 4 —que ya está publicado y validado— salga
+       idéntico al píxel.
+
+       Cola a la izquierda, punta a la derecha, las dos levantadas: mira hacia
+       donde baja. La inclinación se la pone el acto por fuera, con la variable «g». -->
+  <g class="e-tabla">
+    <rect x="12" y="136" width="106" height="11" rx="5.5"/>
+    <path d="M110 142 q15 -2 19 -9 q-10 -4 -19 1 z"/>
+    <path d="M20 142 q-15 -2 -19 -9 q10 -4 19 1 z"/>
+  </g>
+</svg>

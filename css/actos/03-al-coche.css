@@ -203,7 +203,10 @@ html:not(.anim) .dibujo { display: none; }
      🚨 Si se toca el viewBox de una banda, se tocan las tres y el ancho de copia
      de aquí abajo. */
   top: var(--suelo);
-  height: calc(54 * var(--u));
+  /* 🚨 Y LO ALTO SALE DE base.css, no de aquí. Lo necesita también el texto del
+     acto 5 para ponerse por encima de las copas, y ese texto vive en otro
+     subárbol del documento: es la misma razón por la que --suelo está allí. */
+  height: var(--banda-alto);
   transform: translateY(calc(-100% + var(--baja-px, 0px)));
   overflow: hidden;
 }

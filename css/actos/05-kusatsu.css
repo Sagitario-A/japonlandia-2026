@@ -1,0 +1,164 @@
+@charset "utf-8";
+/* ==========================================================================
+   actos/05-kusatsu.css · La roca, el onsen y el acto 5
+   --------------------------------------------------------------------------
+   El color vive en color.css. Aquí vive dónde está cada cosa y cómo se mueve.
+   La capa del dibujo, la línea del suelo, la nieve, las bandas de fondo y el
+   monigote son de los actos 3 y 4 y no se tocan: este acto los hereda.
+
+   🚨 Regla de oro, la de siempre: el JavaScript solo escribe VARIABLES CSS.
+
+   🚨 Y LA HERENCIA DE ESTE ACTO TIENE UNA TRAMPA QUE NO SE VE EN EL CÓDIGO:
+   el acto 4 termina con EL PAISAJE BAJADO —el bosque, su carretera y el recorte
+   de la nieve deslizados hasta que el suelo es el borde de abajo de la
+   pantalla—, y ahí se queda. Todo lo que hay en este archivo se apoya en esa
+   línea, o sea en el canto inferior. Ver ESTADO § 5.5.
+   ========================================================================== */
+
+/* ==========================================================================
+   1 · La roca
+   --------------------------------------------------------------------------
+   Kiko: «va apareciendo una roca chiquitita por la derecha hasta que llega al
+   medio y se queda estática».
+
+   🚨 CHIQUITITA DE VERDAD: 16 unidades, tres cuartos del muñeco. Toda la gracia
+   del golpe está en que la piedra sea ridícula. Con una roca de su tamaño
+   parecería un accidente, y lo que Kiko está contando es un tropiezo.
+   No necesita regla de `transform` propia: la de `.d-pieza` ya la apoya en el
+   suelo, la mueve con --x y le suma la bajada del paisaje.
+   ========================================================================== */
+[data-pieza='roca'] {
+  width: calc(16 * var(--u));
+  aspect-ratio: 120 / 84;
+}
+
+/* ==========================================================================
+   2 · El onsen, en sus dos mitades
+   --------------------------------------------------------------------------
+   «Mientras cae, aparece por debajo de forma muy minimalista un onsen. Este
+   cae en él, desaparece y vuelve a salir como hasta la mitad del torso, como si
+   estuviese relajado.»
+
+   🚨 LAS DOS MITADES LLEVAN LA MISMA REGLA Y TIENEN QUE SEGUIR LLEVÁNDOLA.
+   Son un solo dibujo partido por el eje del agua, con el muñeco metido en
+   medio: la de atrás por detrás de él, la de delante tapándole de la cintura
+   para abajo. Comparten `viewBox`, así que con el mismo ancho y la misma
+   posición encajan solas. Cambiarle el tamaño a una y no a la otra parte el
+   onsen por la mitad, literalmente.
+
+   🚨 Y DE AQUÍ SALE DÓNDE SE HUNDE EL MUÑECO. El eje del agua está en y=104 de
+   un viewBox de 150, o sea al 69 % de la caja contando desde arriba: el agua
+   queda a un 31 % de la altura por encima del suelo. El acto necesita ese
+   número —está en AGUA_REL, en 05-kusatsu.js— para bajar al muñeco hasta que la
+   superficie le cruce por media espalda. Si se cambia el dibujo, se cambia ahí.
+   ========================================================================== */
+[data-pieza='onsen'],
+[data-pieza='onsen-fondo'] {
+  /* 🚨 LO ANCHO LO ESCRIBE EL ACTO, y no está puesto aquí. El acto necesita ese
+     número para calcular cuánto hunde al muñeco, así que el número vive allí y
+     el CSS lo lee: dos definiciones de la misma medida, una aquí y otra en el
+     JavaScript, es como el muñeco acaba flotando por encima del agua. Es lo
+     mismo que se hizo con la altura del monte en el acto 4. El 32 de reserva solo sirve
+     para el fotograma anterior al primer pintado. */
+  width: calc(var(--onsen-ancho, 32) * var(--u));
+  aspect-ratio: 300 / 150;
+}
+
+/* ==========================================================================
+   3 · El texto del acto
+   --------------------------------------------------------------------------
+   Mismo acento azul frío que el acto 4: es la misma nieve y no se estrena un
+   color por estrenarlo.
+   ========================================================================== */
+#kusatsu { --acento: #2e7aa8; }
+
+/* 🚨 LO QUE DURA EL TRAMO, Y AQUÍ NO PUEDE IR DONDE VA EN EL ACTO 3.
+   En el acto 3 esto se cuelga cinco puntos POR DEBAJO de la línea del suelo,
+   en la franja de blanco que no usa nadie. En el acto 5 el suelo es el borde de
+   abajo de la pantalla: debajo no hay nada, así que el mismo cálculo lo dejaría
+   fuera de la pantalla.
+
+   Así que se cuelga por ARRIBA de las copas: la banda del paisaje mide
+   --banda-alto y cuelga hacia arriba desde el suelo, o sea que su borde
+   superior está a esa distancia del canto inferior. Seis puntos más arriba y el
+   dato se lee sobre el blanco, entre el mapa pequeño y los árboles.
+   🚨 Va atado a --banda-alto (base.css) y no a un 54 escrito aquí: el día que
+   el bosque cambie de alto, esto se mueve con él. */
+#kusatsu .viaje {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - var(--banda-alto) - 6.5svh);
+  text-align: center;
+  opacity: var(--p-viaje, 0);
+  pointer-events: none;
+}
+
+/* 🚨 EL PANEL SE QUEDA ARRIBA, Y ES LO CONTRARIO QUE EN EL ACTO 4.
+   Allí Kiko lo pidió subiendo desde el borde de abajo y posándose por delante
+   del paisaje. Aquí abajo está el onsen con el muñeco dentro, que es el remate
+   del acto: un panel subiendo desde el canto inferior le pasaría por encima al
+   choque, a la caída y al onsen, uno detrás de otro.
+   Así que entra donde estaba el mapa —que para entonces ya se ha ido— y sube
+   solo lo justo para que se note que entra.
+
+   🚨 DOS VARIABLES Y NO UNA, por lo mismo que en el acto 4: --p-sube es el
+   viaje y solo va hacia delante, --p-datos es lo que se ve. Con una sola, al
+   desvanecerse al final el panel se iría otra vez hacia abajo por donde vino,
+   y lo que pidió Kiko es que se desvanezca quieto. */
+#kusatsu .panel {
+  align-self: start;
+  width: min(100%, 25rem);
+  transform: translateY(calc((1 - var(--p-sube, 0)) * 7svh));
+}
+#kusatsu .panel-cabecera { margin-bottom: .7rem; }
+#kusatsu .panel h3 {
+  font-size: clamp(1.4rem, 6.2vw, 1.9rem);
+  margin-block: .3rem .4rem;
+}
+#kusatsu .panel .entradilla { font-size: .88rem; line-height: 1.5; }
+#kusatsu .fotos {
+  gap: .5rem;
+  margin-bottom: .75rem;
+}
+/* 💭 Apaisadas como las del acto 4, y por el mismo motivo: cuanto menos alto es
+   el panel, menos baja llega y más lejos se queda del onsen. */
+#kusatsu .foto-hueco { aspect-ratio: 16 / 9; }
+#kusatsu .fila { padding-block: .4rem; }
+
+@media (max-width: 360px) {
+  #kusatsu .foto-hueco { aspect-ratio: 5 / 2; }
+  #kusatsu .fotos { margin-bottom: .6rem; }
+  #kusatsu .fila { padding-block: .22rem; }
+  #kusatsu .panel .entradilla { font-size: .84rem; }
+  #kusatsu .panel-cabecera { margin-bottom: .55rem; }
+}
+
+/* Halo, como todo el texto que flota sobre el dibujo (ley 9: halo, nunca velo) */
+.anim #kusatsu .panel {
+  text-shadow: 0 0 .5rem var(--papel), 0 0 .25rem var(--papel), 0 0 .1rem var(--papel);
+}
+
+/* ==========================================================================
+   4 · Movimiento reducido y sin JavaScript
+   --------------------------------------------------------------------------
+   Lo genérico ya lo hace escena.css: los actos se aplanan y el texto sale
+   entero. Aquí solo hay que evitar que las piezas del acto se queden plantadas
+   encima del texto —el acto pinta su fotograma final y ese fotograma las tiene
+   puestas— y que el dato del viaje no se quede colgado en una posición absoluta
+   que ya no significa nada.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  [data-pieza='roca'],
+  [data-pieza='onsen'],
+  [data-pieza='onsen-fondo'] { display: none !important; }
+  #kusatsu .viaje {
+    position: static;
+    opacity: 1 !important;
+    text-align: left;
+    margin-top: 2.2rem;
+  }
+  #kusatsu .panel { transform: none !important; }
+}
+html:not(.anim) #kusatsu .panel { transform: none; }
+html:not(.anim) #kusatsu .viaje { position: static; opacity: 1; text-align: left; }
