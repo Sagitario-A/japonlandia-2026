@@ -15,15 +15,16 @@
    Narita, Meidaimae— están escritos en el HTML; aquí solo se mueven.
    ============================================================================= */
 
-import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=96c428d5';
-import { dibujarCostas, dibujarReticula, opacidadReticula } from './mapa.js?v=96c428d5';
-import { trazarRuta, cabezaDeRuta } from './ruta.js?v=96c428d5';
-import { r1 } from './util.js?v=96c428d5';
+import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=597bcb55';
+import { dibujarCostas, dibujarReticula, opacidadReticula, dibujarCalles, opacidadCalles } from './mapa.js?v=597bcb55';
+import { trazarRuta, cabezaDeRuta } from './ruta.js?v=597bcb55';
+import { r1 } from './util.js?v=597bcb55';
 
 let raiz = null;
 let svg = null;
 let capasCosta = [];
 let pathReticula = null;
+let pathCalles = null;
 let limbo = null;
 let capasRuta = [];
 const hitos = new Map();
@@ -51,6 +52,7 @@ export function montarLienzo() {
   addEventListener('resize', encajarViewport, { passive: true });
 
   pathReticula = raiz.querySelector('[data-mapa="reticula"]');
+  pathCalles = raiz.querySelector('[data-mapa="calles"]');
   limbo = raiz.querySelector('[data-mapa="limbo"]');
   capasCosta = Array.from(raiz.querySelectorAll('[data-mapa="costa"]'));
   capasRuta = Array.from(raiz.querySelectorAll('[data-mapa="ruta"]'));
@@ -98,6 +100,16 @@ export function pintarMapa() {
     const c = capas[i];
     capasCosta[i].setAttribute('d', c ? c.d : '');
     capasCosta[i].style.opacity = c ? c.opacidad.toFixed(3) : '0';
+  }
+
+  /* El callejero: entra cuando la costa se está yendo, para que el final del
+     zoom no sea una pantalla en blanco. Se dibuja ANTES que las rutas para que
+     la línea de la operadora quede por encima: la ruta es el dato, la calle es
+     el contexto. */
+  if (pathCalles) {
+    const opCalles = opacidadCalles();
+    pathCalles.setAttribute('d', opCalles > 0.001 ? dibujarCalles() : '');
+    pathCalles.style.opacity = opCalles.toFixed(3);
   }
 
   const opReticula = opacidadReticula();

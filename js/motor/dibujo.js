@@ -23,17 +23,17 @@
    podría verlas, la URL no cambiaría nunca y una publicación serviría el dibujo
    viejo durante los diez minutos de caché de GitHub Pages. */
 const PIEZAS = [
-  ['tren', 'arte/tren.svg?v=96c428d5'],
-  ['cuatro', 'arte/cuatro.svg?v=96c428d5'],
-  ['mostrador', 'arte/mostrador.svg?v=96c428d5'],
-  ['llave', 'arte/llave.svg?v=96c428d5'],
-  ['coche', 'arte/coche.svg?v=96c428d5']
+  ['tren', 'arte/tren.svg?v=597bcb55'],
+  ['cuatro', 'arte/cuatro.svg?v=597bcb55'],
+  ['mostrador', 'arte/mostrador.svg?v=597bcb55'],
+  ['llave', 'arte/llave.svg?v=597bcb55'],
+  ['coche', 'arte/coche.svg?v=597bcb55']
 ];
 
 const BANDAS = [
-  ['ciudad', 'arte/ciudad.svg?v=96c428d5'],
-  ['bosque', 'arte/bosque.svg?v=96c428d5'],
-  ['bosque-nevado', 'arte/bosque-nevado.svg?v=96c428d5']
+  ['ciudad', 'arte/ciudad.svg?v=597bcb55'],
+  ['bosque', 'arte/bosque.svg?v=597bcb55'],
+  ['bosque-nevado', 'arte/bosque-nevado.svg?v=597bcb55']
 ];
 
 /* Cuántas veces se repite cada banda en fila. Una copia mide 118vmin de ancho,
@@ -175,6 +175,29 @@ export function colocar(nombre, c) {
   if (c.x !== undefined) poner(el, nombre, '--x', c.x.toFixed(2));
   if (c.y !== undefined) poner(el, nombre, '--y', c.y.toFixed(2));
   if (c.escala !== undefined) poner(el, nombre, '--s', c.escala.toFixed(3));
+}
+
+/**
+ * 🚨 EL FINAL DE LA PELÍCULA, POR AHORA: el dibujo se cae al fondo y se
+ * desvanece. Lo pidió Kiko el 17 de septiembre: «de repente desaparece y tarda
+ * un rato en llegar lo otro… el coche en la nieve se debería caer en el fondo e
+ * irse desvaneciendo según se va avanzando».
+ *
+ * Antes el acto apagaba el dibujo de golpe al salir de su tramo, y entre el
+ * corte y el primer texto del capítulo siguiente quedaba una pantalla de nada.
+ *
+ * `v` va de 0 (el dibujo, en su sitio) a 1 (fuera del todo). Quien lo calcula es
+ * principal.js, que es el único que sabe cuánto llevas pasado del final.
+ * 🚨 Cuando exista el acto 4 esto NO desaparece: se mueve al último acto que
+ * haya, porque la película siempre acaba en alguno.
+ */
+export function desvanecerDibujo(v) {
+  if (!raiz) return;
+  const s = v.toFixed(3);
+  if (ultimo.get('--fin') === s) return;
+  ultimo.set('--fin', s);
+  raiz.style.setProperty('--fin', s);
+  if (v >= 0.999) apagarDibujo();
 }
 
 /** Una variable suelta de la capa entera: --puertas, --halo, --luces. */

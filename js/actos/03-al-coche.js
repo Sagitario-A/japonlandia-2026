@@ -25,14 +25,14 @@
    está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=96c428d5';
-import { tramo, suave, tope } from '../motor/util.js?v=96c428d5';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=96c428d5';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js?v=96c428d5';
-import { montarDibujo, mostrarDibujo, apagarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=96c428d5';
-import { montarNieve, nevar } from '../motor/nieve.js?v=96c428d5';
-import { tenderRuta } from '../motor/ruta.js?v=96c428d5';
-import { LUGARES, TRAMO_AL_COCHE, ENCUADRES } from '../datos/rutas.js?v=96c428d5';
+import { registrarActo } from '../motor/escenario.js?v=597bcb55';
+import { tramo, suave, tope } from '../motor/util.js?v=597bcb55';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=597bcb55';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js?v=597bcb55';
+import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=597bcb55';
+import { montarNieve, nevar } from '../motor/nieve.js?v=597bcb55';
+import { tenderRuta } from '../motor/ruta.js?v=597bcb55';
+import { LUGARES, TRAMO_AL_COCHE, ENCUADRES } from '../datos/rutas.js?v=597bcb55';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -43,6 +43,7 @@ function vista(clave) {
    números dejan de cuadrar, se ve un salto en la costura. */
 const V_CERCA = vista('cerca');
 const V_KEIO = vista('keio');
+const V_CALLE = vista('calle');
 const V_DISUELVE = vista('disuelve');
 
 const RUTA = tenderRuta(TRAMO_AL_COCHE.pasos, 0.2);
@@ -54,7 +55,9 @@ const RUTA = tenderRuta(TRAMO_AL_COCHE.pasos, 0.2);
    que los rótulos del acto 1, una pieza empieza a entrar mientras la anterior
    se está yendo, para que no haya nunca una pantalla con nada.
    -------------------------------------------------------------------------- */
-/* 🚨 EL ACTO MIDE 2.100 svh Y NO 1.600, y el motivo es el tramo de carretera.
+/* 🚨 EL ACTO MIDE 2.400 svh, y ha crecido dos veces por dos motivos distintos.
+   De 2.100 a 2.400 fue por el zoom, que necesitaba una tercera parada de cámara
+   para que diera tiempo a ver el callejero. Y de 1.300 a 2.100, por esto:
    Con 1.600 la parte de la nieve se comía medio acto en dos pantallas: los
    árboles pasaban de verdes a nevados en seis décimas de pantalla, y el guion
    pide justo lo contrario —«poco a poco van apareciendo los mismos árboles,
@@ -66,34 +69,37 @@ const RUTA = tenderRuta(TRAMO_AL_COCHE.pasos, 0.2);
      la estación   8,4    tren, puertas, los cuatro, mostrador, llave, coche
      la carretera  5,6    ciudad, bosque, un rato de bosque, y la nevada */
 const F = {
-  /* A · el mapa */
-  mapaVuelve: [0.040, 0.100],
-  shinjuku:   [0.075, 0.110],
-  linea:      [0.100, 0.225],
-  zoom:       [0.215, 0.300],
+  /* A · el mapa. 🚨 TRES PARADAS DE CÁMARA Y NO DOS: cerca, la línea Keio,
+     escala de calle y disolver. La tercera es donde se ve el callejero, y sin
+     ella no daba tiempo a verlo. */
+  mapaVuelve: [0.035, 0.090],
+  shinjuku:   [0.068, 0.100],
+  linea:      [0.090, 0.190],
+  acercar:    [0.186, 0.268],
+  zoom:       [0.268, 0.340],
 
   /* B · la estación */
-  tren:       [0.285, 0.345],
-  puertas:    [0.345, 0.380],
-  cuatro:     [0.372, 0.415],
-  trenSeVa:   [0.415, 0.465],
-  mostrador:  [0.460, 0.515],
-  llave:      [0.512, 0.550],
-  seVan:      [0.548, 0.600],
-  centrar:    [0.588, 0.630],
-  sube:       [0.628, 0.672],
-  luces:      [0.670, 0.695],
-  consume:    [0.685, 0.720],
+  tren:       [0.325, 0.385],
+  puertas:    [0.385, 0.415],
+  cuatro:     [0.410, 0.450],
+  trenSeVa:   [0.450, 0.500],
+  mostrador:  [0.496, 0.550],
+  llave:      [0.548, 0.585],
+  seVan:      [0.582, 0.630],
+  centrar:    [0.625, 0.668],
+  sube:       [0.666, 0.706],
+  luces:      [0.704, 0.728],
+  consume:    [0.720, 0.756],
 
   /* C · la carretera. 🚨 Entre el bosque y la nevada hay un hueco a propósito
      —de 0,850 a 0,870—: es «un rato de bosque» del guion, donde no cambia nada
      salvo que el bosque sigue pasando. Y las dos últimas fases acaban en 0,985
      y no en 1, para que el acto TERMINE con todo nevado y quieto: ese es el
      fotograma del que tiene que arrancar el acto 4. */
-  arranca:    [0.712, 0.775],
-  bosque:     [0.800, 0.850],
-  nieva:      [0.870, 0.985],
-  nevado:     [0.900, 0.985]
+  arranca:    [0.752, 0.812],
+  bosque:     [0.828, 0.880],
+  nieva:      [0.892, 0.985],
+  nevado:     [0.912, 0.985]
 };
 
 function f(p, fase) {
@@ -140,24 +146,29 @@ const Y_LLAVE = -17;
    parece que se acerca a nosotros — que es justo lo que pasa. */
 const ESCENA_APRETADA = 0.74;
 
+/* Cuántas ranuras tienen las bandas de ciudad y bosque. Es el número más alto
+   de los que aparecen en arte/ciudad.svg y arte/bosque.svg, más uno.
+   🚨 Si se añade una casa o un árbol con un número más alto, se sube esto. */
+const RANURAS = 12;
+
 /* 🚨 EL GUION DEL TEXTO, en ventanas explícitas y no derivado de las fases del
    dibujo. Es la lección del acto 2: derivarlo dejaba huecos sin texto y hacía
    que dos fichas cayeran en la misma celda de la rejilla, una encima de otra. */
 const GUION_FICHAS = [
-  { i: 0, de: 0.100, a: 0.225 },   /* Línea Keio, de vuelta a Shinjuku */
-  { i: 1, de: 0.215, a: 0.310 }    /* Dónde se recoge el coche */
+  { i: 0, de: 0.090, a: 0.190 },   /* Línea Keio, de vuelta a Shinjuku */
+  { i: 1, de: 0.184, a: 0.285 }    /* Dónde se recoge el coche */
 ];
 
 const GUION_ROTULOS = [
   /* 🚨 Empieza en 0,43 y no en 0,47: el tren entra en 0,375 y con el rótulo más
      tarde quedaba pantalla y media con el dibujo abajo y NADA arriba. El texto
      entra mientras el tren se está posando. */
-  { i: 0, de: 0.330, a: 0.460 },   /* los cuatro */
+  { i: 0, de: 0.370, a: 0.500 },   /* los cuatro */
   /* 🚨 Empalma con el anterior, que se apaga en 0,60: con este empezando en
      0,655 quedaba media pantalla con el mostrador entrando y nada escrito. */
-  { i: 1, de: 0.458, a: 0.700 },   /* el coche de alquiler · cubre la llave */
-  { i: 2, de: 0.712, a: 0.800 },   /* hacia el norte */
-  { i: 3, de: 0.865, a: null }     /* empieza a nevar · se queda hasta el final */
+  { i: 1, de: 0.496, a: 0.745 },   /* el coche de alquiler · cubre la llave */
+  { i: 2, de: 0.752, a: 0.830 },   /* hacia el norte */
+  { i: 3, de: 0.888, a: null }     /* empieza a nevar · se queda hasta el final */
 ];
 
 /** Entra en el primer tercio de su ventana y sale en el último cuarto. */
@@ -212,7 +223,13 @@ export function montarActoAlCoche() {
        flotando por encima del texto. */
     salir() {
       pintarTexto(-1);
-      apagarDibujo();
+      /* 🚨 Y EL DIBUJO NO SE APAGA AQUÍ. Lo hacía, y Kiko lo vio: «de repente
+         desaparece y tarda un rato en llegar lo otro». Bajando del acto a los
+         capítulos de texto, el coche se esfumaba de un fotograma al siguiente y
+         luego venía una pantalla de nada.
+         Ahora el coche se va al fondo y se desvanece según sigues bajando, y de
+         eso se encarga principal.js, que es quien sabe cuánto llevas pasado del
+         final. Subiendo, lo apaga el acto 2 al pintar (ley 1). */
     },
 
     pintar(p, acto) {
@@ -221,6 +238,7 @@ export function montarActoAlCoche() {
          ================================================================ */
       const pMapa = f(p, 'mapaVuelve');
       const pLinea = f(p, 'linea');
+      const pAcercar = f(p, 'acercar');
       const pZoom = f(p, 'zoom');
 
       /* 🚨 EL MAPA NO VUELVE HASTA QUE EL PANEL SE HA IDO. El acto 2 termina con
@@ -238,10 +256,15 @@ export function montarActoAlCoche() {
            del acto 2 —cincuenta píxeles en una esquina de la pantalla— y el
            zoom empezaba después, sobre un dibujo que no se había podido leer.
            Se vio en la captura, no leyendo el código. */
-        if (pZoom <= 0) {
+        if (pAcercar <= 0) {
           viajarDeVista(V_CERCA, V_KEIO, pLinea);
+        } else if (pZoom <= 0) {
+          /* 🚨 LA TERCERA PARADA. Aquí es donde entra el callejero y donde se
+             ve «por dónde vamos». Sin ella, el mapa se disolvía justo cuando
+             las calles empezaban a aparecer y no daba tiempo a leer nada. */
+          viajarDeVista(V_KEIO, V_CALLE, pAcercar);
         } else {
-          viajarDeVista(V_KEIO, V_DISUELVE, pZoom);
+          viajarDeVista(V_CALLE, V_DISUELVE, pZoom);
         }
 
         mostrarLienzo(true);
@@ -327,15 +350,24 @@ export function montarActoAlCoche() {
 
       /* Las puertas: se abren cuando el tren se ha parado y se cierran justo
          antes de que arranque. Atado al scroll, sin animación propia. */
-      variable('--puertas', f(p, 'puertas') * (1 - suave(tramo(p, 0.402, 0.425))));
+      variable('--puertas', f(p, 'puertas') * (1 - suave(tramo(p, 0.436, 0.458))));
 
       /* --- Los cuatro --------------------------------------------------
-         Aparecen delante de las puertas y salen por la izquierda. Kiko:
-         «nosotros cuatro desaparecemos hacia la izquierda». */
+         Aparecen delante de las puertas, se apartan cuando llega el mostrador,
+         y 🚨 SE QUEDAN AHÍ MIENTRAS PASA LO DE LA LLAVE. Corrección de Kiko del
+         17 de septiembre: «cuando el mostrador desaparece, nosotros quizás
+         deberíamos quedarnos ahí al lado, aunque el coche tenga el
+         protagonismo». Antes se iban con el mostrador y el coche se quedaba
+         solo en una pantalla vacía.
+
+         Se van solo cuando el coche arranca, y entonces la salida por la
+         izquierda ya no se lee como irse: se lee como quedarse mientras el
+         mundo empieza a correr. Él mismo lo dijo: «el quedarnos ahí puede estar
+         fakeado con el irse hacia la izquierda». */
       colocar('cuatro', {
-        x: X_CUATRO_PUERTA + (X_CUATRO - X_CUATRO_PUERTA) * pMostrador - 90 * pSeVan,
+        x: X_CUATRO_PUERTA + (X_CUATRO - X_CUATRO_PUERTA) * pMostrador - 95 * pArranca,
         y: 0,
-        op: Math.min(pCuatro, 1 - pSeVan * 1.05),
+        op: Math.min(pCuatro, 1 - pArranca * 1.05),
         /* A su tamaño delante del tren —una persona es media altura de vagón— y
            encogidos solo cuando el mostrador y el coche les quitan el sitio */
         escala: 1 - (1 - ESCENA_APRETADA) * pMostrador
@@ -368,8 +400,13 @@ export function montarActoAlCoche() {
          «Una llave entre el recepcionista y nosotros», luego «sube y le empieza
          a salir como un halo de brillar», desbloquea el coche —«al coche se le
          encienden por un momento las luces»— y «se va a menos». */
+      /* 🚨 LA LLAVE SUBE RECTA. Antes hacía una ele —primero a la izquierda y
+         luego hacia arriba— porque las dos cosas iban con la misma fase. Kiko:
+         «quedaría más elegante si fuese hacia arriba directamente». Así que el
+         desplazamiento lateral se hace ANTES, a la vez que el coche se centra
+         —los dos convergen— y cuando empieza a subir ya solo sube. */
       colocar('llave', {
-        x: X_LLAVE * (1 - pSube),
+        x: X_LLAVE * (1 - pCentrar),
         y: Y_LLAVE - 24 * pSube,
         op: Math.min(pLlave, 1 - pConsume),
         /* Se consume yendo a menos, no desapareciendo de golpe */
@@ -390,8 +427,22 @@ export function montarActoAlCoche() {
       const rodado = tope((p - F.arranca[0]) / (1 - F.arranca[0]));
       desplazarFondo(rodado * 1150);
 
-      verBanda('ciudad', pArranca * (1 - pBosque));
-      verBanda('bosque', pBosque * (1 - pNevado));
+      /* 🚨 DE CIUDAD A BOSQUE, CASA A CASA. Kiko, el 17 de septiembre: «debería
+         ser una transición más de dejar de casa árbol, casa árbol, cada vez
+         menos casa más árbol, hasta que solo es árbol». Antes era un fundido de
+         una banda sobre otra, que es otra cosa.
+
+         Las dos bandas están encendidas a la vez y lo que se mueve es --mezcla:
+         cada casa y cada árbol lleva su número de ranura, y el relevo va
+         número a número. El reparto está en arte/ciudad.svg y arte/bosque.svg,
+         y los números de los dos archivos tienen que casar. */
+      const mezcla = pBosque * RANURAS;
+      variable('--mezcla', mezcla);
+
+      /* La ciudad se apaga como capa solo cuando ya no le queda ni una casa:
+         antes de eso tiene que seguir encendida aunque le falten piezas. */
+      verBanda('ciudad', pArranca * (1 - tope((mezcla - (RANURAS - 1)) / 1)));
+      verBanda('bosque', pArranca * (1 - pNevado));
       verBanda('bosque-nevado', pNevado);
 
       /* 🚨 LA NIEVE VA DE MENOS A MÁS. «Empieza a nevar… hasta que finalmente

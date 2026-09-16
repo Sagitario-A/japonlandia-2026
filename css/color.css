@@ -151,18 +151,23 @@
 /* Las luces parpadean con --luces, que también escribe el scroll */
 .v-luz { fill: var(--c-luz); stroke: var(--trazo); stroke-width: 1.6; opacity: var(--luces, 0); }
 
-/* --- La ciudad y el bosque --- */
-.b-lejos rect  { fill: var(--c-edificio-lejos); }
-.b-cerca rect  { fill: var(--c-edificio-cerca); }
-.b-ventana rect { fill: var(--c-ventana); }
-.b-tronco rect { fill: var(--c-tronco); }
-.b-copa path   { fill: var(--c-arbol); }
-.b-copa path:nth-child(odd) { fill: var(--c-arbol-hondo); }
-.b-mata ellipse { fill: var(--c-arbol-hondo); }
-.b-suelo { fill: var(--trazo); opacity: .35; }
+/* --- La ciudad y el bosque ---
+   🚨 Las clases van EN EL ELEMENTO, no en un grupo por tipo. Las bandas están
+   agrupadas por RANURA —una casa entera, un árbol entero— porque la ciudad se
+   convierte en bosque casa a casa, y para eso cada pieza tiene que poder
+   encenderse y apagarse sola. Ver arte/ciudad.svg. */
+.b-lejos   { fill: var(--c-edificio-lejos); }
+.b-cerca   { fill: var(--c-edificio-cerca); }
+.b-ventana { fill: var(--c-ventana); }
+.b-tronco  { fill: var(--c-tronco); }
+.b-copa    { fill: var(--c-arbol); }
+/* La copa de abajo, más oscura: da volumen sin un solo degradado */
+.b-copa + .b-copa { fill: var(--c-arbol-hondo); }
+.b-mata    { fill: var(--c-arbol-hondo); }
+.b-suelo   { fill: var(--trazo); opacity: .35; }
 
-.b-copa-nevada path { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 2; }
-.b-copa-nevada path:nth-child(odd) { fill: #eef6fb; }
-.b-mata-nevada ellipse { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 2; }
+.b-copa-nevada { fill: #eef6fb; stroke: var(--c-nieve-trazo); stroke-width: 2; }
+.b-copa-nevada + .b-copa-nevada { fill: var(--c-nieve-manto); }
+.b-mata-nevada { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 2; }
 .b-manto { fill: var(--c-nieve-manto); }
 .a-bosque-nevado .b-suelo { fill: var(--c-nieve-trazo); opacity: .5; }

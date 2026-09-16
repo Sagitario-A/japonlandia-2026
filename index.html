@@ -9,11 +9,11 @@
 <meta name="theme-color" content="#ffffff">
 
 <link rel="preload" href="tipo/shippori-mincho-500-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/base.css?v=96c428d5">
-<link rel="stylesheet" href="css/texto.css?v=96c428d5">
-<link rel="stylesheet" href="css/escena.css?v=96c428d5">
-<link rel="stylesheet" href="css/color.css?v=96c428d5">
-<link rel="stylesheet" href="css/actos/03-al-coche.css?v=96c428d5">
+<link rel="stylesheet" href="css/base.css?v=597bcb55">
+<link rel="stylesheet" href="css/texto.css?v=597bcb55">
+<link rel="stylesheet" href="css/escena.css?v=597bcb55">
+<link rel="stylesheet" href="css/color.css?v=597bcb55">
+<link rel="stylesheet" href="css/actos/03-al-coche.css?v=597bcb55">
 </head>
 
 <body>
@@ -50,6 +50,10 @@
     <path data-mapa="costa" class="m-costa" d=""/>
     <path data-mapa="costa" class="m-costa" d=""/>
     <path data-mapa="costa" class="m-costa" d=""/>
+
+    <!-- El callejero del final del zoom. Va DEBAJO de las rutas: la línea de la
+         operadora es el dato y la calle solo es el contexto por el que pasa. -->
+    <path data-mapa="calles" class="m-calle" d=""/>
 
     <path data-mapa="ruta" class="m-ruta" d=""/>
     <path data-mapa="ruta" class="m-ruta" d=""/>
@@ -268,7 +272,7 @@
        vamos con la estructura de la película y todas las animaciones y tal».
        Ni una fecha, ni un precio, ni un nombre de empresa inventado.
        Dato: investigacion/021-rutas-de-la-pelicula.md · viaje/00-brief.md -->
-  <section class="acto" id="al-coche" style="--largo: 2100" aria-labelledby="t-al-coche">
+  <section class="acto" id="al-coche" style="--largo: 2400" aria-labelledby="t-al-coche">
     <div class="escena">
 
       <div class="titular-acto">
@@ -500,12 +504,19 @@
 
 <footer class="pie">
   <p>Veintiséis noches · 13 de diciembre de 2026 &mdash; 10 de enero de 2027</p>
+  <!-- 📄 ODbL OBLIGA A ATRIBUIR. Las calles del final del zoom del acto 3 salen
+       de OpenStreetMap, y esta línea es la condición para poder usarlas. Las
+       costas son de Natural Earth, dominio público, y no la necesitarían.
+       🚨 Esto no se quita. Ver herramientas/generar-calles.js. -->
+  <p class="pie-nota">Mapa base: costas de <a href="https://www.naturalearthdata.com/">Natural Earth</a>
+    (dominio público) y calles de <a href="https://www.openstreetmap.org/copyright">&copy; colaboradores
+    de OpenStreetMap</a> (ODbL).</p>
   <p class="pie-nota">Los datos llevan su marca: <span class="marca m-ok">✓ verificado</span>
     <span class="marca m-duda">? por verificar</span>
     <span class="marca m-crit">◆ criterio</span>
     <span class="marca m-pend">○ pendiente</span>. Lo que no está marcado, no está comprobado.</p>
 </footer>
 
-<script type="module" src="js/principal.js?v=96c428d5"></script>
+<script type="module" src="js/principal.js?v=597bcb55"></script>
 </body>
 </html>

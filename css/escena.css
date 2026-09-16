@@ -71,6 +71,16 @@ html:not(.anim) .escenario { display: none; }
   stroke-linejoin: round;
   stroke-linecap: round;
 }
+/* El callejero. Más fino y más tenue que la costa: es el suelo por el que se
+   pasa, no el dato. Si pesa lo mismo que la línea de la operadora, la tapa. */
+.m-calle {
+  fill: none;
+  stroke: var(--mapa-linea);
+  stroke-width: .6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .m-ruta {
   fill: none;
   stroke: var(--acento);

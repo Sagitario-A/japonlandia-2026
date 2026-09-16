@@ -50,7 +50,19 @@
    suavizado, y una transición lo persigue siempre por detrás (ley 6). */
 .dibujo.en-escena {
   visibility: visible;
-  opacity: 1;
+  /* 🚨 EL FINAL: el dibujo se cae al fondo y se desvanece según sigues bajando,
+     en vez de cortarse de golpe. --fin lo escribe principal.js. Se encoge un
+     poco —que es lo que hace que parezca que se va hacia atrás— y baja un pelo.
+     Ver js/motor/dibujo.js. */
+  opacity: calc(1 - var(--fin, 0));
+  /* 🚨 SE VA HACIA ARRIBA Y NO HACIA ABAJO, aunque «caer al fondo» suene a
+     bajar: lo que sube desde abajo es el capítulo siguiente, y un dibujo que
+     baja se mete debajo de su bloque blanco y sale cortado por una raya
+     horizontal. Lo que cuenta que se va al fondo es el encoger, no el bajar. */
+  transform:
+    translateY(calc(var(--fin, 0) * -2svh))
+    scale(calc(1 - var(--fin, 0) * .18));
+  transform-origin: 50% var(--suelo);
 }
 html:not(.anim) .dibujo { display: none; }
 
@@ -178,6 +190,22 @@ html:not(.anim) .dibujo { display: none; }
   transform: translateX(calc(var(--fondo, 0) * -1.182 * var(--u)));
   will-change: transform, opacity;
 }
+/* 🚨 LA CIUDAD SE CONVIERTE EN BOSQUE CASA A CASA, no con un fundido.
+   Lo pidió Kiko el 17 de septiembre viendo el acto: «debería ser una transición
+   más de dejar de casa árbol, casa árbol, cada vez menos casa más árbol, hasta
+   que solo es árbol».
+
+   Cada casa y cada árbol es una ranura con su número, y --mezcla es por dónde
+   va el relevo: la casa número 3 se apaga justo cuando el árbol número 3 se
+   enciende. Los números están repartidos y no ordenados de izquierda a derecha,
+   para que no parezca una persiana bajando.
+   🚨 Cero JavaScript por ranura: el acto escribe UN número y el CSS hace el
+   resto. Son tres bandas por cuatro copias, así que hacerlo pieza a pieza desde
+   el JavaScript costaría cientos de escrituras por fotograma. */
+.a-ciudad .slot { opacity: clamp(0, calc(var(--i) - var(--mezcla, 0) + 1), 1); }
+.a-bosque .slot,
+.a-bosque-nevado .slot { opacity: clamp(0, calc(var(--mezcla, 0) - var(--i)), 1); }
+
 .d-banda svg {
   flex: 0 0 auto;
   height: 100%;

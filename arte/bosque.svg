@@ -1,28 +1,64 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 274" class="a-banda a-bosque" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">
   <!-- El bosque. 🚨 MISMA GEOMETRÍA EXACTA que bosque-nevado.svg: Kiko pidió
-       «los mismos árboles, pero nevados», así que si un árbol se mueve aquí,
-       se mueve allí. Cambiar uno sin el otro hace que el bosque salte en el
-       fundido. Los bordes casan igual que en la ciudad. -->
-  <g class="b-tronco">
-    <rect x="72"  y="214" width="11" height="58"/>
-    <rect x="178" y="226" width="9"  height="46"/>
-    <rect x="262" y="206" width="12" height="66"/>
-    <rect x="360" y="230" width="9"  height="42"/>
-    <rect x="452" y="212" width="11" height="60"/>
-    <rect x="540" y="228" width="9"  height="44"/>
+       «los mismos árboles, pero nevados», así que si un árbol se mueve aquí, se
+       mueve allí. Cambiar uno sin el otro hace que el bosque salte en el
+       fundido. Los bordes casan igual que en la ciudad.
+
+       🚨 CADA ÁRBOL ES UNA RANURA CON SU NÚMERO, el mismo sistema que la
+       ciudad y al revés: la casa con el número 3 se va justo cuando el árbol
+       con el número 3 llega. Así la transición es «casa, árbol, casa, árbol,
+       cada vez menos casa y más árbol», que es lo que pidió, y no un fundido de
+       una imagen a otra.
+       🚨 Los números de aquí tienen que existir en ciudad.svg. Se tocan los dos
+       archivos a la vez o no se toca ninguno. -->
+
+  <g class="slot" style="--i:0">
+    <rect class="b-tronco" x="72" y="214" width="11" height="58"/>
+    <path class="b-copa" d="M77.5 96  L112 168 H43 Z"/>
+    <path class="b-copa" d="M77.5 134 L120 218 H35 Z"/>
   </g>
-  <g class="b-copa">
-    <path d="M77.5 96  L112 168 H43 Z"/><path d="M77.5 134 L120 218 H35 Z"/>
-    <path d="M182.5 130 L210 190 H155 Z"/><path d="M182.5 162 L216 230 H149 Z"/>
-    <path d="M268 84  L308 162 H228 Z"/><path d="M268 126 L316 212 H220 Z"/>
-    <path d="M364.5 140 L390 196 H339 Z"/><path d="M364.5 170 L396 234 H333 Z"/>
-    <path d="M457.5 92  L494 166 H421 Z"/><path d="M457.5 132 L502 216 H413 Z"/>
-    <path d="M544.5 136 L572 194 H517 Z"/><path d="M544.5 166 L578 232 H511 Z"/>
+
+  <g class="slot" style="--i:4">
+    <ellipse class="b-mata" cx="130" cy="258" rx="26" ry="15"/>
   </g>
-  <g class="b-mata">
-    <ellipse cx="130" cy="258" rx="26" ry="15"/>
-    <ellipse cx="320" cy="260" rx="22" ry="13"/>
-    <ellipse cx="500" cy="257" rx="28" ry="16"/>
+
+  <g class="slot" style="--i:2">
+    <rect class="b-tronco" x="178" y="226" width="9" height="46"/>
+    <path class="b-copa" d="M182.5 130 L210 190 H155 Z"/>
+    <path class="b-copa" d="M182.5 162 L216 230 H149 Z"/>
   </g>
+
+  <g class="slot" style="--i:3">
+    <rect class="b-tronco" x="262" y="206" width="12" height="66"/>
+    <path class="b-copa" d="M268 84  L308 162 H228 Z"/>
+    <path class="b-copa" d="M268 126 L316 212 H220 Z"/>
+  </g>
+
+  <g class="slot" style="--i:8">
+    <ellipse class="b-mata" cx="320" cy="260" rx="22" ry="13"/>
+  </g>
+
+  <g class="slot" style="--i:5">
+    <rect class="b-tronco" x="360" y="230" width="9" height="42"/>
+    <path class="b-copa" d="M364.5 140 L390 196 H339 Z"/>
+    <path class="b-copa" d="M364.5 170 L396 234 H333 Z"/>
+  </g>
+
+  <g class="slot" style="--i:7">
+    <rect class="b-tronco" x="452" y="212" width="11" height="60"/>
+    <path class="b-copa" d="M457.5 92  L494 166 H421 Z"/>
+    <path class="b-copa" d="M457.5 132 L502 216 H413 Z"/>
+  </g>
+
+  <g class="slot" style="--i:9">
+    <ellipse class="b-mata" cx="500" cy="257" rx="28" ry="16"/>
+  </g>
+
+  <g class="slot" style="--i:11">
+    <rect class="b-tronco" x="540" y="228" width="9" height="44"/>
+    <path class="b-copa" d="M544.5 136 L572 194 H517 Z"/>
+    <path class="b-copa" d="M544.5 166 L578 232 H511 Z"/>
+  </g>
+
   <rect class="b-suelo" x="0" y="270" width="600" height="3"/>
 </svg>

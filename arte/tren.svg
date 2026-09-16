@@ -28,7 +28,7 @@
   <!-- el hueco de la puerta: lo que se ve cuando se abre -->
   <rect class="t-hueco" x="172" y="24" width="96" height="86" rx="4"/>
 
-  <!-- las dos hojas. Se separan con --puertas (0 cerradas, 1 abiertas) -->
+  <!-- las dos hojas. Se separan con ––puertas (0 cerradas, 1 abiertas) -->
   <g class="t-puerta t-puerta-i">
     <rect class="t-hoja" x="172" y="24" width="48" height="86" rx="4"/>
     <rect class="t-cristal" x="181" y="34" width="30" height="34" rx="4"/>

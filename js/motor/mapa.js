@@ -13,11 +13,12 @@
    Ver herramientas/generar-costas.js.
    ============================================================================= */
 
-import { COSTAS as MUNDO } from '../datos/mundo.js?v=96c428d5';
-import { COSTAS as JAPON } from '../datos/japon.js?v=96c428d5';
-import { COSTAS as KANTO } from '../datos/kanto.js?v=96c428d5';
-import { aVectores, envolvente, asomaEnPantalla, trazar, radioActual } from './proyeccion.js?v=96c428d5';
-import { tope, tramo } from './util.js?v=96c428d5';
+import { COSTAS as MUNDO } from '../datos/mundo.js?v=597bcb55';
+import { COSTAS as JAPON } from '../datos/japon.js?v=597bcb55';
+import { COSTAS as KANTO } from '../datos/kanto.js?v=597bcb55';
+import { CALLES } from '../datos/calles.js?v=597bcb55';
+import { aVectores, envolvente, asomaEnPantalla, trazar, radioActual } from './proyeccion.js?v=597bcb55';
+import { tope, tramo } from './util.js?v=597bcb55';
 
 /* --------------------------------------------------------------------------
    1 · Preparar los datasets
@@ -61,9 +62,60 @@ const NIVELES = [
   { nombre: 'kanto', contornos: preparar(KANTO), hasta: Infinity }
 ];
 
-/* Dónde empieza a apagarse la costa porque la fuente ya no da más de sí */
-const R_DESVANECE = 8000;
-const R_INVISIBLE = 26000;
+/* 🚨 DÓNDE SE APAGA LA COSTA — y por qué aguanta más que antes.
+   Estaba en 8.000-26.000 y Kiko lo vio el 17 de septiembre: «el contorno
+   desaparece muy rápido y se queda ahí como en la nada». Tenía razón: la costa
+   moría de golpe a mitad del zoom y dejaba la pantalla vacía, en vez de irse
+   saliendo del encuadre por su propio pie, que es lo natural.
+
+   El límite real sigue existiendo —el dataset de Kantō está simplificado a
+   0,002°, unos 220 m, así que pasado cierto zoom deja de ser información y pasa
+   a ser un polígono tosco—, pero a 18.000 todavía da un píxel por segmento y a
+   55.000 la bahía de Tokio ya ha salido del encuadre sola. Entre medias, el
+   callejero de aquí abajo va entrando y coge el relevo: el mapa nunca se queda
+   sin nada que enseñar. */
+const R_DESVANECE = 18000;
+const R_INVISIBLE = 75000;
+
+/* --------------------------------------------------------------------------
+   El callejero · «para ver por dónde vamos»
+   --------------------------------------------------------------------------
+   Lo pidió Kiko el 17 de septiembre, viendo el acto 3. Entra cuando la costa
+   empieza a irse y se queda hasta el final del zoom.
+
+   📄 Son datos de OpenStreetMap bajo ODbL, que OBLIGA A ATRIBUIR — al revés que
+   las costas, que son de Natural Earth y de dominio público. La atribución está
+   en la cabecera de datos/calles.js y en el pie de index.html, y de ahí no se
+   quita. Ver herramientas/generar-calles.js.
+   -------------------------------------------------------------------------- */
+const CALLEJERO = preparar(CALLES);
+
+/* Aparece a la vez que la costa se retira, para que haya relevo y no hueco */
+/* 🚨 ESTOS DOS NÚMEROS SALEN DE LA CAJA DEL DATASET, no del gusto.
+   En un móvil vertical la pantalla es 2,16 veces más alta que ancha, así que a
+   un encuadre de F grados de ancho le caben F×2,16 grados de latitud. La caja
+   de calles mide 0,16° de alto, o sea que las calles solo llegan de borde a
+   borde a partir de R ~ 200.000. Antes de eso, encenderlas enseña un RECORTE
+   RECTANGULAR flotando en el blanco, con sus cuatro bordes a la vista: se vio
+   en la captura del zoom.
+   Por eso entran tarde, a la vez que el encuadre se cierra sobre Shinjuku. */
+const R_CALLES_ENTRA = 100000;
+const R_CALLES_LLENA = 220000;
+
+export function opacidadCalles(radio) {
+  const r = radio === undefined ? radioActual() : radio;
+  return tope((r - R_CALLES_ENTRA) / (R_CALLES_LLENA - R_CALLES_ENTRA));
+}
+
+export function dibujarCalles() {
+  if (opacidadCalles() <= 0.001) return '';
+  let d = '';
+  for (const c of CALLEJERO) {
+    if (!asomaEnPantalla(c.env)) continue;      /* el tramo entero, de un vistazo */
+    d += trazar(c.v);
+  }
+  return d;
+}
 
 /**
  * Qué dataset toca. UNO solo: las franjas NO se solapan.

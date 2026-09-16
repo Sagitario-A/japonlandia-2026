@@ -5,12 +5,14 @@
    Todo lo que este archivo hace es coser: la lógica vive en motor/ y actos/.
    ============================================================================= */
 
-import { registrarGlobal, arrancar } from './motor/escenario.js?v=96c428d5';
-import { montarLienzo, mostrarLienzo } from './motor/lienzo.js?v=96c428d5';
-import { montarActoVuelo } from './actos/01-vuelo.js?v=96c428d5';
-import { montarActoLlegada } from './actos/02-llegada.js?v=96c428d5';
-import { montarActoAlCoche } from './actos/03-al-coche.js?v=96c428d5';
-import { tope } from './motor/util.js?v=96c428d5';
+import { registrarGlobal, arrancar } from './motor/escenario.js?v=597bcb55';
+import { montarLienzo, mostrarLienzo } from './motor/lienzo.js?v=597bcb55';
+import { desvanecerDibujo } from './motor/dibujo.js?v=597bcb55';
+import { nevar } from './motor/nieve.js?v=597bcb55';
+import { montarActoVuelo } from './actos/01-vuelo.js?v=597bcb55';
+import { montarActoLlegada } from './actos/02-llegada.js?v=597bcb55';
+import { montarActoAlCoche } from './actos/03-al-coche.js?v=597bcb55';
+import { tope } from './motor/util.js?v=597bcb55';
 
 /* --------------------------------------------------------------------------
    1 · El escenario y los actos
@@ -43,10 +45,33 @@ registrarGlobal(function (scroll, alto, sinMovimiento) {
   }
   if (rail) rail.classList.toggle('visible', pasadaLaPortada);
 
-  /* El escenario se apaga cuando la película ha terminado: a partir de ahí la
-     página son capítulos de texto y una capa fija por encima solo molesta. */
+  /* 🚨 CÓMO SE ACABA LA PELÍCULA.
+     A partir de aquí la página son capítulos de texto, y una capa fija por
+     encima solo molesta. Pero apagarla de golpe se ve: Kiko lo dijo viendo el
+     acto 3, «de repente desaparece y tarda un rato en llegar lo otro».
+
+     Así que el dibujo se va cayendo al fondo durante la pantalla siguiente al
+     final del último acto, y con él la nevada. El mapa, que a esas alturas ya
+     está apagado, se retira cuando la sección sale de pantalla.
+
+     La cuenta: mientras el acto corre, su sección llega por debajo del borde
+     inferior, así que `alto - bottom` es negativo y esto vale 0. Justo en el
+     último fotograma del acto, bottom vale `alto` y sigue valiendo 0. De ahí en
+     adelante bottom baja hasta 0 y esto sube hasta 1: exactamente una pantalla
+     de desvanecido. */
   if (finPelicula) {
     const caja = finPelicula.getBoundingClientRect();
+    /* 🚨 En 0,6 pantallas, no en una entera. El capítulo siguiente sube por
+       debajo y el dibujo queda DETRÁS de su bloque blanco: si el desvanecido
+       dura una pantalla, cuando el bloque llega a la altura del coche el coche
+       todavía se ve al 68 % y se le ve el corte. Se vio en la captura. */
+    const fin = tope((alto - caja.bottom) / (alto * 0.6));
+    desvanecerDibujo(fin);
+    /* La nieve se va con él. Y además se va PORQUE se va: sesenta copos
+       animados dentro de una capa a la que se le está bajando la opacidad
+       obligan al navegador a componer el grupo aparte en cada fotograma
+       (ley 15). Menos copos, menos factura. */
+    if (fin > 0) nevar(1 - fin);
     if (caja.bottom < 0) mostrarLienzo(false);
   }
 });

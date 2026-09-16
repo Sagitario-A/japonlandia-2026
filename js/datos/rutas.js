@@ -210,6 +210,16 @@ export const ENCUADRES = {
      pixeles en una esquina. Se vio en la captura: la pelicula se paraba a
      ensenar un garabato. Centrado entre los dos extremos y con sitio para las
      dos etiquetas. */
-  keio:     [139.676, 35.6783, 0.17],
-  disuelve: [139.6991, 35.6884, 0.03]
+  /* 🚨 Centrado un pelo al oeste y un pelo mas ancho que el punto medio exacto
+     entre los dos extremos: la etiqueta de MATSUBARA va a la IZQUIERDA de su
+     punto —lo decidio asi el acto 2 para no comerse la de Narita— y con el
+     encuadre centrado se salia por el borde. Se vio en la captura. */
+  keio:     [139.6735, 35.6785, 0.20],
+  /* 🚨 LA PARADA EN ESCALA DE CALLE, sobre Shinjuku. No estaba, y sin ella el
+     callejero no llegaba a verse: entre el encuadre de la línea y la disolución
+     no había sitio, y las calles aparecían con el mapa ya al 27 % de opacidad.
+     A 0,055° —6 km de ancho— el callejero llena la pantalla de un móvil y se
+     lee «por dónde vamos», que es lo que pidió Kiko. */
+  calle:    [139.6991, 35.6884, 0.055],
+  disuelve: [139.6991, 35.6884, 0.012]
 };
