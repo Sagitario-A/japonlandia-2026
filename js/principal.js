@@ -5,14 +5,14 @@
    Todo lo que este archivo hace es coser: la lógica vive en motor/ y actos/.
    ============================================================================= */
 
-import { registrarGlobal, arrancar } from './motor/escenario.js?v=b6b3f3bf';
-import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=b6b3f3bf';
-import { desvanecerDibujo } from './motor/dibujo.js?v=b6b3f3bf';
-import { nevar } from './motor/nieve.js?v=b6b3f3bf';
-import { montarActoVuelo } from './actos/01-vuelo.js?v=b6b3f3bf';
-import { montarActoLlegada } from './actos/02-llegada.js?v=b6b3f3bf';
-import { montarActoAlCoche } from './actos/03-al-coche.js?v=b6b3f3bf';
-import { tope } from './motor/util.js?v=b6b3f3bf';
+import { registrarGlobal, arrancar } from './motor/escenario.js?v=7ea3f949';
+import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=7ea3f949';
+import { desvanecerDibujo } from './motor/dibujo.js?v=7ea3f949';
+import { nevar } from './motor/nieve.js?v=7ea3f949';
+import { montarActoVuelo } from './actos/01-vuelo.js?v=7ea3f949';
+import { montarActoLlegada } from './actos/02-llegada.js?v=7ea3f949';
+import { montarActoAlCoche } from './actos/03-al-coche.js?v=7ea3f949';
+import { tope } from './motor/util.js?v=7ea3f949';
 
 /* --------------------------------------------------------------------------
    1 · El escenario y los actos

@@ -54,6 +54,31 @@
   overflow: visible;
 }
 
+/* 🚨 EL BORDE DEL MAPA PEQUENIO SE DIFUMINA, PERO SOLO ARRIBA Y ABAJO.
+   Kiko, viendo el mapa del viaje en coche: «que no se corte magicamente con la
+   nada». Y es literal: al encoger la capa, la costa llegaba al borde del
+   rectangulo y se acababa ahi, en seco, sobre el blanco. Ningun encuadre
+   arregla eso —una costa siempre sale del cuadro por algun lado—, asi que lo
+   que se arregla es el corte.
+
+   🚨 Y SOLO EN VERTICAL, que es la parte que cuesta. El primer intento
+   difuminaba en redondo, hacia los cuatro lados, y se llevo por delante las
+   etiquetas: TAKARAGAWA y SHINJUKU se desvanecian por la mitad justo donde hay
+   que leerlas. Las etiquetas viven a media altura y salen hacia los lados, asi
+   que un degradado vertical no las toca nunca.
+
+   La cuenta hace dos cosas con una sola linea: con --mini a 0 las paradas se
+   van fuera del elemento y no hay mascara ninguna; con --mini a 1 se quedan en
+   el 14 % y el 86 %. Asi no hay una regla aparte que se pueda olvidar de
+   apagar. */
+.escenario {
+  --borde: calc(14% * var(--mini, 0));
+  -webkit-mask-image: linear-gradient(to bottom,
+    transparent 0, #000 var(--borde), #000 calc(100% - var(--borde)), transparent 100%);
+  mask-image: linear-gradient(to bottom,
+    transparent 0, #000 var(--borde), #000 calc(100% - var(--borde)), transparent 100%);
+}
+
 /* Sin JavaScript no hay escenario que valga: ni se monta ni se ve */
 html:not(.anim) .escenario { display: none; }
 

@@ -17,7 +17,7 @@
    [lon, lat]. Se guardan sueltos porque unos son marcadores y otros solo son
    puntos de paso por los que la línea tiene que doblar.
    -------------------------------------------------------------------------- */
-import { EJE_KANETSU } from './carretera-norte.js?v=b6b3f3bf';
+import { EJE_KANETSU } from './carretera-norte.js?v=7ea3f949';
 
 export const LUGARES = {
   /* España */
@@ -245,10 +245,24 @@ export const ENCUADRES = {
   calle:    [139.6991, 35.6884, 0.055],
   disuelve: [139.6991, 35.6884, 0.012],
 
-  /* 🚨 EL MAPA PEQUEÑO DEL FINAL DEL ACTO 3. Tiene que caber la ruta entera
-     —Tokio, la Kan-Etsu y Takaragawa— y que alrededor se siga reconociendo
-     Japón: a 2,8° de ancho entra desde Izu hasta Fukushima, con la bahía de
-     Tokio abajo y el mar de Japón arriba. Más ancho y la ruta es un punto; más
-     estrecho y deja de parecer un mapa de Japón. */
-  japonNorte: [139.35, 36.30, 2.8]
+  /* 🚨 EL MAPA PEQUEÑO DEL FINAL DEL ACTO 3 · LA REGIÓN DE LA NIEVE.
+     Empezó siendo medio Japón, a 2,8° de ancho, y Kiko lo vio enseguida: «al
+     final no hace falta abarcar tanto; la región donde van a estar los tres
+     destinos a los que vamos». Tenía razón — con medio país en pantalla, la
+     ruta era un rasguño en una esquina.
+
+     A 1,9° caben los cuatro sitios que importan, y con sitio para sus etiquetas:
+
+        Shinjuku      139,699 · de donde se sale
+        Takaragawa    139,047 · el primero de la nieve, el del acto 3
+        Kusatsu       138,597 · el del acto 5
+        Yamanouchi    138,431 · el del acto 6
+
+     🚨 Y por eso el centro NO está en el medio de la ruta sino más al este: la
+     etiqueta de Shinjuku sale hacia la derecha de su punto, y centrando la ruta
+     se salía del mapa. Se vio midiéndolo en pantalla.
+
+     💭 Los actos 5 y 6 se pueden quedar con este mismo encuadre: los tres
+     destinos ya están dentro. */
+  region: [139.20, 36.30, 1.9]
 };

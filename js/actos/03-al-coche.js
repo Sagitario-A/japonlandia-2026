@@ -25,14 +25,14 @@
    está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=b6b3f3bf';
-import { tramo, suave, tope } from '../motor/util.js?v=b6b3f3bf';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=b6b3f3bf';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=b6b3f3bf';
-import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=b6b3f3bf';
-import { montarNieve, nevar } from '../motor/nieve.js?v=b6b3f3bf';
-import { tenderRuta } from '../motor/ruta.js?v=b6b3f3bf';
-import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=b6b3f3bf';
+import { registrarActo } from '../motor/escenario.js?v=7ea3f949';
+import { tramo, suave, tope } from '../motor/util.js?v=7ea3f949';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=7ea3f949';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=7ea3f949';
+import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=7ea3f949';
+import { montarNieve, nevar } from '../motor/nieve.js?v=7ea3f949';
+import { tenderRuta } from '../motor/ruta.js?v=7ea3f949';
+import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=7ea3f949';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -51,7 +51,7 @@ const RUTA = tenderRuta(TRAMO_AL_COCHE.pasos, 0.2);
 /* 🚨 LA CARRETERA DE VERDAD hasta Takaragawa: el eje de la autopista Kan-Etsu,
    no una línea a ojo. Ver datos/rutas.js y herramientas/generar-carreteras.js */
 const RUTA_AL_NORTE = tenderRuta(RUTA_NORTE, 0.2);
-const V_NORTE = vista('japonNorte');
+const V_NORTE = vista('region');
 
 /* El mapa pequeño del viaje en coche, en p de este acto */
 const MAPA_NORTE = [0.800, 0.858];
