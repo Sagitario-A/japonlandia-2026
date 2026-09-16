@@ -1,0 +1,274 @@
+@charset "utf-8";
+/* ==========================================================================
+   base.css · Tokens, tipografía y los muebles de siempre
+   --------------------------------------------------------------------------
+   Normas que aplica: web-nueva/NORMAS.md § 1 (blanco impoluto, nada
+   cuadriculado) y § 6 (accesibilidad).
+   🚨 Tema claro y solo claro, aunque el sistema pida oscuro. Lo decidió Kiko el
+   15 de septiembre: «no lo dejes cambiar para respetar la estética».
+   ========================================================================== */
+
+@font-face {
+  font-family: 'Shippori Mincho';
+  src: url('../tipo/shippori-mincho-500-latin.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+2000-206F, U+20AC, U+2122, U+2212;
+}
+
+/* ==========================================================================
+   1 · Tokens
+   ========================================================================== */
+:root {
+  --papel: #ffffff;
+  --papel-hondo: #fafafa;
+  --tinta: #111213;
+  --tinta-suave: #55595f;
+  --tenue: #6e747c;
+  --pelo: #e8e8e8;
+  --pelo-fuerte: #d4d4d4;
+
+  --acento: #24507e;
+  --ok: #2f6b4f;
+  --duda: #8a6a2f;
+  --crit: #6e747c;
+  --pend: #6e747c;
+
+  --f-display: 'Shippori Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, 'Times New Roman', serif;
+  --f-texto: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+  --medida: 34rem;
+  --aire: clamp(4rem, 12vh, 9rem);
+  --lado: clamp(1.25rem, 6vw, 2.5rem);
+
+  /* El mapa: línea de pelo, nunca mancha */
+  --mapa-linea: #c9ced6;
+  --mapa-costa: #a9b2bd;
+}
+
+/* Acentos por capítulo — solo trazos y detalles, nunca fondos (§ 1) */
+[data-cap='nieve']  { --acento: #2e7aa8; }
+[data-cap='kioto']  { --acento: #b23a2e; }
+[data-cap='anno']   { --acento: #8a6a2f; }
+[data-cap='vuelta'] { --acento: #24507e; }
+
+/* ==========================================================================
+   2 · Base
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  overflow-x: clip;               /* clip y no hidden: hidden rompe position:sticky */
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--f-texto);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+h1, h2, h3 {
+  font-family: var(--f-display);
+  font-weight: 500;
+  line-height: 1.1;
+  margin: 0;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+p { margin: 0; }
+ul, ol { margin: 0; padding-left: 1.1rem; }
+li + li { margin-top: .5rem; }
+
+a { color: var(--acento); text-underline-offset: .18em; }
+
+:where(a, button, summary):focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+.saltar-al-contenido {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  padding: .8rem 1.1rem;
+  z-index: 100;
+}
+.saltar-al-contenido:focus { left: .5rem; top: .5rem; }
+
+/* Eyebrow: versalitas pequeñas, el recurso tipográfico en vez de etiquetas */
+.sobre {
+  font-size: .7rem;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: var(--tenue);
+  font-weight: 600;
+}
+.sobre .num {
+  color: var(--acento);
+  margin-right: .5rem;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   3 · Sin JavaScript
+   --------------------------------------------------------------------------
+   🚨 Desde el 16 de septiembre la web NECESITA JavaScript: es una película de
+   scroll y no puede existir sin él (NORMAS § 11.2). Lo que no puede pasar nunca
+   es que salga una pantalla en blanco, así que esto lo explica y lleva al
+   índice, que sí es un documento normal.
+   ========================================================================== */
+.sin-js {
+  position: relative;
+  z-index: 60;
+  max-width: var(--medida);
+  margin: 0 auto;
+  padding: 7rem var(--lado) 2rem;
+  border-bottom: 1px solid var(--pelo);
+  color: var(--tinta-suave);
+}
+.sin-js p + p { margin-top: .8rem; }
+
+/* ==========================================================================
+   4 · Barra
+   ========================================================================== */
+.barra {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .6rem var(--lado);
+  padding-top: max(.6rem, env(safe-area-inset-top));
+  background: color-mix(in srgb, var(--papel) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid transparent;
+  transition: opacity .4s ease, transform .4s ease, border-color .4s ease;
+}
+.barra-titulo {
+  font-family: var(--f-display);
+  font-size: .95rem;
+  letter-spacing: .01em;
+}
+.barra-titulo a { color: var(--tinta); text-decoration: none; }
+.barra.posada { border-bottom-color: var(--pelo); }
+
+/* Durante la portada estorba: solo se esconde si el JavaScript está vivo */
+.anim .barra { opacity: 0; transform: translateY(-100%); pointer-events: none; }
+.anim .barra.visible { opacity: 1; transform: none; pointer-events: auto; }
+
+/* ==========================================================================
+   5 · Raíl de progreso
+   ========================================================================== */
+.rail {
+  position: fixed;
+  right: max(.55rem, env(safe-area-inset-right));
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 30;
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+.rail.visible { opacity: 1; pointer-events: auto; }
+/* Por debajo de 360 px no cabe sin tocar el texto: fuera */
+@media (max-width: 22.5rem) { .rail { display: none; } }
+.rail ol { list-style: none; margin: 0; padding: 0; }
+.rail li + li { margin-top: 0; }
+.rail a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .55rem;
+  padding: .42rem .3rem;
+  text-decoration: none;
+  color: var(--tenue);
+}
+.rail a::after {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--pelo-fuerte);
+  transition: background .3s ease, transform .3s ease;
+}
+/* En móvil el raíl es SOLO puntos: la etiqueta se comía el contenido de al lado */
+.rail a span {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+.rail a[aria-current='true']::after { background: var(--acento); transform: scale(1.7); }
+.rail a[aria-current='true'] { color: var(--tinta); }
+
+/* ==========================================================================
+   6 · Pie
+   ========================================================================== */
+.pie {
+  position: relative;
+  z-index: 2;
+  background: var(--papel);
+  border-top: 1px solid var(--pelo);
+  margin-top: var(--aire);
+  padding: 2.6rem var(--lado) calc(3rem + env(safe-area-inset-bottom));
+  color: var(--tenue);
+  font-size: .8rem;
+}
+.pie > * { max-width: var(--medida); margin-inline: auto; }
+.pie-nota { margin-top: .9rem; line-height: 2; }
+.pie-nota .marca { margin-left: 0; margin-right: .5rem; }
+
+/* ==========================================================================
+   7 · Pantallas grandes
+   ========================================================================== */
+@media (min-width: 60rem) {
+  body { font-size: 1.1rem; }
+  .rail { right: 1.6rem; }
+  .rail a span {
+    position: static;
+    width: auto;
+    height: auto;
+    clip-path: none;
+    overflow: visible;
+    font-size: .65rem;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    opacity: 0;
+    transform: translateX(.4rem);
+    transition: opacity .3s ease, transform .3s ease;
+  }
+  .rail a[aria-current='true'] span,
+  .rail:hover a span,
+  .rail a:focus-visible span { opacity: 1; transform: none; }
+}
+
+/* ==========================================================================
+   8 · Movimiento reducido (§ 6)
+   --------------------------------------------------------------------------
+   La película se detiene y la página se recorre entera leyendo. Esta norma se
+   queda porque es accesibilidad, no purismo.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .001ms !important;
+  }
+}

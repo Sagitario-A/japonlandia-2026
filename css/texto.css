@@ -1,0 +1,349 @@
+@charset "utf-8";
+/* ==========================================================================
+   texto.css · Los datos, las marcas y los capítulos que aún no son película
+   --------------------------------------------------------------------------
+   🚨 Aquí manda el blanco impoluto de NORMAS § 1, sin excepciones: ni tarjetas,
+   ni rejillas, ni fondos de color, ni tablas con celdas marcadas. El color de
+   caricatura entra en el dibujo, no en el texto → § 1, «dónde entra el color».
+   ========================================================================== */
+
+/* ==========================================================================
+   1 · Marcas de fiabilidad — texto con color, sin fondo ni recuadro
+   ========================================================================== */
+.marca {
+  font-size: .68rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  white-space: nowrap;
+  margin-left: .35rem;
+}
+.m-ok   { color: var(--ok); }
+.m-duda { color: var(--duda); }
+.m-crit { color: var(--crit); }
+.m-pend { color: var(--pend); }
+
+/* ==========================================================================
+   2 · Filas de pelo: una línea de 1 px y aire, nunca una tabla con celdas
+   ========================================================================== */
+.filas { margin: 0; }
+.fila {
+  border-top: 1px solid var(--pelo);
+  padding-block: .95rem;
+}
+.fila dt {
+  font-size: .7rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--tenue);
+  font-weight: 600;
+}
+.fila dd {
+  margin: .25rem 0 0;
+  color: var(--tinta);
+}
+@media (min-width: 40rem) {
+  .fila {
+    display: grid;
+    grid-template-columns: 9rem 1fr;
+    gap: 1.6rem;
+    align-items: baseline;
+  }
+  .fila dd { margin-top: 0; }
+}
+
+/* ==========================================================================
+   3 · Aviso: una regla al margen, no una tarjeta
+   ========================================================================== */
+.aviso {
+  margin-top: 2rem;
+  padding-left: 1.1rem;
+  border-left: 2px solid var(--acento);
+  color: var(--tinta-suave);
+  font-size: .97rem;
+}
+.aviso strong { color: var(--tinta); }
+
+/* ==========================================================================
+   4 · Trayecto: los dos extremos de un vuelo, sin caja ninguna
+   ========================================================================== */
+.trayecto {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-bottom: 2.6rem;
+}
+.punta { min-width: 0; }
+.trayecto .punta:last-of-type { text-align: right; }
+.iata {
+  font-family: var(--f-display);
+  font-size: clamp(1.5rem, 7vw, 2rem);
+  letter-spacing: .06em;
+  color: var(--tenue);
+  line-height: 1;
+}
+.hora {
+  font-size: clamp(1.9rem, 9vw, 2.6rem);
+  font-weight: 300;
+  letter-spacing: -.02em;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+  margin-top: .2rem;
+}
+.sitio {
+  font-size: .78rem;
+  color: var(--tenue);
+  line-height: 1.45;
+  margin-top: .25rem;
+}
+.flecha {
+  color: var(--acento);
+  font-size: 1.1rem;
+  padding-top: 1.9rem;
+  flex: 0 0 auto;
+}
+.duda {
+  font-size: .5em;
+  color: var(--duda);
+  vertical-align: super;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   5 · Los capítulos que todavía no son película
+   --------------------------------------------------------------------------
+   Van dentro de `.documento`, que lleva fondo blanco: al subir tapa el
+   escenario fijo de la película, y el paso de una cosa a otra queda limpio.
+   ========================================================================== */
+.documento {
+  position: relative;
+  z-index: 2;
+  background: var(--papel);
+}
+
+.cap {
+  position: relative;
+  max-width: var(--medida);
+  margin-inline: auto;
+  padding-block: var(--aire);
+  padding-inline: var(--lado);
+  scroll-margin-top: 4rem;
+}
+.cap + .cap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: var(--lado);
+  width: 2.2rem;
+  height: 1px;
+  background: var(--pelo-fuerte);
+}
+
+/* Aparición al entrar. Solo con el JavaScript vivo */
+.anim .cap { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s ease; }
+.anim .cap.dentro { opacity: 1; transform: none; }
+
+.cap-cabecera { margin-bottom: 2.4rem; }
+.cap h2 {
+  font-size: clamp(1.9rem, 8.5vw, 2.9rem);
+  margin-block: .7rem .9rem;
+}
+.entradilla {
+  color: var(--tinta-suave);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 28rem;
+}
+.texto { margin-top: 1.6rem; color: var(--tinta-suave); }
+.texto strong { color: var(--tinta); font-weight: 600; }
+.vacio { color: var(--tenue); font-style: italic; }
+
+/* ==========================================================================
+   6 · Lo pendiente, plegado (§ 3)
+   ========================================================================== */
+.pendiente {
+  margin-top: 2.8rem;
+  border-top: 1px solid var(--pelo);
+}
+.pendiente summary {
+  list-style: none;
+  cursor: pointer;
+  padding-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  font-size: .7rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--tenue);
+}
+.pendiente summary::-webkit-details-marker { display: none; }
+.pendiente summary::before {
+  content: '';
+  width: .62rem;
+  height: .62rem;
+  flex: 0 0 auto;
+  border-left: 1.5px solid currentColor;
+  border-bottom: 1.5px solid currentColor;
+  transform: rotate(-45deg) translate(.1em, -.1em);
+  transition: transform .25s ease;
+}
+.pendiente[open] summary::before { transform: rotate(135deg) translate(-.05em, -.05em); }
+.pendiente summary:hover { color: var(--tinta); }
+.pendiente-cuerpo {
+  padding-top: 1.1rem;
+  color: var(--tinta-suave);
+  font-size: .95rem;
+}
+.pendiente-cuerpo strong { color: var(--tinta); font-weight: 600; }
+
+/* ==========================================================================
+   7 · Ambientación de los capítulos de texto
+   ========================================================================== */
+.ambiente {
+  position: sticky;
+  top: 0;
+  height: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+.ambiente svg { position: absolute; display: block; }
+
+.ambiente-nieve svg {
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100vw;
+  height: clamp(48px, 9vh, 86px);
+}
+/* El hielo baja con el scroll: el valor ya viene suavizado, sin transición */
+.ambiente-nieve .hielo {
+  fill: var(--acento);
+  opacity: .13;
+  transform: translateY(calc((1 - var(--p-cap, 1)) * -100%));
+}
+
+.ambiente-kioto svg {
+  top: 8vh;
+  right: calc(var(--lado) * -0.9);
+  width: min(34vw, 12rem);
+  height: auto;
+}
+/* La pagoda se dibuja sola al bajar. Sin --len sale entera y ya */
+.ambiente-kioto .pagoda path {
+  fill: none;
+  stroke: var(--acento);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: .2;
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: calc(var(--len) * (1 - var(--p-cap, 1)));
+}
+
+.ambiente-anno svg {
+  top: 6vh;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(86vw, 26rem);
+  height: auto;
+}
+.ambiente-anno .sol {
+  fill: none;
+  stroke: var(--acento);
+  stroke-width: 1.4;
+  opacity: .22;
+  transform-origin: 200px 150px;
+  transform: scale(calc(.72 + var(--p-cap, 1) * .28));
+}
+
+/* ==========================================================================
+   8 · Pantallas grandes — la misma columna con más aire, no otro diseño
+   ========================================================================== */
+@media (min-width: 60rem) {
+  .cap { max-width: 38rem; }
+  /* Sangrados que cambian por capítulo: aire asimétrico, no rejilla */
+  .cap:nth-of-type(odd)  { margin-left: calc(50% - 21rem); margin-right: auto; }
+  .cap:nth-of-type(even) { margin-left: calc(50% - 17rem); margin-right: auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim .cap { opacity: 1; transform: none; }
+}
+
+/* ==========================================================================
+   9 · La página de índice
+   Misma voz que el resto: filas de pelo y aire, ninguna caja
+   ========================================================================== */
+.indice {
+  max-width: var(--medida);
+  margin-inline: auto;
+  padding-inline: var(--lado);
+  padding-top: clamp(5rem, 16vh, 9rem);
+  padding-bottom: 2rem;
+}
+.indice-cabecera { margin-bottom: 2.8rem; }
+.indice h1 {
+  font-size: clamp(2.4rem, 11vw, 3.4rem);
+  margin-block: .7rem .9rem;
+}
+
+.lista-capitulos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.lista-capitulos li { margin: 0; }
+.lista-capitulos a {
+  display: grid;
+  grid-template-columns: 2.6rem 1fr;
+  gap: .1rem 1rem;
+  align-items: baseline;
+  padding-block: 1.25rem;
+  border-top: 1px solid var(--pelo);
+  text-decoration: none;
+  color: var(--tinta);
+}
+.lista-capitulos li:last-child a { border-bottom: 1px solid var(--pelo); }
+.lista-capitulos .n {
+  font-size: .72rem;
+  letter-spacing: .14em;
+  color: var(--acento);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.lista-capitulos .t {
+  font-family: var(--f-display);
+  font-size: 1.55rem;
+  line-height: 1.15;
+}
+.lista-capitulos .d {
+  grid-column: 2;
+  color: var(--tenue);
+  font-size: .88rem;
+  line-height: 1.5;
+  margin-top: .2rem;
+}
+.lista-capitulos a:hover .t { color: var(--acento); }
+
+/* Cada capítulo con su acento, igual que en la película */
+.lista-capitulos li:nth-child(1) a { --acento: #24507e; }
+.lista-capitulos li:nth-child(2) a { --acento: #111213; }
+.lista-capitulos li:nth-child(3) a { --acento: #2e7aa8; }
+.lista-capitulos li:nth-child(4) a { --acento: #b23a2e; }
+.lista-capitulos li:nth-child(5) a { --acento: #8a6a2f; }
+.lista-capitulos li:nth-child(6) a { --acento: #24507e; }
+
+.indice-pie {
+  margin-top: 2.4rem;
+  font-size: .7rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.indice-pie a { color: var(--tenue); text-decoration: none; }
+.indice-pie a:hover { color: var(--tinta); }
+
+.pagina-indice .pie { margin-top: 3rem; }
