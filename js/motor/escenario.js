@@ -10,7 +10,7 @@
    ser lenta.
    ============================================================================= */
 
-import { tope } from './util.js?v=9e7564bf';
+import { tope } from './util.js?v=24e7ec13';
 
 const actos = [];
 const globales = [];
@@ -84,21 +84,43 @@ function repasar() {
 
   for (const acto of actos) {
     const caja = acto.el.getBoundingClientRect();
-    const cerca = caja.top < alto * 1.5 && caja.bottom > -alto * 0.5;
+    const recorrido = Math.max(1, caja.height - alto);
+    const bruto = -caja.top / recorrido;
+
+    /* 🚨 UN ACTO PINTA SOLO DENTRO DE SU PROPIO TRAMO DE SCROLL, de 0 a 1.
+       No vale con «está cerca». El lienzo es compartido y el último que pinta
+       manda, así que un acto que aún no ha empezado y se adelanta a pintar su
+       fotograma cero mueve la cámara y dibuja encima del que sí está en curso:
+       con el avión todavía a medio camino, el acto 2 ya colaba la ruta entera
+       del vuelo y movía el globo cinco grados.
+       Como los tramos son contiguos y casan en la costura, en cada momento hay
+       exactamente uno con el mando. */
+    const cerca = bruto >= 0 && bruto <= 1;
 
     if (!cerca) {
-      /* Al salir de escena se deja en su fotograma de los extremos, para que
-         no se quede congelado a medias si se vuelve a él de un salto. */
-      if (acto.activo) {
-        acto.activo = false;
-        pintarActo(acto, caja.top > 0 ? 0 : 1);
-      }
+      /* 🚨 UN ACTO FUERA DE PANTALLA NO PINTA. NUNCA.
+         Aquí había un repintado «de cortesía» al salir de escena, para dejar el
+         acto en su fotograma de los extremos. Con el mapa en una capa fija y
+         compartida eso es veneno: el acto que se va movía la cámara y dibujaba
+         encima de lo que el acto activo acababa de pintar. Subiendo el scroll
+         de vuelta al vuelo, el acto 2 se despedía redibujando la ruta con SU
+         cámara y dejaba una línea de puntos suelta flotando sobre el globo.
+         Kiko la vio. No hace falta el repintado: cada acto escribe todo su
+         estado en cuanto vuelve a entrar.
+
+         🚨 Y SE OLVIDA DE LO QUE PINTÓ. `ultimo` existe para no repintar dos
+         veces el mismo fotograma, pero el lienzo es compartido: mientras este
+         acto estaba fuera, otro lo ha borrado y ha pintado lo suyo. Si al
+         volver al MISMO punto de scroll se diera por pintado, no repintaría y
+         se vería el mapa del otro acto. Pasa al subir el scroll y volver a
+         entrar por donde saliste, que es justo lo que uno hace al revisar. */
+      acto.activo = false;
+      acto.ultimo = -1;
       continue;
     }
 
     acto.activo = true;
-    const recorrido = Math.max(1, caja.height - alto);
-    pintarActo(acto, tope(-caja.top / recorrido));
+    pintarActo(acto, tope(bruto));
   }
 
   for (const fn of globales) {

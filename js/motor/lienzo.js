@@ -15,10 +15,10 @@
    Narita, Meidaimae— están escritos en el HTML; aquí solo se mueven.
    ============================================================================= */
 
-import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=9e7564bf';
-import { dibujarCostas, dibujarReticula, opacidadReticula } from './mapa.js?v=9e7564bf';
-import { trazarRuta, cabezaDeRuta } from './ruta.js?v=9e7564bf';
-import { r1 } from './util.js?v=9e7564bf';
+import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=24e7ec13';
+import { dibujarCostas, dibujarReticula, opacidadReticula } from './mapa.js?v=24e7ec13';
+import { trazarRuta, cabezaDeRuta } from './ruta.js?v=24e7ec13';
+import { r1 } from './util.js?v=24e7ec13';
 
 let raiz = null;
 let svg = null;
@@ -128,7 +128,13 @@ export function pintarRuta(indice, ruta, avance, estilo) {
   if (!el) return;
 
   const op = estilo && estilo.opacidad !== undefined ? estilo.opacidad : 1;
-  if (avance <= 0 || op <= 0.002) { el.setAttribute('d', ''); return; }
+  if (avance <= 0 || op <= 0.002) {
+    /* La opacidad también, no solo el trazo: dejarla a medias es una mentira
+       esperando a que alguien la lea al depurar. */
+    el.setAttribute('d', '');
+    el.style.opacity = '0';
+    return;
+  }
   el.setAttribute('d', trazarRuta(ruta, avance));
   el.style.opacity = op.toFixed(3);
   if (estilo && estilo.color) el.style.stroke = estilo.color;

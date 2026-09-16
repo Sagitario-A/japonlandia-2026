@@ -117,6 +117,26 @@ html:not(.anim) .escenario { display: none; }
   height: calc(var(--largo, 300) * 1svh);
 }
 
+/* 🚨 LA PANTALLA MUERTA ENTRE ACTOS, Y POR QUÉ HAY UN MARGEN NEGATIVO.
+
+   Una escena pegajosa deja de estarlo cuando el final de su sección llega al
+   final de la pantalla. Con secciones encadenadas eso deja SIEMPRE un hueco de
+   exactamente una pantalla: en un móvil de 844 px, el acto 1 termina su
+   animación en el scroll 5.064 y el acto 2 no empieza hasta el 5.908. En medio,
+   844 píxeles en los que el primero está clavado en su último fotograma y el
+   segundo aún no ha arrancado. El mapa, que vive en una capa fija, se queda
+   congelado todo ese rato.
+
+   Kiko lo notó dos veces como «se tarda mucho desde que llega a Japón hasta que
+   empieza el zoom», y las dos veces busqué la causa en los tiempos de los
+   actos, que no era. Era esto, y son 844 píxeles de nada.
+
+   El margen negativo solapa las dos secciones justo esa pantalla: el acto 2
+   empieza a contar exactamente donde el acto 1 acaba. Se puede porque los dos
+   actos casan en la costura —el 2 arranca en el estado en que el 1 termina— y
+   porque el dibujo no está en la escena, sino en la capa fija. */
+.anim .acto + .acto { margin-top: -100svh; }
+
 .escena {
   position: sticky;
   top: 0;

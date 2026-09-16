@@ -10,12 +10,12 @@
    Guion → web-nueva/DEFINICION.md, acto A1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=9e7564bf';
-import { tramo, suave, tope } from '../motor/util.js?v=9e7564bf';
-import { mirarA } from '../motor/proyeccion.js?v=9e7564bf';
-import { pintarMapa, pintarRuta, pintarVehiculo, marcar, esconder, mostrarLienzo, opacidadMapa, alzarLienzo } from '../motor/lienzo.js?v=9e7564bf';
-import { tenderRuta } from '../motor/ruta.js?v=9e7564bf';
-import { VUELO_IDA, LUGARES } from '../datos/rutas.js?v=9e7564bf';
+import { registrarActo } from '../motor/escenario.js?v=24e7ec13';
+import { tramo, suave, tope } from '../motor/util.js?v=24e7ec13';
+import { mirarA } from '../motor/proyeccion.js?v=24e7ec13';
+import { pintarMapa, pintarRuta, limpiarRutas, pintarVehiculo, marcar, esconder, mostrarLienzo, opacidadMapa, alzarLienzo } from '../motor/lienzo.js?v=24e7ec13';
+import { tenderRuta } from '../motor/ruta.js?v=24e7ec13';
+import { VUELO_IDA, LUGARES } from '../datos/rutas.js?v=24e7ec13';
 
 /* La ruta real de Iberia, tendida una vez al cargar.
    Se exporta porque el acto 2 la hereda: si desaparece de golpe al cambiar de
@@ -77,6 +77,14 @@ export function montarActoVuelo() {
       /* ---- La ruta y el avión ------------------------------------------ */
       pintarRuta(0, RUTA, pVuelo, { color: 'var(--acento)', guion: true });
       pintarVehiculo('avion', RUTA, pVuelo);
+
+      /* 🚨 Y SE BORRA LO QUE PINTÓ EL ACTO 2. Al subir el scroll de vuelta, las
+         capas del Narita Express y de la línea Keio se quedaban con el `d` del
+         último fotograma del acto 2 —una geometría calculada con OTRA cámara— y
+         reaparecían sobre el globo como una línea de puntos suelta y mal
+         puesta. Kiko lo vio haciendo scroll hacia atrás.
+         Un acto no solo pinta lo suyo: apaga lo que no es suyo. */
+      limpiarRutas(1);
 
       /* ---- Los marcadores ----------------------------------------------
          🚨 Aquí el destino se llama JAPÓN, no Narita. A escala de globo lo que

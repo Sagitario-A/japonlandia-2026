@@ -14,13 +14,13 @@
    Guion → web-nueva/DEFINICION.md, acto A2.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=9e7564bf';
-import { tramo, suave, tope } from '../motor/util.js?v=9e7564bf';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=9e7564bf';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js?v=9e7564bf';
-import { tenderRuta } from '../motor/ruta.js?v=9e7564bf';
-import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=9e7564bf';
-import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=9e7564bf';
+import { registrarActo } from '../motor/escenario.js?v=24e7ec13';
+import { tramo, suave, tope } from '../motor/util.js?v=24e7ec13';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=24e7ec13';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js?v=24e7ec13';
+import { tenderRuta } from '../motor/ruta.js?v=24e7ec13';
+import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=24e7ec13';
+import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=24e7ec13';
 
 /* --------------------------------------------------------------------------
    Los encuadres, en el orden en que los recorre la cámara
@@ -157,7 +157,11 @@ export function montarActoLlegada() {
       pintarRuta(PATAS.length, RUTA_VUELO, 1, {
         color: 'var(--acento)',
         guion: true,
-        opacidad: 1 - suave(tramo(p, 0.02, 0.22))
+        /* 🚨 Se va ANTES de que la etiqueta cambie de «Japón» a «Narita», que
+           es en 0,085. Kiko: «esto Japón cambia en Narita, deberían
+           desvanecerse ya las líneas de puntos del vuelo». Tiene razón: el
+           vuelo ya ha terminado, la línea solo estorba. */
+        opacidad: 1 - suave(tramo(p, 0.00, 0.075))
       });
       limpiarRutas(PATAS.length + 1);
 
