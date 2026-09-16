@@ -38,13 +38,12 @@
      **el escenario mide 100u de ancho** —de -50 a +50— y todo cabe dentro. */
   --u: 1vmin;
 
-  /* La línea del suelo: todo se apoya aquí, y el texto vive por encima.
-     💭 Ojo con el sentido: BAJAR esta línea AGRANDA el hueco blanco entre el
+  /* 🚨 --suelo, la línea donde se apoya todo, está en base.css y no aquí: la
+     usan esta capa Y el texto de los actos, que son dos subárboles distintos
+     del documento. La explicación larga está allí.
+     💭 Y ojo con el sentido: BAJAR esa línea AGRANDA el hueco blanco entre el
      texto de arriba y el dibujo. Al 66 % quedaba casi media pantalla vacía en
-     medio; al 72 % quedaba peor. El 68 %, con los rótulos bajados un poco
-     (§ 5), deja el dibujo apoyado donde el ojo lo busca y conserva el aire de
-     arriba, que es la estética que pidió Kiko. */
-  --suelo: 68%;
+     medio; al 72 % quedaba peor. */
 }
 /* Sin `transition`, igual que el escenario: lo que va atado al scroll ya viene
    suavizado, y una transición lo persigue siempre por detrás (ley 6). */
@@ -269,18 +268,23 @@ html:not(.anim) .dibujo { display: none; }
    reescribe lo que funciona (NORMAS § 11.7).
    ========================================================================== */
 
-/* 🚨 LO QUE DURA EL VIAJE, JUSTO DEBAJO DEL MAPA.
-   Va colocado a mano y no en la rejilla de la escena porque tiene que caer en
-   el hueco exacto entre el borde de abajo del mapa pequeño y las copas de los
-   árboles: son cuatro puntos de pantalla, y la rejilla no sabe nada de dónde
-   está el mapa.
-   🚨 Si se cambia el tamaño o la altura del mapa pequeño —la variable --mini de
-   escena.css— este número se mueve con él y hay que volver a mirarlo. */
+/* 🚨 LO QUE DURA EL VIAJE, DEBAJO DEL COCHE Y DEL PAISAJE.
+   Estuvo un rato justo debajo del mapa, o sea entre el mapa y las copas de los
+   árboles, y Kiko lo vio enseguida: «debería ser debajo del coche y del
+   paisaje, porque ahora está casi encima». Tenía razón — entre las dos cosas
+   solo hay cuatro puntos de pantalla, y el texto acababa apoyado en los
+   árboles.
+
+   Debajo de la línea del suelo hay una franja de blanco que no usa nadie, y es
+   donde el dato se lee sin pelearse con el dibujo.
+   🚨 Va atado a --suelo: si la línea del suelo se mueve, esto se mueve con
+   ella. Colocado a mano y no en la rejilla de la escena porque la rejilla no
+   sabe nada de dónde está el suelo del dibujo. */
 #al-coche .viaje {
   position: absolute;
   left: 0;
   right: 0;
-  top: 47svh;
+  top: calc(var(--suelo) + 5svh);
   text-align: center;
   opacity: var(--p-viaje, 0);
   pointer-events: none;

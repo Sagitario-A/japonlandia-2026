@@ -13,13 +13,13 @@
    Ver herramientas/generar-costas.js.
    ============================================================================= */
 
-import { COSTAS as MUNDO } from '../datos/mundo.js?v=622648d0';
-import { COSTAS as JAPON } from '../datos/japon.js?v=622648d0';
-import { COSTAS as KANTO } from '../datos/kanto.js?v=622648d0';
-import { CALLES } from '../datos/calles.js?v=622648d0';
-import { AUTOPISTAS } from '../datos/autopistas.js?v=622648d0';
-import { aVectores, envolvente, asomaEnPantalla, trazar, radioActual } from './proyeccion.js?v=622648d0';
-import { tope, tramo } from './util.js?v=622648d0';
+import { COSTAS as MUNDO } from '../datos/mundo.js?v=ba06971e';
+import { COSTAS as JAPON } from '../datos/japon.js?v=ba06971e';
+import { COSTAS as KANTO } from '../datos/kanto.js?v=ba06971e';
+import { CALLES } from '../datos/calles.js?v=ba06971e';
+import { AUTOPISTAS } from '../datos/autopistas.js?v=ba06971e';
+import { aVectores, envolvente, asomaEnPantalla, trazar, radioActual } from './proyeccion.js?v=ba06971e';
+import { tope, tramo } from './util.js?v=ba06971e';
 
 /* --------------------------------------------------------------------------
    1 · Preparar los datasets

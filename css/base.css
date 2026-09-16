@@ -42,6 +42,15 @@
   --aire: clamp(4rem, 12vh, 9rem);
   --lado: clamp(1.25rem, 6vw, 2.5rem);
 
+  /* 🚨 LA LÍNEA DEL SUELO DEL DIBUJO, y vive aquí arriba porque la usan DOS
+     sitios que no se ven entre sí: la capa del dibujo (#dibujo, donde se apoyan
+     el tren, el coche y los árboles) y el texto de los actos, que tiene que
+     saber dónde acaba el paisaje para ponerse debajo y no encima.
+     Estaba solo en la capa del dibujo, y desde el texto var(--suelo) no
+     resolvía: caía siempre en su valor de reserva, así que el lazo entre las
+     dos cosas era mentira aunque el código dijera lo contrario. */
+  --suelo: 68%;
+
   /* El mapa: línea de pelo, nunca mancha */
   --mapa-linea: #c9ced6;
   --mapa-costa: #a9b2bd;
