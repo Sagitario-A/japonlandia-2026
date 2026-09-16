@@ -25,14 +25,14 @@
    está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=ba06971e';
-import { tramo, suave, tope } from '../motor/util.js?v=ba06971e';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=ba06971e';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=ba06971e';
-import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=ba06971e';
-import { montarNieve, nevar } from '../motor/nieve.js?v=ba06971e';
-import { tenderRuta } from '../motor/ruta.js?v=ba06971e';
-import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=ba06971e';
+import { registrarActo } from '../motor/escenario.js?v=db2e7560';
+import { tramo, suave, tope } from '../motor/util.js?v=db2e7560';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=db2e7560';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=db2e7560';
+import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=db2e7560';
+import { montarNieve, nevar } from '../motor/nieve.js?v=db2e7560';
+import { tenderRuta } from '../motor/ruta.js?v=db2e7560';
+import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=db2e7560';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -240,8 +240,16 @@ export function montarActoAlCoche() {
        Y el dibujo, porque al bajar del acto 3 a los capítulos de texto no hay
        ningún acto detrás que lo apague, y el coche y la nieve se quedaban
        flotando por encima del texto. */
-    salir() {
+    salir(acto) {
       pintarTexto(-1);
+      /* 🚨 Y LA DURACION DEL VIAJE TAMBIEN, que se escribe con una variable CSS
+         y no con una opacidad en el elemento, asi que pintarTexto() no la
+         alcanza. Se quedaba encendida al salir del acto: hoy no se ve porque
+         para entonces la escena ya ha salido de pantalla, pero es la ley 12
+         —lo que un acto escribe en el HTML, lo recoge al salir— y en cuanto
+         exista el acto 4, la escena de este se solapa una pantalla entera con
+         la suya. Una linea ahora, o un "2 h 33" flotando sobre Takaragawa. */
+      acto.v('--p-viaje', 0);
       /* 🚨 Y EL DIBUJO NO SE APAGA AQUÍ. Lo hacía, y Kiko lo vio: «de repente
          desaparece y tarda un rato en llegar lo otro». Bajando del acto a los
          capítulos de texto, el coche se esfumaba de un fotograma al siguiente y

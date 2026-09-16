@@ -23,17 +23,17 @@
    podría verlas, la URL no cambiaría nunca y una publicación serviría el dibujo
    viejo durante los diez minutos de caché de GitHub Pages. */
 const PIEZAS = [
-  ['tren', 'arte/tren.svg?v=ba06971e'],
-  ['cuatro', 'arte/cuatro.svg?v=ba06971e'],
-  ['mostrador', 'arte/mostrador.svg?v=ba06971e'],
-  ['llave', 'arte/llave.svg?v=ba06971e'],
-  ['coche', 'arte/coche.svg?v=ba06971e']
+  ['tren', 'arte/tren.svg?v=db2e7560'],
+  ['cuatro', 'arte/cuatro.svg?v=db2e7560'],
+  ['mostrador', 'arte/mostrador.svg?v=db2e7560'],
+  ['llave', 'arte/llave.svg?v=db2e7560'],
+  ['coche', 'arte/coche.svg?v=db2e7560']
 ];
 
 const BANDAS = [
-  ['ciudad', 'arte/ciudad.svg?v=ba06971e'],
-  ['bosque', 'arte/bosque.svg?v=ba06971e'],
-  ['bosque-nevado', 'arte/bosque-nevado.svg?v=ba06971e']
+  ['ciudad', 'arte/ciudad.svg?v=db2e7560'],
+  ['bosque', 'arte/bosque.svg?v=db2e7560'],
+  ['bosque-nevado', 'arte/bosque-nevado.svg?v=db2e7560']
 ];
 
 /* Cuántas veces se repite cada banda en fila. Una copia mide 118vmin de ancho,
