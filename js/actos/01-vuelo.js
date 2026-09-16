@@ -10,12 +10,12 @@
    Guion → web-nueva/DEFINICION.md, acto A1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js';
-import { tramo, suave, tope } from '../motor/util.js';
-import { mirarA } from '../motor/proyeccion.js';
-import { pintarMapa, pintarRuta, pintarVehiculo, marcar, esconder, mostrarLienzo, opacidadMapa, alzarLienzo } from '../motor/lienzo.js';
-import { tenderRuta } from '../motor/ruta.js';
-import { VUELO_IDA, LUGARES } from '../datos/rutas.js';
+import { registrarActo } from '../motor/escenario.js?v=8af330d9';
+import { tramo, suave, tope } from '../motor/util.js?v=8af330d9';
+import { mirarA } from '../motor/proyeccion.js?v=8af330d9';
+import { pintarMapa, pintarRuta, pintarVehiculo, marcar, esconder, mostrarLienzo, opacidadMapa, alzarLienzo } from '../motor/lienzo.js?v=8af330d9';
+import { tenderRuta } from '../motor/ruta.js?v=8af330d9';
+import { VUELO_IDA, LUGARES } from '../datos/rutas.js?v=8af330d9';
 
 /* La ruta real de Iberia, tendida una vez al cargar.
    Se exporta porque el acto 2 la hereda: si desaparece de golpe al cambiar de

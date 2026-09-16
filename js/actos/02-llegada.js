@@ -14,13 +14,13 @@
    Guion → web-nueva/DEFINICION.md, acto A2.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js';
-import { tramo, suave, tope } from '../motor/util.js';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js';
-import { tenderRuta } from '../motor/ruta.js';
-import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js';
-import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js';
+import { registrarActo } from '../motor/escenario.js?v=8af330d9';
+import { tramo, suave, tope } from '../motor/util.js?v=8af330d9';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=8af330d9';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js?v=8af330d9';
+import { tenderRuta } from '../motor/ruta.js?v=8af330d9';
+import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=8af330d9';
+import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=8af330d9';
 
 /* --------------------------------------------------------------------------
    Los encuadres, en el orden en que los recorre la cámara
