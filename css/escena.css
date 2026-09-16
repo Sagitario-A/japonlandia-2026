@@ -167,28 +167,20 @@ html:not(.anim) .panel {
 html:not(.anim) .pista { display: none; }
 html:not(.anim) .ir-indice { position: static; margin-top: 2rem; }
 
-/* 🚨 Un velo de papel arriba y abajo.
-   El texto de los actos flota sobre el mapa, y una costa cruzando un titular
-   lo vuelve ilegible: se vio en la primera captura de Japón. No es un fondo de
-   color —eso sigue prohibido en § 1—: es el propio papel blanco difuminándose,
-   así que la página sigue pareciendo blanca y el texto se lee. */
-.anim .escena::before,
-.anim .escena::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  height: 34%;
-  pointer-events: none;
-  z-index: -1;
-}
-.anim .escena::before {
-  top: 0;
-  background: linear-gradient(to bottom, var(--papel) 18%, transparent);
-}
-.anim .escena::after {
-  bottom: 0;
-  background: linear-gradient(to top, var(--papel) 14%, transparent);
+/* 🚨 AQUI HABIA UN VELO DE PAPEL y se ha quitado.
+   Eran dos degradados blancos, arriba y abajo, para que la costa no cruzara los
+   titulares. Pero ocupaban un tercio de la pantalla cada uno y lo que tapaban
+   de verdad era la Tierra: Kiko lo vio como "una cosa blanca que tapa la
+   tierra", y tenia razon.
+   Lo que protege el texto ahora es un halo pegado a las letras (abajo), que
+   hace el mismo trabajo sin poner una sabana por delante del dibujo. */
+
+/* El halo del texto que flota sobre el mapa. Es el mismo truco que ya usaban
+   las etiquetas de los marcadores con paint-order, traido al HTML. */
+.anim .portada,
+.anim .rotulo,
+.anim .tramo-ficha {
+  text-shadow: 0 0 .5rem var(--papel), 0 0 .25rem var(--papel), 0 0 .1rem var(--papel);
 }
 
 /* ==========================================================================

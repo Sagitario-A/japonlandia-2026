@@ -13,11 +13,11 @@
    Ver herramientas/generar-costas.js.
    ============================================================================= */
 
-import { COSTAS as MUNDO } from '../datos/mundo.js?v=8af330d9';
-import { COSTAS as JAPON } from '../datos/japon.js?v=8af330d9';
-import { COSTAS as KANTO } from '../datos/kanto.js?v=8af330d9';
-import { aVectores, envolvente, asomaEnPantalla, trazar, radioActual } from './proyeccion.js?v=8af330d9';
-import { tope, tramo } from './util.js?v=8af330d9';
+import { COSTAS as MUNDO } from '../datos/mundo.js?v=c94af970';
+import { COSTAS as JAPON } from '../datos/japon.js?v=c94af970';
+import { COSTAS as KANTO } from '../datos/kanto.js?v=c94af970';
+import { aVectores, envolvente, asomaEnPantalla, trazar, radioActual } from './proyeccion.js?v=c94af970';
+import { tope, tramo } from './util.js?v=c94af970';
 
 /* --------------------------------------------------------------------------
    1 · Preparar los datasets
@@ -43,9 +43,21 @@ function preparar(costas) {
      la ruta  1,15°→ R ≈ 12.950
 
    Las franjas los envuelven con holgura y se solapan para fundir. */
+/* 🚨 DONDE SE CONMUTA LO DECIDE LA CAJA DEL DATASET, no el gusto.
+   Un dataset solo puede entrar cuando su caja cubre TODO lo que se ve, o al
+   conmutar desaparece de golpe lo que queda fuera y el mapa se corta. Paso el
+   16 de septiembre: Corea, China y Rusia se esfumaban a mitad del zoom.
+
+   En un movil el viewBox es alto, asi que manda la LATITUD:
+       mitad vertical visible = asin(281 / R)
+
+     japon  cubre lat -2..76 (±39 desde 37)  →  asin(281/R) ≤ 39°  →  R ≥ 447
+     kanto  cubre lat 27..43 (±8 desde 35)   →  asin(281/R) ≤ 8°   →  R ≥ 2019
+
+   De ahi salen los dos numeros de abajo, con un pelo de margen. */
 const NIVELES = [
-  { nombre: 'mundo', contornos: preparar(MUNDO), hasta: 450 },
-  { nombre: 'japon', contornos: preparar(JAPON), hasta: 3800 },
+  { nombre: 'mundo', contornos: preparar(MUNDO), hasta: 460 },
+  { nombre: 'japon', contornos: preparar(JAPON), hasta: 2100 },
   { nombre: 'kanto', contornos: preparar(KANTO), hasta: Infinity }
 ];
 

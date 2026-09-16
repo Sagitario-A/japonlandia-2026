@@ -14,13 +14,13 @@
    Guion → web-nueva/DEFINICION.md, acto A2.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=8af330d9';
-import { tramo, suave, tope } from '../motor/util.js?v=8af330d9';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=8af330d9';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js?v=8af330d9';
-import { tenderRuta } from '../motor/ruta.js?v=8af330d9';
-import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=8af330d9';
-import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=8af330d9';
+import { registrarActo } from '../motor/escenario.js?v=c94af970';
+import { tramo, suave, tope } from '../motor/util.js?v=c94af970';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=c94af970';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js?v=c94af970';
+import { tenderRuta } from '../motor/ruta.js?v=c94af970';
+import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=c94af970';
+import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=c94af970';
 
 /* --------------------------------------------------------------------------
    Los encuadres, en el orden en que los recorre la cámara
@@ -79,13 +79,16 @@ export function montarActoLlegada() {
 
     pintar(p, acto) {
       /* ---- Fases ------------------------------------------------------- */
-      const aJapon = suave(tramo(p, 0.00, 0.18));   /* el globo se amplía */
-      const aKanto = suave(tramo(p, 0.24, 0.40));   /* «la zona central de Japón» */
-      const aRuta = suave(tramo(p, 0.46, 0.58));    /* y a escala del trayecto */
-      const aCerca = suave(tramo(p, 0.62, 0.80));   /* y a escala de los últimos tramos */
-      const pNarita = suave(tramo(p, 0.16, 0.22));
-      const pCasa = suave(tramo(p, 0.40, 0.50));
-      const pTrazo = suave(tramo(p, 0.50, 0.80));
+      /* 🚨 RITMO. Kiko pidio acelerar «desde que se llega a Japon hasta el
+         zoom»: la cadena de encuadres se ha comprimido y lo que gana el hueco
+         es el trazado de la ruta, que es la parte que hay que leer. */
+      const aJapon = suave(tramo(p, 0.00, 0.13));   /* el globo se amplía */
+      const aKanto = suave(tramo(p, 0.15, 0.28));   /* «la zona central de Japón» */
+      const aRuta = suave(tramo(p, 0.30, 0.42));    /* y a escala del trayecto */
+      const aCerca = suave(tramo(p, 0.48, 0.66));   /* y a escala de los últimos tramos */
+      const pNarita = suave(tramo(p, 0.12, 0.18));
+      const pCasa = suave(tramo(p, 0.28, 0.36));
+      const pTrazo = suave(tramo(p, 0.40, 0.78));
       const pDatos = suave(tramo(p, 0.80, 0.92));
 
       /* ---- La cámara: cuatro viajes encadenados ------------------------
@@ -142,12 +145,17 @@ export function montarActoLlegada() {
          Y la etiqueta cambia de nombre sin moverse: «Japón» se apaga y
          «Narita» se enciende en el mismo punto, según el mapa se acerca. */
       esconder('avion');
-      marcar('madrid', LUGARES.madrid, 1 - suave(tramo(p, 0.02, 0.14)));
-      marcar('japon', LUGARES.narita, 1 - suave(tramo(p, 0.10, 0.16)));
+      marcar('madrid', LUGARES.madrid, 1 - suave(tramo(p, 0.01, 0.10)));
+      marcar('japon', LUGARES.narita, 1 - suave(tramo(p, 0.07, 0.12)));
       marcar('narita', LUGARES.narita, pNarita);
       marcar('casa', LUGARES.alojamientoTokio, pCasa);
-      marcar('shinjuku', LUGARES.shinjuku, aCerca * (1 - pDatos));
-      marcar('meidaimae', LUGARES.meidaimae, aCerca * (1 - pDatos));
+      /* 🚨 LA LINEA NO VA A CIEGAS. Cada tramo tiene su destino marcado ANTES
+         de empezar a dibujarse, no despues de llegar. Lo pidio Kiko asi: «segun
+         vas completando la linea, deberia estar ya marcado el punto hasta donde
+         va esa linea, y luego la siguiente». */
+      const apaga = 1 - pDatos;
+      marcar('shinjuku', LUGARES.shinjuku, suave(tramo(pTrazo, 0.00, 0.05)) * apaga);
+      marcar('meidaimae', LUGARES.meidaimae, suave(tramo(pTrazo, 0.58, 0.66)) * apaga);
 
       /* El halo se cierra sobre el portal según se recorren los últimos metros */
       const ultima = PATAS[PATAS.length - 1];
