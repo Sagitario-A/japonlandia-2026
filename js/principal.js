@@ -5,18 +5,18 @@
    Todo lo que este archivo hace es coser: la lógica vive en motor/ y actos/.
    ============================================================================= */
 
-import { registrarGlobal, arrancar } from './motor/escenario.js?v=cfb77c51';
-import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=cfb77c51';
-import { desvanecerDibujo } from './motor/dibujo.js?v=cfb77c51';
-import { nevar } from './motor/nieve.js?v=cfb77c51';
+import { registrarGlobal, arrancar } from './motor/escenario.js?v=92870bd8';
+import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=92870bd8';
+import { desvanecerDibujo } from './motor/dibujo.js?v=92870bd8';
+import { nevar } from './motor/nieve.js?v=92870bd8';
 /* 🚨 `tope` lo usa el desvanecido del final, ahi abajo. Lo quite una vez al
    limpiar codigo muerto y el final de la pelicula dejo de ejecutarse entero,
    sin que saltara ninguna comprobacion: ver el aviso de capturas-web.js. */
-import { tope } from './motor/util.js?v=cfb77c51';
-import { montarActoVuelo } from './actos/01-vuelo.js?v=cfb77c51';
-import { montarActoLlegada } from './actos/02-llegada.js?v=cfb77c51';
-import { montarActoAlCoche } from './actos/03-al-coche.js?v=cfb77c51';
-import { montarActoTakaragawa } from './actos/04-takaragawa.js?v=cfb77c51';
+import { tope } from './motor/util.js?v=92870bd8';
+import { montarActoVuelo } from './actos/01-vuelo.js?v=92870bd8';
+import { montarActoLlegada } from './actos/02-llegada.js?v=92870bd8';
+import { montarActoAlCoche } from './actos/03-al-coche.js?v=92870bd8';
+import { montarActoTakaragawa } from './actos/04-takaragawa.js?v=92870bd8';
 
 /* --------------------------------------------------------------------------
    1 · El escenario y los actos
@@ -83,7 +83,7 @@ registrarGlobal(function (scroll, alto, sinMovimiento) {
        primera pantalla —ver js/actos/04-takaragawa.js—. Esta línea se queda
        porque sigue haciendo falta: es la que apaga cualquier resto de mapa al
        acabar la película, y es gratis cuando no hay nada que apagar.
-       Lo que de verdad importa de aquí es el DIBUJO: el coche, el esquiador y
+       Lo que de verdad importa de aquí es el DIBUJO: el coche, el monigote y
        la nieve se van cayendo al fondo durante el cierre, y por eso el cierre
        mide una pantalla entera. */
     const fin = tope((alto - caja.bottom) / alto);

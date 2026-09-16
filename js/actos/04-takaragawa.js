@@ -1,18 +1,30 @@
 /* =============================================================================
-   actos/04-takaragawa.js · La nieve se amontona y alguien la esquía
+   actos/04-takaragawa.js · La nieve se amontona y alguien la baja en tabla
    -----------------------------------------------------------------------------
    Guion literal → web-nueva/DEFINICION.md, acto A4. En orden:
 
      A · LLEGAR       se retira el mapa pequeño que deja puesto el acto 3, el
-                      coche sigue rodando bajo la nevada y entran los datos del
-                      primer alojamiento de la nieve
-     B · LA MONTAÑA   mientras se leen los datos, la nieve que cae se va
-                      acumulando abajo hasta ocupar un tercio de la pantalla; el
-                      coche se va por la derecha y los datos se retiran
-     C · EL ESQUIADOR un monigote la cruza de izquierda a derecha, subiendo y
-                      bajando por encima, mientras se cuenta lo del esquí
-     D · Y SE QUEDA   la montaña se desliza a la izquierda, el esquiador se
+                      coche sigue rodando bajo la nevada y los datos del primer
+                      alojamiento de la nieve SUBEN DESDE ABAJO hasta ponerse
+                      por delante del paisaje y del coche
+     B · LA MONTAÑA   el coche se va por la derecha, los datos se desvanecen
+                      quietos, y entonces la nieve que cae se va acumulando
+                      ABAJO DEL TODO DE LA PÁGINA hasta hacer un montón ancho
+     C · EL MONIGOTE  lo cruza EN TABLA de izquierda a derecha, subiendo y
+                      bajando por encima, mientras se cuenta lo de la nieve
+     D · Y SE QUEDA   la montaña se desliza a la izquierda, el monigote se
                       centra, y sigue nevando
+
+   🔁 TRES COSAS LAS CAMBIÓ KIKO EL 18 DE SEPTIEMBRE, viendo el acto publicado:
+   el muñeco baja en tabla y no con esquís; el panel de datos sube desde abajo
+   del todo y se pone por delante del paisaje en vez de apartarse a la parte de
+   arriba; y la montaña se amontona en el borde de abajo de la página, «no en el
+   suelo del paisaje». De ahí sale el orden de A y B: el guion original ponía la
+   nieve acumulándose MIENTRAS se leen los datos, y él lo puso en fila —«cuando
+   ya se haya ido el coche, [el panel] se desvanezca del todo y siga nevando y
+   la montaña de nieve aparezca abajo del todo»—. Además de ser lo que pidió, es
+   lo único que funciona: el panel sube desde abajo y la montaña crece desde
+   abajo, así que a la vez se pelearían por el mismo sitio de la pantalla.
 
    🚨 DÓNDE EMPIEZA (ley 5). En el fotograma EXACTO en que acaba el acto 3:
    coche centrado a tamaño natural, bosque nevado con el fondo justo donde lo
@@ -22,21 +34,22 @@
    lo retira este acto, en su primera pantalla.
 
    🚨 Y DÓNDE ACABA, que es donde tendrá que empezar el acto 5 —«vuelve el mapa,
-   el muñequito sigue ahí esquiando y sigue nevando»—: esquiador centrado sobre
-   el suelo, bosque nevado detrás, nevando, sin montaña, sin coche y sin mapa.
+   el muñequito sigue ahí esquiando y sigue nevando»—: monigote centrado abajo
+   del todo, bosque nevado detrás y por encima, nevando, sin montaña, sin coche
+   y sin mapa.
 
    🚨 LAS POSICIONES VAN EN UNIDADES DEL ESCENARIO, que mide 100u de ancho —de
    -50 a +50—. La explicación larga está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=cfb77c51';
-import { tramo, suave, tope, frena } from '../motor/util.js?v=cfb77c51';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=cfb77c51';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=cfb77c51';
-import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, perfilDe, altura } from '../motor/dibujo.js?v=cfb77c51';
-import { nevar } from '../motor/nieve.js?v=cfb77c51';
-import { tenderRuta } from '../motor/ruta.js?v=cfb77c51';
-import { LUGARES, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=cfb77c51';
+import { registrarActo } from '../motor/escenario.js?v=92870bd8';
+import { tramo, suave, tope, frena } from '../motor/util.js?v=92870bd8';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=92870bd8';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=92870bd8';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, perfilDe, altura } from '../motor/dibujo.js?v=92870bd8';
+import { nevar } from '../motor/nieve.js?v=92870bd8';
+import { tenderRuta } from '../motor/ruta.js?v=92870bd8';
+import { LUGARES, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=92870bd8';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -68,7 +81,7 @@ const V_NORTE = vista('region');
    El reparto, en pantallas de las diez que dura:
      llegar       4,5   se va el mapa, el coche rueda y entran los datos
      la montaña   3,2   se acumula la nieve, el coche se va, salen los datos
-     el esquí     3,3   el monigote cruza, y el texto del esquí
+     la bajada    3,0   el monigote cruza en tabla, y el texto de la nieve
      se queda     1,5   la montaña se va por la izquierda y él se centra
 
    (suman más de diez porque las ventanas SE SOLAPAN a propósito: una cosa entra
@@ -80,87 +93,102 @@ const F = {
      es exactamente lo que tardaba antes en principal.js: lo que se ve no
      cambia, cambia quién lo hace. */
   mapaSeVa:  [0.000, 0.032],
-  /* 🚨 Y NADA DE TEXTO ANTES DE 0,10. La escena del acto 3 se solapa una
+
+  /* 🚨 EL PANEL SUBE DESDE ABAJO DEL TODO, y por eso son dos ventanas y no una.
+     datosSube es el viaje y solo va hacia delante; datosDent y datosFuer son lo
+     que se ve. Al final se desvanece QUIETO, que es lo que pidió Kiko —«se
+     desvanezca del todo»—: con una sola ventana, al apagarse se habría ido
+     otra vez hacia abajo por donde vino.
+
+     🚨 Y NADA DE TEXTO ANTES DE 0,10. La escena del acto 3 se solapa una
      pantalla entera con esta por el margen negativo de la ley 7, así que
      durante la primera pantalla todavía está subiendo por delante con lo suyo.
      Un panel entrando ahí se cruza con ello. */
-  datosDent: [0.115, 0.190],
-  datosFuer: [0.330, 0.395],
+  datosSube: [0.100, 0.205],
+  datosDent: [0.100, 0.175],
+  datosFuer: [0.300, 0.380],
 
   /* B · la marcha del coche y la montaña.
-     🚨 EL COCHE SE VA ANTES DE QUE LA NIEVE CUAJE, y eso se vio en pantalla, no
-     leyendo el código: con el coche todavía en el centro y el montón ya por
-     encima de las ruedas, no parecía que hubiera nevado, parecía que el coche
-     se había quedado enterrado. El orden que cuenta la historia es al revés:
-     llegamos, se enseña dónde dormimos, el coche sigue su camino, y ENTONCES
-     la nieve se va amontonando donde estaba.
+     🚨 PRIMERO SE VA EL COCHE Y DESPUÉS CUAJA LA NIEVE, y esto vale por dos
+     motivos. Lo pidió Kiko así, y además ya se había visto en pantalla antes de
+     que lo dijera: con el coche todavía en el centro y el montón ya por encima
+     de las ruedas, no parecía que hubiera nevado, parecía que el coche se había
+     quedado enterrado. */
+  cocheSeVa: [0.265, 0.340],
+  monte:     [0.390, 0.585],
 
-     🚨 Y LA MONTAÑA TERMINA DE CRECER CUANDO LOS DATOS YA SE ESTÁN YENDO. El
-     guion pide las dos cosas a la vez —«mientras se muestran, esa nieve se va
-     acumulando»— y a la vez se ven, pero el último tercio de la montaña le
-     comería el panel por abajo: se cruzan en el sitio donde el panel tiene las
-     filas de datos. Así crece durante todo el panel y se planta justo después. */
-  cocheSeVa: [0.185, 0.258],
-  monte:     [0.230, 0.480],
+  /* C · el monigote cruza en tabla, y el texto de la nieve */
+  esqui:     [0.560, 0.855],
 
-  /* C · el esquiador cruza, y el texto del esquí */
-  esqui:     [0.520, 0.830],
-
-  /* D · la montaña se va y él se queda. 🚨 Acaba en 0,975 y no en 1, para que
-     el acto TERMINE quieto: ese fotograma es del que arranca el acto 5. */
-  /* 🚨 EMPIEZA ANTES DE QUE ÉL TERMINE DE BAJAR, y a propósito: la montaña se
+  /* D · la montaña se va y él se queda. 🚨 Acaba en 0,972 y no en 1, para que
+     el acto TERMINE quieto: ese fotograma es del que arranca el acto 5.
+     🚨 Y EMPIEZA ANTES DE QUE ÉL TERMINE DE BAJAR, a propósito: la montaña se
      va por la izquierda justo cuando le queda el último palmo de ladera, así
      que lo que le deja en el suelo es la propia montaña saliéndose de debajo.
      Con las dos cosas separadas se quedaba plantado a media ladera esperando. */
-  monteSeVa: [0.818, 0.972]
+  monteSeVa: [0.845, 0.972]
 };
 
 /* --------------------------------------------------------------------------
    Dónde para cada cosa
    -------------------------------------------------------------------------- */
-/* 🚨 LA MONTAÑA MIDE 96u DE ANCHO —lo pone el CSS— así que su ladera llega
-   hasta 48u a cada lado del centro. De ahí sale todo lo demás: por dónde entra
-   el esquiador, dónde acaba y cuánto hay que desplazarla para que se vaya. */
-const MEDIO_MONTE = 48;
-const X_ESQ_ENTRA = -62;    /* fuera de pantalla por la izquierda, a ras de suelo */
-/* 🚨 38 Y NO 44, Y NO ES REDONDEO. Su dibujo mide 20u de ancho, así que a 44
-   se le salía media cabeza por el borde derecho de un móvil, y encima acababa
-   metido entre los puntos del raíl. A 38 el dibujo entero cabe con holgura.
-   Se queda a media ladera, y lo que le baja el último palmo es la montaña
-   yéndose por debajo. */
-const X_ESQ_ACABA = 38;
-const X_MONTE_FUERA = -152; /* lo que hay que correrla para que no se vea nada */
+/* 🚨 LA MONTAÑA MIDE 132u DE ANCHO —lo pone el CSS— así que su ladera llega
+   hasta 66u a cada lado del centro, o sea que en un móvil, que mide 100u, las
+   dos faldas se salen bastante por los lados: se ve un TROZO de montaña, que es
+   lo que hace que parezca grande. De aquí sale todo lo demás: por dónde entra
+   el monigote, dónde acaba y cuánto hay que correrla para que se vaya.
+   🚨 Y por eso el monigote aparece por el borde izquierdo ya subiendo un poco,
+   no a ras de suelo: a ras de suelo estaría a 66u, o sea fuera de la pantalla.
+   Se lee bien —viene de más allá— y es lo que permite que la montaña sea más
+   ancha que la pantalla. */
+const MEDIO_MONTE = 66;
+const X_ESQ_ENTRA = -80;    /* fuera de pantalla, por la falda de la izquierda */
+/* 🚨 40 Y NO 60, QUE ES DONDE ACABA LA MONTAÑA. Su dibujo mide 20u de ancho,
+   así que a 60 se le saldría entero por el borde derecho de un móvil. A 40 cabe
+   justo, y se queda a media ladera: lo que le baja el último palmo es la
+   montaña yéndose por debajo. */
+const X_ESQ_ACABA = 40;
+const X_MONTE_FUERA = -200; /* lo que hay que correrla para que no se vea nada */
 
 /* 🚨 UN TERCIO DE LA PANTALLA, Y LA CUENTA VIVE AQUÍ Y EN NINGÚN SITIO MÁS.
-   El CSS la lee de --monte-h, que se escribe desde aquí, porque el esquiador
+   El CSS la lee de --monte-h, que se escribe desde aquí, porque el monigote
    necesita exactamente el mismo número para saber a qué altura va. Dos
    definiciones de la misma medida —una en CSS y otra en JavaScript— es como el
    monigote acaba flotando un palmo por encima de la nieve.
 
    Son dos topes y no uno porque la capa del dibujo se mide en vmin y la
    pantalla en svh, y en un móvil alto y en un portátil ancho eso es muy
-   distinto: solo con 35 svh, en un portátil la montaña se comía el bosque
-   entero; solo con 66u, en un móvil quedaba un montoncito de nada.
-   El perfil llega al 94 % de su caja (ver arte/monte.svg), así que 35 svh de
-   caja son 33 svh de nieve: el tercio de pantalla que pidió Kiko. */
-const PARTE_DE_PANTALLA = 0.35;
-const ALTO_MONTE_U = 66;
+   distinto: solo con 30 svh, en un portátil la montaña se comía el bosque
+   entero; solo con 60u, en un móvil quedaba un montoncito de nada.
+
+   🔁 Y la montaña se apoya en el BORDE DE ABAJO DE LA PÁGINA, no en el suelo
+   del paisaje (lo pidió Kiko el 18 de septiembre), así que estos mismos números
+   la dejan mucho más baja en el encuadre que antes: su cima queda por debajo de
+   la carretera del bosque en vez de por encima de las copas.
+
+   🚨 Y EL PERFIL SOLO LLEGA AL 83 % DE SU CAJA, no al 94 % de la primera
+   versión, porque la cima pasó a ser una cúpula ancha en vez de un pico (ver
+   arte/monte.svg). O sea que 30 svh de caja son 25 svh de nieve: si alguien
+   vuelve a hacer la cima puntiaguda, la montaña crece sola sin tocar esto. */
+const PARTE_DE_PANTALLA = 0.30;
+const ALTO_MONTE_U = 60;
 
 /* Cuánto fondo pasa mientras el coche sigue rodando.
    🚨 EL NÚMERO ESTÁ ELEGIDO PARA QUE NO SE VEA LA COSTURA. El acto 3 termina
    moviendo el fondo a 2,02 unidades por cada svh de scroll; con `frena` sobre
-   0,40 del acto y 1.000 svh de recorrido, arrancar en 400 da 2,00. O sea: el
+   0,36 del acto y 1.000 svh de recorrido, arrancar en 363 da 2,02. O sea: el
    bosque cruza el empalme a la MISMA velocidad y va frenando hasta pararse
    cuando el coche se va. Si se toca el largo del acto, se toca esto. */
-const RODAJE = 400;
+const RODAJE = 363;
+const RUEDA_HASTA = 0.36;
 const FONDO_HEREDADO = 1150;   /* donde lo deja el acto 3 */
 
 /* 🚨 EL GUION DEL TEXTO, en ventanas explícitas y no derivadas de las fases del
    dibujo. Es la lección del acto 2: derivarlo dejaba huecos sin texto y hacía
    que dos fichas cayeran en la misma celda, una encima de otra. */
 const GUION_ROTULOS = [
-  { i: 0, de: 0.545, a: 0.720 },   /* el material se alquila por internet */
-  { i: 1, de: 0.705, a: 0.862 }    /* qué pistas, que sigue sin decidir */
+  { i: 0, de: 0.590, a: 0.750 },   /* el material se alquila por internet */
+  { i: 1, de: 0.735, a: 0.888 }    /* dónde se baja, que sigue sin decidir */
 ];
 
 /** Entra en el primer tercio de su ventana y sale en el último cuarto. */
@@ -170,6 +198,7 @@ function ventana(p, de, a) {
 }
 
 let rotulos = [];
+let sueloRel = 0.68;   /* se lee de --suelo al preparar el acto */
 
 function pintarTexto(p) {
   for (const e of rotulos) e.style.opacity = '0';
@@ -204,6 +233,15 @@ export function montarActoTakaragawa() {
 
     preparar(acto) {
       rotulos = Array.from(acto.el.querySelectorAll('.rotulo'));
+      /* 🚨 DÓNDE ESTÁ EL SUELO DEL PAISAJE, leído UNA vez de donde vive, que es
+         base.css. El monigote acaba de pie sobre él cuando la montaña se va, y
+         escribir aquí un 68 % a mano sería la tercera copia de un número que ya
+         tiene dueño: el día que se mueva la línea del suelo, el muñeco se
+         quedaría flotando. getComputedStyle es caro, así que se hace en el
+         preparado y no en cada fotograma. */
+      const capa = document.getElementById('dibujo');
+      const leido = capa ? parseFloat(getComputedStyle(capa).getPropertyValue('--suelo')) : NaN;
+      sueloRel = isNaN(leido) ? 0.68 : leido / 100;
     },
 
     /* 🚨 AL SALIR, SE RECOGE (ley 12). Dos cosas distintas:
@@ -212,7 +250,7 @@ export function montarActoTakaragawa() {
        este acto se solapa una pantalla entera con la del 3 por arriba y con el
        cierre por abajo, y un panel encendido ahí sale impreso encima.
 
-       La montaña y el esquiador SOLO SI SE SALE POR ARRIBA. Son piezas de una
+       La montaña y el monigote SOLO SI SE SALE POR ARRIBA. Son piezas de una
        capa compartida y el acto 3 no sabe que existen, así que volviendo hacia
        atrás se quedarían flotando sobre el bosque — la línea de puntos suelta
        del 16 de septiembre otra vez, con otro nombre. Pero saliendo por abajo
@@ -234,9 +272,10 @@ export function montarActoTakaragawa() {
     salir(acto) {
       pintarTexto(-1);
       acto.v('--p-datos', 0);
+      acto.v('--p-sube', 0);
       if (acto.el.getBoundingClientRect().top > 0) {
         colocar('monte', { op: 0 });
-        colocar('esquiador', { op: 0 });
+        colocar('monigote', { op: 0 });
       }
     },
 
@@ -294,7 +333,7 @@ export function montarActoTakaragawa() {
 
       /* El coche sigue rodando sin moverse, y el bosque va frenando hasta
          pararse: hemos llegado. Ver RODAJE, arriba. */
-      desplazarFondo(FONDO_HEREDADO + RODAJE * frena(tramo(p, 0, 0.40)));
+      desplazarFondo(FONDO_HEREDADO + RODAJE * frena(tramo(p, 0, RUEDA_HASTA)));
 
       /* --- El coche se va por la derecha --------------------------------
          El guion dice «el coche continúa hacia la derecha», y en algún momento
@@ -352,46 +391,58 @@ export function montarActoTakaragawa() {
          ================================================================
          «Desde la izquierda hacia la derecha, subiendo y luego bajando por
          encima de la montaña, aparece un monigote chiquitito que la esquía.»
+         🔁 Y desde el 18 de septiembre la baja EN TABLA, por orden de Kiko: «el
+         muñeco, en vez de esquí, que haga snowboard». Solo cambia el dibujo —
+         arte/monigote.svg—; lo que hace aquí es exactamente lo mismo.
 
          🚨 SUBE POR LA MONTAÑA DE VERDAD, no por una curva parecida. La tabla
          de alturas la mide motor/dibujo.js del propio trazado de arte/monte.svg
          en cuanto llega el archivo, así que retocar el dibujo mueve al monigote
-         con él. Si todavía no ha llegado, `altura()` devuelve 0 y el esquiador
+         con él. Si todavía no ha llegado, `altura()` devuelve 0 y el monigote
          va por el suelo: un hueco, nunca un error. */
       const tCruce = tramo(p, F.esqui[0], F.esqui[1]);
       const anchoMonte = MEDIO_MONTE * anchoRel;
       const xEsq = (X_ESQ_ENTRA + (X_ESQ_ACABA - X_ESQ_ENTRA) * tCruce) * (1 - pIrse);
 
       const tabla = perfilDe('monte');
-      /* Dónde cae el esquiador sobre la caja de la montaña, de 0 a 1. Va
+      /* Dónde cae el monigote sobre la caja de la montaña, de 0 a 1. Va
          referido a DÓNDE ESTÁ LA MONTAÑA y no al centro de la pantalla: cuando
          al final se desliza hacia la izquierda, esto se sale de su borde por sí
          solo, `altura()` devuelve 0 y el monigote se queda en el suelo sin una
          línea de código que lo diga. */
       const sobreMonte = (xEsq - xMonte) / (2 * anchoMonte) + 0.5;
-      const altoAqui = altura(tabla, sobreMonte) * pMonte;
+      const altoAqui = altura(tabla, sobreMonte) * pMonte * altoMonte;
 
-      /* La pendiente, para que vaya inclinado: sin esto no esquía, resbala.
+      /* La pendiente, para que vaya inclinado: sin esto no baja, resbala.
          Se mide en píxeles de verdad —la montaña es mucho más ancha que alta, y
          mezclar unidades daría un ángulo inventado— y a los dos lados del punto
-         donde está, que es la pendiente de debajo de los esquís. */
+         donde está, que es la pendiente de debajo de la tabla. */
       const paso = 0.02;
       const sube = (altura(tabla, sobreMonte + paso) - altura(tabla, sobreMonte - paso)) * pMonte * altoMonte;
       const avanza = 2 * paso * (2 * anchoMonte) * unidad;
       const pendiente = avanza > 0.01 ? -Math.atan2(sube, avanza) * 180 / Math.PI : 0;
       /* 🚨 NO SE LE DA LA PENDIENTE ENTERA, Y SE VIO EN PANTALLA. En la parte
          empinada de la ladera el ángulo pasa de 45°, y con el monigote girado
-         eso entero no parecía esquiando: parecía caído de espaldas con los
-         esquís por el aire. Con dos tercios se lee como que se inclina en la
-         subida y se echa adelante en la bajada, que es lo que hace un esquiador
+         eso entero no parecía bajando: parecía caído de espaldas con la tabla
+         por el aire. Con menos de la mitad se lee como que se inclina en la
+         subida y se echa adelante en la bajada, que es lo que hace quien baja
          de verdad — que tampoco va perpendicular a la nieve. Se bajó dos veces
          mirando la pantalla: con 0,62 y tope de 34° la bajada seguía pareciendo
          una caída de cabeza. */
       const giro = Math.max(-24, Math.min(24, pendiente * 0.45));
 
-      colocar('esquiador', {
+      /* 🚨 Y DÓNDE ACABA DE PIE, que es lo que costó verlo en pantalla. La
+         montaña se apoya en el borde de abajo de la página, así que bajarla
+         entera deja al monigote plantado en el canto inferior, solo, con media
+         pantalla de blanco entre él y el bosque — y sin sitio debajo para el
+         onsen del acto 5, que tiene que aparecer justo ahí.
+         Así que mientras la montaña se desliza hacia la izquierda, él vuelve al
+         SUELO DEL PAISAJE: las dos cosas duran lo mismo, así que se lee como que
+         se baja de la nieve y se queda de pie en la carretera. */
+      const yEnElSuelo = -(altoPantalla * (1 - sueloRel));
+      colocar('monigote', {
         x: xEsq,
-        y: -altoAqui,
+        y: -altoAqui * (1 - pIrse) + yEnElSuelo * pIrse,
         op: p >= F.esqui[0] ? 1 : 0,
         escala: 1,
         giro: giro
@@ -404,6 +455,12 @@ export function montarActoTakaragawa() {
          esquí se alquila por internet, lo mandan a Tokio y se devuelve en
          Matsumoto. Las pistas siguen sin decidir y así se dice. */
       pintarTexto(p);
+      /* 🚨 DOS VARIABLES PARA EL PANEL, Y NO UNA. --p-sube es el viaje desde el
+         borde de abajo de la pantalla y SOLO VA HACIA DELANTE: llega a 1 y se
+         queda. --p-datos es lo que se ve. Así, al final se desvanece quieto en
+         su sitio, que es lo que pidió Kiko —«se desvanezca del todo»—, en vez
+         de irse otra vez hacia abajo por donde vino. */
+      acto.v('--p-sube', suave(tramo(p, F.datosSube[0], F.datosSube[1])));
       acto.v('--p-datos',
         suave(tramo(p, F.datosDent[0], F.datosDent[1])) *
         (1 - suave(tramo(p, F.datosFuer[0], F.datosFuer[1]))));

@@ -23,25 +23,25 @@
    podría verlas, la URL no cambiaría nunca y una publicación serviría el dibujo
    viejo durante los diez minutos de caché de GitHub Pages. */
 const PIEZAS = [
-  ['tren', 'arte/tren.svg?v=cfb77c51'],
-  ['cuatro', 'arte/cuatro.svg?v=cfb77c51'],
-  ['mostrador', 'arte/mostrador.svg?v=cfb77c51'],
-  ['llave', 'arte/llave.svg?v=cfb77c51'],
-  ['coche', 'arte/coche.svg?v=cfb77c51'],
+  ['tren', 'arte/tren.svg?v=92870bd8'],
+  ['cuatro', 'arte/cuatro.svg?v=92870bd8'],
+  ['mostrador', 'arte/mostrador.svg?v=92870bd8'],
+  ['llave', 'arte/llave.svg?v=92870bd8'],
+  ['coche', 'arte/coche.svg?v=92870bd8'],
   /* 🚨 EL ACTO 4 EN ADELANTE. Van aquí y no en el acto por lo de siempre: el
-     esquiador sigue puesto en el acto 5 («el muñequito sigue ahí esquiando») y
+     monigote sigue puesto en el acto 5 («el muñequito sigue ahí esquiando») y
      en el 6. Y estando en esta lista, apagarDibujo() los apaga: sin eso, al
      volver del acto 4 al 3 la montaña se quedaba flotando sobre el bosque,
      porque el acto 3 no sabe que existen.
      El tercer campo dice de qué trazado sale el perfil que se muestrea. */
-  ['monte', 'arte/monte.svg?v=cfb77c51', '.mo-perfil'],
-  ['esquiador', 'arte/esquiador.svg?v=cfb77c51']
+  ['monte', 'arte/monte.svg?v=92870bd8', '.mo-perfil'],
+  ['monigote', 'arte/monigote.svg?v=92870bd8']
 ];
 
 const BANDAS = [
-  ['ciudad', 'arte/ciudad.svg?v=cfb77c51'],
-  ['bosque', 'arte/bosque.svg?v=cfb77c51'],
-  ['bosque-nevado', 'arte/bosque-nevado.svg?v=cfb77c51']
+  ['ciudad', 'arte/ciudad.svg?v=92870bd8'],
+  ['bosque', 'arte/bosque.svg?v=92870bd8'],
+  ['bosque-nevado', 'arte/bosque-nevado.svg?v=92870bd8']
 ];
 
 /* Cuántas veces se repite cada banda en fila. Una copia mide 118vmin de ancho,
@@ -195,7 +195,7 @@ export function colocar(nombre, c) {
   if (c.y !== undefined) poner(el, nombre, '--y', c.y.toFixed(2));
   if (c.escala !== undefined) poner(el, nombre, '--s', c.escala.toFixed(3));
   /* Los dos últimos solo los mira quien los use en su regla de CSS —hoy la
-     montaña y el esquiador—, así que para las cinco piezas del acto 3 no
+     montaña y el monigote—, así que para las cinco piezas del acto 3 no
      cambia absolutamente nada. */
   if (c.escalaX !== undefined) poner(el, nombre, '--sx', c.escalaX.toFixed(3));
   if (c.giro !== undefined) poner(el, nombre, '--g', c.giro.toFixed(1));
@@ -262,18 +262,18 @@ export function desplazarFondo(avance) {
 }
 
 /* --------------------------------------------------------------------------
-   El perfil de una pieza · por dónde va el esquiador
+   El perfil de una pieza · por dónde va el monigote
    --------------------------------------------------------------------------
    🚨 UNA SOLA FUENTE, Y ES EL DIBUJO. La montaña del acto 4 tiene un monigote
    esquiándola por encima, y el monigote necesita saber a qué altura está la
    nieve en cada punto. La tentación es escribir la curva dos veces —la campana
    en el SVG y la misma campana en el JavaScript del acto— y eso se desincroniza
    el día que alguien retoque el perfil: la montaña cambia de forma, el
-   esquiador no, y se queda flotando sin que nadie sepa por qué.
+   monigote no, y se queda flotando sin que nadie sepa por qué.
 
    Así que el perfil se MIDE del trazado de verdad, con getPointAtLength, una
    sola vez: en cuanto llega el archivo. Retocar arte/monte.svg mueve al
-   esquiador con él, sin tocar una línea de código.
+   monigote con él, sin tocar una línea de código.
    -------------------------------------------------------------------------- */
 
 /* Cuántas casillas tiene la tabla, repartidas a lo ancho. Con 64 el error

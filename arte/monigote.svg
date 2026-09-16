@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 150" class="a-monigote" aria-hidden="true" focusable="false">
+  <!-- El monigote que baja la montaña de nieve. Kiko, el 18 de septiembre:
+       «el muñeco, en vez de esquí, que haga snowboard».
+
+       🚨 SE LLAMA `monigote` Y NO `esquiador`, y el cambio de nombre es a
+       propósito: en el acto 5 se choca con una roca, se cae y acaba metido en
+       un onsen, y en el 6 se asusta de un mono y sale corriendo. De tabla nada.
+       Es el mismo muñeco toda la nieve, así que lleva el nombre con el que Kiko
+       lo llama —«el muñequito», «el muñeco»— y no el del deporte que hace en un
+       acto. Si mañana cambia de tabla a otra cosa, no hay que renombrar nada.
+
+       🚨 SIN CARA Y SIN RASGOS, igual que los cuatro de arte/cuatro.svg: Kiko
+       dijo «aún no van a tener estilo propio, ya se lo daremos después». Este es
+       uno de ellos, con el rojo del primero. Cuando diga cómo son, se cambian
+       los dos archivos y ninguno más.
+
+       🚨 VA DE LADO, QUE ES COMO SE VA EN TABLA: los dos pies en la misma
+       tabla, las rodillas dobladas y los brazos abiertos haciendo equilibrio.
+       Sin bastones. La tabla mira hacia la derecha, que es hacia donde baja; la
+       inclinación de la pendiente se la pone el acto por fuera, con --g.
+
+       🚨 SE APOYA EN EL BORDE DE ABAJO DE LA CAJA. La capa del dibujo ancla las
+       piezas por su base, así que la suela de la tabla tiene que estar en y=150
+       o el muñeco flota sobre la nieve.
+
+       🚨 Y EL TRAZO ES FINO (1.6 y no --grosor). Con non-scaling-stroke el
+       trazo mide lo mismo en pantalla para todas las piezas, y esta es la más
+       pequeña de las diez: con 2,6 px parecía dibujada con rotulador gordo al
+       lado del coche. Es el mismo peso que ya usan los cristales y los brazos. -->
+
+  <!-- El brazo de atrás va DETRÁS del cuerpo -->
+  <rect class="e-brazo e-brazo-atras" x="-6" y="-13" width="12" height="27" rx="6"
+        transform="translate(40,74) rotate(46)"/>
+
+  <!-- La tabla: cola a la izquierda, punta a la derecha, las dos levantadas -->
+  <g class="e-tabla">
+    <rect x="12" y="136" width="106" height="11" rx="5.5"/>
+    <path d="M110 142 q15 -2 19 -9 q-10 -4 -19 1 z"/>
+    <path d="M20 142 q-15 -2 -19 -9 q10 -4 19 1 z"/>
+  </g>
+  <!-- Las fijaciones: los dos pies van en la misma tabla -->
+  <rect class="e-bota" x="36" y="124" width="21" height="14" rx="5"/>
+  <rect class="e-bota" x="73" y="124" width="21" height="14" rx="5"/>
+
+  <!-- Las piernas, dobladas y abiertas -->
+  <rect class="e-pierna" x="-7.5" y="-17" width="15" height="35" rx="7.5"
+        transform="translate(52,110) rotate(17)"/>
+  <rect class="e-pierna" x="-7.5" y="-17" width="15" height="35" rx="7.5"
+        transform="translate(79,110) rotate(-19)"/>
+
+  <!-- El cuerpo, agachado y girado un pelo hacia la bajada -->
+  <rect class="e-cuerpo" x="-15" y="-23" width="30" height="46" rx="14"
+        transform="translate(65,80) rotate(7)"/>
+
+  <!-- El brazo de delante, abierto haciendo equilibrio -->
+  <rect class="e-brazo" x="-6" y="-14" width="12" height="29" rx="6"
+        transform="translate(90,72) rotate(-52)"/>
+
+  <!-- La cabeza y el gorro -->
+  <circle class="e-cabeza" cx="69" cy="42" r="14"/>
+  <path class="e-gorro" d="M55 40 a14 14 0 0 1 28 0 q-14 -5 -28 0 z"/>
+  <circle class="e-pompon" cx="69" cy="25" r="5"/>
+</svg>

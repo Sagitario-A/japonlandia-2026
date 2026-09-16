@@ -74,14 +74,14 @@
   --c-nieve-manto: #dcebf5;
   --c-nieve-trazo: #8fb4cd;
 
-  /* ⛷️ El acto 4. La montaña reutiliza el manto y el trazo de la nieve de
+  /* 🏂 El acto 4. La montaña reutiliza el manto y el trazo de la nieve de
      arriba a propósito: es la misma nieve, amontonada. Lo único nuevo es el
-     monigote, y va con el rojo del primero de los cuatro, que es de quien
-     se supone que es. */
-  --c-esq-ropa: #c8503f;
-  --c-esq-gorro: #3f7fa8;
-  --c-ski: #d99b2b;
-  --c-baston: #6c7781;
+     monigote, y va con el rojo del primero de los cuatro, que es de quien se
+     supone que es. La tabla, con el amarillo de la llave del acto 3: es el
+     único color cálido que hay en toda la nieve y por eso se ve. */
+  --c-mono-ropa: #c8503f;
+  --c-mono-gorro: #3f7fa8;
+  --c-tabla: #d99b2b;
 }
 
 /* ==========================================================================
@@ -185,7 +185,7 @@
    🚨 UN SOLO TRAZADO ABIERTO. El relleno lo cierra con una recta por la base y
    el trazo no la dibuja, así que la montaña se apoya en el paisaje sin una
    línea por debajo. Y es la misma curva que muestrea motor/dibujo.js para
-   saber por dónde va el esquiador: ver arte/monte.svg. */
+   saber por dónde va el monigote: ver arte/monte.svg. */
 .mo-perfil {
   fill: var(--c-nieve-manto);
   stroke: var(--c-nieve-trazo);
@@ -193,21 +193,17 @@
   stroke-linecap: round;
 }
 
-/* --- El esquiador ---
+/* --- El monigote, que baja la montaña en tabla ---
    🚨 Trazo de 1.6 y no --grosor: con non-scaling-stroke el trazo mide lo mismo
    en pantalla para todas las piezas, y esta es la más pequeña de las diez. */
 .e-cabeza { fill: var(--c-piel); stroke: var(--trazo); stroke-width: 1.6; }
-.e-cuerpo { fill: var(--c-esq-ropa); stroke: var(--trazo); stroke-width: 1.6; }
-.e-brazo  { fill: var(--c-esq-ropa); stroke: var(--trazo); stroke-width: 1.6; }
+.e-cuerpo { fill: var(--c-mono-ropa); stroke: var(--trazo); stroke-width: 1.6; }
+.e-brazo  { fill: var(--c-mono-ropa); stroke: var(--trazo); stroke-width: 1.6; }
+/* El brazo de atrás, un pelo más apagado: es lo único que da profundidad en un
+   dibujo sin una sola sombra (NORMAS § 1) */
+.e-brazo-atras { opacity: .72; }
 .e-pierna { fill: var(--c-pata); }
 .e-bota   { fill: var(--trazo); }
-.e-gorro  { fill: var(--c-esq-gorro); stroke: var(--trazo); stroke-width: 1.6; }
-.e-pompon { fill: var(--c-esq-gorro); stroke: var(--trazo); stroke-width: 1.6; }
-.e-ski    { fill: var(--c-ski); stroke: var(--trazo); stroke-width: 1.6; }
-.e-ski-atras { opacity: .82; }
-.e-baston {
-  fill: none;
-  stroke: var(--c-baston);
-  stroke-width: 2.6;
-  stroke-linecap: round;
-}
+.e-gorro  { fill: var(--c-mono-gorro); stroke: var(--trazo); stroke-width: 1.6; }
+.e-pompon { fill: var(--c-mono-gorro); stroke: var(--trazo); stroke-width: 1.6; }
+.e-tabla  { fill: var(--c-tabla); stroke: var(--trazo); stroke-width: 1.6; }

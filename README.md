@@ -8,7 +8,7 @@ externas y sin nada que construir: HTML, CSS y módulos de JavaScript nativos.
 
 No es una página con una animación: es **una película de scroll**. El globo se amplía hasta que es
 el mapa de Japón, se dibujan las rutas reales de tren y de coche, y entre medias pasan un tren de
-cercanías, un mostrador de alquiler, un coche que cruza el bosque hasta que nieva, un esquiador,
+cercanías, un mostrador de alquiler, un coche que cruza el bosque hasta que nieva, un monigote en tabla de snowboard,
 un onsen y un mono.
 
 **Estado: el motor y los dos primeros actos. Los seis siguientes y el contenido de verdad están por

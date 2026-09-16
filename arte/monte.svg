@@ -3,30 +3,50 @@
        acumulando abajo y va haciendo una especie de montañita de nieve que
        ocupa hasta un tercio de la pantalla».
 
+       🔁 REDIBUJADA TRES VECES EL 18 DE SEPTIEMBRE, viéndola publicada: «que la
+       montaña sea un poquito más baja y más ancha, y no tan alta y tan estrecha
+       y picuda». Las dos primeras salieron mal en pantalla y por eso están
+       contadas aquí, que es donde sirven de algo:
+
+         1ª · solo se ensanchó la caja. Seguía saliendo una campana, porque la
+              cima era un punto: el ancho no arregla un pico.
+         2ª · se le puso a la cima un tramo RECTO de 120 unidades. Se pasó al
+              otro lado: parecía una mesa, no un montón de nieve.
+         3ª · la de ahora. La cima es una cúpula: la curva sale de lo alto en
+              horizontal y tarda cien unidades en empezar a bajar, así que es
+              redonda y ancha a la vez. Ni pico ni mesa.
+
+       Lo otro que cambió es la caja, que ahora es MUCHO más ancha que alta
+       —132u por 30 svh— y se apoya en el borde de abajo de la página: ver
+       04-takaragawa.css.
+
        🚨 UN SOLO TRAZADO, Y ES LA ÚNICA FUENTE DEL PERFIL.
-       El esquiador no sube por una fórmula parecida a esta curva: sube por
-       ESTA curva. motor/dibujo.js la muestrea con getPointAtLength en cuanto
-       llega el archivo y deja una tabla de 64 alturas; el acto interpola ahí.
-       Así, retocar el perfil aquí mueve al esquiador con él. Escribir la curva
-       dos veces —aquí y en el JavaScript— es justo lo que no se hace: el día
-       que alguien toque una, el monigote se pone a flotar y nadie sabe por qué.
+       El monigote no baja por una fórmula parecida a esta curva: baja por ESTA
+       curva. motor/dibujo.js la muestrea con getPointAtLength en cuanto llega
+       el archivo y deja una tabla de 64 alturas; el acto interpola ahí. Así,
+       retocar el perfil aquí mueve al monigote con él. Escribir la curva dos
+       veces —aquí y en el JavaScript— es justo lo que no se hace: el día que
+       alguien toque una, el muñeco se pone a flotar y nadie sabe por qué.
 
        🚨 EL TRAZADO VA ABIERTO A PROPÓSITO, de la base izquierda a la base
        derecha. El relleno lo cierra solo con una recta —que es el suelo— y el
-       trazo NO dibuja esa recta, así que la montaña se apoya en el paisaje sin
-       una línea por debajo. Por eso getTotalLength() es exactamente el largo
-       del perfil visible, sin un trozo de base metido en medio.
+       trazo NO dibuja esa recta, así que la montaña se apoya en el borde de
+       abajo de la página sin una línea por debajo. Por eso getTotalLength() es
+       exactamente el largo del perfil visible, sin un trozo de base en medio.
 
-       🚨 Y LA X ES MONÓTONA de principio a fin: el perfil tiene que ser una
-       altura por cada x, o la tabla del muestreo no significa nada.
+       🚨 LA X ES MONÓTONA de principio a fin: el perfil tiene que ser una
+       altura por cada x, o la tabla del muestreo no significa nada. Y los
+       puntos de control de cada empalme son los del anterior prolongados, para
+       que no haya ni un pico donde se juntan dos tramos: un pico aquí es un
+       tirón del monigote al pasar por encima.
 
        preserveAspectRatio="none" porque la caja la manda el CSS: en un móvil es
-       un montón corto y alto, y en un portátil una loma ancha. La curva es la
+       un montón ancho y bajo, y en un portátil una loma larga. La curva es la
        misma; lo que cambia es cuánto se estira. -->
   <path class="mo-perfil"
         d="M0 200
-           C 78 197 134 172 196 120
-           C 246 78 284 12 330 12
-           C 378 12 418 60 468 114
-           C 522 172 564 197 600 200"/>
+           C 60 198 110 184 160 152
+           C 210 120 250 34 300 34
+           C 350 34 390 120 440 152
+           C 490 184 540 198 600 200"/>
 </svg>

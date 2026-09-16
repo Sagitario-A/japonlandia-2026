@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* ==========================================================================
-   actos/04-takaragawa.css · La montaña de nieve, el esquiador y el acto 4
+   actos/04-takaragawa.css · La montaña de nieve, el monigote y el acto 4
    --------------------------------------------------------------------------
    El color vive en color.css. Aquí vive dónde está cada cosa y cómo se mueve.
    La capa del dibujo, la línea del suelo, la nieve y las bandas de fondo son
@@ -23,19 +23,32 @@
 .dibujo {
   /* 🚨 ESTO ES UNA RESERVA, NO LA DEFINICIÓN. La altura de verdad la escribe
      el acto en píxeles (ver ALTO_MONTE en js/actos/04-takaragawa.js), y se
-     escribe desde ahí porque el esquiador necesita la MISMA cuenta para saber
-     a qué altura va: dos definiciones de la misma medida, una en CSS y otra en
-     JavaScript, es como el monigote acaba flotando por encima de la nieve. */
+     escribe desde ahí porque el monigote necesita la MISMA cuenta para saber a
+     qué altura va: dos definiciones de la misma medida, una en CSS y otra en
+     JavaScript, es como el muñeco acaba flotando por encima de la nieve. */
   --monte-h: 30svh;
 }
 
 [data-pieza='monte'] {
-  /* 🚨 96u DE ANCHO, Y LA CIFRA IMPORTA. El escenario mide 100u, así que la
-     base de la montaña cae justo dentro de la pantalla en un móvil: el
-     esquiador entra y sale a ras de suelo, a la vista. Más ancha y las laderas
-     se salen por los bordes, y el monigote aparecería a media altura, en el
-     aire. Ver arte/monte.svg. */
-  width: calc(96 * var(--u));
+  /* 🚨 SE APOYA EN EL BORDE DE ABAJO DE LA PÁGINA, NO EN EL SUELO DEL PAISAJE.
+     Lo pidió Kiko el 18 de septiembre viendo el acto publicado: «la montaña de
+     nieve que aparezca abajo del todo de la página, no en el suelo del
+     paisaje». Y tiene sentido: la nieve se amontona DELANTE de todo, no sobre
+     la carretera por la que acaba de pasar el coche. Así el dibujo queda en
+     tres franjas —cielo nevando, el bosque con su carretera, y el montón en
+     primer término— en vez de dos cosas peleándose por la misma línea.
+     🚨 Por eso `top: 100%` y no `var(--suelo)`, que es lo que usan las demás
+     piezas. Si alguien la devuelve al suelo del paisaje, vuelve a tapar los
+     árboles y el coche. */
+  top: 100%;
+  /* 🚨 MÁS ANCHA QUE ALTA, Y LAS DOS CIFRAS SON DE KIKO: «que la montaña sea un
+     poquito más baja y más ancha, y no tan alta y tan estrecha y picuda».
+     Pasó de 96u × 35svh a 132u × 30svh, que sobre el papel es poco y en
+     pantalla es otra silueta: de una campana puntiaguda a un montón tendido.
+     132u es bastante más que la pantalla en un móvil —que mide 100u— así que
+     las faldas se salen por los lados, y eso es justo lo que se quiere: se ve
+     un TROZO de montaña, no una montaña entera puesta en medio. */
+  width: calc(132 * var(--u));
   height: var(--monte-h);
   transform-origin: 50% 100%;
   /* --s es lo alta que está —de 0, nada, a 1, entera— y --sx lo ancha. Las dos
@@ -48,31 +61,34 @@
     scale(var(--sx, 1), var(--s, 0));
 }
 /* 🚨 `preserveAspectRatio="none"` en el SVG: la caja de aquí arriba no guarda
-   la proporción del viewBox —en un móvil sale un montón corto y alto, y en un
-   portátil una loma ancha—, así que el dibujo tiene que estirarse con ella. */
+   la proporción del viewBox —en un móvil sale un montón ancho y bajo, y en un
+   portátil una loma larga—, así que el dibujo tiene que estirarse con ella. */
 
 /* ==========================================================================
-   2 · El esquiador
+   2 · El monigote
    --------------------------------------------------------------------------
    «Un monigote chiquitito que la esquía», de izquierda a derecha, subiendo y
-   bajando por encima. Sigue puesto en el acto 5 y en el 6, por eso vive en la
-   capa del dibujo y no en el acto.
+   bajando por encima. 🔁 Desde el 18 de septiembre baja en TABLA, por orden de
+   Kiko. Sigue puesto en el acto 5 y en el 6, por eso vive en la capa del dibujo
+   y no en el acto.
    ========================================================================== */
-[data-pieza='esquiador'] {
+[data-pieza='monigote'] {
+  /* Se apoya en lo mismo que la montaña, porque va montado en ella */
+  top: 100%;
   width: calc(20 * var(--u));
   aspect-ratio: 130 / 150;
   transform-origin: 50% 100%;
-  /* 🚨 AQUÍ --y NO VA EN UNIDADES DEL ESCENARIO, y es la única pieza de las
-     diez donde no. Va en FRACCIÓN DE LA ALTURA DE LA MONTAÑA: -1 es la cima,
-     0 el suelo. Y es a propósito, porque es lo que hace que no puedan
-     descuadrarse: el acto lee la altura del perfil de la montaña —medida del
-     trazado de verdad, ver perfilDe() en js/motor/dibujo.js—, que es un número
-     de 0 a 1, y lo escribe tal cual. Si mañana la montaña sube o baja, el
-     esquiador sube y baja con ella sin tocar nada.
-     --g es la pendiente, en grados, y gira sobre los pies. */
+  /* 🚨 AQUÍ --y VA EN PÍXELES, y es la única pieza de las diez donde no va en
+     unidades del escenario. Es a propósito: este muñeco se apoya en DOS sitios
+     distintos a lo largo del acto —la ladera de la montaña mientras la baja, y
+     el suelo del paisaje cuando la montaña ya se ha ido—, y esas dos alturas
+     solo se pueden mezclar en la misma unidad. Las dos las calcula el acto en
+     píxeles a partir de la altura medida del perfil de verdad (ver perfilDe()
+     en js/motor/dibujo.js) y de --suelo, que lee una sola vez de base.css.
+     --g es la pendiente, en grados, y gira sobre la tabla. */
   transform:
     translate(-50%, -100%)
-    translate(calc(var(--x, 0) * var(--u)), calc(var(--y, 0) * var(--monte-h)))
+    translate(calc(var(--x, 0) * var(--u)), calc(var(--y, 0) * 1px))
     rotate(calc(var(--g, 0) * 1deg))
     scale(var(--s, 1));
 }
@@ -85,28 +101,25 @@
    ========================================================================== */
 #takaragawa { --acento: #2e7aa8; }
 
-/* 🚨 EL PANEL DEL ALOJAMIENTO VA ARRIBA, Y NO CENTRADO COMO EN EL ACTO 2.
-   Allí el mapa se retiraba por detrás y el panel tenía la pantalla para él.
-   Aquí no: debajo siguen el coche, el bosque nevado y una montaña de nieve que
-   está creciendo mientras se leen los datos —que es justo lo que pidió Kiko—,
-   así que el panel se queda en la mitad de arriba y le deja el suelo al dibujo.
+/* 🚨 EL PANEL SUBE DESDE ABAJO DEL TODO Y SE POSA ENCIMA DEL PAISAJE.
+   Kiko, el 18 de septiembre: «cuando aparece la primera parada de la nieve, que
+   aparezca desde abajo del todo y se vaya poniendo encima del paisaje con el
+   coche».
 
-   Va más apretado que el del acto 2 por lo mismo: entre el borde de arriba y
-   las copas de los árboles hay poco más de un tercio de pantalla en un móvil,
-   y el panel tiene que caber ahí sin sentarse encima del paisaje. */
+   O sea que NO se aparta del dibujo: se pone delante. Antes iba arriba y medido
+   para no tocar el techo del coche; ahora entra por el borde de abajo de la
+   pantalla, sube y se queda centrado, con el bosque y el coche por detrás. Lo
+   que lo hace legible es el halo (ley 9: halo, nunca velo).
+
+   🚨 SON DOS VARIABLES Y NO UNA. `--p-sube` es el viaje desde abajo y solo va
+   hacia delante; `--p-datos` es lo que se ve. Con una sola, al desvanecerse al
+   final el panel se habría ido otra vez hacia abajo, y lo que pidió Kiko es que
+   «se desvanezca del todo»: quieto y a menos. */
 #takaragawa .panel {
-  align-self: start;
+  align-self: center;
   width: min(100%, 25rem);
+  transform: translateY(calc((1 - var(--p-sube, 0)) * 92svh));
 }
-/* 🚨 LOS NÚMEROS DE AQUÍ ABAJO ESTÁN MEDIDOS, no elegidos a ojo: el panel tiene
-   que acabar POR ENCIMA DEL TECHO DEL COCHE, que en un móvil está a 490 px del
-   borde de arriba y en un portátil a 419. Con el panel del acto 2 tal cual
-   medía 440 px y las filas de datos caían encima de la carrocería.
-
-   ⚠️ Lo que NO se puede evitar es que cruce las copas de los árboles: en un
-   portátil el bosque empieza a 126 px del borde de arriba, o sea que ocupa
-   media pantalla, y ahí no hay hueco limpio para un panel. De eso se encarga
-   el halo, igual que con los rótulos del acto 3. */
 #takaragawa .panel-cabecera { margin-bottom: .7rem; }
 #takaragawa .panel h3 {
   font-size: clamp(1.4rem, 6.2vw, 1.9rem);
@@ -117,13 +130,12 @@
   gap: .5rem;
   margin-bottom: .75rem;
 }
+/* 💭 Más apaisadas que las del acto 2. El panel viaja por delante del dibujo y
+   cuanto menos alto es, menos tapa: en un móvil esto son setenta píxeles menos
+   de bosque escondido. */
 #takaragawa .foto-hueco { aspect-ratio: 16 / 9; }
 #takaragawa .fila { padding-block: .4rem; }
 
-/* 🚨 Y EN UNA PANTALLA ESTRECHA, MÁS APRETADO TODAVÍA. A 320 px el panel le
-   sacaba veinte píxeles al techo del coche justo en la pantalla en la que
-   conviven los dos, que es la única en la que se ven juntos. Es el ancho más
-   estrecho que se prueba (NORMAS § 6) y ahí no sobra ni un píxel. */
 @media (max-width: 360px) {
   #takaragawa .foto-hueco { aspect-ratio: 5 / 2; }
   #takaragawa .fotos { margin-bottom: .6rem; }
@@ -134,12 +146,12 @@
 
 /* Halo, como todo el texto que flota sobre el dibujo (ley 9: halo, nunca velo).
    🚨 El panel del acto 2 no lo necesitaba porque detrás no había nada; este
-   flota sobre el bosque nevado y sobre la montaña. */
+   flota sobre el bosque nevado y sobre el coche. */
 .anim #takaragawa .panel {
   text-shadow: 0 0 .5rem var(--papel), 0 0 .25rem var(--papel), 0 0 .1rem var(--papel);
 }
 
-/* Los rótulos del esquí, arriba, mientras el monigote baja la montaña.
+/* Los rótulos de la nieve, arriba, mientras el monigote baja la montaña.
    Mismo sitio que los del acto 3: el dibujo es una franja apoyada en el suelo,
    así que con el texto pegado al borde de arriba queda un agujero blanco. */
 #takaragawa .rotulos {
@@ -151,11 +163,14 @@
    4 · Movimiento reducido y sin JavaScript
    --------------------------------------------------------------------------
    Lo genérico ya lo hace escena.css: los actos se aplanan y el texto sale
-   entero. Aquí solo hay que evitar que la montaña y el esquiador se queden
+   entero. Aquí solo hay que evitar que la montaña y el monigote se queden
    plantados encima del texto, porque el acto pinta su fotograma final y ese
-   fotograma los tiene puestos.
+   fotograma los tiene puestos. Y que el panel no se quede a una pantalla por
+   debajo de donde le toca, que es lo que dice su transform.
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   [data-pieza='monte'],
-  [data-pieza='esquiador'] { display: none !important; }
+  [data-pieza='monigote'] { display: none !important; }
+  #takaragawa .panel { transform: none !important; }
 }
+html:not(.anim) #takaragawa .panel { transform: none; }
