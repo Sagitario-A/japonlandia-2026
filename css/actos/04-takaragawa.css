@@ -30,17 +30,21 @@
 }
 
 [data-pieza='monte'] {
-  /* 🚨 SE APOYA EN EL BORDE DE ABAJO DE LA PÁGINA, NO EN EL SUELO DEL PAISAJE.
-     Lo pidió Kiko el 18 de septiembre viendo el acto publicado: «la montaña de
-     nieve que aparezca abajo del todo de la página, no en el suelo del
-     paisaje». Y tiene sentido: la nieve se amontona DELANTE de todo, no sobre
-     la carretera por la que acaba de pasar el coche. Así el dibujo queda en
-     tres franjas —cielo nevando, el bosque con su carretera, y el montón en
-     primer término— en vez de dos cosas peleándose por la misma línea.
-     🚨 Por eso `top: 100%` y no `var(--suelo)`, que es lo que usan las demás
-     piezas. Si alguien la devuelve al suelo del paisaje, vuelve a tapar los
-     árboles y el coche. */
-  top: 100%;
+  /* 🚨 SE APOYA EN LA LÍNEA DEL SUELO, QUE PARA ENTONCES YA ESTÁ ABAJO DEL TODO.
+     Kiko, el 18 de septiembre, en dos pasos. Primero: «la montaña de nieve que
+     aparezca abajo del todo de la página, no en el suelo del paisaje». Y al
+     verlo así, la solución buena: «cuando el coche se va, bajar el paisaje
+     abajo del todo, que el suelo coincida con la parte de abajo… y ahí ya sí
+     tiene sentido que la montaña esté también en la parte de abajo».
+
+     O sea que no son dos suelos: es UNO que baja. Cuando el coche se ha ido, el
+     bosque, su carretera y el recorte de la nieve se deslizan hasta el borde
+     inferior de la pantalla (--baja-paisaje, en 03-al-coche.css), y la montaña
+     crece sobre esa misma línea. Por eso aquí basta con usar --suelo-ahora,
+     igual que las demás piezas: todo casa solo.
+     🚨 La bajada va en el `transform` con --baja-px, no en el `top`: mover
+     `top` en cada fotograma es layout de la capa entera (NORMAS § 9, regla 1). */
+  top: var(--suelo);
   /* 🚨 MÁS ANCHA QUE ALTA, Y LAS DOS CIFRAS SON DE KIKO: «que la montaña sea un
      poquito más baja y más ancha, y no tan alta y tan estrecha y picuda».
      Pasó de 96u × 35svh a 132u × 30svh, que sobre el papel es poco y en
@@ -57,6 +61,7 @@
      acto pinte no hay nada. */
   transform:
     translate(-50%, -100%)
+    translateY(var(--baja-px, 0px))
     translate(calc(var(--x, 0) * var(--u)), 0)
     scale(var(--sx, 1), var(--s, 0));
 }
@@ -74,20 +79,20 @@
    ========================================================================== */
 [data-pieza='monigote'] {
   /* Se apoya en lo mismo que la montaña, porque va montado en ella */
-  top: 100%;
+  top: var(--suelo);
   width: calc(20 * var(--u));
   aspect-ratio: 130 / 150;
   transform-origin: 50% 100%;
   /* 🚨 AQUÍ --y VA EN PÍXELES, y es la única pieza de las diez donde no va en
-     unidades del escenario. Es a propósito: este muñeco se apoya en DOS sitios
-     distintos a lo largo del acto —la ladera de la montaña mientras la baja, y
-     el suelo del paisaje cuando la montaña ya se ha ido—, y esas dos alturas
-     solo se pueden mezclar en la misma unidad. Las dos las calcula el acto en
-     píxeles a partir de la altura medida del perfil de verdad (ver perfilDe()
-     en js/motor/dibujo.js) y de --suelo, que lee una sola vez de base.css.
+     unidades del escenario. Es lo que mide el perfil de la montaña, que se saca
+     del trazado de verdad (ver perfilDe() en js/motor/dibujo.js) y ya viene en
+     píxeles. Cuando la montaña se va por la izquierda, el perfil se sale de
+     debajo de él y esto vale 0 solo: se queda de pie en el suelo, que para
+     entonces es el borde de abajo de la pantalla.
      --g es la pendiente, en grados, y gira sobre la tabla. */
   transform:
     translate(-50%, -100%)
+    translateY(var(--baja-px, 0px))
     translate(calc(var(--x, 0) * var(--u)), calc(var(--y, 0) * 1px))
     rotate(calc(var(--g, 0) * 1deg))
     scale(var(--s, 1));

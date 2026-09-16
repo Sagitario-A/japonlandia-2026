@@ -44,6 +44,33 @@
      💭 Y ojo con el sentido: BAJAR esa línea AGRANDA el hueco blanco entre el
      texto de arriba y el dibujo. Al 66 % quedaba casi media pantalla vacía en
      medio; al 72 % quedaba peor. */
+
+  /* 🚨 LA LÍNEA DEL SUELO SE PUEDE BAJAR, Y LA QUE MANDA ES ESTA.
+     Lo pidió Kiko el 18 de septiembre para el acto 4: cuando el coche se va,
+     «bajar el paisaje abajo del todo, que el suelo coincida con la parte de
+     abajo», y así la montaña de nieve —que se apoya en el borde inferior de la
+     página— cae sobre el mismo suelo que el bosque en vez de flotar por debajo
+     en una franja aparte.
+
+     --baja-paisaje va de 0 (la línea donde siempre ha estado) a 1 (pegada al
+     borde de abajo). Vale 0 salvo que un acto diga lo contrario, así que para
+     los actos 1, 2 y 3 esto es exactamente lo de antes.
+
+     🚨 Y LA BAJADA SE HACE CON `transform`, NO MOVIENDO `top`.
+     El primer montaje escribía la línea nueva en el `top` de las bandas, de la
+     línea del andén y de las piezas. Funcionaba y era layout EN CADA FOTOGRAMA
+     de toda la capa —quinientos nodos de banda y cuarenta y cuatro copos—, que
+     es lo que prohíbe la regla 1 de NORMAS § 9. Medido: un fotograma de 83 ms
+     en mitad de la bajada.
+     Ahora el acto escribe DOS cosas: --baja-paisaje, de 0 a 1, para el recorte
+     de la nieve; y --baja-px, la misma bajada en píxeles, que es lo que suman
+     a su `transform` las bandas, el suelo y las piezas. Cero layout.
+
+     🚨 TODO LO QUE SE APOYA EN EL SUELO TIENE QUE LLEVAR --baja-px. Si uno solo
+     se queda sin él, al bajar el paisaje ese se queda arriba colgado — y el que
+     más canta es la nieve, que dejaría de caer a media pantalla sobre un suelo
+     que ya no está ahí. */
+  --suelo-ahora: calc(var(--suelo) + var(--baja-paisaje, 0) * (100% - var(--suelo)));
 }
 /* Sin `transition`, igual que el escenario: lo que va atado al scroll ya viene
    suavizado, y una transición lo persigue siempre por detrás (ley 6). */
@@ -90,6 +117,7 @@ html:not(.anim) .dibujo { display: none; }
   height: 2px;
   background: var(--pelo-fuerte);
   opacity: var(--op-suelo, 0);
+  transform: translateY(var(--baja-px, 0px));
 }
 
 /* ==========================================================================
@@ -105,8 +133,10 @@ html:not(.anim) .dibujo { display: none; }
   top: var(--suelo);
   opacity: var(--op, 0);
   transform-origin: 50% 100%;
+  /* --baja-px es lo que el acto 4 baja el suelo. Vale 0 en los actos 1, 2 y 3 */
   transform:
     translate(-50%, -100%)
+    translateY(var(--baja-px, 0px))
     translate(calc(var(--x, 0) * var(--u)), calc(var(--y, 0) * var(--u)))
     scale(var(--s, 1));
   will-change: transform, opacity;
@@ -174,7 +204,7 @@ html:not(.anim) .dibujo { display: none; }
      de aquí abajo. */
   top: var(--suelo);
   height: calc(54 * var(--u));
-  transform: translateY(-100%);
+  transform: translateY(calc(-100% + var(--baja-px, 0px)));
   overflow: hidden;
 }
 .d-banda {
@@ -227,7 +257,16 @@ html:not(.anim) .dibujo { display: none; }
      abajo, y parecían caer por detrás del mundo. Se vio en la captura de la
      nevada. Recortada aquí, el copo que llega al suelo desaparece, que es lo
      que hace la nieve de verdad. */
-  bottom: calc(100% - var(--suelo));
+  /* 🚨 DÓNDE SE CORTA LA NIEVE, Y POR QUÉ SIGUE SIENDO `bottom`.
+     Se probó con `clip-path`, que es paint y no layout y sobre el papel es
+     mejor. Medido, era peor: el acto pasaba del 1 % de fotogramas saltados al
+     5 %, porque recortar un grupo con cuarenta y cuatro hijos animados obliga a
+     componerlo aparte SIEMPRE, no solo mientras el recorte se mueve. Es la ley
+     15 con otro nombre.
+     Con `bottom` el coste es un layout por cada valor nuevo, y --baja-paisaje
+     baja EN OCHO ESCALONES (ver 04-takaragawa.js): ocho layouts en toda la
+     bajada en vez de setenta, y ninguno el resto del acto. */
+  bottom: calc((100% - var(--suelo)) * (1 - var(--baja-paisaje, 0)));
   overflow: hidden;
   /* 🚨 SIN `opacity` EN LA CAPA. Ver la explicación en js/motor/nieve.js: con
      los copos animados dentro, una opacidad de grupo cuesta una composición

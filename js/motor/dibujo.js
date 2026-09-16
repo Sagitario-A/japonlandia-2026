@@ -23,25 +23,25 @@
    podría verlas, la URL no cambiaría nunca y una publicación serviría el dibujo
    viejo durante los diez minutos de caché de GitHub Pages. */
 const PIEZAS = [
-  ['tren', 'arte/tren.svg?v=92870bd8'],
-  ['cuatro', 'arte/cuatro.svg?v=92870bd8'],
-  ['mostrador', 'arte/mostrador.svg?v=92870bd8'],
-  ['llave', 'arte/llave.svg?v=92870bd8'],
-  ['coche', 'arte/coche.svg?v=92870bd8'],
+  ['tren', 'arte/tren.svg?v=c1cd755c'],
+  ['cuatro', 'arte/cuatro.svg?v=c1cd755c'],
+  ['mostrador', 'arte/mostrador.svg?v=c1cd755c'],
+  ['llave', 'arte/llave.svg?v=c1cd755c'],
+  ['coche', 'arte/coche.svg?v=c1cd755c'],
   /* 🚨 EL ACTO 4 EN ADELANTE. Van aquí y no en el acto por lo de siempre: el
      monigote sigue puesto en el acto 5 («el muñequito sigue ahí esquiando») y
      en el 6. Y estando en esta lista, apagarDibujo() los apaga: sin eso, al
      volver del acto 4 al 3 la montaña se quedaba flotando sobre el bosque,
      porque el acto 3 no sabe que existen.
      El tercer campo dice de qué trazado sale el perfil que se muestrea. */
-  ['monte', 'arte/monte.svg?v=92870bd8', '.mo-perfil'],
-  ['monigote', 'arte/monigote.svg?v=92870bd8']
+  ['monte', 'arte/monte.svg?v=c1cd755c', '.mo-perfil'],
+  ['monigote', 'arte/monigote.svg?v=c1cd755c']
 ];
 
 const BANDAS = [
-  ['ciudad', 'arte/ciudad.svg?v=92870bd8'],
-  ['bosque', 'arte/bosque.svg?v=92870bd8'],
-  ['bosque-nevado', 'arte/bosque-nevado.svg?v=92870bd8']
+  ['ciudad', 'arte/ciudad.svg?v=c1cd755c'],
+  ['bosque', 'arte/bosque.svg?v=c1cd755c'],
+  ['bosque-nevado', 'arte/bosque-nevado.svg?v=c1cd755c']
 ];
 
 /* Cuántas veces se repite cada banda en fila. Una copia mide 118vmin de ancho,
@@ -53,6 +53,7 @@ const COPIAS = 3;
 
 let raiz = null;
 let fondo = null;
+let suelo = null;
 const piezas = new Map();
 const bandas = new Map();
 
@@ -123,6 +124,7 @@ export function montarDibujo() {
   if (!raiz) return false;
 
   fondo = raiz.querySelector('.d-fondo');
+  suelo = raiz.querySelector('.d-suelo');
 
   for (const par of PIEZAS) {
     const el = raiz.querySelector('[data-pieza="' + par[0] + '"]');
@@ -170,6 +172,12 @@ export function mostrarDibujo(visible) {
 export function apagarDibujo() {
   if (!raiz) return;
   raiz.classList.remove('en-escena');
+  /* 🚨 Y LA LÍNEA DEL SUELO VUELVE A SU SITIO. El acto 4 la baja hasta el borde
+     de abajo de la pantalla para que la montaña de nieve y el bosque compartan
+     suelo; si se queda bajada, el acto 1 abre con el mundo pegado al canto
+     inferior. Es la ley 16: lo que un acto cambia de una capa compartida, otro
+     lo devuelve. */
+  bajarSuelo(0);
   piezas.forEach(function (el, nombre) { verSiHaceFalta(el, nombre, 0); });
   bandas.forEach(function (el, nombre) { verSiHaceFalta(el, nombre, 0); });
 }
@@ -222,6 +230,27 @@ export function desvanecerDibujo(v) {
   ultimo.set('--fin', s);
   raiz.style.setProperty('--fin', s);
   if (v >= 0.999) apagarDibujo();
+}
+
+/**
+ * 🚨 BAJAR LA LÍNEA DEL SUELO, Y POR QUÉ ESTO NO ES UNA `variable()` MÁS.
+ * El acto 4 baja el paisaje hasta el borde de abajo de la pantalla, y eso es un
+ * número que cambia en CADA fotograma durante pantalla y pico. Escribirlo en la
+ * capa entera —que es lo que hace variable()— invalida el estilo de todo lo que
+ * cuelga de ella, y de ella cuelgan los cuarenta y cuatro copos animados: el
+ * acto pasaba del 1 % de fotogramas saltados al 4 %, sin pintar nada nuevo. Es
+ * la ley 15 por la puerta de atrás.
+ *
+ * Escrito pieza a pieza son nueve elementos pequeños y la nevada no se entera.
+ * Medido: vuelve al 0 %.
+ */
+export function bajarSuelo(px) {
+  const v = px.toFixed(1) + 'px';
+  if (ultimo.get('--baja-px') === v) return;
+  ultimo.set('--baja-px', v);
+  if (fondo) fondo.style.setProperty('--baja-px', v);
+  if (suelo) suelo.style.setProperty('--baja-px', v);
+  piezas.forEach(function (el) { el.style.setProperty('--baja-px', v); });
 }
 
 /** Una variable suelta de la capa entera: --puertas, --halo, --luces. */

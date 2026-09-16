@@ -25,14 +25,14 @@
    está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=92870bd8';
-import { tramo, suave, tope } from '../motor/util.js?v=92870bd8';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=92870bd8';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=92870bd8';
-import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=92870bd8';
-import { montarNieve, nevar } from '../motor/nieve.js?v=92870bd8';
-import { tenderRuta } from '../motor/ruta.js?v=92870bd8';
-import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=92870bd8';
+import { registrarActo } from '../motor/escenario.js?v=c1cd755c';
+import { tramo, suave, tope } from '../motor/util.js?v=c1cd755c';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=c1cd755c';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=c1cd755c';
+import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=c1cd755c';
+import { montarNieve, nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=c1cd755c';
+import { tenderRuta } from '../motor/ruta.js?v=c1cd755c';
+import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=c1cd755c';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -392,6 +392,14 @@ export function montarActoAlCoche() {
 
       const hayDibujo = pTren > 0.001;
       mostrarDibujo(hayDibujo);
+
+      /* 🚨 LA NIEVE CAE HASTA LA LÍNEA DEL SUELO DE SIEMPRE. El acto 4 la baja
+         hasta el borde de abajo de la pantalla, porque allí baja el paisaje
+         entero con ella; aquí no, y si se queda bajada los copos siguen cayendo
+         por debajo de la carretera, o sea por detrás del mundo — que es
+         exactamente el fallo que se arregló recortándola. Es la ley 1: un acto
+         apaga lo que no usa, aunque lo haya encendido otro. */
+      nieveHastaElSuelo(0);
 
       if (!hayDibujo) {
         /* Todavía estamos en el mapa: el dibujo no existe */

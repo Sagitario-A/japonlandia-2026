@@ -94,6 +94,20 @@ function escalon(v, n) {
   return Math.round(v * n) / n;
 }
 
+/* Hasta dónde llega la nevada: 0, la línea del suelo de siempre; 1, el borde de
+   abajo de la pantalla. Lo baja el acto 4 cuando baja el paisaje entero.
+   🚨 Se escribe EN LA CAPA DE NIEVE y no en la del dibujo, y a saltos, por lo
+   mismo de siempre: cada valor nuevo recalcula el estilo de los copos. */
+let ultimaBajada = -1;
+
+export function nieveHastaElSuelo(v) {
+  if (!raiz) return;
+  const b = v < 0 ? 0 : v > 1 ? 1 : v;
+  if (b === ultimaBajada) return;
+  ultimaBajada = b;
+  raiz.style.setProperty('--baja-paisaje', b.toFixed(3));
+}
+
 /**
  * Cuánto nieva, de 0 (nada) a 1 (fuerte).
  *

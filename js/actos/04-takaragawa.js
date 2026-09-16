@@ -42,14 +42,14 @@
    -50 a +50—. La explicación larga está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=92870bd8';
-import { tramo, suave, tope, frena } from '../motor/util.js?v=92870bd8';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=92870bd8';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=92870bd8';
-import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, perfilDe, altura } from '../motor/dibujo.js?v=92870bd8';
-import { nevar } from '../motor/nieve.js?v=92870bd8';
-import { tenderRuta } from '../motor/ruta.js?v=92870bd8';
-import { LUGARES, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=92870bd8';
+import { registrarActo } from '../motor/escenario.js?v=c1cd755c';
+import { tramo, suave, tope, frena } from '../motor/util.js?v=c1cd755c';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=c1cd755c';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=c1cd755c';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, perfilDe, altura, bajarSuelo } from '../motor/dibujo.js?v=c1cd755c';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=c1cd755c';
+import { tenderRuta } from '../motor/ruta.js?v=c1cd755c';
+import { LUGARES, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=c1cd755c';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -115,10 +115,23 @@ const F = {
      de las ruedas, no parecía que hubiera nevado, parecía que el coche se había
      quedado enterrado. */
   cocheSeVa: [0.265, 0.340],
-  monte:     [0.390, 0.585],
+
+  /* 🚨 Y AQUÍ BAJA EL PAISAJE ENTERO. Kiko, el 18 de septiembre: «cuando el
+     coche se va, lo que podemos hacer, según seguimos scrolleando, es bajar el
+     paisaje abajo del todo, que el suelo coincida con la parte de abajo… y ahí
+     ya sí tiene sentido que la montaña esté también en la parte de abajo».
+
+     Es la pieza que faltaba. Antes había DOS suelos —el del bosque a media
+     pantalla y el borde inferior donde se amontonaba la nieve— con una franja
+     de blanco en medio que no era de nadie. Ahora es uno solo que baja: el
+     bosque, su carretera y el recorte de la nieve se deslizan hasta el canto de
+     abajo, y la montaña crece sobre esa misma línea.
+     Empieza en cuanto el coche ya no está y el fondo ha dejado de correr. */
+  bajaPaisaje: [0.360, 0.480],
+  monte:     [0.480, 0.645],
 
   /* C · el monigote cruza en tabla, y el texto de la nieve */
-  esqui:     [0.560, 0.855],
+  esqui:     [0.620, 0.890],
 
   /* D · la montaña se va y él se queda. 🚨 Acaba en 0,972 y no en 1, para que
      el acto TERMINE quieto: ese fotograma es del que arranca el acto 5.
@@ -126,7 +139,7 @@ const F = {
      va por la izquierda justo cuando le queda el último palmo de ladera, así
      que lo que le deja en el suelo es la propia montaña saliéndose de debajo.
      Con las dos cosas separadas se quedaba plantado a media ladera esperando. */
-  monteSeVa: [0.845, 0.972]
+  monteSeVa: [0.875, 0.975]
 };
 
 /* --------------------------------------------------------------------------
@@ -187,8 +200,8 @@ const FONDO_HEREDADO = 1150;   /* donde lo deja el acto 3 */
    dibujo. Es la lección del acto 2: derivarlo dejaba huecos sin texto y hacía
    que dos fichas cayeran en la misma celda, una encima de otra. */
 const GUION_ROTULOS = [
-  { i: 0, de: 0.590, a: 0.750 },   /* el material se alquila por internet */
-  { i: 1, de: 0.735, a: 0.888 }    /* dónde se baja, que sigue sin decidir */
+  { i: 0, de: 0.645, a: 0.800 },   /* el material se alquila por internet */
+  { i: 1, de: 0.785, a: 0.925 }    /* dónde se baja, que sigue sin decidir */
 ];
 
 /** Entra en el primer tercio de su ventana y sale en el último cuarto. */
@@ -233,12 +246,11 @@ export function montarActoTakaragawa() {
 
     preparar(acto) {
       rotulos = Array.from(acto.el.querySelectorAll('.rotulo'));
-      /* 🚨 DÓNDE ESTÁ EL SUELO DEL PAISAJE, leído UNA vez de donde vive, que es
-         base.css. El monigote acaba de pie sobre él cuando la montaña se va, y
-         escribir aquí un 68 % a mano sería la tercera copia de un número que ya
-         tiene dueño: el día que se mueva la línea del suelo, el muñeco se
-         quedaría flotando. getComputedStyle es caro, así que se hace en el
-         preparado y no en cada fotograma. */
+      /* 🚨 DÓNDE ESTÁ LA LÍNEA DEL SUELO, leída UNA vez de donde vive, que es
+         base.css. Hace falta en píxeles para bajar el paisaje con `transform`
+         en vez de moviendo `top`, y escribir aquí un 68 % a mano sería una
+         segunda copia de un número que ya tiene dueño. getComputedStyle es
+         caro: por eso se hace al preparar y no en cada fotograma. */
       const capa = document.getElementById('dibujo');
       const leido = capa ? parseFloat(getComputedStyle(capa).getPropertyValue('--suelo')) : NaN;
       sueloRel = isNaN(leido) ? 0.68 : leido / 100;
@@ -276,6 +288,11 @@ export function montarActoTakaragawa() {
       if (acto.el.getBoundingClientRect().top > 0) {
         colocar('monte', { op: 0 });
         colocar('monigote', { op: 0 });
+        /* 🚨 Y EL SUELO VUELVE ARRIBA. El acto 3 no sabe que esta variable
+           existe, así que volviendo hacia atrás se quedaría con el bosque
+           pegado al canto de abajo y el coche con él. Es la ley 16. */
+        bajarSuelo(0);
+        nieveHastaElSuelo(0);
       }
     },
 
@@ -325,6 +342,25 @@ export function montarActoTakaragawa() {
          EL PAISAJE · lo que se hereda del acto 3 y sigue puesto
          ================================================================ */
       apagarLoDelActo3();
+      /* 🚨 EL PAISAJE BAJA HASTA EL BORDE DE ABAJO cuando el coche ya se ha ido.
+         Se escribe SIEMPRE, también cuando vale 0: es una variable de una capa
+         compartida, y saltando desde el raíl a media montaña sin pasar por aquí
+         el bosque se quedaría a media pantalla con la nieve amontonada debajo,
+         flotando. Lo barato es escribir un número; lo caro es el fallo. */
+      const baja = suave(tramo(p, F.bajaPaisaje[0], F.bajaPaisaje[1]));
+      /* 🚨 EL RECORTE DE LA NIEVE BAJA A SALTOS, y es la ley 15 otra vez.
+         --baja-paisaje mueve el `clip-path` de la capa de nieve, y recortar en
+         cada fotograma un grupo con cuarenta y cuatro hijos animados obliga al
+         navegador a componerlo entero cada vez: medido, el acto pasaba del 0 %
+         de fotogramas saltados al 7 %. En ocho escalones no se nota —lo único
+         que marca ese borde es dónde desaparece un copo, y para entonces está
+         detrás del bosque que está bajando— y son ocho escrituras en toda la
+         bajada en vez de setenta. El desplazamiento de verdad, --baja-px, sí va
+         continuo: eso es `transform` y no cuesta nada. */
+      nieveHastaElSuelo(Math.round(baja * 8) / 8);
+      /* La misma bajada en píxeles, que es lo que suman a su `transform` las
+         bandas, la línea del suelo y las piezas. Ver 03-al-coche.css. */
+      bajarSuelo(baja * window.innerHeight * (1 - sueloRel));
       verBanda('ciudad', 0);
       verBanda('bosque', 0);
       verBanda('bosque-nevado', 1);
@@ -431,18 +467,16 @@ export function montarActoTakaragawa() {
          una caída de cabeza. */
       const giro = Math.max(-24, Math.min(24, pendiente * 0.45));
 
-      /* 🚨 Y DÓNDE ACABA DE PIE, que es lo que costó verlo en pantalla. La
-         montaña se apoya en el borde de abajo de la página, así que bajarla
-         entera deja al monigote plantado en el canto inferior, solo, con media
-         pantalla de blanco entre él y el bosque — y sin sitio debajo para el
-         onsen del acto 5, que tiene que aparecer justo ahí.
-         Así que mientras la montaña se desliza hacia la izquierda, él vuelve al
-         SUELO DEL PAISAJE: las dos cosas duran lo mismo, así que se lee como que
-         se baja de la nieve y se queda de pie en la carretera. */
-      const yEnElSuelo = -(altoPantalla * (1 - sueloRel));
+      /* 🚨 Y DÓNDE ACABA DE PIE: en el suelo, sin hacer nada. Aquí hubo un
+         apaño —devolverlo a mano a la altura del bosque— que dejó de hacer
+         falta en cuanto Kiko dijo de bajar el paisaje entero: el suelo baja
+         hasta donde está la montaña, así que cuando ella se desliza y el perfil
+         se sale de debajo, él se queda de pie sobre la misma línea en la que se
+         apoya el bosque. Una idea suya que se llevó por delante diez líneas
+         mías, que es la mejor clase de idea. */
       colocar('monigote', {
         x: xEsq,
-        y: -altoAqui * (1 - pIrse) + yEnElSuelo * pIrse,
+        y: -altoAqui,
         op: p >= F.esqui[0] ? 1 : 0,
         escala: 1,
         giro: giro
