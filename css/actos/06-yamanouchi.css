@@ -1,0 +1,147 @@
+@charset "utf-8";
+/* ==========================================================================
+   actos/06-yamanouchi.css · El mono, la huida y la salida de la nieve
+   --------------------------------------------------------------------------
+   El color vive en color.css. Aquí vive dónde está cada cosa y cómo se mueve.
+   La capa del dibujo, la línea del suelo, la nieve, las bandas de fondo, el
+   monigote, la tabla, la roca, el onsen y el coche son de los actos 3, 4 y 5 y
+   no se tocan: este acto los hereda.
+
+   🚨 Regla de oro, la de siempre: el JavaScript solo escribe VARIABLES CSS.
+
+   🚨 Y LA HERENCIA DE ESTE ACTO TIENE LA MISMA TRAMPA QUE LA DEL 5, más una
+   nueva: el paisaje sigue BAJADO —el suelo es el borde de abajo de la
+   pantalla— y además el muñeco viene METIDO EN EL ONSEN, en la postura del
+   onsen. Las dos cosas hay que volver a escribirlas en cada fotograma, porque
+   son de capas compartidas y saltando desde el raíl no pasa por aquí nadie que
+   las ponga. Ver ESTADO § 5.7.
+   ========================================================================== */
+
+/* ==========================================================================
+   1 · El mono de Jigokudani
+   --------------------------------------------------------------------------
+   Kiko: «aparece por la derecha un mono de la nieve, de estos japoneses de
+   Nagano, de Jigokudani, y avanza ligeramente hacia la izquierda sin llegar al
+   onsen».
+
+   🚨 22 UNIDADES: un pelo más que el muñeco, que mide 20. Es lo que hace que la
+   escena funcione. Más pequeño no asusta a nadie y más grande deja de ser un
+   mono y pasa a ser un oso: lo que da miedo de un macaco no es el tamaño, es
+   que se te acerque. Y a 22u cabe entero entre el onsen y el borde derecho de
+   un móvil, que mide 100u de ancho.
+
+   No necesita regla de `transform` propia: la de `.d-pieza` ya lo apoya en el
+   suelo, lo mueve con --x y le suma la bajada del paisaje.
+   ========================================================================== */
+[data-pieza='mono'] {
+  width: calc(22 * var(--u));
+  aspect-ratio: 130 / 110;
+}
+
+/* ==========================================================================
+   2 · El texto del acto
+   --------------------------------------------------------------------------
+   Mismo acento azul frío que los actos 4 y 5: es la misma nieve y no se estrena
+   un color por estrenarlo. El acto 7 ya cambiará, que ahí se sale de la nieve.
+   ========================================================================== */
+#yamanouchi { --acento: #2e7aa8; }
+
+/* 🚨 LOS DOS DATOS DE TRAMO VAN EN EL MISMO SITIO, y nunca a la vez.
+   Es la misma posición que en el acto 5 —colgando por ARRIBA de las copas del
+   bosque, porque debajo del suelo no hay nada: el suelo es el canto inferior—,
+   y los dos se turnan ahí: el de Kusatsu → Yamanouchi al principio y el de
+   Yamanouchi → Matsumoto al final. Cada uno con su propia variable, y el acto
+   se encarga de que no coincidan.
+
+   🚨 Va atado a --banda-alto (base.css) y no a un número escrito aquí: el día
+   que el bosque cambie de alto, esto se mueve con él.
+
+   🚨 Y AL FINAL DEL ACTO YA NO HAY BOSQUE —los árboles se apagan uno a uno—,
+   pero la banda SIGUE PUESTA con su manto de nieve y su carretera, así que
+   --banda-alto sigue significando lo mismo y el dato no se mueve de sitio
+   cuando el bosque se va. Si algún día se apagara la banda entera, esto se
+   quedaría colgado en mitad del blanco. */
+#yamanouchi .viaje {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% - var(--banda-alto) - 6.5svh);
+  text-align: center;
+  pointer-events: none;
+}
+#yamanouchi .viaje[data-viaje='uno'] { opacity: var(--p-viaje-1, 0); }
+#yamanouchi .viaje[data-viaje='dos'] { opacity: var(--p-viaje-2, 0); }
+
+/* El panel se queda ARRIBA, igual que en el acto 5 y por lo mismo: abajo está
+   el onsen con el muñeco dentro, y después el mono, la huida y el coche. Todo
+   lo que cuenta este acto pasa en la mitad de abajo de la pantalla.
+
+   🚨 DOS VARIABLES Y NO UNA, como en los actos 4 y 5: --p-sube es el viaje y
+   solo va hacia delante, --p-datos es lo que se ve. Con una sola, al
+   desvanecerse el panel se iría otra vez por donde vino, y lo que pidió Kiko es
+   que se desvanezca quieto. */
+#yamanouchi .panel {
+  align-self: start;
+  width: min(100%, 25rem);
+  /* La opacidad ya la pone escena.css con --p-datos: aqui solo se cambia el
+     viaje, igual que en el acto 5. */
+  transform: translateY(calc((1 - var(--p-sube, 0)) * 7svh));
+}
+#yamanouchi .panel-cabecera { margin-bottom: .7rem; }
+#yamanouchi .panel h3 {
+  font-size: clamp(1.4rem, 6.2vw, 1.9rem);
+  margin-block: .3rem .4rem;
+}
+#yamanouchi .panel .entradilla { font-size: .88rem; line-height: 1.5; }
+#yamanouchi .fotos {
+  gap: .5rem;
+  margin-bottom: .75rem;
+}
+/* 💭 Apaisadas como las de los actos 4 y 5, y por el mismo motivo: cuanto menos
+   alto es el panel, menos baja llega y más lejos se queda del onsen. */
+#yamanouchi .foto-hueco { aspect-ratio: 16 / 9; }
+#yamanouchi .fila { padding-block: .4rem; }
+
+@media (max-width: 360px) {
+  #yamanouchi .foto-hueco { aspect-ratio: 5 / 2; }
+  #yamanouchi .fotos { margin-bottom: .6rem; }
+  #yamanouchi .fila { padding-block: .22rem; }
+  #yamanouchi .panel .entradilla { font-size: .84rem; }
+  #yamanouchi .panel-cabecera { margin-bottom: .55rem; }
+}
+
+/* Halo, como todo el texto que flota sobre el dibujo (ley 9: halo, nunca velo) */
+.anim #yamanouchi .panel {
+  text-shadow: 0 0 .5rem var(--papel), 0 0 .25rem var(--papel), 0 0 .1rem var(--papel);
+}
+
+/* ==========================================================================
+   3 · Movimiento reducido y sin JavaScript
+   --------------------------------------------------------------------------
+   Lo genérico ya lo hace escena.css: los actos se aplanan y el texto sale
+   entero. Aquí solo hay que evitar que las piezas del acto se queden plantadas
+   encima del texto —el acto pinta su fotograma final y ese fotograma las tiene
+   puestas— y que los dos datos de tramo no se queden colgados en una posición
+   absoluta que ya no significa nada.
+
+   🚨 Y AQUÍ LOS DOS DATOS SÍ SALEN A LA VEZ, uno debajo del otro. Es lo
+   correcto: sin animación no hay «antes» ni «después», hay una página que se
+   lee, y los dos tramos son dos datos del viaje.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  [data-pieza='mono'] { display: none !important; }
+  #yamanouchi .viaje {
+    position: static;
+    opacity: 1 !important;
+    text-align: left;
+    margin-top: 2.2rem;
+  }
+  #yamanouchi .viaje[data-viaje='dos'] { margin-top: 1rem; }
+  #yamanouchi .panel { transform: none !important; }
+}
+html:not(.anim) #yamanouchi .panel { transform: none; }
+html:not(.anim) #yamanouchi .viaje {
+  position: static;
+  opacity: 1;
+  text-align: left;
+}

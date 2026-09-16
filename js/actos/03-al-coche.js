@@ -25,14 +25,14 @@
    está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=c7302cd0';
-import { tramo, suave, tope } from '../motor/util.js?v=c7302cd0';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=c7302cd0';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=c7302cd0';
-import { montarDibujo, mostrarDibujo, colocar, variable, variableDe, verBanda, desplazarFondo, bajarSuelo } from '../motor/dibujo.js?v=c7302cd0';
-import { montarNieve, nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=c7302cd0';
-import { tenderRuta } from '../motor/ruta.js?v=c7302cd0';
-import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=c7302cd0';
+import { registrarActo } from '../motor/escenario.js?v=235063c6';
+import { tramo, suave, tope } from '../motor/util.js?v=235063c6';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=235063c6';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=235063c6';
+import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura } from '../motor/dibujo.js?v=235063c6';
+import { montarNieve, nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=235063c6';
+import { tenderRuta } from '../motor/ruta.js?v=235063c6';
+import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=235063c6';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -421,22 +421,23 @@ export function montarActoAlCoche() {
          🚨 La POSTURA cuenta como una pieza más: el acto 5 deja al muñeco
          sentado en un onsen, y una variable olvidada no se ve en ninguna
          opacidad. */
-      colocar('monte', { op: 0 });
-      colocar('monigote', { op: 0 });
-      colocar('tabla', { op: 0 });
-      colocar('roca', { op: 0 });
-      colocar('onsen', { op: 0 });
-      colocar('onsen-fondo', { op: 0 });
-      variableDe('monigote', '--pose', 0);
+      /* 🔁 Y DESDE EL ACTO 6 ESTO SE DICE AL REVÉS, que es la ley 23.
+         Aquí había seis `colocar(..., {op: 0})` con los nombres de las piezas
+         de los actos 4 y 5 escritos a mano, y esa lista tenía el defecto de
+         todas las listas de nombres ajenos: **este acto tenía que conocer las
+         piezas de los actos que todavía no existen**. El mono nació con el acto
+         6 y no estaba en ella, así que saltando del 6 al 3 se habría quedado
+         flotando sobre la estación de Shinjuku, igual que se quedó el muñeco.
+         Ahora se declaran las que SÍ se enseñan y el motor apaga el resto.
+         🚨 La POSTURA va igual: se declara la que se enseña, no se apagan las
+         otras una a una. Ver motor/dibujo.js. */
+      limpiarPiezas('tren', 'cuatro', 'mostrador', 'llave', 'coche');
+      postura('monigote', 'tabla');
 
       if (!hayDibujo) {
         /* Todavía estamos en el mapa: el dibujo no existe */
         variable('--op-suelo', 0);
-        colocar('tren', { op: 0 });
-        colocar('cuatro', { op: 0 });
-        colocar('mostrador', { op: 0 });
-        colocar('coche', { op: 0 });
-        colocar('llave', { op: 0 });
+        limpiarPiezas();
         verBanda('ciudad', 0);
         verBanda('bosque', 0);
         verBanda('bosque-nevado', 0);

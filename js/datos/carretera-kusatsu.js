@@ -12,8 +12,8 @@
    puntos que comparten y se busco el camino mas rapido entre los dos
    extremos. El detalle esta en herramientas/generar-carreteras.js.
 
-   87.5 km de carretera. El extremo de Takaragawa se estira 0.09 km
-   hasta la carretera mas cercana y el de Kusatsu 0.02 km; a la escala de
+   87.5 km de carretera. El extremo de salida se estira 0.09 km
+   hasta la carretera mas cercana y el de llegada 0.02 km; a la escala de
    este mapa eso es menos de un pixel.
 
    119 puntos, simplificados a 0.0009 grados (~100 m).

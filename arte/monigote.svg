@@ -50,7 +50,7 @@
   <!-- ══════ POSTURA 1 · EN TABLA ══════
        De lado, los dos pies en la tabla, las rodillas dobladas y los brazos
        abiertos haciendo equilibrio. Sin bastones. Actos 4 y el principio del 5. -->
-  <g class="e-pose e-pose-tabla">
+  <g class="e-pose e-pose-tabla" data-postura="tabla">
     <!-- El brazo de atrás va DETRÁS del cuerpo -->
     <rect class="e-brazo e-brazo-atras" x="-6" y="-13" width="12" height="27" rx="6"
           transform="translate(40,74) rotate(46)"/>
@@ -81,7 +81,7 @@
        hasta que la superficie le cruza por media espalda.
        🚨 EL CUERPO VA RECTO, sin el giro de 7° de la postura de tabla: ese giro
        es el de quien está bajando, y aquí no baja nadie. -->
-  <g class="e-pose e-pose-onsen">
+  <g class="e-pose e-pose-onsen" data-postura="onsen">
     <!-- Los brazos, tendidos sobre el borde y con las manos por fuera -->
     <rect class="e-brazo" x="-6" y="-13" width="12" height="30" rx="6"
           transform="translate(45,84) rotate(74)"/>
@@ -95,5 +95,54 @@
     <circle class="e-cabeza" cx="67" cy="52" r="14"/>
     <path class="e-gorro" d="M53 50 a14 14 0 0 1 28 0 q-14 -5 -28 0 z"/>
     <circle class="e-pompon" cx="67" cy="35" r="5"/>
+  </g>
+
+  <!-- ══════ POSTURA 3 · CORRIENDO ══════
+       Acto 6: «el muñeco lo ve, se asusta, sale hacia la izquierda corriendo».
+
+       🚨 CORRE HACIA LA IZQUIERDA, y por eso mira a la izquierda: es la unica
+       postura de las tres que tiene lado. Las otras dos valen giradas porque
+       una baja de izquierda a derecha y la otra esta de frente.
+
+       Como se lee que corre y no que anda, en un dibujo quieto:
+         · las dos piernas ABIERTAS en tijera, una adelante y otra atras,
+         · los dos brazos tambien en tijera y al reves que las piernas,
+         · el cuerpo ECHADO HACIA DELANTE (11 grados), que es lo que separa
+           correr de estar de pie,
+         · y LOS DOS PIES EN EL AIRE: el ancla de la pieza esta en la base de la
+           caja, o sea en el suelo, asi que las botas no llegan abajo del todo.
+           Un corredor con los dos pies plantados parece un maniqui.
+
+       🚨 LA CABEZA VA UN PELO MAS BAJA que en las otras dos (cy=46 en vez de 42
+       y 52) porque el cuerpo esta inclinado. Si se deja a la misma altura, al
+       cambiar de postura el muneco pega un salto vertical, y el cambio aqui NO
+       pasa debajo del agua: pasa a la vista, mientras se levanta del onsen. -->
+  <g class="e-pose e-pose-corre" data-postura="corre">
+    <!-- El brazo de atras, echado hacia atras y por detras del cuerpo -->
+    <rect class="e-brazo e-brazo-atras" x="-6" y="-13" width="12" height="28" rx="6"
+          transform="translate(88,78) rotate(38)"/>
+    <!-- La pierna de atras, estirada hacia atras y con el pie levantado -->
+    <rect class="e-pierna" x="-7.5" y="-17" width="15" height="34" rx="7.5"
+          transform="translate(84,108) rotate(31)"/>
+    <rect class="e-bota" x="92" y="124" width="21" height="13" rx="5"
+          transform="rotate(24 102 130)"/>
+    <!-- La pierna de delante, doblada y subida: la rodilla va alta -->
+    <rect class="e-pierna" x="-7.5" y="-17" width="15" height="32" rx="7.5"
+          transform="translate(52,104) rotate(-28)"/>
+    <rect class="e-bota" x="30" y="115" width="21" height="13" rx="5"
+          transform="rotate(-16 40 121)"/>
+    <!-- El cuerpo, echado hacia delante -->
+    <rect class="e-cuerpo" x="-15" y="-23" width="30" height="46" rx="14"
+          transform="translate(68,82) rotate(-11)"/>
+    <!-- El brazo de delante, cruzado hacia delante -->
+    <rect class="e-brazo" x="-6" y="-14" width="12" height="29" rx="6"
+          transform="translate(48,74) rotate(-34)"/>
+    <!-- La cabeza y el gorro, mirando a la izquierda. El pompon se va hacia
+         atras: es lo que da la sensacion de velocidad sin dibujar una sola
+         linea de movimiento. -->
+    <circle class="e-cabeza" cx="62" cy="46" r="14"/>
+    <path class="e-gorro" d="M48 44 a14 14 0 0 1 28 0 q-14 -5 -28 0 z"
+          transform="rotate(-11 62 44)"/>
+    <circle class="e-pompon" cx="78" cy="33" r="5"/>
   </g>
 </svg>

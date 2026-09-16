@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 110" class="a-mono" aria-hidden="true" focusable="false">
+  <!-- El mono de la nieve de Jigokudani (地獄谷野猿公苑), acto 6.
+       Kiko: «aparece por la derecha un mono de la nieve, de estos japoneses de
+       Nagano, de Jigokudani, y avanza ligeramente hacia la izquierda sin llegar
+       al onsen».
+
+       🚨 QUE SE RECONOZCA QUE ES ESE MONO Y NO UN MONO CUALQUIERA. Un macaco
+       japones tiene tres cosas que ninguna otra cosa de esta pelicula tiene, y
+       son las tres que hay que dibujar:
+         · LA CARA ROJA, que es lo unico rojo de todo el acto,
+         · el pelo GRIS PARDO y espeso, que aqui es la mancha del cuerpo,
+         · y la COLA CORTISIMA. Un mono con cola larga es otro animal.
+       Sin la cara roja esto es un oso pequenio.
+
+       🚨 MIRA A LA IZQUIERDA, hacia el onsen, porque viene de la derecha y
+       avanza hacia alla. Es lo mismo que la postura de correr del muneco: las
+       piezas que tienen lado se dibujan en el lado en que se usan.
+
+       🚨 Y ESTA DE PIE, NO A CUATRO PATAS. A cuatro patas, a 22 unidades de
+       ancho y detras de un onsen, es una mancha alargada que no se lee. De pie
+       tiene silueta, y ademas es lo que hacen estos monos cuando se acercan a
+       mirar algo.
+
+       📐 Se apoya en el borde de abajo de la caja, como todas las piezas de la
+       capa del dibujo (motor/dibujo.js las ancla por su base).
+
+       🎨 Color plano de caricatura, sin degradados ni sombras (NORMAS § 1). Los
+       colores viven en css/color.css, no aqui.
+
+       📄 Y una convencion de escritura: en los comentarios de un .svg las
+       variables de CSS se nombran entrecomilladas y sin sus dos guiones. Dos
+       guiones seguidos dentro de un comentario son XML invalido, y estos
+       archivos existen para poder abrirlos en un editor vectorial. -->
+
+  <!-- La cola, cortita y hacia atras. Va la primera: por detras del cuerpo -->
+  <path class="m-cola" d="M92 84 q14 -2 17 -12" />
+
+  <!-- El brazo de atras, colgando. Mas apagado, que es lo unico que da
+       profundidad en un dibujo sin una sola sombra -->
+  <rect class="m-brazo m-brazo-atras" x="-6" y="-13" width="12" height="28" rx="6"
+        transform="translate(84,62) rotate(-9)"/>
+
+  <!-- Las dos piernas, cortas y separadas -->
+  <rect class="m-pierna" x="-8" y="-13" width="16" height="28" rx="8"
+        transform="translate(56,94)"/>
+  <rect class="m-pierna" x="-8" y="-13" width="16" height="28" rx="8"
+        transform="translate(80,94)"/>
+  <!-- Los pies -->
+  <ellipse class="m-pie" cx="54" cy="105" rx="12" ry="5"/>
+  <ellipse class="m-pie" cx="82" cy="105" rx="12" ry="5"/>
+
+  <!-- El cuerpo: ancho abajo y estrecho arriba, que es la silueta de un macaco
+       de invierno con el pelo puesto -->
+  <path class="m-cuerpo" d="M68 36
+    q22 0 25 22 q3 22 -2 30 q-3 6 -23 6 q-20 0 -23 -6 q-5 -8 -2 -30 q3 -22 25 -22 z"/>
+
+  <!-- El brazo de delante, adelantado hacia el onsen: es lo que dice que
+       «avanza hacia la izquierda» aunque la pieza este quieta -->
+  <rect class="m-brazo" x="-6" y="-13" width="12" height="29" rx="6"
+        transform="translate(48,62) rotate(22)"/>
+
+  <!-- La cabeza. El pelo primero, y la cara roja encima: asi la melena hace de
+       marco, que es exactamente como se ve un macaco de verdad -->
+  <circle class="m-pelo" cx="62" cy="30" r="24"/>
+  <!-- La cara, desplazada a la izquierda dentro del pelo: mira hacia alla -->
+  <ellipse class="m-cara" cx="57" cy="32" rx="15" ry="17"/>
+  <!-- El hocico, un pelo mas claro -->
+  <ellipse class="m-hocico" cx="53" cy="39" rx="9" ry="7"/>
+  <!-- Los dos ojos, juntos y pequenios: es un bicho mirando, no una mascota -->
+  <circle class="m-ojo" cx="51" cy="28" r="2.6"/>
+  <circle class="m-ojo" cx="62" cy="28" r="2.6"/>
+  <!-- Las orejas, una a cada lado del pelo -->
+  <circle class="m-oreja" cx="40" cy="26" r="6"/>
+  <circle class="m-oreja" cx="84" cy="26" r="6"/>
+
+  <!-- La caperuza de nieve: lleva nevando cuatro actos, y todo lo que esta
+       quieto en esta pelicula tiene nieve encima. Es lo mismo que lleva la roca
+       del acto 5 y la que ata al mono con el resto de la escena. -->
+  <path class="m-nieve" d="M40 12 q22 -12 44 0 q-10 6 -22 6 q-12 0 -22 -6 z"/>
+</svg>

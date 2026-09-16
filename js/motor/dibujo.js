@@ -23,18 +23,18 @@
    podría verlas, la URL no cambiaría nunca y una publicación serviría el dibujo
    viejo durante los diez minutos de caché de GitHub Pages. */
 const PIEZAS = [
-  ['tren', 'arte/tren.svg?v=c7302cd0'],
-  ['cuatro', 'arte/cuatro.svg?v=c7302cd0'],
-  ['mostrador', 'arte/mostrador.svg?v=c7302cd0'],
-  ['llave', 'arte/llave.svg?v=c7302cd0'],
-  ['coche', 'arte/coche.svg?v=c7302cd0'],
+  ['tren', 'arte/tren.svg?v=235063c6'],
+  ['cuatro', 'arte/cuatro.svg?v=235063c6'],
+  ['mostrador', 'arte/mostrador.svg?v=235063c6'],
+  ['llave', 'arte/llave.svg?v=235063c6'],
+  ['coche', 'arte/coche.svg?v=235063c6'],
   /* 🚨 EL ACTO 4 EN ADELANTE. Van aquí y no en el acto por lo de siempre: el
      monigote sigue puesto en el acto 5 («el muñequito sigue ahí esquiando») y
      en el 6. Y estando en esta lista, apagarDibujo() los apaga: sin eso, al
      volver del acto 4 al 3 la montaña se quedaba flotando sobre el bosque,
      porque el acto 3 no sabe que existen.
      El tercer campo dice de qué trazado sale el perfil que se muestrea. */
-  ['monte', 'arte/monte.svg?v=c7302cd0', '.mo-perfil'],
+  ['monte', 'arte/monte.svg?v=235063c6', '.mo-perfil'],
   /* 🚨 LA TABLA ES UNA PIEZA APARTE DESDE EL ACTO 5, y hasta entonces vivía
      dentro del muñeco. La partió Kiko al describir el acto 5: «se cae de la
      tabla y sube hacia arriba en diagonal». A partir del golpe cada uno va por
@@ -42,21 +42,27 @@ const PIEZAS = [
      mueven por separado no pueden ser el mismo dibujo. Comparten `viewBox` y
      tamaño, así que mientras van pegadas basta con darles la misma x, la misma
      y y el mismo giro: ver arte/tabla.svg. */
-  ['tabla', 'arte/tabla.svg?v=c7302cd0'],
+  ['tabla', 'arte/tabla.svg?v=235063c6'],
   /* 🚨 EL ACTO 5. Y EL ORDEN DE ESTAS TRES NO ES NEGOCIABLE: el onsen está
      partido en dos mitades con el muñeco EN MEDIO, que es lo que hace que se le
      vea metido en el agua y no sentado delante de un barreño. Aquí solo se
      declaran; quien manda de verdad en el orden de pintado es el HTML. */
-  ['roca', 'arte/roca.svg?v=c7302cd0'],
-  ['onsen-fondo', 'arte/onsen-fondo.svg?v=c7302cd0'],
-  ['monigote', 'arte/monigote.svg?v=c7302cd0'],
-  ['onsen', 'arte/onsen.svg?v=c7302cd0']
+  ['roca', 'arte/roca.svg?v=235063c6'],
+  ['onsen-fondo', 'arte/onsen-fondo.svg?v=235063c6'],
+  ['monigote', 'arte/monigote.svg?v=235063c6'],
+  ['onsen', 'arte/onsen.svg?v=235063c6'],
+  /* 🚨 EL ACTO 6. El mono de Jigokudani va DESPUÉS del onsen en esta lista y en
+     el HTML, porque entra por delante de todo: se acerca al onsen por la
+     derecha, y quien está dentro del agua es el muñeco. Si fuera por detrás, el
+     mono aparecería medio tapado por el barreño justo cuando se le tiene que
+     ver entero. */
+  ['mono', 'arte/mono.svg?v=235063c6']
 ];
 
 const BANDAS = [
-  ['ciudad', 'arte/ciudad.svg?v=c7302cd0'],
-  ['bosque', 'arte/bosque.svg?v=c7302cd0'],
-  ['bosque-nevado', 'arte/bosque-nevado.svg?v=c7302cd0']
+  ['ciudad', 'arte/ciudad.svg?v=235063c6'],
+  ['bosque', 'arte/bosque.svg?v=235063c6'],
+  ['bosque-nevado', 'arte/bosque-nevado.svg?v=235063c6']
 ];
 
 /* Cuántas veces se repite cada banda en fila. Una copia mide 118vmin de ancho,
@@ -197,6 +203,76 @@ export function apagarDibujo() {
   bandas.forEach(function (el, nombre) { verSiHaceFalta(el, nombre, 0); });
 }
 
+/**
+ * 🚨 LA LEY 23 APLICADA A LAS PIEZAS: UN ACTO DICE LO QUE SÍ ENSEÑA.
+ *
+ * Hasta el acto 6, cada acto apagaba lo ajeno NOMBRÁNDOLO a mano —una función
+ * `apagarLoDeAntes()` con la lista de las piezas de los actos anteriores—, y esa
+ * lista tenía el mismo defecto que tenían las de marcadores: **cada acto tenía
+ * que conocer las piezas de los actos que todavía no existen**. La roca nació
+ * con el acto 5 y no estaba en ninguna de las listas de los actos 3 y 4; el
+ * mono nace con el 6 y no está en ninguna de las cinco anteriores. Saltando
+ * desde el raíl, el acto que te saltas no pinta y no recoge nada (ley 20), así
+ * que el mono se habría quedado flotando sobre la estación de Shinjuku igual
+ * que se quedó el muñeco en su día.
+ *
+ * Así que se dice al revés: `limpiarPiezas('roca', 'onsen', 'monigote')` y el
+ * motor apaga TODAS las demás, existan o no cuando se escribió ese acto. El
+ * acto 7 podrá estrenar sus trenes sin tocar una línea de los seis anteriores.
+ *
+ * 🚨 Las piezas nombradas NO se tocan: las coloca el acto. Si esto las apagara
+ * y el acto las volviera a encender, serían dos escrituras al DOM por pieza y
+ * por fotograma para dejarlo todo igual.
+ */
+export function limpiarPiezas() {
+  const dejar = arguments;
+  piezas.forEach(function (el, nombre) {
+    for (let i = 0; i < dejar.length; i++) if (dejar[i] === nombre) return;
+    verSiHaceFalta(el, nombre, 0);
+  });
+}
+
+/**
+ * 🚨 Y LA LEY 23 APLICADA A LAS POSTURAS, QUE ES LO MISMO CON OTRA CARA.
+ *
+ * El muñeco tiene tres posturas —en la tabla, en el onsen, corriendo— y va a
+ * tener más. El primer montaje del acto 5 lo resolvió con una variable `--pose`
+ * de 0 a 1, y para el acto 6 la salida fácil era añadir un `--corre` al lado.
+ * Lo paró Kiko antes de que se escribiera: *«funciona hoy y es otra lista que
+ * crece: el acto 7 añadirá otra postura y habrá tres variables que nadie apaga.
+ * Dale la vuelta igual que hiciste con los marcadores»*. Tenía razón: una
+ * variable que un acto enciende y ningún otro sabe que existe es exactamente el
+ * punto de Kusatsu colado sobre el globo.
+ *
+ * Así que el acto declara la postura que SÍ enseña y el motor apaga las demás.
+ * Y la lista de posturas **no está escrita en ningún sitio**: sale del propio
+ * dibujo, de los grupos que llevan `data-postura` dentro del `.svg`. Añadir una
+ * postura es añadir un grupo al dibujo, y nada más. Es la ley 18 —una sola
+ * fuente, y es el dibujo— cruzada con la 23.
+ *
+ * 🚨 Y se apaga con `display`, no con opacidad: una postura invisible a
+ * opacidad 0 sigue costando capa (ley 14). Pasa una o dos veces por acto, así
+ * que no hay nada que optimizar.
+ */
+export function postura(pieza, cual) {
+  const el = piezas.get(pieza);
+  if (!el) return;
+  const k = pieza + ':postura';
+  if (ultimo.get(k) === cual) return;
+  ultimo.set(k, cual);
+  const grupos = el.querySelectorAll('[data-postura]');
+  for (const g of grupos) {
+    /* 🚨 `inline` Y NO CADENA VACÍA, y esto costó que el muñeco desapareciera
+       del acto 6 entero. Vaciar el estilo en línea no enciende nada: deja que
+       vuelva a mandar la hoja de estilo, y ahí las posturas que no son la de
+       reposo están en `display: none` justo para que no salgan las tres
+       apiladas antes del primer pintado. O sea que la postura elegida se
+       apagaba a sí misma. Se vio en la primera captura: onsen, roca y tabla en
+       su sitio, y dentro del agua no había nadie. */
+    g.style.display = g.getAttribute('data-postura') === cual ? 'inline' : 'none';
+  }
+}
+
 /* --------------------------------------------------------------------------
    Mover
    -------------------------------------------------------------------------- */
@@ -271,7 +347,16 @@ export function bajarSuelo(px) {
 /**
  * Una variable de UNA pieza, no de la capa entera.
  *
- * 🚨 ES LA LEY 19, Y ES LA ÚNICA RAZÓN POR LA QUE ESTO EXISTE. `variable()`
+ * ⚠️ HOY NO LA USA NADIE, y conviene saberlo antes de fiarse del párrafo de
+ * abajo: nació para la postura del muñeco del acto 5, y el acto 6 se llevó esa
+ * postura a `postura()`, que hace lo mismo sin variables. Se queda porque el
+ * motivo por el que existe sigue siendo verdad y volverá a hacer falta el día
+ * que algo que cambia en cada fotograma tenga que escribirse en una pieza.
+ * 🚨 Si se borra, que se borre por estar muerta y no por «limpiar»: el 16 de
+ * septiembre se quitó `tope` de principal.js por eso y el final de la película
+ * dejó de ejecutarse entero, sin que saltara ninguna comprobación.
+ *
+ * 🚨 ES LA LEY 19, Y ES LA RAZÓN POR LA QUE ESTO EXISTE. `variable()`
  * escribe en la raíz de la capa, y de la raíz cuelgan los cuarenta y cuatro
  * copos animados: cada escritura les recalcula el estilo a todos. Para algo que
  * cambia una vez por acto da igual, pero el acto 5 mueve la postura del muñeco

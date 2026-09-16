@@ -9,13 +9,14 @@
 <meta name="theme-color" content="#ffffff">
 
 <link rel="preload" href="tipo/shippori-mincho-500-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/base.css?v=c7302cd0">
-<link rel="stylesheet" href="css/texto.css?v=c7302cd0">
-<link rel="stylesheet" href="css/escena.css?v=c7302cd0">
-<link rel="stylesheet" href="css/color.css?v=c7302cd0">
-<link rel="stylesheet" href="css/actos/03-al-coche.css?v=c7302cd0">
-<link rel="stylesheet" href="css/actos/04-takaragawa.css?v=c7302cd0">
-<link rel="stylesheet" href="css/actos/05-kusatsu.css?v=c7302cd0">
+<link rel="stylesheet" href="css/base.css?v=235063c6">
+<link rel="stylesheet" href="css/texto.css?v=235063c6">
+<link rel="stylesheet" href="css/escena.css?v=235063c6">
+<link rel="stylesheet" href="css/color.css?v=235063c6">
+<link rel="stylesheet" href="css/actos/03-al-coche.css?v=235063c6">
+<link rel="stylesheet" href="css/actos/04-takaragawa.css?v=235063c6">
+<link rel="stylesheet" href="css/actos/05-kusatsu.css?v=235063c6">
+<link rel="stylesheet" href="css/actos/06-yamanouchi.css?v=235063c6">
 </head>
 
 <body>
@@ -116,6 +117,27 @@
       <text x="0" y="22" text-anchor="middle">Kusatsu</text>
     </g>
 
+    <!-- Yamanouchi, el tercer sitio de la nieve (acto 6). Centrada y ENCIMA del
+         punto: la ruta le llega por abajo y por la izquierda —viene rodeando
+         por Nagano— y la salida hacia Matsumoto se va también hacia abajo, así
+         que arriba es el único lado por el que no pasa nada.
+         🚨 Y es la etiqueta MÁS LARGA de las tres de la nieve: once letras en
+         una ventana de mapa pequeño que mide 164 px en un móvil. Es la razón de
+         que el encuadre del acto 6 sea más ancho que la ruta que enseña. -->
+    <g data-hito="yamanouchi" class="m-hito m-destino">
+      <circle class="m-halo" r="10"/><circle r="3.4"/>
+      <text x="0" y="-14" text-anchor="middle">Yamanouchi</text>
+    </g>
+
+    <!-- Matsumoto, donde se deja el coche y empieza el tren (final del acto 6).
+         Debajo del punto: la ruta le baja desde arriba. Y no es un alojamiento,
+         es una estación: lleva la misma marca porque en este mapa lo que se
+         señala es dónde para el viaje, no dónde se duerme. -->
+    <g data-hito="matsumoto" class="m-hito m-destino">
+      <circle class="m-halo" r="10"/><circle r="3.4"/>
+      <text x="0" y="22" text-anchor="middle">Matsumoto</text>
+    </g>
+
     <g data-hito="casa" class="m-hito m-destino">
       <circle class="m-halo" r="10"/><circle r="3.4"/>
       <!-- A la izquierda del punto: con la etiqueta a la derecha se comia la de
@@ -172,6 +194,13 @@
   <div class="d-pieza" data-pieza="onsen-fondo"></div>
   <div class="d-pieza" data-pieza="monigote"></div>
   <div class="d-pieza" data-pieza="onsen"></div>
+  <!-- 🚨 EL MONO VA EL ÚLTIMO, O SEA POR DELANTE DE TODO, y eso también es
+       parte de la escena: se acerca al onsen por la derecha y quien está dentro
+       del agua es el muñeco. Puesto antes del onsen, el mono aparecería medio
+       tapado por el barreño justo en el momento en que hay que verlo entero —es
+       el susto del acto—. Por delante, además, se lee que está MÁS CERCA de
+       nosotros que el agua, que es lo que hace que dé un poco de respeto. -->
+  <div class="d-pieza" data-pieza="mono"></div>
   <div class="nieve" id="campo-nieve"></div>
 </div>
 
@@ -185,6 +214,7 @@
     <li><a href="#al-coche" data-rail="al-coche"><span>Al coche</span></a></li>
     <li><a href="#takaragawa" data-rail="takaragawa"><span>Takaragawa</span></a></li>
     <li><a href="#kusatsu" data-rail="kusatsu"><span>Kusatsu</span></a></li>
+    <li><a href="#yamanouchi" data-rail="yamanouchi"><span>Yamanouchi</span></a></li>
   </ol>
 </nav>
 
@@ -526,6 +556,77 @@
     </div>
   </section>
 
+  <section class="acto" id="yamanouchi" style="--largo: 1600" aria-labelledby="t-yamanouchi">
+    <div class="escena">
+
+      <div class="titular-acto">
+        <p class="sobre"><span class="num">06</span> Yamanouchi</p>
+        <h2 id="t-yamanouchi">La tercera parada, y la salida de la nieve</h2>
+      </div>
+
+      <!-- 🚨 ESTE ACTO TIENE DOS DATOS DE TRAMO Y NO UNO, porque tiene dos
+           viajes: el que trae a Yamanouchi al principio y el que saca de la
+           nieve hacia Matsumoto al final. Misma pieza y mismo sitio que en los
+           actos 3 y 5, que es donde Kiko la colocó: «debería ser debajo del
+           coche y del paisaje».
+
+           🚨 Y EL PRIMERO ES EL DATO MÁS IMPORTANTE DE TODO EL ACTO, porque es
+           el único sitio de la película donde la geografía engaña: Kusatsu y
+           Yamanouchi están a 19 km en línea recta, y en las fechas de este
+           viaje se tardan más de dos horas. La carretera corta —la 292 de Shiga
+           Kōgen— cierra de noviembre a abril, y con ella la meseta entera.
+           Por eso el pie lo dice en vez de limitarse a poner los kilómetros:
+           alguien que mire el mapa va a pensar que sobra tiempo.
+
+           Los kilómetros son los de la carretera real de OpenStreetMap, medidos
+           sobre la geometría que se dibuja. El TIEMPO es una estimación y va
+           marcada como tal, igual que en los actos 3 y 5: sale de medir a
+           velocidad libre de catálogo, sin tráfico, sin hielo y sin Año Nuevo.
+           Datos: js/datos/carretera-yamanouchi.js y carretera-matsumoto.js. -->
+      <p class="viaje" data-viaje="uno">
+        <span class="v-dato">2 h 12</span>
+        <span class="v-pie">Kusatsu <span aria-hidden="true">&rarr;</span> Yamanouchi ·
+          136 km rodeando por Ueda y Nagano
+          <span class="marca m-duda">? por verificar</span></span>
+      </p>
+
+      <p class="viaje" data-viaje="dos">
+        <span class="v-dato">1 h 25</span>
+        <span class="v-pie">Yamanouchi <span aria-hidden="true">&rarr;</span> estación de Matsumoto ·
+          99 km
+          <span class="marca m-duda">? por verificar</span></span>
+      </p>
+
+      <!-- El panel del tercer alojamiento. El mismo del acto 2, del 4 y del 5,
+           sin tocar una línea de su CSS: aquí lo único propio es que se queda
+           ARRIBA, como en el acto 5, porque abajo está el onsen con el muñeco
+           dentro y después el coche.
+           ⬜ De Yamanouchi no hay nada elegido todavía: ni sitio, ni noches, ni
+           precio. Se dice así en vez de rellenarlo con algo bonito. -->
+      <div class="panel">
+        <div class="panel-cabecera">
+          <p class="sobre">Tercera parada de la nieve</p>
+          <h3>Yamanouchi</h3>
+          <p class="entradilla">El pueblo de los monos de Jigokudani, y el alojamiento
+            todavía sin elegir.</p>
+        </div>
+
+        <!-- ⬜ Fotos por decidir (NORMAS § 4). Hasta entonces, huecos honestos -->
+        <div class="fotos">
+          <div class="foto-hueco"><span>foto 1</span></div>
+          <div class="foto-hueco"><span>foto 2</span></div>
+          <div class="foto-hueco"><span>foto 3</span></div>
+        </div>
+
+        <dl class="filas">
+          <div class="fila"><dt>Dónde</dt><dd>Sin elegir <span class="marca m-pend">○ pendiente</span></dd></div>
+          <div class="fila"><dt>Noches</dt><dd>Por decidir <span class="marca m-pend">○ pendiente</span></dd></div>
+          <div class="fila"><dt>Precio</dt><dd>Por decidir <span class="marca m-pend">○ pendiente</span></dd></div>
+        </dl>
+      </div>
+    </div>
+  </section>
+
   <!-- ══════════════════  Y AQUÍ SE CORTA  ══════════════════
        🚨 AQUÍ HABÍA CUATRO CAPÍTULOS DE TEXTO —la nieve, Kioto, Año Nuevo y la
        vuelta— y los quitó Kiko el 17 de septiembre: «que borre "la nieve" o las
@@ -567,6 +668,6 @@
     <span class="marca m-pend">○ pendiente</span>. Lo que no está marcado, no está comprobado.</p>
 </footer>
 
-<script type="module" src="js/principal.js?v=c7302cd0"></script>
+<script type="module" src="js/principal.js?v=235063c6"></script>
 </body>
 </html>

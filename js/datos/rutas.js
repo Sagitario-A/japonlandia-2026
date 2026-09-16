@@ -17,8 +17,10 @@
    [lon, lat]. Se guardan sueltos porque unos son marcadores y otros solo son
    puntos de paso por los que la línea tiene que doblar.
    -------------------------------------------------------------------------- */
-import { EJE_KANETSU } from './carretera-norte.js?v=c7302cd0';
-import { RUTA_KUSATSU } from './carretera-kusatsu.js?v=c7302cd0';
+import { EJE_KANETSU } from './carretera-norte.js?v=235063c6';
+import { RUTA_KUSATSU } from './carretera-kusatsu.js?v=235063c6';
+import { RUTA_YAMANOUCHI } from './carretera-yamanouchi.js?v=235063c6';
+import { RUTA_MATSUMOTO } from './carretera-matsumoto.js?v=235063c6';
 
 export const LUGARES = {
   /* España */
@@ -228,6 +230,28 @@ export const RUTA_NORTE = [L.shinjuku].concat(EJE_KANETSU).concat([L.takaragawa]
 export const RUTA_A_KUSATSU = [L.takaragawa].concat(RUTA_KUSATSU).concat([L.kusatsu]);
 
 /* --------------------------------------------------------------------------
+   5.bis · Los dos tramos del acto 6
+   --------------------------------------------------------------------------
+   🚨 LA DE YAMANOUCHI ES LA QUE MÁS FÁCIL ERA HACER MAL DE TODA LA PELÍCULA, y
+   por eso lleva la cabecera más larga: la carretera corta entre Kusatsu y
+   Yamanouchi —la 292 de Shiga Kōgen— CIERRA DE NOVIEMBRE A ABRIL, y con ella la
+   meseta entera. No son 19 km y cuarenta minutos: son 136 km rodeando por
+   Tsumagoi, el paso de Torii, Ueda y Nagano.
+
+   El cierre está verificado con fuente oficial y fechado; los detalles, en la
+   cabecera de datos/carretera-yamanouchi.js, que es donde viven. Y el buscador
+   de camino tiene ese puerto vetado a propósito y pasa POR los cuatro pueblos:
+   comprobarlo después no bastaba, porque encontró dos rutas distintas que
+   cumplían los puntos de paso y se iban igualmente por carreteras cerradas.
+   → herramientas/generar-carreteras.js, sección 3.
+   -------------------------------------------------------------------------- */
+export const RUTA_A_YAMANOUCHI = [L.kusatsu].concat(RUTA_YAMANOUCHI).concat([L.yamanouchi]);
+
+/* Y la salida de la nieve: de Yamanouchi a la ESTACIÓN de Matsumoto, que es
+   donde se deja el coche y arranca el acto 7. */
+export const RUTA_A_MATSUMOTO = [L.yamanouchi].concat(RUTA_MATSUMOTO).concat([L.matsumoto]);
+
+/* --------------------------------------------------------------------------
    6 · Encuadres de la cámara
    --------------------------------------------------------------------------
    [lon, lat, gradosDeAncho]. El radio lo calcula `encuadrar()`, porque pensar
@@ -296,5 +320,31 @@ export const ENCUADRES = {
      que en el encuadre de la región salía un rasguño en la esquina de arriba y
      además la etiqueta de Kusatsu se cortaba contra el borde izquierdo.
      Centrado entre los dos extremos y con sitio para las dos etiquetas. */
-  kusatsu: [138.82, 36.735, 0.95]
+  kusatsu: [138.82, 36.735, 0.95],
+
+  /* 🚨 EL ACTO 6 TIENE DOS ENCUADRES Y NO UNO, porque tiene dos tramos: el
+     viaje a Yamanouchi al principio y la salida hacia Matsumoto al final. Con
+     un solo encuadre que abarcara los dos, el primero volvía a ser el rasguño
+     en la esquina que Kiko ya corrigió en el acto 3 y otra vez en el 5. Cada
+     tramo, su encuadre; y entre los dos el mapa se va y vuelve, que es lo que
+     hace el acto de todas formas.
+
+     🚨 Y ESTE TRAMO NO SE ENCUADRA CON SUS DOS EXTREMOS. Kusatsu y Yamanouchi
+     están a 19 km en línea recta, pero la carretera de verdad mide 136: la
+     corta cierra en invierno y se rodea por Tsumagoi, Ueda y Nagano, o sea que
+     la ruta BAJA hasta 36,40 antes de volver a subir. Centrado entre los dos
+     extremos, media ruta se salía por abajo. Lo que hay que encuadrar es la
+     RUTA, no los dos puntos — que es justo lo que avisaba ESTADO § 5.6.
+
+     La ruta ocupa de 138,18 a 138,66 de longitud y de 36,39 a 36,75 de latitud,
+     así que el centro cae en 138,42 · 36,57.
+     Y 1,15° de ancho y no los 0,48 que mide: las etiquetas van centradas sobre
+     su punto (ley 22) y «Yamanouchi» son once letras en una ventana de mapa
+     pequeño que mide 164 px en un móvil. Medido en pantalla, no calculado. */
+  yamanouchi: [138.42, 36.57, 1.15],
+
+  /* El segundo tramo del acto 6: de Yamanouchi a la estación de Matsumoto, que
+     es donde se deja el coche y empieza el acto 7. La ruta va de 137,93 a
+     138,47 y de 36,20 a 36,75; centro en 138,20 · 36,47. */
+  matsumoto: [138.20, 36.475, 1.20]
 };

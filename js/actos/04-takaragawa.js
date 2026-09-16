@@ -42,14 +42,14 @@
    -50 a +50—. La explicación larga está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=c7302cd0';
-import { tramo, suave, tope, frena } from '../motor/util.js?v=c7302cd0';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=c7302cd0';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=c7302cd0';
-import { mostrarDibujo, colocar, variable, variableDe, verBanda, desplazarFondo, perfilDe, altura, bajarSuelo } from '../motor/dibujo.js?v=c7302cd0';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=c7302cd0';
-import { tenderRuta } from '../motor/ruta.js?v=c7302cd0';
-import { LUGARES, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=c7302cd0';
+import { registrarActo } from '../motor/escenario.js?v=235063c6';
+import { tramo, suave, tope, frena } from '../motor/util.js?v=235063c6';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=235063c6';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=235063c6';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, perfilDe, altura, bajarSuelo, limpiarPiezas, postura } from '../motor/dibujo.js?v=235063c6';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=235063c6';
+import { tenderRuta } from '../motor/ruta.js?v=235063c6';
+import { LUGARES, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=235063c6';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -226,17 +226,29 @@ function pintarTexto(p) {
    las deje apagadas al terminar: saltando desde el raíl con el acto 3 a medias
    —con el tren puesto, por ejemplo— el último fotograma que se pintó las tenía
    encendidas, y aquí no las tocaría nadie. */
+/* 🔁 Y SE DICE AL REVÉS DESDE EL ACTO 6 (ley 23): aquí se declara lo que este
+   acto SÍ enseña y el motor apaga todo lo demás. Antes era una lista con los
+   nombres de las piezas del acto 3, que obligaba a este acto a conocer las
+   piezas de actos que todavía no existían —la roca, el onsen y el mono nacieron
+   después— y dejaba colarse cualquier pieza nueva al saltar hacia atrás. */
 function apagarLoDelActo3() {
-  colocar('tren', { op: 0 });
-  colocar('cuatro', { op: 0 });
-  colocar('mostrador', { op: 0 });
-  colocar('llave', { op: 0 });
+  limpiarPiezas('coche', 'monte', 'monigote', 'tabla');
   variable('--halo', 0);
   variable('--luces', 0);
   variable('--puertas', 0);
   /* La línea del suelo la trae la banda de bosque, igual que al final del acto
      3: dos líneas a la vez se ven como un error de impresión. */
   variable('--op-suelo', 0);
+  /* 🚨 Y LOS ÁRBOLES, QUE ES LA TRAMPA DEL ACTO 6 Y SE ARREGLA AQUÍ.
+     `--mezcla` es el relevo casa-a-árbol del acto 3: con 12 están los nueve
+     árboles puestos, y bajándola se van apagando uno a uno. Hasta el acto 6 la
+     escribía SOLO el acto 3 y los actos 4 y 5 heredaban la suya, que es la de
+     todos los árboles encendidos. El acto 6 la baja a 0 para dejar al coche
+     rodando «sin bosque ni nada», así que volviendo hacia atrás el bosque se
+     quedaba PELADO aquí: el manto de nieve y la carretera, sin un solo árbol.
+     Lo avisó Kiko antes de que se escribiera una línea del acto 6, y la
+     solución es la de siempre y cuesta esto: escribirla en cada fotograma. */
+  variable('--mezcla', 12);
 }
 
 export function montarActoTakaragawa() {
@@ -286,9 +298,7 @@ export function montarActoTakaragawa() {
       acto.v('--p-datos', 0);
       acto.v('--p-sube', 0);
       if (acto.el.getBoundingClientRect().top > 0) {
-        colocar('monte', { op: 0 });
-        colocar('monigote', { op: 0 });
-        colocar('tabla', { op: 0 });
+        limpiarPiezas('coche');
         /* 🚨 Y EL SUELO VUELVE ARRIBA. El acto 3 no sabe que esta variable
            existe, así que volviendo hacia atrás se quedaría con el bosque
            pegado al canto de abajo y el coche con él. Es la ley 16. */
@@ -481,7 +491,7 @@ export function montarActoTakaragawa() {
          atrás bajaría la montaña sentado en una bañera que ya no está. Es la
          ley 16 aplicada a algo que no es una pieza. Cuesta una comparación por
          fotograma y no se escribe si no ha cambiado. */
-      variableDe('monigote', '--pose', 0);
+      postura('monigote', 'tabla');
 
       colocar('monigote', {
         x: xEsq,

@@ -94,6 +94,21 @@
   --c-agua: #7fc6bd;
   --c-agua-trazo: #4e9a92;
   --c-vaho: #b8c6cf;
+
+  /* 🐒 El acto 6. El mono de Jigokudani.
+     🚨 LA CARA ROJA ES EL DATO, NO LA DECORACIÓN. Un macaco japonés se
+     reconoce por tres cosas —la cara roja, el pelo gris pardo y la cola
+     cortísima— y sin la primera esto es un oso pequeño. Y da la casualidad de
+     que es el único rojo de piel de toda la película: el rojo que ya había
+     (--c-ropa-1) es tela, y va en el muñeco y en el coche.
+     💭 El pelo tira a pardo cálido a propósito: sobre una pantalla entera de
+     nieve azul pálido, un gris frío se funde con el fondo y el mono deja de
+     tener silueta. Es el mismo problema que la nieve blanca sobre papel
+     blanco, resuelto al revés. */
+  --c-mono-pelo: #a8998a;
+  --c-mono-pelo-hondo: #8a7c6e;
+  --c-mono-cara: #d2705f;
+  --c-mono-hocico: #e09a8b;
 }
 
 /* ==========================================================================
@@ -220,15 +235,48 @@
 .e-pompon { fill: var(--c-mono-gorro); stroke: var(--trazo); stroke-width: 1.6; }
 .e-tabla  { fill: var(--c-tabla); stroke: var(--trazo); stroke-width: 1.6; }
 
-/* --- Las dos posturas del monigote (acto 5) ---
-   🚨 NO ES UN FUNDIDO, ES UN INTERRUPTOR, y se apaga la que no toca del todo.
-   El cambio pasa mientras está debajo del agua, así que no hay nada que fundir;
-   y `visibility` además de `opacity` porque una postura a opacidad 0 sigue
-   costando capa, igual que las piezas apagadas de motor/dibujo.js.
-   La escribe el acto en el ELEMENTO de la pieza, no en la capa: ver la ley 19. */
-.a-monigote .e-pose-tabla { opacity: calc(1 - var(--pose, 0)); }
-.a-monigote .e-pose-onsen { opacity: var(--pose, 0); }
-.a-monigote .e-pose-tabla[data-fuera], .a-monigote .e-pose-onsen[data-fuera] { visibility: hidden; }
+/* --- Las TRES posturas del monigote (actos 4, 5 y 6) ---
+   🚨 AQUÍ NO HAY NI UNA REGLA POR POSTURA, Y ESA ES LA GRACIA.
+
+   Hasta el acto 6 esto eran dos reglas atadas a una variable `--pose` de 0 a 1:
+   `.e-pose-tabla { opacity: calc(1 - var(--pose)) }` y su pareja. Funcionaba
+   con dos posturas y se rompía con tres, y para el acto 6 la salida fácil era
+   añadir un `--corre` al lado. Lo paró Kiko antes de que se escribiera: «es
+   otra lista que crece; el acto 7 añadirá otra postura y habrá tres variables
+   que nadie apaga».
+
+   Ahora el acto declara la postura que SÍ enseña —`postura('monigote',
+   'corre')`— y el motor apaga las demás con `display`, buscándolas por su
+   `data-postura` dentro del propio dibujo. O sea que **la lista de posturas
+   está en el .svg y en ningún otro sitio**: añadir una es dibujarla, y este
+   archivo no se entera. Ver motor/dibujo.js, `postura()`.
+
+   Lo único que queda aquí es el estado de reposo, para el fotograma que va
+   entre que la pieza llega por fetch y el primer pintado: se ve la de tabla,
+   que es la primera que aparece en la película. */
+.a-monigote .e-pose-onsen,
+.a-monigote .e-pose-corre { display: none; }
+
+/* --- El mono de Jigokudani (acto 6) ---
+   🚨 La cara roja va SIN trazo oscuro alrededor, al revés que todo lo demás de
+   esta paleta: con el trazo de 1,6 puesto, a 22 unidades de ancho la cara se
+   convertía en una mancha oscura y el rojo desaparecía. Es la pieza más
+   pequeña que tiene un color que hay que reconocer. */
+.m-pelo   { fill: var(--c-mono-pelo); stroke: var(--trazo); stroke-width: 1.6; }
+.m-cuerpo { fill: var(--c-mono-pelo); stroke: var(--trazo); stroke-width: 1.6; }
+.m-brazo  { fill: var(--c-mono-pelo-hondo); stroke: var(--trazo); stroke-width: 1.6; }
+.m-pierna { fill: var(--c-mono-pelo-hondo); stroke: var(--trazo); stroke-width: 1.6; }
+/* El brazo de atrás, un pelo más apagado: lo mismo que en el monigote, y es lo
+   único que da profundidad en un dibujo sin una sola sombra */
+.m-brazo-atras { opacity: .72; }
+.m-pie    { fill: var(--trazo); }
+.m-oreja  { fill: var(--c-mono-cara); stroke: var(--trazo); stroke-width: 1.4; }
+.m-cara   { fill: var(--c-mono-cara); }
+.m-hocico { fill: var(--c-mono-hocico); }
+.m-ojo    { fill: var(--trazo); }
+.m-cola   { fill: none; stroke: var(--c-mono-pelo-hondo); stroke-width: 6; stroke-linecap: round; }
+/* Su caperuza de nieve, la misma que la de la roca del acto 5 */
+.m-nieve  { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 1.4; }
 
 /* --- La roca del acto 5 ---
    Piedra gris fría, que es lo único que no es ni nieve ni personaje en toda la

@@ -49,14 +49,14 @@
    montaña, que ya venía en píxeles.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=c7302cd0';
-import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=c7302cd0';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=c7302cd0';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=c7302cd0';
-import { mostrarDibujo, colocar, variable, variableDe, verBanda, desplazarFondo, bajarSuelo } from '../motor/dibujo.js?v=c7302cd0';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=c7302cd0';
-import { tenderRuta } from '../motor/ruta.js?v=c7302cd0';
-import { LUGARES, RUTA_A_KUSATSU, ENCUADRES } from '../datos/rutas.js?v=c7302cd0';
+import { registrarActo } from '../motor/escenario.js?v=235063c6';
+import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=235063c6';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=235063c6';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=235063c6';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura } from '../motor/dibujo.js?v=235063c6';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=235063c6';
+import { tenderRuta } from '../motor/ruta.js?v=235063c6';
+import { LUGARES, RUTA_A_KUSATSU, ENCUADRES } from '../datos/rutas.js?v=235063c6';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -173,7 +173,7 @@ const MUNDO_ROCA = 0.70;
    que es lo que hace que el golpe sea suyo.
    25 unidades: lo justo para que quede claramente a la derecha y siga cabiendo
    entera en un móvil, que mide 100u de ancho. */
-const X_ROCA_PARA = 25;
+export const X_ROCA_PARA = 25;
 
 /* Él va derivando hacia la izquierda mientras miramos el mapa —está rodando, y
    el mundo se mueve más deprisa que él— y luego cruza el medio entero para
@@ -198,7 +198,7 @@ const X_ONSEN = 0;
    que caer. Dejarla tirada a la vista contesta de paso a lo que el acto 6
    tenía abierto —si el muñeco vuelve a llevar tabla o no—, y si no gusta se
    cambia este número por uno fuera de pantalla y desaparece. */
-const X_TABLA_CAE = -30;
+export const X_TABLA_CAE = -30;
 
 /* 🚨 LO ALTO QUE VUELA, CON DOS TOPES Y NO UNO, igual que la montaña del acto
    4. La capa del dibujo se mide en vmin y la pantalla en svh: con solo 56u, en
@@ -234,7 +234,7 @@ const POSA_U = 2.0;
    revés, porque la cuenta de abajo lo necesita: dos definiciones de la misma
    medida, una en CSS y otra aquí, es como el muñeco acaba flotando sobre el
    agua. Es lo mismo que se hizo con --monte-h en el acto 4. */
-const ONSEN_ANCHO_U = 32;
+export const ONSEN_ANCHO_U = 32;
 /* El eje del agua dentro de arte/onsen.svg: y=104 de un viewBox de 150 de alto,
    contando desde arriba. O sea que el agua queda a un 31 % de la altura de la
    pieza por encima del suelo. 🚨 Si se retoca el dibujo, se retoca esto. */
@@ -249,7 +249,14 @@ const MONO_TORSO_REL = 1 - 96 / 150;
 const ONSEN_ALTO_U = ONSEN_ANCHO_U * (150 / 300);
 const AGUA_SOBRE_SUELO_U = ONSEN_ALTO_U * AGUA_REL;
 const MONO_ALTO_U = MONO_ANCHO_U * (150 / 130);
-const HUNDIDO_U = MONO_ALTO_U * MONO_TORSO_REL - AGUA_SOBRE_SUELO_U;
+/* 🚨 ESTE NÚMERO LO EXPORTA EL ACTO 5 Y LO IMPORTA EL 6, y es la única vez en
+   toda la película que un acto importa de otro. Es a propósito: el acto 6
+   empieza en el fotograma exacto en que acaba este (ley 5), con el muñeco
+   metido en el agua justo a esta altura, y tiene que sacarlo de ahí. Escribir
+   la cuenta otra vez allí serían dos definiciones del mismo número en dos
+   archivos, que es la regla 1 del repositorio y es como el muñeco acaba
+   flotando por encima del agua en un acto y no en el otro. */
+export const HUNDIDO_U = MONO_ALTO_U * MONO_TORSO_REL - AGUA_SOBRE_SUELO_U;
 /* Cuánto más se hunde mientras está debajo del agua, antes de volver a salir.
    Da igual que sea mucho: ahí abajo no se le ve. */
 const FONDO_U = 26;
@@ -262,6 +269,11 @@ const FONDO_U = 26;
    y la roca cuelga de esta misma curva. */
 const FONDO_HEREDADO = 1513;
 const RODAJE = 300;
+/* 🚨 DONDE SE QUEDA EL FONDO AL ACABAR ESTE ACTO, que es donde tiene que
+   arrancar el 6. Exportado por lo mismo que HUNDIDO_U: escrito a mano allí,
+   el bosque pega un salto en la costura el día que se toque cualquiera de los
+   dos números de arriba. */
+export const FONDO_AL_FINAL = FONDO_HEREDADO + RODAJE;
 
 /* --------------------------------------------------------------------------
    El rebote del onsen
@@ -287,18 +299,23 @@ let sueloRel = 0.68;   /* se lee de --suelo al preparar el acto */
    —con la montaña puesta, por ejemplo— el último fotograma que se pintó las
    tenía encendidas, y aquí no las tocaría nadie. */
 function apagarLoDeAntes() {
-  colocar('tren', { op: 0 });
-  colocar('cuatro', { op: 0 });
-  colocar('mostrador', { op: 0 });
-  colocar('llave', { op: 0 });
-  colocar('coche', { op: 0 });
-  colocar('monte', { op: 0 });
+  /* 🔁 Y SE DICE AL REVÉS DESDE EL ACTO 6 (ley 23): se declaran las piezas que
+     este acto SÍ enseña y el motor apaga el resto. Antes era una lista de seis
+     nombres ajenos, y el mono del acto 6 no habria estado en ella. */
+  limpiarPiezas('monigote', 'tabla', 'roca', 'onsen', 'onsen-fondo');
   variable('--halo', 0);
   variable('--luces', 0);
   variable('--puertas', 0);
   /* La línea del suelo la trae la banda de bosque, igual que al final del acto
      4: dos líneas a la vez se ven como un error de impresión. */
   variable('--op-suelo', 0);
+  /* 🚨 Y LOS ÁRBOLES A TOPE, que es la trampa que trajo el acto 6. --mezcla la
+     escribia SOLO el acto 3; el 6 la baja a 0 para dejar al coche rodando sin
+     bosque, y volviendo hacia atras este acto se quedaba con el manto de nieve
+     pelado, sin un arbol. Igual que bajarSuelo: se escribe en cada fotograma
+     porque es de una capa compartida y la barata es esta. Con 12 estan los
+     nueve arboles puestos (RANURAS, en 03-al-coche.js). */
+  variable('--mezcla', 12);
 }
 
 export function montarActoKusatsu() {
@@ -348,10 +365,8 @@ export function montarActoKusatsu() {
       limpiarRutas(0);
       empequeñecerMapa(0);
       if (acto.el.getBoundingClientRect().top > 0) {
-        colocar('roca', { op: 0 });
-        colocar('onsen', { op: 0 });
-        colocar('onsen-fondo', { op: 0 });
-        variableDe('monigote', '--pose', 0);
+        limpiarPiezas('monigote', 'tabla');
+        postura('monigote', 'tabla');
       }
     },
 
@@ -518,7 +533,7 @@ export function montarActoKusatsu() {
       /* La postura cambia DEBAJO DEL AGUA, donde no se ve: no es un fundido,
          es un interruptor. Y se escribe en la pieza y no en la capa, que es la
          ley 19. */
-      variableDe('monigote', '--pose', p >= F.tragado[1] ? 1 : 0);
+      postura('monigote', p >= F.tragado[1] ? 'onsen' : 'tabla');
 
       /* Se lo lleva por delante: un giro corto hacia atrás mientras vuela, que
          es lo que hace que se lea «se cae» y no «salta». Con la vuelta entera
