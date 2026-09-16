@@ -77,8 +77,36 @@
    un mono», y es lo que hace que se lea que son dos sitios distintos. */
 [data-pieza='poza'],
 [data-pieza='poza-fondo'] {
-  width: calc(18 * var(--u));
+  /* 🚨 LO ANCHO LO ESCRIBE EL ACTO, IGUAL QUE EL ONSEN DEL ACTO 5, y aqui estaba
+     puesto a fuego: el acto escribia --poza-ancho y el CSS no lo leia, asi que
+     la poza salia a 26 unidades sobre un repecho de cima de 15 y se le veia
+     colgando por los dos lados. Se vio en la captura. El numero vive en el acto
+     porque lo necesita para calcular cuanto se hunde el mono. */
+  width: calc(var(--poza-ancho, 16) * var(--u));
   aspect-ratio: 300 / 150;
+}
+
+/* 🏨 よろづや · el 桃山風呂.
+   🚨 88 UNIDADES, que es casi la pantalla de un móvil, y tiene que serlo: es el
+   sitio donde dormimos y el muñeco se está bañando enfrente. Más pequeño se lee
+   como una casita del paisaje y se pierde el gesto entero.
+   Y va con un `z-index` en medio: DELANTE de las bandas del bosque y DETRÁS del
+   onsen. Como el HTML ya lo pone ahí, no hace falta tocarle la capa. */
+[data-pieza='yorozuya'] {
+  width: calc(78 * var(--u));
+  aspect-ratio: 600 / 330;
+}
+
+/* 🏔️ La montaña de los monos, delante de todo.
+   🚨 Su alto va atado a la PANTALLA y no a la caja, como el monte del acto 4 y
+   la montaña del fondo, y por lo mismo: en un portátil ancho una altura en
+   unidades se sale por arriba. Y el mono baja por su ladera, así que este
+   tamaño y el `viewBox` del dibujo son la misma cosa: si se toca uno, la tabla
+   de alturas que muestrea dibujo.js deja de cuadrar (ley 18). */
+[data-pieza='monte-mono'] {
+  width: calc(54 * var(--u));
+  height: min(30svh, calc(40 * var(--u)));
+  aspect-ratio: auto;
 }
 
 /* ==========================================================================

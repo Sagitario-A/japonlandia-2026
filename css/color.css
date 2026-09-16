@@ -108,6 +108,26 @@
   /* La montaña del fondo: más pálida que la nieve de delante, que es lo único
      que la manda lejos en un dibujo sin sombras ni degradados */
   --c-monte-lejos: #eef4f9;
+  /* Y la montaña de los monos, que está DELANTE de todo: más oscura que la del
+     fondo por lo mismo, al revés. Es roca vista, no nieve */
+  --c-monte-cerca: #b9c6d2;
+  --c-monte-cerca-hondo: #94a4b3;
+
+  /* 🏨 よろづや · el 桃山風呂, acto 6.
+     🚨 SON LOS COLORES DEL EDIFICIO, NO LOS DE LA FOTO. La foto que pasó Kiko
+     es de noche y con focos: fondo negro azulado y madera naranja
+     incandescente. Aquí es de día y está nevando, y el fondo de esta web es
+     blanco impoluto y no se toca (NORMAS § 1). Así que se respeta el color de
+     la MADERA —marrón rojizo cálido, el que tiene a cualquier hora— y el ámbar
+     de los shoji iluminados, que es lo que da el aire de la foto y además es lo
+     único cálido en una pantalla llena de nieve azul pálido.
+     El tejado va gris oscuro porque es lo que es: 鉄板葺, plancha de hierro. */
+  --c-madera: #9a5b36;
+  --c-madera-hondo: #6f3f26;
+  --c-hierro: #4a4a52;
+  --c-shoji: #f3ddb0;
+  /* 稲田石, el granito gris claro de la bañera de verdad */
+  --c-inada: #c9ccc9;
 
   --c-mono-pelo: #a8998a;
   --c-mono-pelo-hondo: #8a7c6e;
@@ -299,6 +319,36 @@
    de pueblo de una charca de montaña. */
 .z-roca  { fill: var(--c-roca); stroke: var(--trazo); stroke-width: 1.6; }
 .z-nieve { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 1.4; }
+
+/* --- La montaña de los monos (acto 6) ---
+   Al revés que la del fondo: está DELANTE de todo, así que va más oscura y con
+   el trazo normal. Es roca vista con nieve encima, no una silueta lejana. */
+.mm-roca    { fill: var(--c-monte-cerca); stroke: var(--trazo); stroke-width: 1.8; }
+.mm-nieve   { fill: var(--c-nieve-manto); stroke: none; }
+.mm-repecho { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 1.4; }
+.mm-veta    { fill: none; stroke: var(--c-monte-cerca-hondo); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+/* --- よろづや · el 桃山風呂 (acto 6) ---
+   🚨 LO QUE HACE RECONOCIBLE EL EDIFICIO ES EL KARAHAFU, el frontón curvo de la
+   entrada. Va con la madera más oscura y con su canto perfilado para que esa
+   doble curva se lea a 88 unidades de ancho, que es lo que mide en pantalla.
+   Y los shoji van ENCENDIDOS: es lo único cálido de toda la nieve, y es lo que
+   hace que el edificio se lea como un sitio donde se duerme y no como un muro. */
+.y-tejado   { fill: var(--c-hierro); stroke: var(--trazo); stroke-width: 1.8; stroke-linejoin: round; }
+.y-cuerpo   { fill: var(--c-madera); stroke: var(--trazo); stroke-width: 1.8; }
+.y-karahafu { fill: var(--c-madera-hondo); stroke: var(--trazo); stroke-width: 1.8; stroke-linejoin: round; }
+.y-karafilo { fill: none; stroke: var(--c-madera); stroke-width: 4; stroke-linejoin: round; }
+.y-remate   { fill: var(--c-llave); stroke: var(--trazo); stroke-width: 1.6; }
+.y-rotulo   { fill: var(--c-cartel); stroke: var(--trazo); stroke-width: 1.6; }
+.y-viga     { fill: var(--c-madera-hondo); stroke: var(--trazo); stroke-width: 1.8; }
+.y-mensula  { fill: var(--c-madera-hondo); }
+.y-shoji    { fill: var(--c-shoji); stroke: var(--trazo); stroke-width: 1.8; }
+.y-reja     { fill: none; stroke: var(--c-madera-hondo); stroke-width: 2.2; }
+.y-cuerda   { fill: none; stroke: var(--trazo); stroke-width: 1.6; }
+.y-farol    { fill: var(--c-halo); stroke: var(--trazo); stroke-width: 1.6; }
+.y-zocalo   { fill: var(--c-inada); stroke: var(--trazo); stroke-width: 1.8; }
+.y-roca     { fill: var(--c-roca); stroke: var(--trazo); stroke-width: 1.8; }
+.y-nieve    { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 1.4; }
 
 /* --- La roca del acto 5 ---
    Piedra gris fría, que es lo único que no es ni nieve ni personaje en toda la

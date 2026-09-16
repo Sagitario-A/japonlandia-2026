@@ -64,20 +64,20 @@
    quedaron así del acto 4.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=faa3b2af';
-import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=faa3b2af';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=faa3b2af';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=faa3b2af';
-import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena } from '../motor/dibujo.js?v=faa3b2af';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=faa3b2af';
-import { tenderRuta } from '../motor/ruta.js?v=faa3b2af';
-import { LUGARES, RUTA_A_YAMANOUCHI, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=faa3b2af';
+import { registrarActo } from '../motor/escenario.js?v=a17f41b7';
+import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=a17f41b7';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=a17f41b7';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=a17f41b7';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena, perfilDe, altura } from '../motor/dibujo.js?v=a17f41b7';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=a17f41b7';
+import { tenderRuta } from '../motor/ruta.js?v=a17f41b7';
+import { LUGARES, RUTA_A_YAMANOUCHI, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=a17f41b7';
 /* 🚨 LO ÚNICO QUE ESTE ACTO IMPORTA DE OTRO ACTO, y es a propósito: son los
    cuatro números con los que acaba el acto 5, o sea el fotograma del que este
    arranca (ley 5). Escritos a mano aquí serían el mismo número en dos archivos
    —regla 1 del repositorio—, y el día que alguien mueva la tabla o cambie lo
    ancho del onsen, el acto 6 abriría con las cosas en otro sitio que el 5. */
-import { HUNDIDO_U, ONSEN_ANCHO_U, X_TABLA_CAE, X_ROCA_PARA, FONDO_AL_FINAL } from './05-kusatsu.js?v=faa3b2af';
+import { HUNDIDO_U, ONSEN_ANCHO_U, X_TABLA_CAE, X_ROCA_PARA, FONDO_AL_FINAL } from './05-kusatsu.js?v=a17f41b7';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -130,6 +130,22 @@ const F = {
   viaje1Dent: [0.095, 0.150],
   viaje1Fuer: [0.225, 0.272],
   mapa1SeVa:  [0.228, 0.280],
+
+  /* 🚨 Y MIENTRAS LA RUTA SE DIBUJA, EL PAISAJE CORRE. Kiko, primera ronda:
+     «cuando aparece el mapa de Kusatsu a Yamanouchi y se va completando la
+     ruta, el onsen con el muñeco se tiene que quedar en el centro estático,
+     pero la tabla y la roca y los árboles del fondo tienen que moverse a
+     relativamente alta velocidad hacia la izquierda».
+
+     Es el viaje contado con lo que ya hay: el muñeco no se mueve —está metido
+     en el agua, y esa es la broma— y el mundo pasa por detrás. Cuando la línea
+     llega a Yamanouchi, el mundo frena y **entra el hotel**.
+     🚨 La curva es `frena`: arranca de golpe —que es lo que pidió, «relativamente
+     alta velocidad»— y se va posando. Al revés no serviría: el paisaje tiene
+     que estar ya quieto cuando aparece el edificio. */
+  corrida:    [0.052, 0.238],
+  /* El hotel entra cuando la ruta ya ha llegado y el mundo casi se ha parado */
+  entraHotel: [0.208, 0.268],
 
   /* B · los datos. Dos ventanas para el panel y no una, como en los actos 4 y
      5: --p-sube solo va hacia delante y --p-datos es lo que se ve, para que al
@@ -210,8 +226,13 @@ const F = {
      Yamanouchi, o sea a la izquierda en el mapa que se está dibujando justo
      encima. Con el coche yendo hacia la derecha, el dibujo y el mapa contaban
      viajes contrarios en la misma pantalla. */
-  arranca:    [0.842, 0.908],
-  viaja:      [0.894, 1.000],
+  /* 🔁 EL COCHE YA NO SE MUEVE SOLO, Y ESO LO CORRIGIO KIKO: «en realidad se
+     va toda la escena, como que toda la escena se va a la derecha dejando al
+     coche en el medio, y el coche ya va directamente hacia la izquierda, no que
+     el coche se mueva hacia la derecha». O sea que no hay ventana de arranque:
+     hay UNA sola cosa moviendose —el mundo— y el coche va con el hasta que
+     llega al centro, donde se queda. Se ve en el codigo del coche, mas abajo. */
+  viaja:      [0.842, 1.000],
 
   /* 🚨 LOS ÁRBOLES SE APAGAN UNO A UNO, y esta ventana es la del acto entero
      que más despacio va a propósito: son nueve ranuras en pantalla y pico, o
@@ -253,15 +274,24 @@ const X_PICO = 20;
 
 /* La poza de los monos, al pie de la montaña. Va entre la roca que dejó el acto
    5 —en +25 y 16u de ancho, o sea que llega hasta +33— y el borde derecho. */
-const X_POZA = 45;
+const MONTE_MONO_ANCHO_U = 54;
+/* 🔁 Corrido a la derecha y encogido al verlo en pantalla: con 62 unidades en
+   el 38 se salia por el borde derecho y ademas se comia el ala derecha del
+   hotel. Asi cabe entera y deja ver el edificio. */
+const X_MONTE_MONO = 40;
+/* 🚨 DONDE CAE LA POZA EN LA CIMA, y sale del dibujo y no de un numero a ojo:
+   el repecho llano de arte/monte-mono.svg va de x=200 a x=292 de un viewBox de
+   400, o sea que su centro esta al 61,5 % del ancho de la pieza. */
+const POZA_EN_CIMA = 0.615;
+const X_POZA = X_MONTE_MONO + (POZA_EN_CIMA - 0.5) * MONTE_MONO_ANCHO_U;
 
 /* 🐒 EL MONO ESTÁ LEJOS, Y POR ESO ES PEQUEÑO. Es lo único que da profundidad
    en una película sin sombras ni degradados: metido en la poza, al pie de la
    montaña, va al 62 % de su tamaño, y cuando salta «hacia nosotros» crece hasta
    pasarse del natural. Ese cambio de tamaño ES el salto hacia delante: sin él,
    un bicho que baja por la pantalla solo parece que baja. */
-const MONO_LEJOS = 0.62;
-const MONO_CERCA = 1.28;
+const MONO_LEJOS = 0.55;
+const MONO_CERCA = 1.05;
 
 /* 🚨 LOS NÚMEROS QUE ESTÁN ESCRITOS EN DOS SITIOS, juntos y avisados como en el
    acto 5: son la costura entre este archivo, el CSS y los dibujos.
@@ -270,11 +300,11 @@ const MONO_CERCA = 1.28;
    acto y lo lee el CSS, y no al revés, porque la cuenta lo necesita: dos
    definiciones de la misma medida es como el mono acaba flotando por encima del
    agua. Lo ancho del mono lo declara css/actos/06-yamanouchi.css. */
-const POZA_ANCHO_U = 26;
+const POZA_ANCHO_U = 16;
 const MONO_ANCHO_U = 22;
 /* Adónde cae: hacia el centro y hacia delante, pero NO encima del muñeco. Deja
    sitio para que se le vea entero y para que el muñeco salga por el otro lado. */
-const X_MONO_CAE = 15;
+const X_MONO_CAE = 14;
 /* Lo alto que salta antes de caer, en unidades */
 const MONO_SALTO_U = 20;
 
@@ -309,6 +339,22 @@ const X_COCHE_ENTRA = -130;
    contaban viajes contrarios en la misma pantalla. */
 const VIAJE = 560;
 
+/* 🔁 Y CUÁNTO MUNDO PASA MIENTRAS SE DIBUJA LA RUTA A YAMANOUCHI.
+   Kiko, primera ronda: «a relativamente alta velocidad hacia la izquierda».
+   760 es más de lo que el coche recorre al final en un tramo más corto: es
+   deliberado, porque aquí lo que se está contando son 136 km de carretera y
+   dos horas y media de rodeo, y el paisaje tiene que pasar como pasa por la
+   ventanilla. 🚨 Y en POSITIVO: el fondo corre hacia la izquierda, que es lo
+   contrario que al final del acto. */
+const CORRIDA = 760;
+
+/* Dónde se planta el hotel al llegar. Centrado y un pelo a la derecha del
+   onsen: el onsen del muñeco está en el 0 y mide 32u, el edificio mide 88, así
+   que centrándolo exacto el muñeco le tapa justo la entrada — que es la parte
+   que hay que ver. Cuatro unidades bastan para destaparla sin que parezca
+   descuadrado. */
+const X_HOTEL = -4;
+
 /* 🚨 CUÁNTOS ÁRBOLES HAY, Y POR QUÉ ESTE NÚMERO ESTÁ AQUÍ.
    Es RANURAS, de 03-al-coche.js: con --mezcla a 12 están los nueve árboles de
    bosque-nevado.svg encendidos, y bajándola se van apagando de uno en uno por
@@ -340,7 +386,8 @@ function escenaHeredada(altoPantalla) {
      lo demás, exista o no hoy: así el acto 7 podrá estrenar sus trenes sin
      tocar una línea de este archivo. */
   limpiarPiezas('monigote', 'tabla', 'roca', 'onsen', 'onsen-fondo',
-                'mono', 'coche', 'pico', 'poza', 'poza-fondo');
+                'mono', 'coche', 'pico', 'poza', 'poza-fondo',
+                'yorozuya', 'monte-mono');
   variable('--halo', 0);
   variable('--luces', 0);
   variable('--puertas', 0);
@@ -466,12 +513,24 @@ export function montarActoYamanouchi() {
          portátil. */
       const delanteU = ((1 / zoom) - 1) * altoPantalla / 2 / unidad;
 
-      /* El mundo. Quieto donde lo dejó el acto 5 durante TODO el acto hasta que
-         el coche arranca — que es lo que pidió Kiko: «dejando el onsen y toda la
-         imagen estática hasta que ya el coche acelere»—, y entonces se mueve
-         HACIA LA DERECHA, para que el coche se lea yendo hacia la izquierda. */
+      /* ================================================================
+         EL MUNDO, QUE SE MUEVE DOS VECES Y EN SENTIDOS CONTRARIOS
+         ================================================================
+         🔁 LA PRIMERA ES NUEVA, de la primera ronda de Kiko: mientras el mapa
+         dibuja la ruta de Kusatsu a Yamanouchi, «la tabla y la roca y los
+         árboles del fondo tienen que moverse a relativamente alta velocidad
+         hacia la izquierda», y el onsen con el muñeco se queda quieto en el
+         centro. Es el viaje contado con lo que ya hay en pantalla: él no se
+         mueve —está metido en el agua— y el mundo le pasa por detrás.
+
+         La segunda es el final, y va al revés: el coche sale hacia el OESTE, o
+         sea a la izquierda, así que el mundo corre hacia la derecha.
+
+         🚨 LAS DOS SE SUMAN EN EL MISMO NÚMERO y no pueden pisarse: la primera
+         termina en 0,238 y la segunda no empieza hasta 0,894. */
+      const corriendo = frena(tramo(p, F.corrida[0], F.corrida[1]));
       const viajando = suave(tramo(p, F.viaja[0], F.viaja[1]));
-      desplazarFondo(FONDO_AL_FINAL - VIAJE * viajando);
+      desplazarFondo(FONDO_AL_FINAL + CORRIDA * corriendo - VIAJE * viajando);
 
       /* 🚨 Y TODO LO QUE ESTÁ PLANTADO EN EL SUELO SE VA CON ÉL.
          Esto no estaba y se vio en la captura del final: el coche se ponía en
@@ -563,6 +622,37 @@ export function montarActoYamanouchi() {
 
       const opPoza = suave(tramo(p, F.entraPoza[0], F.entraPoza[1]));
 
+      /* 🔁 LA MONTAÑA DE LOS MONOS, QUE ES DE LA PRIMERA RONDA. Kiko: «justo
+         delante de esa montaña grande, yo te diría de hacer una pequeña, pero
+         que esté como traída al frente, de hecho puede estar delante de los
+         árboles». Va en el plano del suelo, así que se arrastra con él. */
+      const xMonteMono = X_MONTE_MONO + arrastre;
+      colocar('monte-mono', {
+        x: xMonteMono,
+        y: 0,
+        op: (opPoza > 0.004 && xMonteMono < 170) ? opPoza : 0,
+        escala: 1
+      });
+
+      /* 🚨 LA CIMA, MEDIDA DEL DIBUJO Y NO ESCRITA A MANO (ley 18).
+         El perfil de arte/monte-mono.svg se muestrea al cargarlo, así que de
+         aquí sale a qué altura está la ladera en cada punto — y con eso se
+         colocan la poza en el repecho y el mono bajando por la pendiente.
+         Retocar la curva del dibujo los mueve a los dos, sin tocar código.
+         Si la pieza todavía no ha llegado, `altura()` devuelve 0 y todo se
+         queda a ras de suelo: feo un instante, nunca roto. */
+      const perfilMonte = perfilDe('monte-mono');
+      const altoMonte = Math.min(0.30 * altoPantalla, 40 * unidad);
+      const anchoMonte = MONTE_MONO_ANCHO_U * unidad;
+      /* De una `x` del escenario a su sitio dentro de la pieza, de 0 a 1 */
+      function sobreElMonte(xu) {
+        return (xu - (xMonteMono - MONTE_MONO_ANCHO_U / 2)) / MONTE_MONO_ANCHO_U;
+      }
+      /* Y de ahí a lo alto que está la ladera ahí, en unidades */
+      function laderaU(xu) {
+        return altura(perfilMonte, sobreElMonte(xu)) * altoMonte / unidad;
+      }
+
       /* ================================================================
          C.bis · EL MONO, QUE YA ESTABA DENTRO DEL AGUA
          ================================================================
@@ -576,9 +666,20 @@ export function montarActoYamanouchi() {
            · sale del agua y baja hacia delante  (la `y`, con un arco)
            · se acerca al centro                  (la `x`)
            · y CRECE                              (la escala)
-         🚨 La escala es la que cuenta el salto. Sin ella, un bicho que baja por
-         la pantalla solo parece que baja; creciendo del 62 % al 128 % parece que
-         se te echa encima, que es lo que pidió. */
+         🔁 Y EN LA PRIMERA RONDA SE MUDÓ A LA CIMA. Kiko: «que el onsen sea la
+         base de la cima de la montaña, y que desde ahí salte el mono y baje por
+         la ladera asustando al muñeco». O sea que ya no cae al vacío hacia
+         nosotros: **baja rodando por la pendiente**, que es mucho mejor, porque
+         el recorrido se ve entero y acaba justo al lado del muñeco.
+
+         🚨 Y LA ALTURA NO ES UNA CURVA INVENTADA: ES LA LADERA. El mono va
+         pegado al perfil medido del dibujo en cada punto, igual que el monigote
+         baja la montaña del acto 4. Es la ley 18: una sola fuente, y es el
+         dibujo.
+
+         La escala sigue contando la distancia —del 55 % arriba en la cima al
+         105 % abajo, al lado del muñeco—, que es lo que hace que se lea que se
+         acerca y no solo que baja. */
       const tSalta = tramo(p, F.monoSalta[0], F.monoSalta[1]);
       const escalaMono = mezcla(MONO_LEJOS, MONO_CERCA, suave(tSalta));
 
@@ -589,21 +690,30 @@ export function montarActoYamanouchi() {
       const pozaAltoU = POZA_ANCHO_U * (150 / 300);
       const aguaPozaU = pozaAltoU * (1 - 104 / 150);
       const monoAltoU = MONO_ANCHO_U * (110 / 130) * MONO_LEJOS;
-      const hundidoMonoU = monoAltoU * 0.42 - aguaPozaU;
+      /* 🚨 0,55 Y NO 0,42: el agua le tiene que cruzar por el pecho, no por las
+         rodillas. Con 0,42 —que es mas o menos lo que usa el acto 5 para el
+         muñeco— el mono se quedaba de pie DENTRO de la poza con las piernas
+         medio tapadas, y no parecia bañandose sino metido en un barreño. La
+         diferencia es que el muñeco esta sentado y el mono esta de pie: la
+         proporcion de cuerpo que tiene que quedar bajo el agua no es la misma.
+         Se vio en la captura. */
+      const hundidoMonoU = monoAltoU * 0.55 - aguaPozaU;
 
-      /* 🚨 ADÓNDE BAJA: A LA FRANJA QUE HA ABIERTO EL ZOOM, por delante del
-         suelo. `delante` está calculado arriba y sale del zoom y del alto de la
-         pantalla; se usa el 62 % para que caiga con sitio de sobra y no se salga
-         por el canto de abajo en una pantalla baja.
-         🚨 VA EN UNIDADES DEL ESCENARIO, NO EN PIXELES, y el primer montaje lo
-         tenia en pixeles: el mono salia disparado fuera de la pantalla y en la
-         captura del salto no habia mono. `colocar` mide la `y` en unidades para
-         todas las piezas menos el muñeco y la tabla, que se quedaron en pixeles
-         desde el acto 4. Se vio mirando, no leyendo. */
-      const yMonoSalta = mezcla(hundidoMonoU, delanteU * 0.62, tSalta * tSalta)
+      /* Por dónde va: de la poza de la cima al pie de la ladera, junto al
+         onsen. `suave` porque sale de un salto y se va posando. */
+      const xMono = mezcla(X_POZA, X_MONO_CAE, suave(tSalta)) + arrastre * 1.15;
+
+      /* Y a qué altura: la de la ladera en ese punto, más el hundido de la poza
+         mientras todavía está dentro, menos el brinco con el que sale.
+         🚨 EN UNIDADES DEL ESCENARIO, NO EN PÍXELES. El primer montaje lo tenía
+         en píxeles y el mono salía disparado fuera de la pantalla: en la captura
+         del salto no había mono. `colocar` mide la `y` en unidades para todas
+         las piezas menos el muñeco y la tabla, que se quedaron en píxeles desde
+         el acto 4. Se vio mirando, no leyendo. */
+      const yMonoSalta = -laderaU(xMono)
+        + hundidoMonoU * (1 - tope(tSalta * 3))
         - MONO_SALTO_U * Math.sin(Math.PI * tSalta);
 
-      const xMono = mezcla(X_POZA, X_MONO_CAE, suave(tSalta)) + arrastre * 1.45;
       colocar('mono', {
         x: xMono,
         y: yMonoSalta,
@@ -611,14 +721,21 @@ export function montarActoYamanouchi() {
         escala: escalaMono
       });
 
-      /* 🚨 LAS DOS MITADES DE LA POZA VAN AL MISMO SITIO, SIEMPRE, igual que las
-         del onsen del acto 5: son un solo dibujo partido por el eje del agua con
-         el mono en medio. En cuanto una se mueva un píxel más que la otra, se ve
-         la juntura. Y NO se mueven en todo el acto: se quedan donde el zoom las
-         deja. */
+      /* 🚨 LA POZA VA EN LA CIMA, Y SU ALTURA TAMBIÉN SALE DEL PERFIL.
+         «Que arriba haya como un charquito de agua… que el onsen sea la base de
+         la cima de la montaña.» Se apoya en el repecho llano del dibujo, y por
+         eso su sitio se calcula con `laderaU` en vez de ponerse a ojo: si
+         alguien retoca la montaña, la poza sube o baja con ella.
+         🚨 Las dos mitades van al mismo sitio, SIEMPRE: son un solo dibujo
+         partido por el eje del agua con el mono en medio. */
       variable('--poza-ancho', POZA_ANCHO_U);
       const xPoza = X_POZA + arrastre;
-      const sitioPoza = { x: xPoza, y: 0, op: (opPoza > 0.004 && xPoza < 140) ? opPoza : 0, escala: 1 };
+      const sitioPoza = {
+        x: xPoza,
+        y: -laderaU(xPoza),
+        op: (opPoza > 0.004 && xPoza < 150) ? opPoza : 0,
+        escala: 1
+      };
       colocar('poza-fondo', sitioPoza);
       colocar('poza', sitioPoza);
 
@@ -631,7 +748,15 @@ export function montarActoYamanouchi() {
          [esté] estática». Así que la roca se queda donde estaba y se va con el
          resto del paisaje cuando el mundo empieza a correr — hacia la derecha,
          que es lo que hace el suelo cuando el coche tira hacia la izquierda. */
-      const xRoca = X_ROCA_PARA + arrastre;
+      /* 🔁 Y ANTES DE ESO, LAS DOS CORREN HACIA LA IZQUIERDA CON EL PAISAJE.
+         Kiko, primera ronda: «la tabla y la roca y los árboles del fondo tienen
+         que moverse a relativamente alta velocidad hacia la izquierda» mientras
+         se dibuja la ruta. Son lo que queda de Kusatsu, y Kusatsu se queda
+         atrás: cuando el mundo para, ya no están.
+         🚨 ESO SE LLEVA POR DELANTE LA RECOGIDA DE LA TABLA que se decidió en la
+         ronda anterior. Si vuelve a hacer falta, la tabla tiene que dejar de
+         correr aquí y quedarse a la izquierda. Está avisado en DEFINICION. */
+      const xRoca = X_ROCA_PARA - CORRIDA * corriendo * 1.182 + arrastre;
       colocar('roca', {
         x: xRoca,
         /* 🚨 Y SE APAGA CUANDO YA NO CABE. La pantalla mide 100 unidades en un
@@ -639,7 +764,7 @@ export function montarActoYamanouchi() {
            una roca a opacidad 1 fuera de cuadro es invisible en una pantalla y
            visible en otra. 130 la deja fuera en todas. */
         y: 0,
-        op: xRoca < 140 ? 1 : 0,
+        op: (xRoca > -140 && xRoca < 140) ? 1 : 0,
         escala: 1
       });
 
@@ -719,7 +844,14 @@ export function montarActoYamanouchi() {
          Girada -70° alrededor de la base de su caja se pone casi vertical, y
          cinco unidades a su derecha queda por detrás de él según corre hacia la
          izquierda: la lleva al costado, como quien se lleva una tabla. */
-      const recogida = xMuñeco <= X_TABLA_CAE;
+      /* 🔁 Y LA TABLA YA NO SE RECOGE, porque para cuando él corre ya no está.
+         En la primera ronda se decidió que la recogía al pasar; en esta, Kiko
+         pidió que la tabla corriera hacia la izquierda con el resto del paisaje
+         de Kusatsu mientras se dibuja la ruta. Las dos cosas no caben: si se va
+         con Kusatsu, no está aquí para recogerla. Se ha hecho lo último, que es
+         lo que dijo después, y queda avisado en DEFINICION. */
+      const xTabla = X_TABLA_CAE - CORRIDA * corriendo * 1.182 + arrastre;
+      const recogida = corriendo <= 0 && xMuñeco <= X_TABLA_CAE;
       if (recogida) {
         colocar('tabla', { x: xMuñeco + 5, y: yMono2, op: dentro ? 0 : 1, escala: 1, giro: -70 });
       } else {
@@ -727,7 +859,13 @@ export function montarActoYamanouchi() {
            levantada dos unidades para que no se hunda por debajo del borde
            —el giro va alrededor de la base de su caja, y en este acto el suelo
            es el canto inferior de la pantalla—. */
-        colocar('tabla', { x: X_TABLA_CAE, y: -2.0 * unidad, op: 1, escala: 1, giro: -172 });
+        colocar('tabla', {
+          x: xTabla,
+          y: -2.0 * unidad,
+          op: (xTabla > -150 && xTabla < 140) ? 1 : 0,
+          escala: 1,
+          giro: -172
+        });
       }
 
       /* ================================================================
@@ -745,6 +883,24 @@ export function montarActoYamanouchi() {
          piezas que dejan de escribirse en cada fotograma.
          🚨 Las dos mitades siguen yendo al mismo sitio, siempre. */
       const xOnsen = arrastre;
+      /* 🏨 Y DETRÁS DE ÉL, EL HOTEL — よろづや, el 桃山風呂.
+         Entra cuando la ruta ya ha llegado a Yamanouchi y el paisaje casi se ha
+         parado: es el premio del viaje que se acaba de contar en el mapa. Kiko:
+         «haciendo ver como que nos estamos bañando en el onsen que está justo
+         enfrente de esa estructura».
+         🚨 Y va en el HTML entre las bandas y el onsen, que es lo que hace la
+         escena: por delante de los árboles y por detrás del muñeco. Aquí solo se
+         coloca; quien manda en el orden de pintado es el HTML.
+         Está en el plano del suelo, así que corre con él al final. */
+      const opHotel = suave(tramo(p, F.entraHotel[0], F.entraHotel[1]));
+      const xHotel = X_HOTEL + arrastre;
+      colocar('yorozuya', {
+        x: xHotel,
+        y: 0,
+        op: xHotel < 190 ? opHotel : 0,
+        escala: 1
+      });
+
       const sitioOnsen = { x: xOnsen, y: 0, op: xOnsen < 140 ? 1 : 0, escala: 1 };
       colocar('onsen-fondo', sitioOnsen);
       colocar('onsen', sitioOnsen);
@@ -774,9 +930,20 @@ export function montarActoYamanouchi() {
          Es el truco del acto 3 con el signo cambiado, y va hacia la izquierda
          porque Matsumoto está al oeste. */
       const tCoche = tramo(p, F.entraCoche[0], F.entraCoche[1]);
-      const tArranca = suave(tramo(p, F.arranca[0], F.arranca[1]));
+      /* 🔁 Y NO SE MUEVE POR SU CUENTA: LO MUEVE LA ESCENA. Kiko lo corrigió en
+         la primera ronda: «en realidad se va toda la escena, como que toda la
+         escena se va a la derecha dejando al coche en el medio, y el coche ya va
+         directamente hacia la izquierda, no que el coche se mueva hacia la
+         derecha». Y tiene razón: con el coche desplazándose él solo hacia la
+         derecha, lo que se lee durante ese golpe es un coche yendo al este, que
+         es justo lo contrario del viaje.
+
+         Así que el coche va enganchado al MISMO arrastre que el onsen y la roca
+         —está aparcado y el mundo se lo lleva— y se suelta al llegar al centro,
+         que es donde se queda rodando. Un `Math.min` en vez de una ventana
+         propia: no hay dos movimientos, hay uno solo que se para en el medio. */
       colocar('coche', {
-        x: mezcla(mezcla(X_COCHE_ENTRA, X_COCHE_PARA, frena(tCoche)), 0, tArranca),
+        x: Math.min(0, mezcla(X_COCHE_ENTRA, X_COCHE_PARA, frena(tCoche)) + arrastre),
         y: 0,
         op: tCoche > 0 ? 1 : 0,
         escala: 1

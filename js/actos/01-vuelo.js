@@ -10,13 +10,13 @@
    Guion → web-nueva/DEFINICION.md, acto A1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=faa3b2af';
-import { tramo, suave, tope } from '../motor/util.js?v=faa3b2af';
-import { mirarA } from '../motor/proyeccion.js?v=faa3b2af';
-import { pintarMapa, pintarRuta, limpiarRutas, pintarVehiculo, marcar, mostrarLienzo, opacidadMapa, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=faa3b2af';
-import { tenderRuta } from '../motor/ruta.js?v=faa3b2af';
-import { apagarDibujo } from '../motor/dibujo.js?v=faa3b2af';
-import { VUELO_IDA, LUGARES } from '../datos/rutas.js?v=faa3b2af';
+import { registrarActo } from '../motor/escenario.js?v=a17f41b7';
+import { tramo, suave, tope } from '../motor/util.js?v=a17f41b7';
+import { mirarA } from '../motor/proyeccion.js?v=a17f41b7';
+import { pintarMapa, pintarRuta, limpiarRutas, pintarVehiculo, marcar, mostrarLienzo, opacidadMapa, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=a17f41b7';
+import { tenderRuta } from '../motor/ruta.js?v=a17f41b7';
+import { apagarDibujo } from '../motor/dibujo.js?v=a17f41b7';
+import { VUELO_IDA, LUGARES } from '../datos/rutas.js?v=a17f41b7';
 
 /* La ruta real de Iberia, tendida una vez al cargar.
    Se exporta porque el acto 2 la hereda: si desaparece de golpe al cambiar de

@@ -1,0 +1,110 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 330" class="a-yorozuya" aria-hidden="true" focusable="false">
+  <!-- EL 桃山風呂 (MOMOYAMA-BURO) DE よろづや, EN YUDANAKA ONSEN · acto 6.
+       Kiko, viendo el acto publicado: «cuando lleguemos a Yamanouchi, que quede
+       detras del onsen con el muñeco y delante de los arboles una imagen
+       vectorizada del hotel al que vamos… haciendo ver como que nos estamos
+       bañando en el onsen que esta justo enfrente de esa estructura. Que es la
+       mitica casa de Yorozuya».
+
+       🚨 ESTO NO ES DECORACION: ES UN DATO DEL VIAJE.
+       よろづや esta en 湯田中温泉, en 山ノ内町 (Yamanouchi), que es justo el tercer
+       sitio de la nieve. Y la estructura de la foto es el 桃山風呂:
+
+         · 1951 (昭和26年), 220 m2 de planta
+         · 木造平屋建 — madera, UNA sola altura
+         · 屋根鉄板葺 — tejado de PLANCHA DE HIERRO, no de teja
+         · 純木造伽藍建築 — arquitectura de madera pura de estilo templo
+         · bañera OVALADA de 稲田石 (granito de Inada, gris claro)
+         · 登録有形文化財 (Bien Cultural Registrado) desde 2003
+
+       ✅ Verificado el 17 de septiembre de 2026 en la Wikipedia japonesa de
+       よろづや (湯田中温泉) y en la web oficial del establecimiento.
+
+       🚨 LA FORMA SALE DE LA FOTO, Y LO QUE LA HACE RECONOCIBLE ES UNA COSA:
+       el 唐破風 (karahafu), el fronton CURVO sobre la entrada. Es esa onda que
+       sube por los lados, baja en el centro y vuelve a levantarse en la punta.
+       Sin el karahafu esto es una casa de madera cualquiera; con el, es ese
+       edificio. Todo lo demas —las dos alas mas bajas, los aleros anchos, la
+       reja de shoji iluminados de la planta baja, el remate de la cumbrera— va
+       detras en importancia.
+
+       🚨 Y LOS COLORES SON LOS DEL EDIFICIO, NO LOS DE LA FOTO. La foto es de
+       noche y con focos: fondo negro azulado y madera naranja incandescente.
+       Aqui es de dia y esta nevando, y el fondo de esta web es blanco impoluto
+       y no se toca (NORMAS § 1). Asi que se respeta el color de la MADERA
+       —marron rojizo calido, que es el que tiene a cualquier hora— y el ambar
+       de los shoji iluminados, que es lo que da el aire de la foto y ademas es
+       lo unico calido en una pantalla llena de nieve azul palido. El tejado, de
+       plancha de hierro, gris oscuro.
+
+       📄 Y una convencion de escritura: en los comentarios de un `.svg` las
+       variables de CSS se nombran entrecomilladas y sin sus dos guiones. Dos
+       guiones seguidos son XML invalido y estos archivos se abren en un editor
+       vectorial. -->
+
+  <!-- ══════ LAS DOS ALAS, que van detras ══════ -->
+  <!-- Ala izquierda -->
+  <path class="y-tejado" d="M4 170 L150 142 L206 156 L206 168 L4 182 Z"/>
+  <rect class="y-cuerpo" x="14" y="176" width="190" height="104"/>
+  <!-- Ala derecha -->
+  <path class="y-tejado" d="M596 170 L450 142 L394 156 L394 168 L596 182 Z"/>
+  <rect class="y-cuerpo" x="396" y="176" width="190" height="104"/>
+
+  <!-- ══════ EL CUERPO CENTRAL ══════ -->
+  <!-- El tejado principal, a dos aguas y con alero ancho -->
+  <path class="y-tejado" d="M300 40 L470 130 L486 148 L114 148 L130 130 Z"/>
+  <!-- El remate de la cumbrera: en la foto es una silueta pequeña recortada
+       contra el cielo, y es lo que dice que el edificio es «de templo» -->
+  <path class="y-remate" d="M294 40 q6 -16 12 0 q-6 -5 -12 0 z"/>
+  <rect class="y-remate" x="297" y="24" width="6" height="18" rx="3"/>
+
+  <!-- 🚨 EL KARAHAFU (唐破風), que es LA pieza. Sube por los lados, baja en el
+       centro y vuelve a levantarse: esa doble curva es la firma del edificio. -->
+  <!-- 🚨 EL CENTRO ES EL PUNTO ALTO, NO UN HUNDIDO. El primer intento lo tenía
+       al reves —dos jorobas con un valle en medio— y en la foto se ve claro que
+       el fronton SUBE hasta la cumbre del centro, con las dos concavidades a los
+       lados. Ese perfil concavo-convexo-concavo es lo que hace que un karahafu
+       sea un karahafu y no un arco cualquiera. Se vio en la captura. -->
+  <path class="y-karahafu" d="M186 172
+    q28 -46 60 -50 q30 -4 54 -30 q24 26 54 30 q32 4 60 50 z"/>
+  <!-- Su borde, más claro: en la foto el canto del fronton va perfilado -->
+  <path class="y-karafilo" d="M186 172 q28 -46 60 -50 q30 -4 54 -30 q24 26 54 30 q32 4 60 50"/>
+  <!-- La tabla del centro, donde en la foto va el rotulo -->
+  <rect class="y-rotulo" x="262" y="140" width="76" height="26" rx="3"/>
+
+  <!-- El dintel bajo el karahafu, con sus ménsulas -->
+  <rect class="y-viga" x="176" y="172" width="248" height="14"/>
+  <rect class="y-mensula" x="196" y="186" width="10" height="20"/>
+  <rect class="y-mensula" x="295" y="186" width="10" height="20"/>
+  <rect class="y-mensula" x="394" y="186" width="10" height="20"/>
+
+  <!-- ══════ LA PLANTA BAJA: la reja de shoji iluminados ══════
+       Es lo que da el calor de la foto. Rejilla de tres por dos en el centro y
+       una banda continua en las alas. -->
+  <rect class="y-shoji" x="188" y="196" width="224" height="84"/>
+  <g class="y-reja">
+    <path d="M188 224 h224 M188 252 h224"/>
+    <path d="M244 196 v84 M300 196 v84 M356 196 v84"/>
+  </g>
+  <!-- Las alas, con sus ventanas -->
+  <rect class="y-shoji" x="34" y="200" width="150" height="62"/>
+  <g class="y-reja"><path d="M34 231 h150 M84 200 v62 M134 200 v62"/></g>
+  <rect class="y-shoji" x="416" y="200" width="150" height="62"/>
+  <g class="y-reja"><path d="M416 231 h150 M466 200 v62 M516 200 v62"/></g>
+
+  <!-- Los dos farolillos que cuelgan de los aleros -->
+  <path class="y-cuerda" d="M152 156 v16 M448 156 v16"/>
+  <ellipse class="y-farol" cx="152" cy="180" rx="9" ry="11"/>
+  <ellipse class="y-farol" cx="448" cy="180" rx="9" ry="11"/>
+
+  <!-- ══════ LA BASE DE PIEDRA ══════
+       稲田石, el granito gris claro de la bañera de verdad. Aqui hace de zocalo:
+       es lo que separa el edificio del agua en la foto. -->
+  <rect class="y-zocalo" x="4" y="280" width="592" height="22"/>
+  <!-- Y unas rocas sueltas al pie, que es como esta el borde del baño -->
+  <ellipse class="y-roca" cx="86" cy="302" rx="46" ry="16"/>
+  <ellipse class="y-roca" cx="300" cy="306" rx="70" ry="18"/>
+  <ellipse class="y-roca" cx="510" cy="302" rx="46" ry="16"/>
+  <!-- Su nieve encima, que lleva nevando cuatro actos -->
+  <path class="y-nieve" d="M244 296 q56 -16 112 0 q-28 9 -56 9 q-28 0 -56 -9 z"/>
+</svg>

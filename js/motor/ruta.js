@@ -8,8 +8,8 @@
    pasa—, y a escala de ciudad es invisible, así que vale para las dos cosas.
    ============================================================================= */
 
-import { RAD } from './util.js?v=faa3b2af';
-import { aVectores, trazar, proyectar, px, py } from './proyeccion.js?v=faa3b2af';
+import { RAD } from './util.js?v=a17f41b7';
+import { aVectores, trazar, proyectar, px, py } from './proyeccion.js?v=a17f41b7';
 
 /**
  * Convierte puntos de paso `[[lon, lat], …]` en una polilínea densa de vectores.
