@@ -25,14 +25,14 @@
    está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=597bcb55';
-import { tramo, suave, tope } from '../motor/util.js?v=597bcb55';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=597bcb55';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js?v=597bcb55';
-import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=597bcb55';
-import { montarNieve, nevar } from '../motor/nieve.js?v=597bcb55';
-import { tenderRuta } from '../motor/ruta.js?v=597bcb55';
-import { LUGARES, TRAMO_AL_COCHE, ENCUADRES } from '../datos/rutas.js?v=597bcb55';
+import { registrarActo } from '../motor/escenario.js?v=1b7da4d4';
+import { tramo, suave, tope } from '../motor/util.js?v=1b7da4d4';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=1b7da4d4';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=1b7da4d4';
+import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=1b7da4d4';
+import { montarNieve, nevar } from '../motor/nieve.js?v=1b7da4d4';
+import { tenderRuta } from '../motor/ruta.js?v=1b7da4d4';
+import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=1b7da4d4';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -47,6 +47,16 @@ const V_CALLE = vista('calle');
 const V_DISUELVE = vista('disuelve');
 
 const RUTA = tenderRuta(TRAMO_AL_COCHE.pasos, 0.2);
+
+/* 🚨 LA CARRETERA DE VERDAD hasta Takaragawa: el eje de la autopista Kan-Etsu,
+   no una línea a ojo. Ver datos/rutas.js y herramientas/generar-carreteras.js */
+const RUTA_AL_NORTE = tenderRuta(RUTA_NORTE, 0.2);
+const V_NORTE = vista('japonNorte');
+
+/* El mapa pequeño del viaje en coche, en p de este acto */
+const MAPA_NORTE = [0.800, 0.858];
+const DESTINO_NORTE = [0.818, 0.856];
+const CARRETERA = [0.828, 0.968];
 
 /* --------------------------------------------------------------------------
    El reparto del scroll
@@ -167,8 +177,11 @@ const GUION_ROTULOS = [
   /* 🚨 Empalma con el anterior, que se apaga en 0,60: con este empezando en
      0,655 quedaba media pantalla con el mostrador entrando y nada escrito. */
   { i: 1, de: 0.496, a: 0.745 },   /* el coche de alquiler · cubre la llave */
-  { i: 2, de: 0.752, a: 0.830 },   /* hacia el norte */
-  { i: 3, de: 0.888, a: null }     /* empieza a nevar · se queda hasta el final */
+  /* 🚨 Y AQUÍ YA NO HAY UN CUARTO RÓTULO. El de «empieza a nevar» lo quitó
+     Kiko el 17 de septiembre: ese sitio de la pantalla lo ocupa ahora el mapa
+     pequeño con la carretera hacia Takaragawa, que cuenta lo mismo y además
+     dice dónde estamos. */
+  { i: 2, de: 0.752, a: 0.818 }    /* hacia el norte · lo releva el mapa */
 ];
 
 /** Entra en el primer tercio de su ventana y sale en el último cuarto. */
@@ -288,13 +301,50 @@ export function montarActoAlCoche() {
         esconder('narita');
         esconder('meidaimae');
         esconder('avion');
+        empequeñecerMapa(0);
+      } else if (p > MAPA_NORTE[0]) {
+        /* ================================================================
+           EL MAPA PEQUEÑO DEL VIAJE AL NORTE
+           ================================================================
+           Kiko, el 17 de septiembre: «que aparezca la silueta del mapa de
+           Japón, y lo mismo que con las líneas de metro, pero con las
+           carreteras hasta el primer punto».
+
+           Es la MISMA capa del mapa, dibujada más pequeña y subida: arriba el
+           mapa, abajo el coche cruzando el bosque. No hay un segundo mapa ni
+           una segunda cámara, así que la ruta y los marcadores funcionan igual
+           que en los actos 1 y 2. */
+        const pMini = suave(tramo(p, MAPA_NORTE[0], MAPA_NORTE[1]));
+        viajarDeVista(V_NORTE, V_NORTE, 0);
+        empequeñecerMapa(pMini);
+        mostrarLienzo(true);
+        alzarLienzo(1);
+        opacidadMapa(pMini * 0.92);
+        pintarMapa();
+
+        /* La carretera se dibuja según el coche avanza. 🚨 Y Takaragawa se
+           enciende ANTES de que la línea llegue: la línea no va a ciegas. */
+        marcar('shinjuku', LUGARES.shinjuku, pMini);
+        marcar('takaragawa', LUGARES.takaragawa, suave(tramo(p, DESTINO_NORTE[0], DESTINO_NORTE[1])));
+        esconder('casa');
+        esconder('madrid');
+        esconder('japon');
+        esconder('narita');
+        esconder('meidaimae');
+        esconder('avion');
+
+        const avance = tope((p - CARRETERA[0]) / (CARRETERA[1] - CARRETERA[0]));
+        pintarRuta(0, RUTA_AL_NORTE, avance, { color: 'var(--acento)', guion: false });
+        cerrarHalo('takaragawa', avance);
+        limpiarRutas(1);
       } else {
         /* 🚨 Y CUANDO YA NO SE VE, SE APAGA DE VERDAD. No basta con dejarlo a
            opacidad cero: `pintarMapa()` reproyecta la costa en cada fotograma y
-           este acto se pasa la mitad de sus quince pantallas sin mapa ninguno.
+           este acto se pasa media docena de pantallas sin mapa ninguno.
            Apagarlo aquí es media factura de fluidez del acto. */
         mostrarLienzo(false);
         limpiarRutas(0);
+        empequeñecerMapa(0);
       }
 
       /* ================================================================
@@ -400,13 +450,14 @@ export function montarActoAlCoche() {
          «Una llave entre el recepcionista y nosotros», luego «sube y le empieza
          a salir como un halo de brillar», desbloquea el coche —«al coche se le
          encienden por un momento las luces»— y «se va a menos». */
-      /* 🚨 LA LLAVE SUBE RECTA. Antes hacía una ele —primero a la izquierda y
-         luego hacia arriba— porque las dos cosas iban con la misma fase. Kiko:
-         «quedaría más elegante si fuese hacia arriba directamente». Así que el
-         desplazamiento lateral se hace ANTES, a la vez que el coche se centra
-         —los dos convergen— y cuando empieza a subir ya solo sube. */
+      /* 🚨 LA LLAVE VA EN DIAGONAL RECTA, desde la mano del dependiente hasta
+         encima del coche. Las dos coordenadas con la MISMA fase: en cuanto van
+         con fases distintas, el recorrido se parte en dos y se ve una ele.
+         Pasó en las dos direcciones —primero subiendo y luego moviéndose, y
+         luego al revés— hasta que Kiko lo dijo claro: «como desde donde te la
+         dan hacia arriba, como en una diagonal perfecta». */
       colocar('llave', {
-        x: X_LLAVE * (1 - pCentrar),
+        x: X_LLAVE * (1 - pSube),
         y: Y_LLAVE - 24 * pSube,
         op: Math.min(pLlave, 1 - pConsume),
         /* Se consume yendo a menos, no desapareciendo de golpe */

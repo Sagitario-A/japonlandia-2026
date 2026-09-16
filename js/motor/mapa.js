@@ -13,12 +13,13 @@
    Ver herramientas/generar-costas.js.
    ============================================================================= */
 
-import { COSTAS as MUNDO } from '../datos/mundo.js?v=597bcb55';
-import { COSTAS as JAPON } from '../datos/japon.js?v=597bcb55';
-import { COSTAS as KANTO } from '../datos/kanto.js?v=597bcb55';
-import { CALLES } from '../datos/calles.js?v=597bcb55';
-import { aVectores, envolvente, asomaEnPantalla, trazar, radioActual } from './proyeccion.js?v=597bcb55';
-import { tope, tramo } from './util.js?v=597bcb55';
+import { COSTAS as MUNDO } from '../datos/mundo.js?v=1b7da4d4';
+import { COSTAS as JAPON } from '../datos/japon.js?v=1b7da4d4';
+import { COSTAS as KANTO } from '../datos/kanto.js?v=1b7da4d4';
+import { CALLES } from '../datos/calles.js?v=1b7da4d4';
+import { AUTOPISTAS } from '../datos/autopistas.js?v=1b7da4d4';
+import { aVectores, envolvente, asomaEnPantalla, trazar, radioActual } from './proyeccion.js?v=1b7da4d4';
+import { tope, tramo } from './util.js?v=1b7da4d4';
 
 /* --------------------------------------------------------------------------
    1 · Preparar los datasets
@@ -105,6 +106,42 @@ const R_CALLES_LLENA = 220000;
 export function opacidadCalles(radio) {
   const r = radio === undefined ? radioActual() : radio;
   return tope((r - R_CALLES_ENTRA) / (R_CALLES_LLENA - R_CALLES_ENTRA));
+}
+
+/* --------------------------------------------------------------------------
+   Las autopistas · el relevo entre la costa y el callejero
+   --------------------------------------------------------------------------
+   🚨 EXISTEN PARA QUE EL MAPA NO SE QUEDE EN BLANCO. Kiko, el 17 de
+   septiembre: «las calles deberían aparecer antes para que no se quede tanto
+   tiempo en blanco el mapa». Tenía razón, pero el callejero no podía adelantarse
+   sin enseñar los bordes de su caja: es pequeña, y a esos zooms no llena la
+   pantalla.
+
+   La solución no es adelantar el callejero, es meter algo entre medias. La red
+   de autopistas tiene una caja mucho más grande —1,75° de alto— así que llena
+   la pantalla justo en el tramo en que la costa ya se ha ido y el callejero
+   todavía no ha llegado. El mapa pasa de costa a autopistas a calles sin un
+   solo hueco.
+   -------------------------------------------------------------------------- */
+const RED = preparar(AUTOPISTAS);
+
+const R_AUTOPISTAS = [12000, 20000, 120000, 260000];   /* entra, llena, aguanta, se va */
+
+export function opacidadAutopistas(radio) {
+  const r = radio === undefined ? radioActual() : radio;
+  const entra = tope((r - R_AUTOPISTAS[0]) / (R_AUTOPISTAS[1] - R_AUTOPISTAS[0]));
+  const sale = tope((r - R_AUTOPISTAS[2]) / (R_AUTOPISTAS[3] - R_AUTOPISTAS[2]));
+  return entra * (1 - sale);
+}
+
+export function dibujarAutopistas() {
+  if (opacidadAutopistas() <= 0.001) return '';
+  let d = '';
+  for (const c of RED) {
+    if (!asomaEnPantalla(c.env)) continue;
+    d += trazar(c.v);
+  }
+  return d;
 }
 
 export function dibujarCalles() {

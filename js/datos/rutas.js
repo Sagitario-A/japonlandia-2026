@@ -17,6 +17,8 @@
    [lon, lat]. Se guardan sueltos porque unos son marcadores y otros solo son
    puntos de paso por los que la línea tiene que doblar.
    -------------------------------------------------------------------------- */
+import { EJE_KANETSU } from './carretera-norte.js?v=1b7da4d4';
+
 export const LUGARES = {
   /* España */
   madrid:        [-3.7000, 40.4000],
@@ -183,7 +185,27 @@ export const TRAMO_AL_COCHE = {
 };
 
 /* --------------------------------------------------------------------------
-   5 · Encuadres de la cámara
+   5 · De Tokio a la montaña · la ruta del coche del acto 3
+   --------------------------------------------------------------------------
+   Kiko, el 17 de septiembre: «que aparezca la silueta del mapa de Japón, y lo
+   mismo que con las líneas de metro, pero con las carreteras hasta el primer
+   punto».
+
+   🚨 ES LA CARRETERA DE VERDAD, no una línea a ojo entre dos sitios: el eje de
+   la autopista Kan-Etsu (E17, 関越自動車道), sacado de OpenStreetMap por
+   herramientas/generar-carreteras.js. Es por donde se va, y por eso hace esa
+   curva larga hacia el oeste en vez de subir recto.
+
+   ⚠️ Los dos extremos se unen en recta a sus puntos verificados: doce
+   kilómetros de ciudad desde Shinjuku hasta la entrada de la autopista, y
+   veinte de carretera de montaña desde Minakami hasta el onsen. A la escala de
+   este mapa —trescientos kilómetros de pantalla— son dos y tres píxeles. Está
+   explicado también en la cabecera de datos/carretera-norte.js.
+   -------------------------------------------------------------------------- */
+export const RUTA_NORTE = [L.shinjuku].concat(EJE_KANETSU).concat([L.takaragawa]);
+
+/* --------------------------------------------------------------------------
+   6 · Encuadres de la cámara
    --------------------------------------------------------------------------
    [lon, lat, gradosDeAncho]. El radio lo calcula `encuadrar()`, porque pensar
    en grados de ancho es humano y pensar en radios no.
@@ -221,5 +243,12 @@ export const ENCUADRES = {
      A 0,055° —6 km de ancho— el callejero llena la pantalla de un móvil y se
      lee «por dónde vamos», que es lo que pidió Kiko. */
   calle:    [139.6991, 35.6884, 0.055],
-  disuelve: [139.6991, 35.6884, 0.012]
+  disuelve: [139.6991, 35.6884, 0.012],
+
+  /* 🚨 EL MAPA PEQUEÑO DEL FINAL DEL ACTO 3. Tiene que caber la ruta entera
+     —Tokio, la Kan-Etsu y Takaragawa— y que alrededor se siga reconociendo
+     Japón: a 2,8° de ancho entra desde Izu hasta Fukushima, con la bahía de
+     Tokio abajo y el mar de Japón arriba. Más ancho y la ruta es un punto; más
+     estrecho y deja de parecer un mapa de Japón. */
+  japonNorte: [139.35, 36.30, 2.8]
 };

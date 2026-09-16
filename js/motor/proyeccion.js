@@ -18,7 +18,7 @@
    Ver NORMAS § 9.
    ============================================================================= */
 
-import { RAD, mezcla, mezclaEscala, r1 } from './util.js?v=597bcb55';
+import { RAD, mezcla, mezclaEscala, r1 } from './util.js?v=1b7da4d4';
 
 /* 🚨 EL VIEWBOX NO ES CUADRADO, y hay una razón.
    --------------------------------------------------------------------------

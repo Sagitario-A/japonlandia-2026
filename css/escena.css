@@ -35,11 +35,17 @@
    interpola: ya viene suavizado. */
 .escenario.en-escena {
   visibility: visible;
-  opacity: var(--opacidad-mapa, 1);
+  opacity: calc(var(--opacidad-mapa, 1) * (1 - var(--fin, 0)));
   /* La Tierra sube desde abajo mientras el titulo sigue delante: los dos se
-     cruzan, que es lo que hace que parezca una pagina y no dos pegadas. */
-  transform: translateY(calc((1 - var(--p-alzado, 1)) * 34svh))
-             scale(calc(.9 + var(--p-alzado, 1) * .1));
+     cruzan, que es lo que hace que parezca una pagina y no dos pegadas.
+
+     🚨 Y la variable --mini encoge el mapa entero y lo sube, para el pequenio del
+     viaje en coche del acto 3: ahi arriba va el mapa y abajo el dibujo. Vale 0
+     casi siempre; a 1, el mapa mide la mitad y se va a la parte de arriba. Ver
+     empequenecerMapa() en js/motor/lienzo.js. */
+  transform:
+    translateY(calc((1 - var(--p-alzado, 1)) * 34svh - var(--mini, 0) * 17svh))
+    scale(calc((.9 + var(--p-alzado, 1) * .1) * (1 - var(--mini, 0) * .5)));
 }
 .escenario svg {
   width: 100%;
@@ -71,6 +77,16 @@ html:not(.anim) .escenario { display: none; }
   stroke-linejoin: round;
   stroke-linecap: round;
 }
+/* Las autopistas. Un pelo mas marcadas que el callejero porque se ven de mucho
+   mas lejos, pero igual de tenues que la costa: siguen siendo el contexto. */
+.m-autopista {
+  fill: none;
+  stroke: var(--mapa-linea);
+  stroke-width: .8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 /* El callejero. Más fino y más tenue que la costa: es el suelo por el que se
    pasa, no el dato. Si pesa lo mismo que la línea de la operadora, la tapa. */
 .m-calle {

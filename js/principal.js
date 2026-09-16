@@ -5,14 +5,14 @@
    Todo lo que este archivo hace es coser: la lógica vive en motor/ y actos/.
    ============================================================================= */
 
-import { registrarGlobal, arrancar } from './motor/escenario.js?v=597bcb55';
-import { montarLienzo, mostrarLienzo } from './motor/lienzo.js?v=597bcb55';
-import { desvanecerDibujo } from './motor/dibujo.js?v=597bcb55';
-import { nevar } from './motor/nieve.js?v=597bcb55';
-import { montarActoVuelo } from './actos/01-vuelo.js?v=597bcb55';
-import { montarActoLlegada } from './actos/02-llegada.js?v=597bcb55';
-import { montarActoAlCoche } from './actos/03-al-coche.js?v=597bcb55';
-import { tope } from './motor/util.js?v=597bcb55';
+import { registrarGlobal, arrancar } from './motor/escenario.js?v=1b7da4d4';
+import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=1b7da4d4';
+import { desvanecerDibujo } from './motor/dibujo.js?v=1b7da4d4';
+import { nevar } from './motor/nieve.js?v=1b7da4d4';
+import { montarActoVuelo } from './actos/01-vuelo.js?v=1b7da4d4';
+import { montarActoLlegada } from './actos/02-llegada.js?v=1b7da4d4';
+import { montarActoAlCoche } from './actos/03-al-coche.js?v=1b7da4d4';
+import { tope } from './motor/util.js?v=1b7da4d4';
 
 /* --------------------------------------------------------------------------
    1 · El escenario y los actos
@@ -61,12 +61,12 @@ registrarGlobal(function (scroll, alto, sinMovimiento) {
      de desvanecido. */
   if (finPelicula) {
     const caja = finPelicula.getBoundingClientRect();
-    /* 🚨 En 0,6 pantallas, no en una entera. El capítulo siguiente sube por
-       debajo y el dibujo queda DETRÁS de su bloque blanco: si el desvanecido
-       dura una pantalla, cuando el bloque llega a la altura del coche el coche
-       todavía se ve al 68 % y se le ve el corte. Se vio en la captura. */
-    const fin = tope((alto - caja.bottom) / (alto * 0.6));
+    /* Una pantalla entera de desvanecido: el dibujo se queda quieto y del
+       mismo tamaño mientras el capítulo siguiente aparece por encima, hasta que
+       lo de atrás ya no está. */
+    const fin = tope((alto - caja.bottom) / alto);
     desvanecerDibujo(fin);
+    desvanecerMapa(fin);
     /* La nieve se va con él. Y además se va PORQUE se va: sesenta copos
        animados dentro de una capa a la que se le está bajando la opacidad
        obligan al navegador a componer el grupo aparte en cada fotograma

@@ -54,14 +54,13 @@
      en vez de cortarse de golpe. --fin lo escribe principal.js. Se encoge un
      poco —que es lo que hace que parezca que se va hacia atrás— y baja un pelo.
      Ver js/motor/dibujo.js. */
+  /* 🚨 SE DESVANECE Y YA: NI SE ENCOGE NI SE MUEVE. Lo pidió Kiko el 17 de
+     septiembre, viendo la primera versión: «quedarse el mismo tamaño y
+     estético, y que las cosas del alojamiento de la nieve vayan apareciendo por
+     encima hasta que llegue un punto en el que lo otro se haya desvanecido del
+     todo». Encogerlo hacía que pareciera que se metía debajo, que es justo lo
+     que no quería. */
   opacity: calc(1 - var(--fin, 0));
-  /* 🚨 SE VA HACIA ARRIBA Y NO HACIA ABAJO, aunque «caer al fondo» suene a
-     bajar: lo que sube desde abajo es el capítulo siguiente, y un dibujo que
-     baja se mete debajo de su bloque blanco y sale cortado por una raya
-     horizontal. Lo que cuenta que se va al fondo es el encoger, no el bajar. */
-  transform:
-    translateY(calc(var(--fin, 0) * -2svh))
-    scale(calc(1 - var(--fin, 0) * .18));
   transform-origin: 50% var(--suelo);
 }
 html:not(.anim) .dibujo { display: none; }

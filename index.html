@@ -9,11 +9,11 @@
 <meta name="theme-color" content="#ffffff">
 
 <link rel="preload" href="tipo/shippori-mincho-500-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/base.css?v=597bcb55">
-<link rel="stylesheet" href="css/texto.css?v=597bcb55">
-<link rel="stylesheet" href="css/escena.css?v=597bcb55">
-<link rel="stylesheet" href="css/color.css?v=597bcb55">
-<link rel="stylesheet" href="css/actos/03-al-coche.css?v=597bcb55">
+<link rel="stylesheet" href="css/base.css?v=1b7da4d4">
+<link rel="stylesheet" href="css/texto.css?v=1b7da4d4">
+<link rel="stylesheet" href="css/escena.css?v=1b7da4d4">
+<link rel="stylesheet" href="css/color.css?v=1b7da4d4">
+<link rel="stylesheet" href="css/actos/03-al-coche.css?v=1b7da4d4">
 </head>
 
 <body>
@@ -51,8 +51,10 @@
     <path data-mapa="costa" class="m-costa" d=""/>
     <path data-mapa="costa" class="m-costa" d=""/>
 
-    <!-- El callejero del final del zoom. Va DEBAJO de las rutas: la línea de la
-         operadora es el dato y la calle solo es el contexto por el que pasa. -->
+    <!-- Las autopistas y el callejero. Van DEBAJO de las rutas: la línea de la
+         operadora es el dato, y la carretera solo es el contexto por el que
+         pasa. Las dos capas se relevan según el zoom, ver js/motor/mapa.js. -->
+    <path data-mapa="autopistas" class="m-autopista" d=""/>
     <path data-mapa="calles" class="m-calle" d=""/>
 
     <path data-mapa="ruta" class="m-ruta" d=""/>
@@ -78,6 +80,13 @@
     </g>
     <g data-hito="meidaimae" class="m-hito m-menor">
       <circle r="2.4"/><text x="8" y="15">Meidaimae</text>
+    </g>
+
+    <!-- Takaragawa, el primer sitio de la nieve. Se enciende ANTES de que la
+         carretera llegue hasta él, como todos los destinos de esta web. -->
+    <g data-hito="takaragawa" class="m-hito m-destino">
+      <circle class="m-halo" r="10"/><circle r="3.4"/>
+      <text x="10" y="-9">Takaragawa</text>
     </g>
 
     <g data-hito="casa" class="m-hito m-destino">
@@ -311,11 +320,6 @@
           <p class="r-pie">De Tokio a la montaña
             <span class="marca m-pend">○ pendiente</span></p>
         </li>
-        <li class="rotulo rotulo-ancho">
-          <p class="r-dato r-dato-corto">Empieza a nevar</p>
-          <p class="r-pie">Y ya no para hasta Matsumoto
-            <span class="marca m-pend">○ pendiente</span></p>
-        </li>
       </ul>
     </div>
   </section>
@@ -517,6 +521,6 @@
     <span class="marca m-pend">○ pendiente</span>. Lo que no está marcado, no está comprobado.</p>
 </footer>
 
-<script type="module" src="js/principal.js?v=597bcb55"></script>
+<script type="module" src="js/principal.js?v=1b7da4d4"></script>
 </body>
 </html>

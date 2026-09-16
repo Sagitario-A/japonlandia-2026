@@ -15,16 +15,17 @@
    Narita, Meidaimae— están escritos en el HTML; aquí solo se mueven.
    ============================================================================= */
 
-import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=597bcb55';
-import { dibujarCostas, dibujarReticula, opacidadReticula, dibujarCalles, opacidadCalles } from './mapa.js?v=597bcb55';
-import { trazarRuta, cabezaDeRuta } from './ruta.js?v=597bcb55';
-import { r1 } from './util.js?v=597bcb55';
+import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=1b7da4d4';
+import { dibujarCostas, dibujarReticula, opacidadReticula, dibujarCalles, opacidadCalles, dibujarAutopistas, opacidadAutopistas } from './mapa.js?v=1b7da4d4';
+import { trazarRuta, cabezaDeRuta } from './ruta.js?v=1b7da4d4';
+import { r1 } from './util.js?v=1b7da4d4';
 
 let raiz = null;
 let svg = null;
 let capasCosta = [];
 let pathReticula = null;
 let pathCalles = null;
+let pathAutopistas = null;
 let limbo = null;
 let capasRuta = [];
 const hitos = new Map();
@@ -53,6 +54,7 @@ export function montarLienzo() {
 
   pathReticula = raiz.querySelector('[data-mapa="reticula"]');
   pathCalles = raiz.querySelector('[data-mapa="calles"]');
+  pathAutopistas = raiz.querySelector('[data-mapa="autopistas"]');
   limbo = raiz.querySelector('[data-mapa="limbo"]');
   capasCosta = Array.from(raiz.querySelectorAll('[data-mapa="costa"]'));
   capasRuta = Array.from(raiz.querySelectorAll('[data-mapa="ruta"]'));
@@ -66,6 +68,29 @@ export function montarLienzo() {
 /** Enciende o apaga el escenario entero. */
 export function mostrarLienzo(visible) {
   if (raiz) raiz.classList.toggle('en-escena', !!visible);
+}
+
+/**
+ * 🚨 EL MAPA PEQUEÑO. Encoge el escenario entero y lo sube, para que quepa
+ * arriba mientras el dibujo de caricatura ocupa la parte de abajo.
+ *
+ * Lo pidió Kiko el 17 de septiembre para el viaje en coche: «que aparezca la
+ * silueta del mapa de Japón, y lo mismo que con las líneas de metro, pero con
+ * las carreteras hasta el primer punto».
+ *
+ * Es la misma capa de siempre —no hay un segundo mapa ni una segunda cámara—:
+ * solo se dibuja más pequeña. Con eso, el zoom, las rutas y los marcadores
+ * siguen funcionando exactamente igual.
+ */
+export function empequeñecerMapa(v) {
+  if (!raiz) return;
+  raiz.style.setProperty('--mini', v.toFixed(3));
+}
+
+/** Lo mismo que desvanecerDibujo(), para la capa del mapa: al acabar la
+ *  pelicula, el mapa pequenio del viaje al norte tambien se tiene que ir. */
+export function desvanecerMapa(v) {
+  if (raiz) raiz.style.setProperty('--fin', v.toFixed(3));
 }
 
 /** La opacidad global del mapa, para poder disolverlo al final de un acto. */
@@ -100,6 +125,14 @@ export function pintarMapa() {
     const c = capas[i];
     capasCosta[i].setAttribute('d', c ? c.d : '');
     capasCosta[i].style.opacity = c ? c.opacidad.toFixed(3) : '0';
+  }
+
+  /* Las autopistas: el relevo entre la costa y el callejero, para que no haya
+     ni un tramo de zoom con el mapa en blanco. Ver mapa.js. */
+  if (pathAutopistas) {
+    const opRed = opacidadAutopistas();
+    pathAutopistas.setAttribute('d', opRed > 0.001 ? dibujarAutopistas() : '');
+    pathAutopistas.style.opacity = opRed.toFixed(3);
   }
 
   /* El callejero: entra cuando la costa se está yendo, para que el final del
