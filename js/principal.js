@@ -5,14 +5,17 @@
    Todo lo que este archivo hace es coser: la lógica vive en motor/ y actos/.
    ============================================================================= */
 
-import { registrarGlobal, arrancar } from './motor/escenario.js?v=db2e7560';
-import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=db2e7560';
-import { desvanecerDibujo } from './motor/dibujo.js?v=db2e7560';
-import { nevar } from './motor/nieve.js?v=db2e7560';
-import { montarActoVuelo } from './actos/01-vuelo.js?v=db2e7560';
-import { montarActoLlegada } from './actos/02-llegada.js?v=db2e7560';
-import { montarActoAlCoche } from './actos/03-al-coche.js?v=db2e7560';
-import { tope } from './motor/util.js?v=db2e7560';
+import { registrarGlobal, arrancar } from './motor/escenario.js?v=9b11daa9';
+import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=9b11daa9';
+import { desvanecerDibujo } from './motor/dibujo.js?v=9b11daa9';
+import { nevar } from './motor/nieve.js?v=9b11daa9';
+/* 🚨 `tope` lo usa el desvanecido del final, ahi abajo. Lo quite una vez al
+   limpiar codigo muerto y el final de la pelicula dejo de ejecutarse entero,
+   sin que saltara ninguna comprobacion: ver el aviso de capturas-web.js. */
+import { tope } from './motor/util.js?v=9b11daa9';
+import { montarActoVuelo } from './actos/01-vuelo.js?v=9b11daa9';
+import { montarActoLlegada } from './actos/02-llegada.js?v=9b11daa9';
+import { montarActoAlCoche } from './actos/03-al-coche.js?v=9b11daa9';
 
 /* --------------------------------------------------------------------------
    1 · El escenario y los actos
@@ -88,38 +91,21 @@ registrarGlobal(function (scroll, alto, sinMovimiento) {
 });
 
 /* --------------------------------------------------------------------------
-   3 · Los capítulos que todavía no son película
+   3 · El raíl marca por qué acto vas
    --------------------------------------------------------------------------
-   Nieve, Kioto, Año Nuevo y la vuelta siguen siendo secciones de texto hasta
-   que les toque su acto. Conservan la aparición al entrar y la ambientación
-   que ya tenían: no se tira lo que funciona (NORMAS § 11.7).
+   🚨 AQUÍ HABÍA MUCHO MÁS, y se fue con los capítulos de texto.
+
+   Hasta el 17 de septiembre, detrás de los actos había cuatro capítulos
+   escritos —la nieve, Kioto, Año Nuevo y la vuelta— esperando a que les llegara
+   su acto, y esta sección los hacía aparecer al entrar, dibujaba la pagoda de
+   Kioto midiendo sus trazos y los metía en el raíl. Kiko los quitó: «que borre
+   las secciones que están después de donde estamos y se limite a nuestro plan».
+
+   Lo que queda es lo único que sigue haciendo falta: marcar en el raíl por qué
+   acto vas. Cuando un acto nuevo aparezca en el HTML, entra aquí solo.
    -------------------------------------------------------------------------- */
-const capitulos = Array.from(document.querySelectorAll('.cap'));
-const enlacesRail = Array.from(document.querySelectorAll('.rail a'));
-
-/* La pagoda se dibuja sola: el CSS necesita saber cuánto mide cada trazo */
-for (const trazo of document.querySelectorAll('.ambiente-kioto .pagoda path')) {
-  try {
-    trazo.style.setProperty('--len', trazo.getTotalLength().toFixed(1));
-  } catch (e) { /* un navegador sin getTotalLength: sale entera y ya */ }
-}
-
-registrarGlobal(function (scroll, alto) {
-  for (const cap of capitulos) {
-    const caja = cap.getBoundingClientRect();
-    if (caja.bottom < -alto || caja.top > alto * 1.4) continue;
-    cap.style.setProperty('--p-cap', tope((alto - caja.top) / (alto * 0.75)).toFixed(3));
-  }
-});
-
 if ('IntersectionObserver' in window) {
-  const vigia = new IntersectionObserver((entradas) => {
-    for (const e of entradas) if (e.isIntersecting) e.target.classList.add('dentro');
-  }, { rootMargin: '0px 0px -12% 0px', threshold: 0.08 });
-  for (const cap of capitulos) vigia.observe(cap);
-
-  /* El raíl marca dónde vas. Los actos también participan: son secciones. */
-  const marcables = Array.from(document.querySelectorAll('.acto, .cap'));
+  const enlacesRail = Array.from(document.querySelectorAll('.rail a'));
   const vigiaRail = new IntersectionObserver((entradas) => {
     for (const e of entradas) {
       if (!e.isIntersecting) continue;
@@ -128,9 +114,7 @@ if ('IntersectionObserver' in window) {
       }
     }
   }, { rootMargin: '-45% 0px -45% 0px' });
-  for (const m of marcables) vigiaRail.observe(m);
-} else {
-  for (const cap of capitulos) cap.classList.add('dentro');
+  for (const acto of document.querySelectorAll('.acto')) vigiaRail.observe(acto);
 }
 
 /* --------------------------------------------------------------------------

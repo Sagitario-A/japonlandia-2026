@@ -347,3 +347,34 @@
 .indice-pie a:hover { color: var(--tinta); }
 
 .pagina-indice .pie { margin-top: 3rem; }
+
+/* ==========================================================================
+   El cierre · donde se corta la película
+   --------------------------------------------------------------------------
+   🚨 OCUPA UNA PANTALLA ENTERA, y no es por estética.
+   El dibujo del último acto se desvanece a lo largo de la pantalla siguiente a
+   su final (ver --fin en js/principal.js). Con los capítulos de texto quitados,
+   detrás del acto 3 solo quedaban 487 px de scroll: el coche se quedaba a tres
+   cuartos de opacidad en el último píxel de la página, sin llegar a irse nunca.
+   Con una pantalla entera, el desvanecido termina y la web acaba en blanco.
+   🚨 Cada acto nuevo hereda esto: el cierre va SIEMPRE detrás del último acto.
+   ========================================================================== */
+.cierre {
+  min-height: 100svh;
+  display: grid;
+  align-content: center;
+  max-width: var(--medida);
+  margin-inline: auto;
+  padding-inline: var(--lado);
+  position: relative;
+  z-index: 1;
+}
+.cierre h2 {
+  font-family: var(--f-texto);
+  margin-bottom: .8rem;
+}
+.cierre p {
+  color: var(--tinta-suave);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
