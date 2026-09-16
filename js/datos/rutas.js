@@ -17,7 +17,7 @@
    [lon, lat]. Se guardan sueltos porque unos son marcadores y otros solo son
    puntos de paso por los que la línea tiene que doblar.
    -------------------------------------------------------------------------- */
-import { EJE_KANETSU } from './carretera-norte.js?v=7ea3f949';
+import { EJE_KANETSU } from './carretera-norte.js?v=622648d0';
 
 export const LUGARES = {
   /* España */

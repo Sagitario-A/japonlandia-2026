@@ -25,14 +25,14 @@
    está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=7ea3f949';
-import { tramo, suave, tope } from '../motor/util.js?v=7ea3f949';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=7ea3f949';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=7ea3f949';
-import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=7ea3f949';
-import { montarNieve, nevar } from '../motor/nieve.js?v=7ea3f949';
-import { tenderRuta } from '../motor/ruta.js?v=7ea3f949';
-import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=7ea3f949';
+import { registrarActo } from '../motor/escenario.js?v=622648d0';
+import { tramo, suave, tope } from '../motor/util.js?v=622648d0';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=622648d0';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=622648d0';
+import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=622648d0';
+import { montarNieve, nevar } from '../motor/nieve.js?v=622648d0';
+import { tenderRuta } from '../motor/ruta.js?v=622648d0';
+import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=622648d0';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -255,6 +255,12 @@ export function montarActoAlCoche() {
       /* ================================================================
          A · EL MAPA SE DESPIDE
          ================================================================ */
+      /* 🚨 SE ESCRIBE SIEMPRE, no dentro de la rama del mapa pequeño. Puesto
+         dentro, al subir el scroll el acto salía de esa rama sin apagarlo y la
+         duración se quedaba escrita sobre la estación. Es la ley 1: lo que un
+         acto enciende, el propio acto lo apaga cuando ya no toca. */
+      acto.v('--p-viaje', suave(tramo(p, MAPA_NORTE[0], MAPA_NORTE[1])));
+
       const pMapa = f(p, 'mapaVuelve');
       const pLinea = f(p, 'linea');
       const pAcercar = f(p, 'acercar');

@@ -269,6 +269,57 @@ html:not(.anim) .dibujo { display: none; }
    reescribe lo que funciona (NORMAS § 11.7).
    ========================================================================== */
 
+/* 🚨 LO QUE DURA EL VIAJE, JUSTO DEBAJO DEL MAPA.
+   Va colocado a mano y no en la rejilla de la escena porque tiene que caer en
+   el hueco exacto entre el borde de abajo del mapa pequeño y las copas de los
+   árboles: son cuatro puntos de pantalla, y la rejilla no sabe nada de dónde
+   está el mapa.
+   🚨 Si se cambia el tamaño o la altura del mapa pequeño —la variable --mini de
+   escena.css— este número se mueve con él y hay que volver a mirarlo. */
+#al-coche .viaje {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 47svh;
+  text-align: center;
+  opacity: var(--p-viaje, 0);
+  pointer-events: none;
+}
+.viaje > * {
+  /* 🚨 Estrechado a proposito. A lo ancho de la pantalla, el pie se iba de lado
+     a lado y la marca «por verificar» acababa debajo del rail de la derecha.
+     Partido en dos lineas cabe, y ademas queda como bloque debajo del mapa en
+     vez de como una banda cruzando la pantalla. */
+  max-width: min(100%, 21rem);
+  margin-inline: auto;
+  padding-inline: var(--lado);
+}
+.v-dato {
+  display: block;
+  font-family: var(--f-display);
+  font-size: clamp(1.5rem, 6.4vw, 2rem);
+  line-height: 1.1;
+  font-variant-numeric: tabular-nums;
+}
+.v-pie {
+  display: block;
+  margin-top: .35rem;
+  font-size: .78rem;
+  line-height: 1.5;
+  color: var(--tinta-suave);
+}
+/* Halo, como todo el texto que flota sobre el dibujo (ley 9: halo, nunca velo) */
+.anim #al-coche .viaje {
+  text-shadow: 0 0 .5rem var(--papel), 0 0 .25rem var(--papel), 0 0 .1rem var(--papel);
+}
+/* Sin JavaScript y con movimiento reducido es una linea de texto mas */
+html:not(.anim) #al-coche .viaje {
+  position: static;
+  opacity: 1;
+  text-align: left;
+  margin-top: 2.2rem;
+}
+
 /* Los rótulos van ARRIBA y el dibujo abajo, así que no se pisan nunca.
    💭 Bajados un poco respecto al acto 1: el dibujo de este acto es una franja
    apoyada en el suelo y no llena la pantalla como el mapa, así que con el texto
@@ -286,6 +337,12 @@ html:not(.anim) .dibujo { display: none; }
    bucle es justo lo que `prefers-reduced-motion` viene a apagar (NORMAS § 6).
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
+  #al-coche .viaje {
+    position: static;
+    opacity: 1 !important;
+    text-align: left;
+    margin-top: 2.2rem;
+  }
   .dibujo { position: absolute; height: 100svh; }
   .nieve { display: none !important; }
   .copo { animation: none !important; }
