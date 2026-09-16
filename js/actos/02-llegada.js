@@ -17,10 +17,10 @@
 import { registrarActo } from '../motor/escenario.js';
 import { tramo, suave, tope } from '../motor/util.js';
 import { encuadrar, viajarDeVista } from '../motor/proyeccion.js';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo } from '../motor/lienzo.js';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js';
 import { tenderRuta } from '../motor/ruta.js';
 import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js';
-import { VISTA_FINAL } from './01-vuelo.js';
+import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js';
 
 /* --------------------------------------------------------------------------
    Los encuadres, en el orden en que los recorre la cámara
@@ -83,7 +83,7 @@ export function montarActoLlegada() {
       const aKanto = suave(tramo(p, 0.24, 0.40));   /* «la zona central de Japón» */
       const aRuta = suave(tramo(p, 0.46, 0.58));    /* y a escala del trayecto */
       const aCerca = suave(tramo(p, 0.62, 0.80));   /* y a escala de los últimos tramos */
-      const pNarita = suave(tramo(p, 0.18, 0.26));
+      const pNarita = suave(tramo(p, 0.16, 0.22));
       const pCasa = suave(tramo(p, 0.40, 0.50));
       const pTrazo = suave(tramo(p, 0.50, 0.80));
       const pDatos = suave(tramo(p, 0.80, 0.92));
@@ -105,6 +105,7 @@ export function montarActoLlegada() {
       }
 
       mostrarLienzo(true);
+      alzarLienzo(1);          /* la Tierra ya subio en el acto 1: aqui se queda */
 
       /* Cuando entran los datos del alojamiento, el mapa se retira casi del
          todo. 🚨 Con un 28 % todavia visible, la linea roja de la ruta cruzaba
@@ -119,13 +120,30 @@ export function montarActoLlegada() {
         const avance = tope((pTrazo - pata.desde) / (pata.hasta - pata.desde));
         pintarRuta(i, pata.ruta, avance, { color: pata.def.color, guion: false });
       }
-      limpiarRutas(PATAS.length);
+      /* 🚨 La linea de puntos del vuelo la heredamos del acto 1 y se apaga
+         mientras el globo se amplia. Antes este acto pisaba esa misma capa con
+         el Narita Express y el trazo del vuelo se esfumaba de un fotograma al
+         siguiente, justo en la costura. Se vio comparando dos capturas
+         consecutivas del empalme. */
+      pintarRuta(PATAS.length, RUTA_VUELO, 1, {
+        color: 'var(--acento)',
+        guion: true,
+        opacidad: 1 - suave(tramo(p, 0.02, 0.22))
+      });
+      limpiarRutas(PATAS.length + 1);
 
       /* ---- Los marcadores ----------------------------------------------
-         Las dos estaciones intermedias solo entran cuando la cámara se acerca:
-         a escala de Kantō serían dos etiquetas encima de la del alojamiento. */
-      esconder('madrid');
+         🚨 ESTE ACTO EMPIEZA DONDE ACABA EL 1, exactamente. El acto 1 termina
+         con Madrid y «Japón» encendidos, así que aquí arrancan encendidos y se
+         van apagando. Antes este acto los apagaba de golpe en su p=0, y como
+         en la costura se pintan los dos y el último manda, la etiqueta
+         parpadeaba justo al cambiar de acto.
+
+         Y la etiqueta cambia de nombre sin moverse: «Japón» se apaga y
+         «Narita» se enciende en el mismo punto, según el mapa se acerca. */
       esconder('avion');
+      marcar('madrid', LUGARES.madrid, 1 - suave(tramo(p, 0.02, 0.14)));
+      marcar('japon', LUGARES.narita, 1 - suave(tramo(p, 0.10, 0.16)));
       marcar('narita', LUGARES.narita, pNarita);
       marcar('casa', LUGARES.alojamientoTokio, pCasa);
       marcar('shinjuku', LUGARES.shinjuku, aCerca * (1 - pDatos));

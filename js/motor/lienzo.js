@@ -71,6 +71,17 @@ export function opacidadMapa(v) {
   if (raiz) raiz.style.setProperty('--opacidad-mapa', v.toFixed(3));
 }
 
+/**
+ * Cuánto ha subido la Tierra desde abajo: 0 abajo del todo, 1 en su sitio.
+ * 🚨 Existe porque al reconstruir la web se perdió por el camino: el globo se
+ * limitaba a aparecer por opacidad, y lo que Kiko pidió es que **suba** por
+ * detrás del título mientras bajas, que es lo que hace que parezca una sola
+ * página y no dos pantallas pegadas.
+ */
+export function alzarLienzo(v) {
+  if (raiz) raiz.style.setProperty('--p-alzado', v.toFixed(3));
+}
+
 /* --------------------------------------------------------------------------
    El mapa
    -------------------------------------------------------------------------- */
@@ -110,14 +121,16 @@ export function pintarMapa() {
 
 /**
  * Dibuja una ruta en la capa `indice` (0, 1, 2…), trazada hasta `avance`.
- * `estilo` opcional: { color, guion } — `guion` pone la línea de puntos.
+ * `estilo` opcional: { color, guion, opacidad }.
  */
 export function pintarRuta(indice, ruta, avance, estilo) {
   const el = capasRuta[indice];
   if (!el) return;
 
-  if (avance <= 0) { el.setAttribute('d', ''); return; }
+  const op = estilo && estilo.opacidad !== undefined ? estilo.opacidad : 1;
+  if (avance <= 0 || op <= 0.002) { el.setAttribute('d', ''); return; }
   el.setAttribute('d', trazarRuta(ruta, avance));
+  el.style.opacity = op.toFixed(3);
   if (estilo && estilo.color) el.style.stroke = estilo.color;
   if (estilo && estilo.guion !== undefined) {
     el.style.strokeDasharray = estilo.guion ? '0.5 6' : 'none';

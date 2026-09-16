@@ -13,12 +13,15 @@
 import { registrarActo } from '../motor/escenario.js';
 import { tramo, suave, tope } from '../motor/util.js';
 import { mirarA } from '../motor/proyeccion.js';
-import { pintarMapa, pintarRuta, pintarVehiculo, marcar, esconder, mostrarLienzo, opacidadMapa } from '../motor/lienzo.js';
+import { pintarMapa, pintarRuta, pintarVehiculo, marcar, esconder, mostrarLienzo, opacidadMapa, alzarLienzo } from '../motor/lienzo.js';
 import { tenderRuta } from '../motor/ruta.js';
 import { VUELO_IDA, LUGARES } from '../datos/rutas.js';
 
-/* La ruta real de Iberia, tendida una vez al cargar */
-const RUTA = tenderRuta(VUELO_IDA);
+/* La ruta real de Iberia, tendida una vez al cargar.
+   Se exporta porque el acto 2 la hereda: si desaparece de golpe al cambiar de
+   acto se ve el corte, asi que alli se desvanece mientras empieza el zoom. */
+export const RUTA_VUELO = tenderRuta(VUELO_IDA);
+const RUTA = RUTA_VUELO;
 
 /* 🚨 Dónde acaba la cámara de este acto es donde empieza la del siguiente.
    Si estos dos números no cuadran con los del acto 2, se ve un salto. */
@@ -63,18 +66,30 @@ export function montarActoVuelo() {
 
       mostrarLienzo(true);
       opacidadMapa(pEntrada);
+      alzarLienzo(pEntrada);          /* la Tierra sube, no solo aparece */
       pintarMapa();
 
       /* ---- La ruta y el avión ------------------------------------------ */
       pintarRuta(0, RUTA, pVuelo, { color: 'var(--acento)', guion: true });
       pintarVehiculo('avion', RUTA, pVuelo);
 
-      /* Los extremos, con sus etiquetas. Entran cuando el título se va, para
-         no pisarlo: se vio en pantalla que competían. */
+      /* ---- Los marcadores ----------------------------------------------
+         🚨 Aquí el destino se llama JAPÓN, no Narita. A escala de globo lo que
+         se reconoce es el país; el aeropuerto no significa nada hasta que el
+         mapa se acerca. Lo pidió Kiko el 16 de septiembre: «cuando se va
+         girando la tierra, en vez de poner Japón, pone Narita — y debería ser
+         Japón, y ya cuando se empieza a hacer grande, Narita».
+
+         Y se apaga TODO lo que este acto no usa. Lo que un acto no toca se
+         queda como estuviera, y Shinjuku y Meidaimae salían encendidas sobre
+         el globo durante el vuelo entero. */
       const opHitos = 1 - pTitulo;
       marcar('madrid', LUGARES.madrid, opHitos);
-      marcar('narita', LUGARES.narita, opHitos * suave(tramo(p, 0.45, 0.70)));
+      marcar('japon', LUGARES.narita, opHitos * suave(tramo(p, 0.45, 0.70)));
+      esconder('narita');
       esconder('casa');
+      esconder('shinjuku');
+      esconder('meidaimae');
 
       /* ---- El texto ---------------------------------------------------- */
       acto.v('--p-entrada', pEntrada);

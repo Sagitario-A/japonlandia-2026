@@ -27,11 +27,19 @@
   pointer-events: none;
   opacity: 0;
   visibility: hidden;
-  transition: opacity .35s ease;
 }
+/* 🚨 SIN `transition`. La tenia, de 350 ms, y como la opacidad la escribe el
+   scroll en cada fotograma, la transicion la perseguia siempre por detras: a
+   mitad de la entrada el mapa marcaba 0,33 cuando le tocaba 0,68, y la Tierra
+   parecia aparecer tarde y de golpe. Lo que va atado al scroll no se
+   interpola: ya viene suavizado. */
 .escenario.en-escena {
   visibility: visible;
   opacity: var(--opacidad-mapa, 1);
+  /* La Tierra sube desde abajo mientras el titulo sigue delante: los dos se
+     cruzan, que es lo que hace que parezca una pagina y no dos pegadas. */
+  transform: translateY(calc((1 - var(--p-alzado, 1)) * 34svh))
+             scale(calc(.9 + var(--p-alzado, 1) * .1));
 }
 .escenario svg {
   width: 100%;
@@ -71,7 +79,11 @@ html:not(.anim) .escenario { display: none; }
   stroke-linejoin: round;
 }
 
-/* --- Marcadores --- */
+/* --- Marcadores ---
+   🚨 Apagados por defecto. Los encienden los actos, uno a uno. Sin esta linea,
+   los que ningun acto toca —Shinjuku y Meidaimae— salian encendidos desde el
+   primer fotograma, flotando sobre el globo durante todo el vuelo. */
+.m-hito { opacity: 0; }
 .m-hito circle { fill: var(--acento); }
 .m-hito text {
   font-family: var(--f-texto);
@@ -231,6 +243,9 @@ html:not(.anim) .ir-indice { position: static; margin-top: 2rem; }
   background: linear-gradient(var(--tenue), transparent);
 }
 
+/* Se va con el titulo: cruzando por delante del globo estorba */
+.anim .ir-indice { opacity: var(--p-titulo, 1); }
+
 .ir-indice {
   position: absolute;
   bottom: max(1rem, env(safe-area-inset-bottom));
@@ -302,13 +317,18 @@ html:not(.anim) .ir-indice { position: static; margin-top: 2rem; }
    Se encienden cuando su línea empieza a dibujarse en el mapa. Abajo, para no
    taparlo: el trayecto que cuentan está pasando justo encima.
    ========================================================================== */
+/* 🚨 EN LA PELICULA NO SE VE. Aparecia a opacidad 1 en cuanto la escena del
+   acto 2 asomaba —es decir, ANTES de que empezara el zoom— y cruzaba por
+   delante del globo. Kiko lo pidio claro: «me gustaria directamente ya que
+   empezase con el zoom». Sigue en el HTML porque nombra la seccion para un
+   lector de pantalla y porque es lo que se lee sin JavaScript. */
 .titular-acto {
   grid-area: 1 / 1;
   align-self: start;
   justify-self: center;
   text-align: center;
-  opacity: calc(1 - var(--p-datos, 0));
 }
+.anim .titular-acto { opacity: 0; }
 .titular-acto h2 {
   font-size: clamp(1.5rem, 6.4vw, 2.1rem);
   margin-top: .6rem;
