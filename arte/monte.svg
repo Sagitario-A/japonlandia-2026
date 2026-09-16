@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" preserveAspectRatio="none" class="a-monte" aria-hidden="true" focusable="false">
+  <!-- La montaña de nieve del acto 4. Kiko: «esa nieve que va cayendo se va
+       acumulando abajo y va haciendo una especie de montañita de nieve que
+       ocupa hasta un tercio de la pantalla».
+
+       🚨 UN SOLO TRAZADO, Y ES LA ÚNICA FUENTE DEL PERFIL.
+       El esquiador no sube por una fórmula parecida a esta curva: sube por
+       ESTA curva. motor/dibujo.js la muestrea con getPointAtLength en cuanto
+       llega el archivo y deja una tabla de 64 alturas; el acto interpola ahí.
+       Así, retocar el perfil aquí mueve al esquiador con él. Escribir la curva
+       dos veces —aquí y en el JavaScript— es justo lo que no se hace: el día
+       que alguien toque una, el monigote se pone a flotar y nadie sabe por qué.
+
+       🚨 EL TRAZADO VA ABIERTO A PROPÓSITO, de la base izquierda a la base
+       derecha. El relleno lo cierra solo con una recta —que es el suelo— y el
+       trazo NO dibuja esa recta, así que la montaña se apoya en el paisaje sin
+       una línea por debajo. Por eso getTotalLength() es exactamente el largo
+       del perfil visible, sin un trozo de base metido en medio.
+
+       🚨 Y LA X ES MONÓTONA de principio a fin: el perfil tiene que ser una
+       altura por cada x, o la tabla del muestreo no significa nada.
+
+       preserveAspectRatio="none" porque la caja la manda el CSS: en un móvil es
+       un montón corto y alto, y en un portátil una loma ancha. La curva es la
+       misma; lo que cambia es cuánto se estira. -->
+  <path class="mo-perfil"
+        d="M0 200
+           C 78 197 134 172 196 120
+           C 246 78 284 12 330 12
+           C 378 12 418 60 468 114
+           C 522 172 564 197 600 200"/>
+</svg>

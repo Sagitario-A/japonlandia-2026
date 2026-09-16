@@ -9,11 +9,12 @@
 <meta name="theme-color" content="#ffffff">
 
 <link rel="preload" href="tipo/shippori-mincho-500-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/base.css?v=9b11daa9">
-<link rel="stylesheet" href="css/texto.css?v=9b11daa9">
-<link rel="stylesheet" href="css/escena.css?v=9b11daa9">
-<link rel="stylesheet" href="css/color.css?v=9b11daa9">
-<link rel="stylesheet" href="css/actos/03-al-coche.css?v=9b11daa9">
+<link rel="stylesheet" href="css/base.css?v=cfb77c51">
+<link rel="stylesheet" href="css/texto.css?v=cfb77c51">
+<link rel="stylesheet" href="css/escena.css?v=cfb77c51">
+<link rel="stylesheet" href="css/color.css?v=cfb77c51">
+<link rel="stylesheet" href="css/actos/03-al-coche.css?v=cfb77c51">
+<link rel="stylesheet" href="css/actos/04-takaragawa.css?v=cfb77c51">
 </head>
 
 <body>
@@ -126,6 +127,11 @@
   <div class="d-pieza" data-pieza="coche"></div>
   <div class="d-pieza" data-pieza="cuatro"></div>
   <div class="d-pieza" data-pieza="llave"></div>
+  <!-- El acto 4. La montaña va DELANTE del coche y de los árboles porque la
+       nieve se amontona en primer término, y el esquiador delante de ella
+       porque la esquía por encima. -->
+  <div class="d-pieza" data-pieza="monte"></div>
+  <div class="d-pieza" data-pieza="esquiador"></div>
   <div class="nieve" id="campo-nieve"></div>
 </div>
 
@@ -137,6 +143,7 @@
     <li><a href="#vuelo"   data-rail="vuelo"><span>El vuelo</span></a></li>
     <li><a href="#llegada" data-rail="llegada"><span>La llegada</span></a></li>
     <li><a href="#al-coche" data-rail="al-coche"><span>Al coche</span></a></li>
+    <li><a href="#takaragawa" data-rail="takaragawa"><span>Takaragawa</span></a></li>
   </ol>
 </nav>
 
@@ -337,6 +344,71 @@
     </div>
   </section>
 
+  <!-- ══════════════════  A4 · TAKARAGAWA  ══════════════════
+       Empieza en el fotograma exacto en que acaba el 3 —coche centrado, bosque
+       nevado, nevando fuerte— y el mapa pequeño, que el acto 3 deja puesto, lo
+       retira este en su primera pantalla.
+
+       Entran los datos del primer alojamiento de la nieve mientras la nieve que
+       cae se amontona abajo; el coche se va por la derecha; la montaña se queda
+       y un monigote la esquía de izquierda a derecha; y al final la montaña se
+       desliza a la izquierda y el esquiador se queda centrado, nevando.
+
+       🚨 TODO EL CONTENIDO VA EN PLACEHOLDER, por orden de Kiko. Ni una fecha,
+       ni un precio, ni un nombre de estación de esquí inventado. Lo único que
+       va con dato es lo que él ya cerró: que el material de esquí se alquila
+       por internet, lo envían a Tokio y se devuelve en Matsumoto.
+       Dato: web-nueva/DEFINICION.md, «el esquí» · viaje/00-brief.md -->
+  <section class="acto" id="takaragawa" style="--largo: 1100" aria-labelledby="t-takaragawa">
+    <div class="escena">
+
+      <div class="titular-acto">
+        <p class="sobre"><span class="num">04</span> Takaragawa</p>
+        <h2 id="t-takaragawa">La primera parada de la nieve</h2>
+      </div>
+
+      <!-- El panel es el mismo del acto 2, sin tocar una línea de su CSS. Lo
+           único que cambia es dónde se posa: aquí va arriba, porque debajo está
+           el paisaje y la montaña creciendo. Ver css/actos/04-takaragawa.css -->
+      <div class="panel">
+        <div class="panel-cabecera">
+          <p class="sobre">Primera parada de la nieve</p>
+          <h3>Takaragawa Onsen Ōsenkaku</h3>
+          <p class="entradilla">Un onsen de montaña, y la primera cama después de Tokio.</p>
+        </div>
+
+        <!-- ⬜ Fotos por decidir (NORMAS § 4). Hasta entonces, huecos honestos -->
+        <div class="fotos">
+          <div class="foto-hueco"><span>foto 1</span></div>
+          <div class="foto-hueco"><span>foto 2</span></div>
+          <div class="foto-hueco"><span>foto 3</span></div>
+        </div>
+
+        <dl class="filas">
+          <div class="fila"><dt>Noches</dt><dd>Por decidir <span class="marca m-pend">○ pendiente</span></dd></div>
+          <div class="fila"><dt>Precio</dt><dd>Por decidir <span class="marca m-pend">○ pendiente</span></dd></div>
+          <div class="fila"><dt>Reserva</dt><dd>Sin hacer <span class="marca m-pend">○ pendiente</span></dd></div>
+        </dl>
+      </div>
+
+      <!-- El texto del esquí, mientras el monigote baja la montaña.
+           🚨 Las estaciones NO se señalan en el mapa: «no son parte de la
+           película». Se cuentan aquí y solo aquí. -->
+      <ul class="rotulos">
+        <li class="rotulo rotulo-ancho">
+          <p class="r-dato r-dato-corto">El material, por internet</p>
+          <p class="r-pie">Se alquila antes, lo mandan al alojamiento de Tokio y se devuelve
+            en Matsumoto <span class="marca m-ok">✓ verificado</span></p>
+        </li>
+        <li class="rotulo rotulo-ancho">
+          <p class="r-dato r-dato-corto">Dónde se esquía</p>
+          <p class="r-pie">Las estaciones, por elegir
+            <span class="marca m-pend">○ pendiente</span></p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <!-- ══════════════════  Y AQUÍ SE CORTA  ══════════════════
        🚨 AQUÍ HABÍA CUATRO CAPÍTULOS DE TEXTO —la nieve, Kioto, Año Nuevo y la
        vuelta— y los quitó Kiko el 17 de septiembre: «que borre "la nieve" o las
@@ -378,6 +450,6 @@
     <span class="marca m-pend">○ pendiente</span>. Lo que no está marcado, no está comprobado.</p>
 </footer>
 
-<script type="module" src="js/principal.js?v=9b11daa9"></script>
+<script type="module" src="js/principal.js?v=cfb77c51"></script>
 </body>
 </html>

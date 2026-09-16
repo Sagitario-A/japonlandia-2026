@@ -1,0 +1,161 @@
+@charset "utf-8";
+/* ==========================================================================
+   actos/04-takaragawa.css · La montaña de nieve, el esquiador y el acto 4
+   --------------------------------------------------------------------------
+   El color vive en color.css. Aquí vive dónde está cada cosa y cómo se mueve.
+   La capa del dibujo, la línea del suelo, la nieve y las bandas de fondo son
+   del acto 3 y no se tocan: este acto las hereda tal cual.
+
+   🚨 Regla de oro, la de siempre: el JavaScript solo escribe VARIABLES CSS.
+   ========================================================================== */
+
+/* ==========================================================================
+   1 · La montaña que se acumula
+   --------------------------------------------------------------------------
+   Kiko: «esa nieve que va cayendo se va acumulando abajo y va haciendo una
+   especie de montañita de nieve que ocupa hasta un tercio de la pantalla».
+
+   🚨 CRECE CON UN `scale`, NO APILANDO COPOS. Apilar de verdad significa contar
+   partículas y redibujar un trazado en cada fotograma, que es exactamente lo
+   que prohíbe la ley 15. Aquí el trazado está quieto y lo único que se mueve
+   son dos números de una `transform`: el navegador lo compone sin repintar.
+   ========================================================================== */
+.dibujo {
+  /* 🚨 ESTO ES UNA RESERVA, NO LA DEFINICIÓN. La altura de verdad la escribe
+     el acto en píxeles (ver ALTO_MONTE en js/actos/04-takaragawa.js), y se
+     escribe desde ahí porque el esquiador necesita la MISMA cuenta para saber
+     a qué altura va: dos definiciones de la misma medida, una en CSS y otra en
+     JavaScript, es como el monigote acaba flotando por encima de la nieve. */
+  --monte-h: 30svh;
+}
+
+[data-pieza='monte'] {
+  /* 🚨 96u DE ANCHO, Y LA CIFRA IMPORTA. El escenario mide 100u, así que la
+     base de la montaña cae justo dentro de la pantalla en un móvil: el
+     esquiador entra y sale a ras de suelo, a la vista. Más ancha y las laderas
+     se salen por los bordes, y el monigote aparecería a media altura, en el
+     aire. Ver arte/monte.svg. */
+  width: calc(96 * var(--u));
+  height: var(--monte-h);
+  transform-origin: 50% 100%;
+  /* --s es lo alta que está —de 0, nada, a 1, entera— y --sx lo ancha. Las dos
+     crecen a la vez porque un montón de nieve se ensancha según sube; solo a lo
+     alto parecería una sábana inflándose. Y por defecto vale 0: antes de que el
+     acto pinte no hay nada. */
+  transform:
+    translate(-50%, -100%)
+    translate(calc(var(--x, 0) * var(--u)), 0)
+    scale(var(--sx, 1), var(--s, 0));
+}
+/* 🚨 `preserveAspectRatio="none"` en el SVG: la caja de aquí arriba no guarda
+   la proporción del viewBox —en un móvil sale un montón corto y alto, y en un
+   portátil una loma ancha—, así que el dibujo tiene que estirarse con ella. */
+
+/* ==========================================================================
+   2 · El esquiador
+   --------------------------------------------------------------------------
+   «Un monigote chiquitito que la esquía», de izquierda a derecha, subiendo y
+   bajando por encima. Sigue puesto en el acto 5 y en el 6, por eso vive en la
+   capa del dibujo y no en el acto.
+   ========================================================================== */
+[data-pieza='esquiador'] {
+  width: calc(20 * var(--u));
+  aspect-ratio: 130 / 150;
+  transform-origin: 50% 100%;
+  /* 🚨 AQUÍ --y NO VA EN UNIDADES DEL ESCENARIO, y es la única pieza de las
+     diez donde no. Va en FRACCIÓN DE LA ALTURA DE LA MONTAÑA: -1 es la cima,
+     0 el suelo. Y es a propósito, porque es lo que hace que no puedan
+     descuadrarse: el acto lee la altura del perfil de la montaña —medida del
+     trazado de verdad, ver perfilDe() en js/motor/dibujo.js—, que es un número
+     de 0 a 1, y lo escribe tal cual. Si mañana la montaña sube o baja, el
+     esquiador sube y baja con ella sin tocar nada.
+     --g es la pendiente, en grados, y gira sobre los pies. */
+  transform:
+    translate(-50%, -100%)
+    translate(calc(var(--x, 0) * var(--u)), calc(var(--y, 0) * var(--monte-h)))
+    rotate(calc(var(--g, 0) * 1deg))
+    scale(var(--s, 1));
+}
+
+/* ==========================================================================
+   3 · El texto del acto
+   --------------------------------------------------------------------------
+   El acento es el azul frío que NORMAS § 9 le asigna a este acto, y es el mismo
+   que tenía el capítulo de la nieve: no se estrena un color por estrenarlo.
+   ========================================================================== */
+#takaragawa { --acento: #2e7aa8; }
+
+/* 🚨 EL PANEL DEL ALOJAMIENTO VA ARRIBA, Y NO CENTRADO COMO EN EL ACTO 2.
+   Allí el mapa se retiraba por detrás y el panel tenía la pantalla para él.
+   Aquí no: debajo siguen el coche, el bosque nevado y una montaña de nieve que
+   está creciendo mientras se leen los datos —que es justo lo que pidió Kiko—,
+   así que el panel se queda en la mitad de arriba y le deja el suelo al dibujo.
+
+   Va más apretado que el del acto 2 por lo mismo: entre el borde de arriba y
+   las copas de los árboles hay poco más de un tercio de pantalla en un móvil,
+   y el panel tiene que caber ahí sin sentarse encima del paisaje. */
+#takaragawa .panel {
+  align-self: start;
+  width: min(100%, 25rem);
+}
+/* 🚨 LOS NÚMEROS DE AQUÍ ABAJO ESTÁN MEDIDOS, no elegidos a ojo: el panel tiene
+   que acabar POR ENCIMA DEL TECHO DEL COCHE, que en un móvil está a 490 px del
+   borde de arriba y en un portátil a 419. Con el panel del acto 2 tal cual
+   medía 440 px y las filas de datos caían encima de la carrocería.
+
+   ⚠️ Lo que NO se puede evitar es que cruce las copas de los árboles: en un
+   portátil el bosque empieza a 126 px del borde de arriba, o sea que ocupa
+   media pantalla, y ahí no hay hueco limpio para un panel. De eso se encarga
+   el halo, igual que con los rótulos del acto 3. */
+#takaragawa .panel-cabecera { margin-bottom: .7rem; }
+#takaragawa .panel h3 {
+  font-size: clamp(1.4rem, 6.2vw, 1.9rem);
+  margin-block: .3rem .4rem;
+}
+#takaragawa .panel .entradilla { font-size: .88rem; line-height: 1.5; }
+#takaragawa .fotos {
+  gap: .5rem;
+  margin-bottom: .75rem;
+}
+#takaragawa .foto-hueco { aspect-ratio: 16 / 9; }
+#takaragawa .fila { padding-block: .4rem; }
+
+/* 🚨 Y EN UNA PANTALLA ESTRECHA, MÁS APRETADO TODAVÍA. A 320 px el panel le
+   sacaba veinte píxeles al techo del coche justo en la pantalla en la que
+   conviven los dos, que es la única en la que se ven juntos. Es el ancho más
+   estrecho que se prueba (NORMAS § 6) y ahí no sobra ni un píxel. */
+@media (max-width: 360px) {
+  #takaragawa .foto-hueco { aspect-ratio: 5 / 2; }
+  #takaragawa .fotos { margin-bottom: .6rem; }
+  #takaragawa .fila { padding-block: .22rem; }
+  #takaragawa .panel .entradilla { font-size: .84rem; }
+  #takaragawa .panel-cabecera { margin-bottom: .55rem; }
+}
+
+/* Halo, como todo el texto que flota sobre el dibujo (ley 9: halo, nunca velo).
+   🚨 El panel del acto 2 no lo necesitaba porque detrás no había nada; este
+   flota sobre el bosque nevado y sobre la montaña. */
+.anim #takaragawa .panel {
+  text-shadow: 0 0 .5rem var(--papel), 0 0 .25rem var(--papel), 0 0 .1rem var(--papel);
+}
+
+/* Los rótulos del esquí, arriba, mientras el monigote baja la montaña.
+   Mismo sitio que los del acto 3: el dibujo es una franja apoyada en el suelo,
+   así que con el texto pegado al borde de arriba queda un agujero blanco. */
+#takaragawa .rotulos {
+  align-self: start;
+  padding-top: 6svh;
+}
+
+/* ==========================================================================
+   4 · Movimiento reducido y sin JavaScript
+   --------------------------------------------------------------------------
+   Lo genérico ya lo hace escena.css: los actos se aplanan y el texto sale
+   entero. Aquí solo hay que evitar que la montaña y el esquiador se queden
+   plantados encima del texto, porque el acto pinta su fotograma final y ese
+   fotograma los tiene puestos.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  [data-pieza='monte'],
+  [data-pieza='esquiador'] { display: none !important; }
+}

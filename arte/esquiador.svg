@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 150" class="a-esquiador" aria-hidden="true" focusable="false">
+  <!-- «Desde la izquierda hacia la derecha, subiendo y luego bajando por encima
+       de la montaña, aparece un monigote chiquitito que la esquía.»
+
+       🚨 SIN CARA Y SIN RASGOS, igual que los cuatro de arte/cuatro.svg: Kiko
+       dijo «aún no van a tener estilo propio, ya se lo daremos después». Este es
+       uno de ellos, con el rojo del primero. Cuando diga cómo son, se cambian
+       los dos archivos y ninguno más.
+
+       🚨 MIRA HACIA LA DERECHA, que es hacia donde esquía, y va inclinado hacia
+       delante. El acto le añade el giro de la pendiente por fuera, con --g: el
+       dibujo no sabe nada de la montaña.
+
+       🚨 SE APOYA EN EL BORDE DE ABAJO DE LA CAJA. La capa del dibujo ancla las
+       piezas por su base, así que la suela del esquí de delante tiene que estar
+       en y=150 o el monigote flota sobre la nieve.
+
+       🚨 Y EL TRAZO ES FINO (1.6 y no --grosor). Con non-scaling-stroke el
+       trazo mide lo mismo en pantalla para todas las piezas, y esta es la más
+       pequeña de las diez: con 2,6 px parecía dibujada con rotulador gordo al
+       lado del coche. Es el mismo peso que ya usan los cristales y los brazos. -->
+
+  <!-- El bastón va DETRÁS del cuerpo: sale de la mano y se clava por detrás -->
+  <g class="e-baston">
+    <path d="M70 84 L38 138"/>
+    <path d="M32 132 L44 139"/>
+  </g>
+
+  <!-- El esquí de atrás, un poco más arriba: dos esquís dan profundidad sin
+       una sola sombra (NORMAS § 1) -->
+  <g class="e-ski e-ski-atras">
+    <rect x="4" y="126" width="92" height="9" rx="4.5"/>
+    <path d="M92 131.5 q17 -2 22 -9 q-10 -4 -22 1 z"/>
+  </g>
+  <rect class="e-bota" x="34" y="115" width="19" height="13" rx="5"/>
+
+  <!-- Las piernas, flexionadas -->
+  <rect class="e-pierna" x="-7" y="-18" width="14" height="36" rx="7"
+        transform="translate(50,104) rotate(14)"/>
+  <rect class="e-pierna" x="-7.5" y="-19" width="15" height="38" rx="7.5"
+        transform="translate(58,116) rotate(4)"/>
+
+  <!-- El esquí de delante -->
+  <g class="e-ski">
+    <rect x="16" y="137" width="94" height="9" rx="4.5"/>
+    <path d="M106 142.5 q17 -2 22 -9 q-10 -4 -22 1 z"/>
+  </g>
+  <rect class="e-bota" x="48" y="126" width="20" height="13" rx="5"/>
+
+  <!-- El cuerpo, inclinado hacia delante -->
+  <rect class="e-cuerpo" x="-14" y="-23" width="28" height="46" rx="13"
+        transform="translate(66,82) rotate(20)"/>
+
+  <!-- El brazo de delante, con la mano donde nace el bastón -->
+  <rect class="e-brazo" x="-6.5" y="-15" width="13" height="30" rx="6.5"
+        transform="translate(74,76) rotate(-38)"/>
+
+  <!-- La cabeza y el gorro -->
+  <circle class="e-cabeza" cx="84" cy="44" r="14"/>
+  <path class="e-gorro" d="M70 42 a14 14 0 0 1 28 0 q-14 -5 -28 0 z"/>
+  <circle class="e-pompon" cx="84" cy="27" r="5"/>
+</svg>

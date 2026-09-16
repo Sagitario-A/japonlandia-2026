@@ -5,17 +5,18 @@
    Todo lo que este archivo hace es coser: la lógica vive en motor/ y actos/.
    ============================================================================= */
 
-import { registrarGlobal, arrancar } from './motor/escenario.js?v=9b11daa9';
-import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=9b11daa9';
-import { desvanecerDibujo } from './motor/dibujo.js?v=9b11daa9';
-import { nevar } from './motor/nieve.js?v=9b11daa9';
+import { registrarGlobal, arrancar } from './motor/escenario.js?v=cfb77c51';
+import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=cfb77c51';
+import { desvanecerDibujo } from './motor/dibujo.js?v=cfb77c51';
+import { nevar } from './motor/nieve.js?v=cfb77c51';
 /* 🚨 `tope` lo usa el desvanecido del final, ahi abajo. Lo quite una vez al
    limpiar codigo muerto y el final de la pelicula dejo de ejecutarse entero,
    sin que saltara ninguna comprobacion: ver el aviso de capturas-web.js. */
-import { tope } from './motor/util.js?v=9b11daa9';
-import { montarActoVuelo } from './actos/01-vuelo.js?v=9b11daa9';
-import { montarActoLlegada } from './actos/02-llegada.js?v=9b11daa9';
-import { montarActoAlCoche } from './actos/03-al-coche.js?v=9b11daa9';
+import { tope } from './motor/util.js?v=cfb77c51';
+import { montarActoVuelo } from './actos/01-vuelo.js?v=cfb77c51';
+import { montarActoLlegada } from './actos/02-llegada.js?v=cfb77c51';
+import { montarActoAlCoche } from './actos/03-al-coche.js?v=cfb77c51';
+import { montarActoTakaragawa } from './actos/04-takaragawa.js?v=cfb77c51';
 
 /* --------------------------------------------------------------------------
    1 · El escenario y los actos
@@ -24,6 +25,7 @@ montarLienzo();
 montarActoVuelo();
 montarActoLlegada();
 montarActoAlCoche();
+montarActoTakaragawa();
 
 /* --------------------------------------------------------------------------
    2 · La barra de arriba y el raíl
@@ -38,7 +40,7 @@ const rail = document.getElementById('rail');
    el escenario se apagaba A MITAD DEL ACTO 3: los globales corren DESPUES de
    los actos, asi que ganan, y el mapa se iba justo mientras se trazaba la linea
    Keio hacia Shinjuku. */
-const finPelicula = document.getElementById('al-coche');
+const finPelicula = document.getElementById('takaragawa');
 
 registrarGlobal(function (scroll, alto, sinMovimiento) {
   const pasadaLaPortada = sinMovimiento || scroll > alto * 0.9;
@@ -76,8 +78,14 @@ registrarGlobal(function (scroll, alto, sinMovimiento) {
        alojamiento, así que se va enseguida. El coche, la nieve y el bosque son
        el sitio donde estamos, y se quedan hasta que el capítulo ya está puesto.
 
-       🚨 Cuando exista el acto 4 esto cambia de sitio, no de idea: el mapa se
-       irá igual y el paisaje seguirá, pero el relevo lo hará el acto. */
+       🚨 Y DESDE EL 17 DE SEPTIEMBRE EL MAPA YA NO SE VA AQUÍ. El relevo lo
+       hace el acto 4, que hereda el mapa pequeño puesto y lo retira en su
+       primera pantalla —ver js/actos/04-takaragawa.js—. Esta línea se queda
+       porque sigue haciendo falta: es la que apaga cualquier resto de mapa al
+       acabar la película, y es gratis cuando no hay nada que apagar.
+       Lo que de verdad importa de aquí es el DIBUJO: el coche, el esquiador y
+       la nieve se van cayendo al fondo durante el cierre, y por eso el cierre
+       mide una pantalla entera. */
     const fin = tope((alto - caja.bottom) / alto);
     desvanecerMapa(tope(fin / 0.25));
     desvanecerDibujo(tope((fin - 0.45) / 0.55));

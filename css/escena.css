@@ -497,6 +497,22 @@ html:not(.anim) .ir-indice { position: static; margin-top: 2rem; }
    ========================================================================== */
 @media (prefers-reduced-motion: reduce) {
   .acto { height: auto; }
+  /* 🚨 Y FUERA EL MARGEN NEGATIVO DE LA LEY 7, que aquí no solapa una pantalla
+     muerta: solapa los actos enteros.
+
+     El margen existe porque una escena pegajosa deja una pantalla de nada al
+     final de su sección. Con movimiento reducido no hay escenas pegajosas —los
+     actos se aplanan a su altura de texto— pero la regla seguía puesta, porque
+     el selector .anim .acto + .acto gana en especificidad al .acto de este
+     bloque. Con secciones de seiscientos píxeles y un tirón de 844 hacia
+     arriba, el texto del acto 3 salía impreso encima del del 2, y el del 4
+     encima del 3.
+
+     🚨 Estaba desde que se montó el acto 2 y no lo cogió nadie: las capturas de
+     movimiento reducido solo miran el principio de la página, donde todavía no
+     hay dos actos que solapar. Se vio mirando el acto 4 con movimiento
+     reducido, que es el cuarto de la pila. */
+  .anim .acto + .acto { margin-top: 0; }
   .escena {
     position: static;
     height: auto;

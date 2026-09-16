@@ -25,14 +25,14 @@
    está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=9b11daa9';
-import { tramo, suave, tope } from '../motor/util.js?v=9b11daa9';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=9b11daa9';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=9b11daa9';
-import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=9b11daa9';
-import { montarNieve, nevar } from '../motor/nieve.js?v=9b11daa9';
-import { tenderRuta } from '../motor/ruta.js?v=9b11daa9';
-import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=9b11daa9';
+import { registrarActo } from '../motor/escenario.js?v=cfb77c51';
+import { tramo, suave, tope } from '../motor/util.js?v=cfb77c51';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=cfb77c51';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa } from '../motor/lienzo.js?v=cfb77c51';
+import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo } from '../motor/dibujo.js?v=cfb77c51';
+import { montarNieve, nevar } from '../motor/nieve.js?v=cfb77c51';
+import { tenderRuta } from '../motor/ruta.js?v=cfb77c51';
+import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=cfb77c51';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
