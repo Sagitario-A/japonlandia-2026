@@ -15,10 +15,10 @@
    Narita, Meidaimae— están escritos en el HTML; aquí solo se mueven.
    ============================================================================= */
 
-import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=c94af970';
-import { dibujarCostas, dibujarReticula, opacidadReticula } from './mapa.js?v=c94af970';
-import { trazarRuta, cabezaDeRuta } from './ruta.js?v=c94af970';
-import { r1 } from './util.js?v=c94af970';
+import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=9e7564bf';
+import { dibujarCostas, dibujarReticula, opacidadReticula } from './mapa.js?v=9e7564bf';
+import { trazarRuta, cabezaDeRuta } from './ruta.js?v=9e7564bf';
+import { r1 } from './util.js?v=9e7564bf';
 
 let raiz = null;
 let svg = null;
@@ -189,11 +189,17 @@ export function esconder(nombre) {
  * 🚨 Existe porque el último tramo —tres minutos andando, 200 metros— mide
  * medio píxel a cualquier escala en la que se vea el resto del trayecto. Una
  * línea que no se ve no cuenta nada; un halo que se cierra sobre el portal, sí.
- * `cerca` va de 0 (abierto) a 1 (pegado al punto).
+ * `cerca` va de 0 (el tramo no ha empezado) a 1 (se ha llegado).
+ *
+ * 🚨 Es un PULSO, no un cierre: en reposo el halo es pequeño, se abre a mitad
+ * del recorrido y vuelve a cerrarse al llegar. La primera versión lo tenía al
+ * revés —ancho mientras el tramo aún no había empezado— y a la escala de la
+ * ruta ese círculo de veintidós unidades se comía la etiqueta de Shinjuku justo
+ * en el momento en que esa etiqueta era lo único importante de la pantalla.
  */
 export function cerrarHalo(nombre, cerca) {
   const el = hitos.get(nombre);
   if (!el) return;
   const halo = el.querySelector('.m-halo');
-  if (halo) halo.setAttribute('r', r1(22 - 16 * cerca));
+  if (halo) halo.setAttribute('r', r1(6 + 20 * Math.sin(Math.PI * cerca)));
 }

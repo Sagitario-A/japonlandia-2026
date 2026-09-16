@@ -10,12 +10,12 @@
    Guion → web-nueva/DEFINICION.md, acto A1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=c94af970';
-import { tramo, suave, tope } from '../motor/util.js?v=c94af970';
-import { mirarA } from '../motor/proyeccion.js?v=c94af970';
-import { pintarMapa, pintarRuta, pintarVehiculo, marcar, esconder, mostrarLienzo, opacidadMapa, alzarLienzo } from '../motor/lienzo.js?v=c94af970';
-import { tenderRuta } from '../motor/ruta.js?v=c94af970';
-import { VUELO_IDA, LUGARES } from '../datos/rutas.js?v=c94af970';
+import { registrarActo } from '../motor/escenario.js?v=9e7564bf';
+import { tramo, suave, tope } from '../motor/util.js?v=9e7564bf';
+import { mirarA } from '../motor/proyeccion.js?v=9e7564bf';
+import { pintarMapa, pintarRuta, pintarVehiculo, marcar, esconder, mostrarLienzo, opacidadMapa, alzarLienzo } from '../motor/lienzo.js?v=9e7564bf';
+import { tenderRuta } from '../motor/ruta.js?v=9e7564bf';
+import { VUELO_IDA, LUGARES } from '../datos/rutas.js?v=9e7564bf';
 
 /* La ruta real de Iberia, tendida una vez al cargar.
    Se exporta porque el acto 2 la hereda: si desaparece de golpe al cambiar de
@@ -58,7 +58,12 @@ export function montarActoVuelo() {
       /* ---- Fases ------------------------------------------------------- */
       const pEntrada = suave(tramo(p, 0.00, 0.16));   /* la Tierra subiendo */
       const pTitulo = 1 - suave(tramo(p, 0.05, 0.20));
-      const pVuelo = suave(tramo(p, 0.20, 0.92));
+      /* 🚨 Hasta 0,985 y no hasta 0,92. Con el vuelo acabando en 0,92 quedaba
+         un 8 % de este acto —media pantalla de scroll— en el que el avion ya
+         habia llegado y no pasaba nada, justo antes de que el acto 2 empezara
+         a ampliar. Kiko lo noto como una espera larga entre llegar a Japon y
+         el zoom, y no era el zoom: era esta cola muerta. */
+      const pVuelo = suave(tramo(p, 0.20, 0.985));
       const pPista = 1 - suave(tramo(p, 0.00, 0.08));
 
       /* ---- La cámara --------------------------------------------------- */
@@ -97,7 +102,7 @@ export function montarActoVuelo() {
       acto.v('--p-pista', pPista);
 
       for (let i = 0; i < rotulos.length; i++) {
-        rotulos[i].style.opacity = opacidadRotulo(p, i, rotulos.length, 0.22, 0.94).toFixed(3);
+        rotulos[i].style.opacity = opacidadRotulo(p, i, rotulos.length, 0.22, 0.97).toFixed(3);
       }
     }
   });

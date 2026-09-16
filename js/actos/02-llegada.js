@@ -14,13 +14,13 @@
    Guion → web-nueva/DEFINICION.md, acto A2.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=c94af970';
-import { tramo, suave, tope } from '../motor/util.js?v=c94af970';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=c94af970';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js?v=c94af970';
-import { tenderRuta } from '../motor/ruta.js?v=c94af970';
-import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=c94af970';
-import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=c94af970';
+import { registrarActo } from '../motor/escenario.js?v=9e7564bf';
+import { tramo, suave, tope } from '../motor/util.js?v=9e7564bf';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=9e7564bf';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js?v=9e7564bf';
+import { tenderRuta } from '../motor/ruta.js?v=9e7564bf';
+import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=9e7564bf';
+import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=9e7564bf';
 
 /* --------------------------------------------------------------------------
    Los encuadres, en el orden en que los recorre la cámara
@@ -67,6 +67,30 @@ PATAS.forEach((pata, i) => {
 });
 
 let fichas = [];
+let paradas = [];
+
+/* 🚨 EL GUION DEL TEXTO DE ABAJO, en `p` de este acto.
+   No se deriva de las patas de la ruta, aunque lo parezca. Tiene que
+   ALTERNARSE con los anuncios de parada —punto, linea, ficha, punto, linea,
+   ficha— y derivarlo daba dos fallos que se vieron en la tabla de estados:
+   un hueco sin nada de texto mientras la linea ya corria, y luego el anuncio
+   de Meidaimae impreso ENCIMA de la ficha del Narita Express, porque las dos
+   viven en la misma celda de la rejilla.
+   Con ventanas explicitas y encadenadas no se pisa ninguna. */
+const GUION = [
+  { lista: 'parada', i: 0, de: 0.320, a: 0.445 },   /* «Primera conexion · Shinjuku» */
+  { lista: 'ficha',  i: 0, de: 0.425, a: 0.580 },   /* Narita Express */
+  { lista: 'parada', i: 1, de: 0.565, a: 0.655 },   /* «Segunda conexion · Meidaimae» */
+  { lista: 'ficha',  i: 1, de: 0.640, a: 0.710 },   /* Linea Keio */
+  { lista: 'ficha',  i: 2, de: 0.700, a: null }     /* A pie · lo releva el panel */
+];
+
+/** Entra en el primer tercio de su ventana y sale en el ultimo cuarto. */
+function ventana(p, de, a) {
+  const entra = suave(tramo(p, de, de + (a === null ? 0.04 : (a - de) * 0.32)));
+  if (a === null) return entra;
+  return entra * (1 - suave(tramo(p, a - (a - de) * 0.26, a)));
+}
 
 export function montarActoLlegada() {
   return registrarActo({
@@ -75,6 +99,7 @@ export function montarActoLlegada() {
 
     preparar(acto) {
       fichas = Array.from(acto.el.querySelectorAll('[data-tramo]'));
+      paradas = Array.from(acto.el.querySelectorAll('[data-parada]'));
     },
 
     pintar(p, acto) {
@@ -82,14 +107,15 @@ export function montarActoLlegada() {
       /* 🚨 RITMO. Kiko pidio acelerar «desde que se llega a Japon hasta el
          zoom»: la cadena de encuadres se ha comprimido y lo que gana el hueco
          es el trazado de la ruta, que es la parte que hay que leer. */
-      const aJapon = suave(tramo(p, 0.00, 0.13));   /* el globo se amplía */
-      const aKanto = suave(tramo(p, 0.15, 0.28));   /* «la zona central de Japón» */
-      const aRuta = suave(tramo(p, 0.30, 0.42));    /* y a escala del trayecto */
-      const aCerca = suave(tramo(p, 0.48, 0.66));   /* y a escala de los últimos tramos */
-      const pNarita = suave(tramo(p, 0.12, 0.18));
-      const pCasa = suave(tramo(p, 0.28, 0.36));
+      const aJapon = suave(tramo(p, 0.00, 0.09));   /* el globo se amplía */
+      const aKanto = suave(tramo(p, 0.13, 0.27));   /* «la zona central de Japón» */
+      const aRuta = suave(tramo(p, 0.29, 0.40));    /* y a escala del trayecto */
+      const aCerca = suave(tramo(p, 0.46, 0.64));   /* y a escala de los últimos tramos */
+      const pNarita = suave(tramo(p, 0.085, 0.135));
+      const pCasa = suave(tramo(p, 0.26, 0.33));
       const pTrazo = suave(tramo(p, 0.40, 0.78));
       const pDatos = suave(tramo(p, 0.80, 0.92));
+
 
       /* ---- La cámara: cuatro viajes encadenados ------------------------
          🚨 El cuarto no estaba y hacía falta. A la escala del Narita Express,
@@ -154,8 +180,8 @@ export function montarActoLlegada() {
          vas completando la linea, deberia estar ya marcado el punto hasta donde
          va esa linea, y luego la siguiente». */
       const apaga = 1 - pDatos;
-      marcar('shinjuku', LUGARES.shinjuku, suave(tramo(pTrazo, 0.00, 0.05)) * apaga);
-      marcar('meidaimae', LUGARES.meidaimae, suave(tramo(pTrazo, 0.58, 0.66)) * apaga);
+      marcar('shinjuku', LUGARES.shinjuku, suave(tramo(p, 0.32, 0.37)) * apaga);
+      marcar('meidaimae', LUGARES.meidaimae, suave(tramo(p, 0.55, 0.60)) * apaga);
 
       /* El halo se cierra sobre el portal según se recorren los últimos metros */
       const ultima = PATAS[PATAS.length - 1];
@@ -170,16 +196,19 @@ export function montarActoLlegada() {
          siguiente. 🚨 Sin apagarse, las tres acababan superpuestas y el bloque
          de abajo era ilegible: tres titulares y tres pies uno encima de otro.
          Se vio en pantalla. */
-      for (let i = 0; i < fichas.length; i++) {
-        const pata = PATAS[i];
-        if (!pata) continue;
-        const largo = pata.hasta - pata.desde;
-        const entra = suave(tramo(pTrazo, pata.desde, pata.desde + largo * 0.25));
-        const esUltima = i === PATAS.length - 1;
-        const sale = esUltima
-          ? tramo(pDatos, 0.05, 0.45)                                   /* la deja el panel */
-          : suave(tramo(pTrazo, pata.hasta - largo * 0.18, pata.hasta));
-        fichas[i].style.opacity = (entra * (1 - sale)).toFixed(3);
+      /* 🚨 PRIMERO EL PUNTO, DESPUES LA LINEA. Kiko: «podria salir primero el
+         punto, Shinjuku, que ponga abajo primera conexion». Cada parada se
+         anuncia antes de que su tramo empiece a dibujarse, y la ficha del tramo
+         releva al anuncio. Las ventanas estan en GUION, arriba. */
+      for (const e of paradas) e.style.opacity = '0';
+      for (const e of fichas) e.style.opacity = '0';
+
+      for (const linea of GUION) {
+        const el = (linea.lista === 'parada' ? paradas : fichas)[linea.i];
+        if (!el) continue;
+        let o = ventana(p, linea.de, linea.a);
+        if (linea.a === null) o *= 1 - tramo(pDatos, 0.05, 0.45);  /* la deja el panel */
+        el.style.opacity = o.toFixed(3);
       }
     }
   });

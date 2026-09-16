@@ -5,11 +5,11 @@
    Todo lo que este archivo hace es coser: la lógica vive en motor/ y actos/.
    ============================================================================= */
 
-import { registrarGlobal, arrancar } from './motor/escenario.js?v=c94af970';
-import { montarLienzo, mostrarLienzo } from './motor/lienzo.js?v=c94af970';
-import { montarActoVuelo } from './actos/01-vuelo.js?v=c94af970';
-import { montarActoLlegada } from './actos/02-llegada.js?v=c94af970';
-import { tope } from './motor/util.js?v=c94af970';
+import { registrarGlobal, arrancar } from './motor/escenario.js?v=9e7564bf';
+import { montarLienzo, mostrarLienzo } from './motor/lienzo.js?v=9e7564bf';
+import { montarActoVuelo } from './actos/01-vuelo.js?v=9e7564bf';
+import { montarActoLlegada } from './actos/02-llegada.js?v=9e7564bf';
+import { tope } from './motor/util.js?v=9e7564bf';
 
 /* --------------------------------------------------------------------------
    1 · El escenario y los actos
