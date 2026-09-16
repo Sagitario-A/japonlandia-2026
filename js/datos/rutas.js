@@ -154,7 +154,36 @@ export const TRAMOS_LLEGADA = [
 ];
 
 /* --------------------------------------------------------------------------
-   4 · Encuadres de la cámara
+   4 · Del alojamiento al coche · el acto 3
+   --------------------------------------------------------------------------
+   La misma línea Keio del tramo de llegada, al revés: se vuelve a Shinjuku,
+   que es donde se recoge el coche. Es LO ÚLTIMO QUE HACE EL MAPA en toda la
+   película hasta el acto 5.
+
+   Kiko, guion A3: «nos desplazamos hasta el centro de recogida del coche» y
+   «cuando la línea del transporte en metro se complete hasta ese punto, se
+   empieza a hacer zoom, zoom, zoom hasta que el mapa se difumina por completo».
+   Confirmado por él el 17 de septiembre: primero la línea entera, y ENTONCES
+   el zoom.
+
+   ⚠️ EL PUNTO DE RECOGIDA NO ESTÁ DECIDIDO: «por Shinjuku, de momento»
+   (PENDIENTE W8). Lo que se marca es la ESTACIÓN de Shinjuku, que sí está
+   verificada, y el texto lo dice con su marca. No se inventa una oficina.
+   -------------------------------------------------------------------------- */
+export const TRAMO_AL_COCHE = {
+  id: 'al-coche',
+  nombre: 'Línea Keio',
+  codigo: 'KO',                /* ✅ verificado */
+  operador: 'Keio',
+  color: '#d3238b',            /* ⚠️ sin verificar, igual que en la llegada */
+  minutos: 7,                  /* ✅ */
+  desde: 'Meidaimae',
+  hasta: 'Shinjuku',
+  pasos: [L.alojamientoTokio, L.meidaimae, L.sasazuka, L.shinjuku]
+};
+
+/* --------------------------------------------------------------------------
+   5 · Encuadres de la cámara
    --------------------------------------------------------------------------
    [lon, lat, gradosDeAncho]. El radio lo calcula `encuadrar()`, porque pensar
    en grados de ancho es humano y pensar en radios no.
@@ -168,5 +197,19 @@ export const ENCUADRES = {
   ruta:   [140.02, 35.72, 1.7],
   /* Shinjuku, Sasazuka y Meidaimae caben justos: es la escala a la que la
      linea Keio deja de ser once pixeles y se ve el ultimo tramo. */
-  cerca:  [139.735, 35.674, 0.78]
+  cerca:  [139.735, 35.674, 0.78],
+  /* 🚨 EL ÚLTIMO ENCUADRE DE LA PELÍCULA, el del acto 3: sobre la estación de
+     Shinjuku y tan cerca que ya no hay mapa que dibujar. A 0,03° de ancho el
+     radio pasa de 490.000 y la costa hace rato que se apagó sola por su propio
+     techo (mapa.js, R_INVISIBLE = 26.000). Que no quede nada que dibujar es
+     justo lo que se quiere: «zoom, zoom, zoom hasta que el mapa se difumina por
+     completo». */
+  /* 🚨 EL ENCUADRE DE LA LINEA DEL ACTO 3. El de «cerca» lo heredamos del acto
+     2, donde tenia que caber Shinjuku, Sasazuka y Meidaimae; para el acto 3 el
+     sujeto es solo Matsubara → Shinjuku, y a 0,78° esa linea mide cincuenta
+     pixeles en una esquina. Se vio en la captura: la pelicula se paraba a
+     ensenar un garabato. Centrado entre los dos extremos y con sitio para las
+     dos etiquetas. */
+  keio:     [139.676, 35.6783, 0.17],
+  disuelve: [139.6991, 35.6884, 0.03]
 };

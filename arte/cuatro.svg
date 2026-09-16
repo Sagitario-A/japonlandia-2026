@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 250 130" class="a-cuatro" aria-hidden="true" focusable="false">
+  <!-- Los cuatro. Kiko: «que aún no van a tener estilo propio, ya se lo daremos
+       después.» Así que son cuatro monigotes iguales de forma y distintos de
+       color: nada de caras, ni de rasgos, ni de género. Cuando diga cómo son,
+       se cambia AQUÍ y solo aquí.
+
+       Tres vienen de Madrid y el cuarto se une en Tokio (regla 6 del
+       repositorio), pero a esta altura del viaje ya son cuatro. -->
+  <g class="c-uno">
+    <circle class="c-cabeza" cx="32" cy="30" r="15"/>
+    <path class="c-cuerpo" d="M32 47 q-19 0 -19 22 v26 q0 6 6 6 h26 q6 0 6 -6 v-26 q0 -22 -19 -22 z"/>
+    <rect class="c-pata" x="23" y="99" width="7" height="30" rx="3.5"/>
+    <rect class="c-pata" x="34" y="99" width="7" height="30" rx="3.5"/>
+  </g>
+  <g class="c-dos">
+    <circle class="c-cabeza" cx="93" cy="26" r="15"/>
+    <path class="c-cuerpo" d="M93 43 q-19 0 -19 22 v30 q0 6 6 6 h26 q6 0 6 -6 v-30 q0 -22 -19 -22 z"/>
+    <rect class="c-pata" x="84" y="99" width="7" height="30" rx="3.5"/>
+    <rect class="c-pata" x="95" y="99" width="7" height="30" rx="3.5"/>
+  </g>
+  <g class="c-tres">
+    <circle class="c-cabeza" cx="155" cy="31" r="15"/>
+    <path class="c-cuerpo" d="M155 48 q-19 0 -19 22 v25 q0 6 6 6 h26 q6 0 6 -6 v-25 q0 -22 -19 -22 z"/>
+    <rect class="c-pata" x="146" y="99" width="7" height="30" rx="3.5"/>
+    <rect class="c-pata" x="157" y="99" width="7" height="30" rx="3.5"/>
+  </g>
+  <g class="c-cuatro">
+    <circle class="c-cabeza" cx="216" cy="28" r="15"/>
+    <path class="c-cuerpo" d="M216 45 q-19 0 -19 22 v28 q0 6 6 6 h26 q6 0 6 -6 v-28 q0 -22 -19 -22 z"/>
+    <rect class="c-pata" x="207" y="99" width="7" height="30" rx="3.5"/>
+    <rect class="c-pata" x="218" y="99" width="7" height="30" rx="3.5"/>
+  </g>
+</svg>

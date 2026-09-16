@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 141" class="a-tren" aria-hidden="true" focusable="false">
+  <!-- Un tren de cercanías de Tokio, NO de alta velocidad: morro plano, cuerpo
+       largo y una sola puerta doble en el centro, que es donde se ponen los
+       cuatro. Guion A3, palabras de Kiko: «un tren típico de los que hay allí
+       en Tokio. No de alta velocidad, sino los normales.»
+
+       🎨 LA BANDA DE COLOR NO ES EL COLOR DE UNA LÍNEA. Los colores de Keio y
+       JR East están ⚠️ sin verificar (PENDIENTE W4) y en esta web el color de
+       una línea es un dato. Esta banda es caricatura, no información. -->
+
+  <!-- bajos y bogies -->
+  <rect class="t-bajos" x="10" y="108" width="420" height="10" rx="4"/>
+  <circle class="t-rueda" cx="78" cy="127" r="13"/>
+  <circle class="t-rueda" cx="118" cy="127" r="13"/>
+  <circle class="t-rueda" cx="322" cy="127" r="13"/>
+  <circle class="t-rueda" cx="362" cy="127" r="13"/>
+
+  <!-- carrocería -->
+  <rect class="t-cuerpo" x="6" y="14" width="428" height="96" rx="16"/>
+  <rect class="t-banda" x="6" y="82" width="428" height="13"/>
+
+  <!-- ventanas: dos grupos, uno a cada lado de la puerta -->
+  <rect class="t-cristal" x="30" y="32" width="54" height="34" rx="5"/>
+  <rect class="t-cristal" x="94" y="32" width="54" height="34" rx="5"/>
+  <rect class="t-cristal" x="292" y="32" width="54" height="34" rx="5"/>
+  <rect class="t-cristal" x="356" y="32" width="54" height="34" rx="5"/>
+
+  <!-- el hueco de la puerta: lo que se ve cuando se abre -->
+  <rect class="t-hueco" x="172" y="24" width="96" height="86" rx="4"/>
+
+  <!-- las dos hojas. Se separan con --puertas (0 cerradas, 1 abiertas) -->
+  <g class="t-puerta t-puerta-i">
+    <rect class="t-hoja" x="172" y="24" width="48" height="86" rx="4"/>
+    <rect class="t-cristal" x="181" y="34" width="30" height="34" rx="4"/>
+  </g>
+  <g class="t-puerta t-puerta-d">
+    <rect class="t-hoja" x="220" y="24" width="48" height="86" rx="4"/>
+    <rect class="t-cristal" x="229" y="34" width="30" height="34" rx="4"/>
+  </g>
+</svg>

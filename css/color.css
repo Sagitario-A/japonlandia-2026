@@ -1,0 +1,168 @@
+@charset "utf-8";
+/* ==========================================================================
+   color.css · La paleta de caricatura
+   --------------------------------------------------------------------------
+   🎨 AQUÍ Y SOLO AQUÍ ENTRA EL COLOR. Lo decidió Kiko el 16 de septiembre al
+   pedir el dibujo «con estilo caricaturesco y muy sencillo y de colores»,
+   sabiendo que choca con «blanca, muy clara, muy limpia, muy impoluta». La
+   frontera está escrita en NORMAS § 1 y es literal:
+
+     · el dibujo de la película   → color plano de caricatura
+     · el mapa, los datos, el texto y el fondo → blanco impoluto
+
+   🚨 LA PRUEBA DE QUE ESTO ESTÁ BIEN HECHO: si quitas el dibujo, lo que queda
+   tiene que seguir pareciendo la misma web impoluta de antes. El color entra en
+   los personajes, no en la página.
+
+   🚨 Y SIN DEGRADADOS, SIN SOMBRAS Y SIN FILTROS. Además de ser la estética
+   elegida, un `filter` de SVG animado hunde el rendimiento en un móvil, y el
+   acto 3 es el que más elementos mete en pantalla.
+   ========================================================================== */
+
+#dibujo {
+  /* El trazo de todo el dibujo. Uno solo, para que las piezas parezcan de la
+     misma mano aunque se dibujen en semanas distintas. */
+  --trazo: #23282e;
+  --grosor: 2.6;
+
+  /* El tren. ⚠️ LA BANDA NO ES EL COLOR DE UNA LÍNEA: los de Keio y JR East
+     están sin verificar (PENDIENTE W4) y en esta web el color de una línea es
+     un dato. Esto es caricatura. */
+  --c-tren: #e6ebf0;
+  --c-tren-banda: #3f7fa8;
+  --c-cristal: #cfe2ee;
+  --c-metal: #aeb7c0;
+
+  /* Los cuatro. Sin rasgos: no tienen estilo propio todavía. */
+  --c-piel: #f0c9a4;
+  --c-ropa-1: #c8503f;
+  --c-ropa-2: #3f7fa8;
+  --c-ropa-3: #4f8f6a;
+  --c-ropa-4: #d99b2b;
+  --c-pata: #414a54;
+
+  /* El mostrador */
+  --c-mueble: #c98f52;
+  --c-mueble-hondo: #a9743f;
+  --c-cartel: #f4f6f8;
+
+  /* La llave y su halo */
+  --c-llave: #d99b2b;
+  --c-llave-hondo: #b07c1c;
+  --c-halo: #e8b94b;
+
+  /* El coche */
+  --c-coche: #c8503f;
+  --c-coche-cristal: #cfe2ee;
+  --c-rueda: #2e343b;
+  --c-llanta: #aeb7c0;
+  --c-luz: #ffd75e;
+
+  /* La ciudad y el bosque */
+  --c-edificio-lejos: #cfd6de;
+  --c-edificio-cerca: #9fadbb;
+  --c-ventana: #f2f5f8;
+  --c-arbol: #4f8f6a;
+  --c-arbol-hondo: #3c6f52;
+  --c-tronco: #7d5a3c;
+
+  /* ❄️ LA NIEVE NO ES BLANCA, y tiene que ser así.
+     Sobre papel blanco impoluto, la nieve blanca no existe: no se ve un solo
+     copo. Se resuelve con un azul frío, que además es el tinte que el acto 4
+     ya tenía asignado en NORMAS § 9. */
+  --c-nieve: #a9c9de;
+  --c-nieve-manto: #dcebf5;
+  --c-nieve-trazo: #8fb4cd;
+}
+
+/* ==========================================================================
+   Las piezas
+   --------------------------------------------------------------------------
+   Manchas planas y un trazo. `vector-effect: non-scaling-stroke` para que el
+   trazo mida lo mismo con la pieza grande o pequeña: sin él, el coche al
+   centrarse engordaba de línea y parecía otro dibujo.
+   ========================================================================== */
+/* El tamaño de cada pieza lo pone actos/03-al-coche.css: aquí solo el color.
+
+   🚨 `non-scaling-stroke` SOLO EN LAS PIEZAS, que son las que se escalan. Las
+   bandas de fondo no cambian nunca de tamaño, y aplicárselo eran cuatrocientos
+   nodos pagando un cálculo de trazo por fotograma para nada. */
+.d-pieza svg * { vector-effect: non-scaling-stroke; }
+
+/* --- El tren --- */
+.t-cuerpo { fill: var(--c-tren); stroke: var(--trazo); stroke-width: var(--grosor); }
+.t-banda  { fill: var(--c-tren-banda); }
+.t-cristal { fill: var(--c-cristal); stroke: var(--trazo); stroke-width: 1.8; }
+.t-bajos  { fill: var(--c-metal); }
+.t-rueda  { fill: var(--c-rueda); }
+.t-hueco  { fill: #6c7781; }
+.t-hoja   { fill: var(--c-tren); stroke: var(--trazo); stroke-width: 1.8; }
+
+/* 🚨 LAS PUERTAS VAN ATADAS AL SCROLL, no a una animación con duración propia.
+   Con una `transition` de por medio, parar de bajar dejaba las puertas a medio
+   abrir y luego se movían solas: es la ley 6 del lienzo. */
+.t-puerta-i { transform: translateX(calc(var(--puertas, 0) * -46px)); }
+.t-puerta-d { transform: translateX(calc(var(--puertas, 0) * 46px)); }
+
+/* --- Los cuatro --- */
+.c-cabeza { fill: var(--c-piel); stroke: var(--trazo); stroke-width: var(--grosor); }
+.c-cuerpo { stroke: var(--trazo); stroke-width: var(--grosor); }
+.c-uno    .c-cuerpo { fill: var(--c-ropa-1); }
+.c-dos    .c-cuerpo { fill: var(--c-ropa-2); }
+.c-tres   .c-cuerpo { fill: var(--c-ropa-3); }
+.c-cuatro .c-cuerpo { fill: var(--c-ropa-4); }
+.c-pata   { fill: var(--c-pata); }
+
+/* --- El mostrador --- */
+.m-cabeza { fill: var(--c-piel); stroke: var(--trazo); stroke-width: var(--grosor); }
+.m-cuerpo { fill: var(--c-ropa-2); stroke: var(--trazo); stroke-width: var(--grosor); }
+.m-brazo  { fill: var(--c-ropa-2); stroke: var(--trazo); stroke-width: 1.8; }
+.m-tabla  { fill: var(--c-mueble-hondo); }
+.m-frente { fill: var(--c-mueble); stroke: var(--trazo); stroke-width: var(--grosor); }
+.m-veta   { fill: var(--c-mueble-hondo); opacity: .55; }
+.m-cartel { fill: var(--c-cartel); stroke: var(--trazo); stroke-width: var(--grosor); }
+.m-poste  { fill: var(--c-metal); }
+
+/* --- La llave --- */
+.l-mando  { fill: var(--c-llave); stroke: var(--trazo); stroke-width: var(--grosor); }
+.l-boton  { fill: var(--c-llave-hondo); }
+.l-anilla { fill: none; stroke: var(--c-metal); stroke-width: 5; }
+.l-caña, .l-diente { fill: var(--c-metal); }
+
+/* El halo: tres anillos que se abren con --halo. Cero filtros. */
+.l-halo { opacity: var(--halo, 0); }
+.l-anillo {
+  fill: none;
+  stroke: var(--c-halo);
+  stroke-width: 3;
+  transform-origin: 80px 80px;
+  transform: scale(calc(.55 + var(--halo, 0) * .45));
+}
+.l-anillo-1 { opacity: .9; }
+.l-anillo-2 { opacity: .55; }
+.l-anillo-3 { opacity: .3; }
+
+/* --- El coche --- */
+.v-cuerpo  { fill: var(--c-coche); stroke: var(--trazo); stroke-width: var(--grosor); }
+.v-cristal { fill: var(--c-coche-cristal); stroke: var(--trazo); stroke-width: 1.8; }
+.v-rueda   { fill: var(--c-rueda); }
+.v-llanta  { fill: var(--c-llanta); }
+.v-suelo   { fill: var(--trazo); opacity: .18; }
+/* Las luces parpadean con --luces, que también escribe el scroll */
+.v-luz { fill: var(--c-luz); stroke: var(--trazo); stroke-width: 1.6; opacity: var(--luces, 0); }
+
+/* --- La ciudad y el bosque --- */
+.b-lejos rect  { fill: var(--c-edificio-lejos); }
+.b-cerca rect  { fill: var(--c-edificio-cerca); }
+.b-ventana rect { fill: var(--c-ventana); }
+.b-tronco rect { fill: var(--c-tronco); }
+.b-copa path   { fill: var(--c-arbol); }
+.b-copa path:nth-child(odd) { fill: var(--c-arbol-hondo); }
+.b-mata ellipse { fill: var(--c-arbol-hondo); }
+.b-suelo { fill: var(--trazo); opacity: .35; }
+
+.b-copa-nevada path { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 2; }
+.b-copa-nevada path:nth-child(odd) { fill: #eef6fb; }
+.b-mata-nevada ellipse { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 2; }
+.b-manto { fill: var(--c-nieve-manto); }
+.a-bosque-nevado .b-suelo { fill: var(--c-nieve-trazo); opacity: .5; }

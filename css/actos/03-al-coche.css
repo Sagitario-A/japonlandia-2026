@@ -1,0 +1,265 @@
+@charset "utf-8";
+/* ==========================================================================
+   actos/03-al-coche.css · La capa del dibujo, la nieve y el acto 3
+   --------------------------------------------------------------------------
+   El color de las piezas vive en color.css. Aquí vive dónde está cada cosa y
+   cómo se mueve.
+
+   🚨 Regla de oro, la misma que en escena.css: el JavaScript solo escribe
+   VARIABLES CSS. Todo lo que se mueve aquí se mueve con `transform` y
+   `opacity`, que son las dos únicas cosas que un móvil anima sin recalcular la
+   página.
+   ========================================================================== */
+
+/* ==========================================================================
+   1 · La capa del dibujo
+   --------------------------------------------------------------------------
+   Hermana de `#escenario` y por las mismas razones: el coche y la nieve siguen
+   puestos en los actos 4, 5 y 6, así que no pueden pertenecer al acto 3.
+   Va DESPUÉS del escenario en el HTML para pintarse por encima del mapa, y los
+   dos por debajo del texto de los actos, que llevan `z-index: 1`.
+   ========================================================================== */
+.dibujo {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+
+  /* 🚨 LA UNIDAD DEL DIBUJO ES `vmin`, Y SE USA PARA TODO: el tamaño de las
+     piezas Y su separación. El primer montaje tenía los tamaños en `vmin` y las
+     posiciones en `vw`, y las dos cosas crecían a ritmos distintos: en el móvil
+     los cuatro se salían por la izquierda y el mostrador por la derecha, y en
+     un portátil los tres quedaban desperdigados con un agujero en medio. Se vio
+     en la captura del mostrador, no leyendo el código.
+
+     Con una sola unidad la composición es la misma en todas las pantallas:
+     **el escenario mide 100u de ancho** —de -50 a +50— y todo cabe dentro. */
+  --u: 1vmin;
+
+  /* La línea del suelo: todo se apoya aquí, y el texto vive por encima.
+     💭 Ojo con el sentido: BAJAR esta línea AGRANDA el hueco blanco entre el
+     texto de arriba y el dibujo. Al 66 % quedaba casi media pantalla vacía en
+     medio; al 72 % quedaba peor. El 68 %, con los rótulos bajados un poco
+     (§ 5), deja el dibujo apoyado donde el ojo lo busca y conserva el aire de
+     arriba, que es la estética que pidió Kiko. */
+  --suelo: 68%;
+}
+/* Sin `transition`, igual que el escenario: lo que va atado al scroll ya viene
+   suavizado, y una transición lo persigue siempre por detrás (ley 6). */
+.dibujo.en-escena {
+  visibility: visible;
+  opacity: 1;
+}
+html:not(.anim) .dibujo { display: none; }
+
+#dibujo svg { display: block; overflow: visible; }
+
+/* 🚨 QUE `hidden` GANE, QUE NO ES GRATIS.
+   `motor/dibujo.js` apaga con `hidden` lo que no se ve, que es lo que mantiene
+   el acto a 60 fps. Pero la regla del navegador para `[hidden]` es `display:
+   none` y viene de su hoja por defecto, así que CUALQUIER `display` escrito
+   aquí la gana: `.d-banda` lleva `display: flex` y con eso `hidden` no ocultaba
+   nada. Resultado: al llegar al final del acto, los edificios de la ciudad
+   seguían pintados detrás del bosque nevado con la opacidad del último
+   fotograma en que se vieron. Se vio en la captura de la nevada, no en el
+   código. */
+#dibujo [hidden] { display: none !important; }
+
+/* --- La línea del suelo del andén ---
+   💭 No estaba en el guion. La puse porque un tren, cuatro personas y un coche
+   flotando sobre papel en blanco no se apoyan en nada y parecen recortables.
+   Es una línea de pelo, no un suelo dibujado: si molesta, se quita con una
+   línea y no se lleva nada por delante. */
+.d-suelo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: var(--suelo);
+  height: 2px;
+  background: var(--pelo-fuerte);
+  opacity: var(--op-suelo, 0);
+}
+
+/* ==========================================================================
+   2 · Las piezas
+   --------------------------------------------------------------------------
+   Cada pieza se apoya por su base en la línea del suelo y se mueve desde ahí.
+   `--x` y `--y` van en unidades del escenario (100u de ancho), que es como se
+   piensa «entra por la derecha» o «la llave sube».
+   ========================================================================== */
+.d-pieza {
+  position: absolute;
+  left: 50%;
+  top: var(--suelo);
+  opacity: var(--op, 0);
+  transform-origin: 50% 100%;
+  transform:
+    translate(-50%, -100%)
+    translate(calc(var(--x, 0) * var(--u)), calc(var(--y, 0) * var(--u)))
+    scale(var(--s, 1));
+  will-change: transform, opacity;
+}
+.d-pieza svg { width: 100%; height: 100%; }
+
+/* Los tamaños y las proporciones.
+
+   🚨 LA PROPORCIÓN SE DECLARA AQUÍ y tiene que coincidir con el `viewBox` de su
+   SVG: sin `aspect-ratio` el hueco mide cero de alto hasta que llega el `fetch`
+   y el dibujo entra dando un salto. Y los `viewBox` están RECORTADOS por abajo
+   a ras de las ruedas —440×141 y no 440×150— porque si sobra hueco debajo, la
+   pieza se apoya en aire y flota un par de unidades sobre la línea del suelo.
+   Se vio en la captura del tren. Si se toca un `viewBox`, se toca esta tabla.
+
+   🚨 ESTOS SON LOS TAMAÑOS CUANDO LA PIEZA TIENE LA PANTALLA PARA ELLA. Y son
+   grandes a propósito: con las piezas medidas para que las tres de la escena
+   del mostrador cupieran a la vez, el resto del acto quedaba con un dibujo
+   diminuto abajo y media pantalla de blanco encima. Se vio en la captura.
+
+   El apretón de la escena del mostrador se resuelve donde toca, que es en el
+   acto: ahí las tres piezas se encogen juntas con `--s` (ver ESCENA_APRETADA en
+   03-al-coche.js) y el coche vuelve a su tamaño al centrarse, con lo que además
+   parece que se acerca. Aquí no se paga por un solo golpe del acto. */
+[data-pieza='tren']      { width: calc(118 * var(--u)); aspect-ratio: 440 / 141; }
+[data-pieza='cuatro']    { width: calc(34 * var(--u));  aspect-ratio: 250 / 130; }
+[data-pieza='mostrador'] { width: calc(38 * var(--u));  aspect-ratio: 260 / 161; }
+[data-pieza='coche']     { width: calc(46 * var(--u));  aspect-ratio: 300 / 140; }
+
+/* La llave no se apoya en el suelo: flota entre el dependiente y nosotros, y
+   luego sube. Por eso se ancla por su centro y no por su base. */
+[data-pieza='llave'] {
+  width: calc(22 * var(--u));
+  aspect-ratio: 1;
+  transform-origin: 50% 50%;
+  transform:
+    translate(-50%, -50%)
+    translate(calc(var(--x, 0) * var(--u)), calc(var(--y, 0) * var(--u)))
+    scale(var(--s, 1));
+}
+
+/* ==========================================================================
+   3 · El fondo que pasa · «el coche anda sin moverse»
+   --------------------------------------------------------------------------
+   Kiko: «en realidad se queda en el centro, pero de repente por la derecha van
+   apareciendo edificios de ciudad». Así que el coche no se mueve ni un píxel:
+   lo que se desplaza es esto.
+
+   🚨 EL BUCLE NO SE PUEDE VER. Son cuatro copias idénticas en fila y el
+   desplazamiento se da la vuelta justo al llegar al ancho de UNA copia: en ese
+   momento la copia 2 está exactamente donde estaba la 1, así que el salto no
+   existe. Por eso las bandas tienen que casar por los dos bordes y por eso no
+   hay ningún árbol pegado a x=0 ni a x=600.
+   ========================================================================== */
+.d-fondo {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* 🚨 LA BANDA ACABA EXACTAMENTE EN LA LÍNEA DEL SUELO. Los tres SVG están
+     recortados a ras de su propia línea de carretera —viewBox 600×274 y no
+     600×300—, así que el coche y los árboles se apoyan en la MISMA línea y por
+     debajo no queda la franja de treinta unidades que antes terminaba en un
+     canto recto sobre el blanco. Se vio en la captura de la nevada.
+     🚨 Si se toca el viewBox de una banda, se tocan las tres y el ancho de copia
+     de aquí abajo. */
+  top: var(--suelo);
+  height: calc(54 * var(--u));
+  transform: translateY(-100%);
+  overflow: hidden;
+}
+.d-banda {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  opacity: var(--op, 0);
+  /* Una copia mide 118,2u de ancho: 54u de alto por la proporción 600/274 del
+     viewBox. Con --fondo de 0 a 100 el desplazamiento recorre exactamente una
+     copia, y como las cuatro son idénticas el bucle cae donde no se ve. */
+  transform: translateX(calc(var(--fondo, 0) * -1.182 * var(--u)));
+  will-change: transform, opacity;
+}
+.d-banda svg {
+  flex: 0 0 auto;
+  height: 100%;
+  width: calc(118.2 * var(--u));
+}
+
+/* ==========================================================================
+   4 · La nieve
+   --------------------------------------------------------------------------
+   🚨 CERO JAVASCRIPT POR FOTOGRAMA. Los copos caen con esta animación, que no
+   sabe nada del scroll. El scroll solo escribe cuántos se ven, cuánto y a qué
+   velocidad. Ver js/motor/nieve.js.
+   ========================================================================== */
+.nieve {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  /* 🚨 LA NIEVE SE PARA EN EL SUELO. Cayendo por toda la pantalla, los copos
+     seguían bajando POR DEBAJO de la carretera y del bosque, por el blanco de
+     abajo, y parecían caer por detrás del mundo. Se vio en la captura de la
+     nevada. Recortada aquí, el copo que llega al suelo desaparece, que es lo
+     que hace la nieve de verdad. */
+  bottom: calc(100% - var(--suelo));
+  overflow: hidden;
+  /* 🚨 SIN `opacity` EN LA CAPA. Ver la explicación en js/motor/nieve.js: con
+     los copos animados dentro, una opacidad de grupo cuesta una composición
+     fuera de pantalla por fotograma. La intensidad la lleva el número de
+     copos. */
+}
+/* Mientras no nieva no existe: ochenta copos a opacidad casi cero cuestan lo
+   mismo de pintar que ochenta copos visibles. */
+.nieve:not(.nevando) { display: none; }
+
+.copo {
+  position: absolute;
+  top: 0;
+  left: calc(var(--x) * 1%);
+  width: calc(var(--t) * 1px);
+  height: calc(var(--t) * 1px);
+  border-radius: 50%;
+  background: var(--c-nieve);
+  /* Los copos se encienden por orden: `--copos` dice cuántos, y cada uno sabe
+     su número. Así la nevada va de menos a más sin tocar el DOM. */
+  opacity: clamp(0, calc(var(--copos, 0) - var(--i)), 1);
+  animation: caer calc(var(--caida) * var(--nieve-vel, 1) * 1s) linear infinite;
+  animation-delay: calc(var(--espera) * 1s);
+  /* 🚨 SIN `will-change`. Aquí no ayuda: son sesenta elementos, y pedirle al
+     navegador sesenta capas propias cuesta más de lo que ahorra. Una animación
+     de `transform` ya se compone sola sin pedírselo. */
+}
+@keyframes caer {
+  from { transform: translate3d(0, -12vh, 0); }
+  to   { transform: translate3d(calc(var(--deriva) * 1vw), 90vh, 0); }
+}
+
+/* ==========================================================================
+   5 · El texto del acto 3
+   --------------------------------------------------------------------------
+   Reutiliza las piezas del acto 1 y del 2 —los rótulos que se encadenan arriba
+   y las fichas de tramo de abajo— porque hacen exactamente lo mismo. No se
+   reescribe lo que funciona (NORMAS § 11.7).
+   ========================================================================== */
+
+/* Los rótulos van ARRIBA y el dibujo abajo, así que no se pisan nunca.
+   💭 Bajados un poco respecto al acto 1: el dibujo de este acto es una franja
+   apoyada en el suelo y no llena la pantalla como el mapa, así que con el texto
+   pegado al borde de arriba quedaba un agujero blanco enorme entre las dos
+   cosas. Con esto, el texto y el dibujo se leen como una sola composición. */
+#al-coche .rotulos {
+  align-self: start;
+  padding-top: 6svh;
+}
+
+/* ==========================================================================
+   6 · Movimiento reducido y sin JavaScript
+   --------------------------------------------------------------------------
+   El dibujo se queda en su fotograma final y la nieve NO cae: una animación en
+   bucle es justo lo que `prefers-reduced-motion` viene a apagar (NORMAS § 6).
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  .dibujo { position: absolute; height: 100svh; }
+  .nieve { display: none !important; }
+  .copo { animation: none !important; }
+}

@@ -14,13 +14,14 @@
    Guion → web-nueva/DEFINICION.md, acto A2.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=24e7ec13';
-import { tramo, suave, tope } from '../motor/util.js?v=24e7ec13';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=24e7ec13';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js?v=24e7ec13';
-import { tenderRuta } from '../motor/ruta.js?v=24e7ec13';
-import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=24e7ec13';
-import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=24e7ec13';
+import { registrarActo } from '../motor/escenario.js?v=96c428d5';
+import { tramo, suave, tope } from '../motor/util.js?v=96c428d5';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=96c428d5';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, esconder, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo } from '../motor/lienzo.js?v=96c428d5';
+import { tenderRuta } from '../motor/ruta.js?v=96c428d5';
+import { apagarDibujo } from '../motor/dibujo.js?v=96c428d5';
+import { LUGARES, TRAMOS_LLEGADA, ENCUADRES } from '../datos/rutas.js?v=96c428d5';
+import { VISTA_FINAL, RUTA_VUELO } from './01-vuelo.js?v=96c428d5';
 
 /* --------------------------------------------------------------------------
    Los encuadres, en el orden en que los recorre la cámara
@@ -174,6 +175,13 @@ export function montarActoLlegada() {
 
          Y la etiqueta cambia de nombre sin moverse: «Japón» se apaga y
          «Narita» se enciende en el mismo punto, según el mapa se acerca. */
+      /* 🚨 APAGA EL DIBUJO DEL ACTO 3. Es EL fallo mas probable de todo el
+         acto 3 y por eso esta aqui: al subir el scroll del 3 al 2, este acto no
+         sabe nada del tren ni del coche y los dejaba flotando sobre el mapa de
+         Tokio. Es la linea de puntos suelta del 16 de septiembre con otro
+         nombre, y se arregla igual: un acto apaga lo que no usa. */
+      apagarDibujo();
+
       esconder('avion');
       marcar('madrid', LUGARES.madrid, 1 - suave(tramo(p, 0.01, 0.10)));
       marcar('japon', LUGARES.narita, 1 - suave(tramo(p, 0.07, 0.12)));

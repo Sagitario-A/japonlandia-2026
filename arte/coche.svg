@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 140" class="a-coche" aria-hidden="true" focusable="false">
+  <!-- El coche de alquiler. Se queda cuando el mostrador se va, se centra bajo
+       la llave, se le encienden las luces al desbloquearlo y luego cruza la
+       ciudad, el bosque y la nieve.
+       ⬜ Es un monovolumen porque van cuatro con equipaje de 26 noches, que es
+       lo que dice la investigación 018. El modelo NO está decidido. -->
+
+  <!-- sombra: una línea, no una mancha. En esta web no hay sombras (NORMAS § 1) -->
+  <rect class="v-suelo" x="24" y="126" width="252" height="2.5" rx="1.25"/>
+
+  <!-- carrocería -->
+  <path class="v-cuerpo" d="M26 118 v-28 q0 -12 12 -16 l26 -9 14 -26 q4 -8 14 -8 h96 q10 0 14 8 l14 26 30 9 q12 4 12 16 v28 q0 6 -6 6 h-220 q-6 0 -6 -6 z"/>
+  <!-- techo y ventanas -->
+  <path class="v-cristal" d="M92 66 l10 -20 q2 -4 7 -4 h30 v24 z"/>
+  <path class="v-cristal" d="M150 66 v-24 h34 q5 0 7 4 l10 20 z"/>
+  <rect class="v-cristal" x="206" y="52" width="26" height="14" rx="4"/>
+
+  <!-- luces: se encienden al desbloquear -->
+  <rect class="v-luz v-luz-frente" x="248" y="92" width="26" height="12" rx="5"/>
+  <rect class="v-luz v-luz-cola" x="28" y="92" width="20" height="12" rx="5"/>
+
+  <!-- ruedas -->
+  <circle class="v-rueda" cx="78" cy="118" r="21"/>
+  <circle class="v-llanta" cx="78" cy="118" r="9"/>
+  <circle class="v-rueda" cx="222" cy="118" r="21"/>
+  <circle class="v-llanta" cx="222" cy="118" r="9"/>
+</svg>

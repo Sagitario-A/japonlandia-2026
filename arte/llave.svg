@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" class="a-llave" aria-hidden="true" focusable="false">
+  <!-- La llave del coche. Kiko: «una llave», luego «sube y le empieza a salir
+       como un halo de brillar», desbloquea, y «se va a menos».
+       El halo son tres anillos que se abren con --halo. No es un filtro de SVG:
+       un filtro animado hunde el rendimiento en un móvil (NORMAS § 9). -->
+  <g class="l-halo">
+    <circle class="l-anillo l-anillo-1" cx="80" cy="80" r="40"/>
+    <circle class="l-anillo l-anillo-2" cx="80" cy="80" r="56"/>
+    <circle class="l-anillo l-anillo-3" cx="80" cy="80" r="72"/>
+  </g>
+  <g class="l-cuerpo">
+    <!-- el mando -->
+    <rect class="l-mando" x="62" y="52" width="36" height="52" rx="9"/>
+    <circle class="l-boton" cx="80" cy="68" r="6"/>
+    <rect class="l-boton" x="72" y="82" width="16" height="6" rx="3"/>
+    <!-- la anilla -->
+    <circle class="l-anilla" cx="80" cy="41" r="10"/>
+    <!-- el paletón -->
+    <rect class="l-caña" x="76" y="104" width="8" height="26"/>
+    <rect class="l-diente" x="84" y="112" width="10" height="6"/>
+    <rect class="l-diente" x="84" y="122" width="10" height="6"/>
+  </g>
+</svg>

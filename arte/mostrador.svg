@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 161" class="a-mostrador" aria-hidden="true" focusable="false">
+  <!-- El mostrador de alquiler y el dependiente. Entra por la derecha con el
+       coche al lado y se va por la derecha sin él.
+       🚫 SIN TEXTO: no se inventa el nombre de ninguna empresa. El coche aún no
+       está reservado (PENDIENTE: Nippon o Toyota, decisión de Kiko). -->
+
+  <!-- el dependiente, detrás -->
+  <g class="m-dependiente">
+    <circle class="m-cabeza" cx="104" cy="40" r="16"/>
+    <path class="m-cuerpo" d="M104 58 q-22 0 -22 26 v34 h44 v-34 q0 -26 -22 -26 z"/>
+    <!-- El brazo que tiende la llave. Apunta a la IZQUIERDA porque es donde
+         estan la llave y nosotros: apuntando a la derecha senalaba al borde de
+         la pantalla. -->
+    <rect class="m-brazo" x="44" y="74" width="46" height="9" rx="4.5"/>
+  </g>
+
+  <!-- el mostrador, delante -->
+  <rect class="m-tabla" x="34" y="96" width="196" height="12" rx="4"/>
+  <rect class="m-frente" x="44" y="108" width="176" height="52" rx="4"/>
+  <rect class="m-veta" x="44" y="128" width="176" height="3"/>
+
+  <!-- el cartel de encima, en blanco a propósito -->
+  <rect class="m-cartel" x="150" y="30" width="86" height="40" rx="5"/>
+  <rect class="m-poste" x="188" y="70" width="8" height="28"/>
+</svg>

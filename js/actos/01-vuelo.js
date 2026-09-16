@@ -10,12 +10,13 @@
    Guion → web-nueva/DEFINICION.md, acto A1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=24e7ec13';
-import { tramo, suave, tope } from '../motor/util.js?v=24e7ec13';
-import { mirarA } from '../motor/proyeccion.js?v=24e7ec13';
-import { pintarMapa, pintarRuta, limpiarRutas, pintarVehiculo, marcar, esconder, mostrarLienzo, opacidadMapa, alzarLienzo } from '../motor/lienzo.js?v=24e7ec13';
-import { tenderRuta } from '../motor/ruta.js?v=24e7ec13';
-import { VUELO_IDA, LUGARES } from '../datos/rutas.js?v=24e7ec13';
+import { registrarActo } from '../motor/escenario.js?v=96c428d5';
+import { tramo, suave, tope } from '../motor/util.js?v=96c428d5';
+import { mirarA } from '../motor/proyeccion.js?v=96c428d5';
+import { pintarMapa, pintarRuta, limpiarRutas, pintarVehiculo, marcar, esconder, mostrarLienzo, opacidadMapa, alzarLienzo } from '../motor/lienzo.js?v=96c428d5';
+import { tenderRuta } from '../motor/ruta.js?v=96c428d5';
+import { apagarDibujo } from '../motor/dibujo.js?v=96c428d5';
+import { VUELO_IDA, LUGARES } from '../datos/rutas.js?v=96c428d5';
 
 /* La ruta real de Iberia, tendida una vez al cargar.
    Se exporta porque el acto 2 la hereda: si desaparece de golpe al cambiar de
@@ -85,6 +86,12 @@ export function montarActoVuelo() {
          puesta. Kiko lo vio haciendo scroll hacia atrás.
          Un acto no solo pinta lo suyo: apaga lo que no es suyo. */
       limpiarRutas(1);
+
+      /* 🚨 Y APAGA EL DIBUJO DEL ACTO 3, por lo mismo. Volviendo arriba deprisa
+         o saltando desde el indice, el acto 2 puede no llegar a pintar ni un
+         fotograma, y el tren y el coche se quedaban encendidos sobre el globo.
+         Es la ley 1 del lienzo aplicada a la capa del dibujo. */
+      apagarDibujo();
 
       /* ---- Los marcadores ----------------------------------------------
          🚨 Aquí el destino se llama JAPÓN, no Narita. A escala de globo lo que

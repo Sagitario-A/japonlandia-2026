@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 274" class="a-banda a-bosque-nevado" preserveAspectRatio="xMidYMax meet" aria-hidden="true" focusable="false">
+  <!-- El mismo bosque de bosque.svg, nevado. MISMAS COORDENADAS, otro color.
+       🚨 La nieve sobre papel blanco no se ve: no es blanca, es azul frío con
+       trazo. Es el problema que tiene toda esta web —«blanca, muy clara, muy
+       impoluta»— cuando lo que hay que dibujar es nieve. Se resuelve con el
+       tinte frío del acto 4, no pintando el fondo. -->
+  <g class="b-tronco">
+    <rect x="72"  y="214" width="11" height="58"/>
+    <rect x="178" y="226" width="9"  height="46"/>
+    <rect x="262" y="206" width="12" height="66"/>
+    <rect x="360" y="230" width="9"  height="42"/>
+    <rect x="452" y="212" width="11" height="60"/>
+    <rect x="540" y="228" width="9"  height="44"/>
+  </g>
+  <g class="b-copa b-copa-nevada">
+    <path d="M77.5 96  L112 168 H43 Z"/><path d="M77.5 134 L120 218 H35 Z"/>
+    <path d="M182.5 130 L210 190 H155 Z"/><path d="M182.5 162 L216 230 H149 Z"/>
+    <path d="M268 84  L308 162 H228 Z"/><path d="M268 126 L316 212 H220 Z"/>
+    <path d="M364.5 140 L390 196 H339 Z"/><path d="M364.5 170 L396 234 H333 Z"/>
+    <path d="M457.5 92  L494 166 H421 Z"/><path d="M457.5 132 L502 216 H413 Z"/>
+    <path d="M544.5 136 L572 194 H517 Z"/><path d="M544.5 166 L578 232 H511 Z"/>
+  </g>
+  <g class="b-mata b-mata-nevada">
+    <ellipse cx="130" cy="258" rx="26" ry="15"/>
+    <ellipse cx="320" cy="260" rx="22" ry="13"/>
+    <ellipse cx="500" cy="257" rx="28" ry="16"/>
+  </g>
+  <!-- el suelo, ya cubierto -->
+  <path class="b-manto" d="M0 272 q40 -14 84 -8 q52 7 96 -4 q56 -14 112 -2 q48 10 92 -6 q54 -19 108 -4 q52 14 108 4 V274 H0 Z"/>
+  <rect class="b-suelo" x="0" y="270" width="600" height="3"/>
+</svg>

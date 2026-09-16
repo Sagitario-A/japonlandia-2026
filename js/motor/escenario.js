@@ -10,7 +10,7 @@
    ser lenta.
    ============================================================================= */
 
-import { tope } from './util.js?v=24e7ec13';
+import { tope } from './util.js?v=96c428d5';
 
 const actos = [];
 const globales = [];
@@ -29,6 +29,7 @@ let arrancado = false;
  * @param {Element} def.el           la <section> del acto
  * @param {Function} def.pintar      pintar(p, ctx)
  * @param {Function} [def.preparar]  se llama una vez, antes del primer pintado
+ * @param {Function} [def.salir]     se llama al SALIR del tramo, una sola vez
  */
 export function registrarActo(def) {
   if (!def.el) return null;                 /* el acto aún no existe en el HTML */
@@ -40,6 +41,7 @@ export function registrarActo(def) {
     escena,
     pintar: def.pintar,
     preparar: def.preparar,
+    salir: def.salir,
     listo: false,
     activo: false,
     ultimo: -1,
@@ -114,6 +116,19 @@ function repasar() {
          volver al MISMO punto de scroll se diera por pintado, no repintaría y
          se vería el mapa del otro acto. Pasa al subir el scroll y volver a
          entrar por donde saliste, que es justo lo que uno hace al revisar. */
+      /* 🚨 Y RECOGE LO QUE DEJÓ ESCRITO EN EL HTML.
+         Olvidar el último fotograma hace que el acto se repinte al volver, pero
+         NO deshace lo que ya escribió en la página. Y los actos se solapan una
+         pantalla entera por el margen negativo de la ley 7, así que la escena
+         del acto siguiente está en pantalla mientras el anterior termina: el
+         rótulo final del acto 3 —«empieza a nevar»— salía impreso encima del
+         panel del alojamiento del acto 2, las dos cosas a la vez y las dos
+         ilegibles. Es la línea de puntos suelta del 16 de septiembre otra vez,
+         ahora con texto.
+         Un acto que escriba en el HTML implementa `salir()` y lo borra ahí. */
+      if (acto.activo && acto.salir) {
+        try { acto.salir(acto); } catch (e) { console.warn('salir ' + acto.id, e); }
+      }
       acto.activo = false;
       acto.ultimo = -1;
       continue;

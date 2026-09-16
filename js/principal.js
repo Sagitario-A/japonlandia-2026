@@ -5,11 +5,12 @@
    Todo lo que este archivo hace es coser: la lógica vive en motor/ y actos/.
    ============================================================================= */
 
-import { registrarGlobal, arrancar } from './motor/escenario.js?v=24e7ec13';
-import { montarLienzo, mostrarLienzo } from './motor/lienzo.js?v=24e7ec13';
-import { montarActoVuelo } from './actos/01-vuelo.js?v=24e7ec13';
-import { montarActoLlegada } from './actos/02-llegada.js?v=24e7ec13';
-import { tope } from './motor/util.js?v=24e7ec13';
+import { registrarGlobal, arrancar } from './motor/escenario.js?v=96c428d5';
+import { montarLienzo, mostrarLienzo } from './motor/lienzo.js?v=96c428d5';
+import { montarActoVuelo } from './actos/01-vuelo.js?v=96c428d5';
+import { montarActoLlegada } from './actos/02-llegada.js?v=96c428d5';
+import { montarActoAlCoche } from './actos/03-al-coche.js?v=96c428d5';
+import { tope } from './motor/util.js?v=96c428d5';
 
 /* --------------------------------------------------------------------------
    1 · El escenario y los actos
@@ -17,6 +18,7 @@ import { tope } from './motor/util.js?v=24e7ec13';
 montarLienzo();
 montarActoVuelo();
 montarActoLlegada();
+montarActoAlCoche();
 
 /* --------------------------------------------------------------------------
    2 · La barra de arriba y el raíl
@@ -26,7 +28,12 @@ montarActoLlegada();
    -------------------------------------------------------------------------- */
 const barra = document.getElementById('barra');
 const rail = document.getElementById('rail');
-const finPelicula = document.getElementById('llegada');
+/* 🚨 EL FIN DE LA PELICULA ES EL ULTIMO ACTO QUE EXISTA, y hay que moverlo
+   cada vez que se anade uno. Con esto apuntando a 'llegada' y el acto 3 detras,
+   el escenario se apagaba A MITAD DEL ACTO 3: los globales corren DESPUES de
+   los actos, asi que ganan, y el mapa se iba justo mientras se trazaba la linea
+   Keio hacia Shinjuku. */
+const finPelicula = document.getElementById('al-coche');
 
 registrarGlobal(function (scroll, alto, sinMovimiento) {
   const pasadaLaPortada = sinMovimiento || scroll > alto * 0.9;

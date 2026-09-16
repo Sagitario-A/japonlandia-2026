@@ -9,9 +9,11 @@
 <meta name="theme-color" content="#ffffff">
 
 <link rel="preload" href="tipo/shippori-mincho-500-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/base.css?v=24e7ec13">
-<link rel="stylesheet" href="css/texto.css?v=24e7ec13">
-<link rel="stylesheet" href="css/escena.css?v=24e7ec13">
+<link rel="stylesheet" href="css/base.css?v=96c428d5">
+<link rel="stylesheet" href="css/texto.css?v=96c428d5">
+<link rel="stylesheet" href="css/escena.css?v=96c428d5">
+<link rel="stylesheet" href="css/color.css?v=96c428d5">
+<link rel="stylesheet" href="css/actos/03-al-coche.css?v=96c428d5">
 </head>
 
 <body>
@@ -88,12 +90,40 @@
 </div>
 
 <!-- ═══════════════════════════════════════════════════════════════════════
+     LA CAPA DEL DIBUJO · la caricatura en color
+
+     🚨 Tampoco pertenece a ningún acto, y por el mismo motivo que el escenario:
+     el coche y la nieve del acto 3 SIGUEN PUESTOS en los actos 4, 5 y 6. Si
+     fueran del acto 3, el 4 tendría que volver a crearlos en la costura.
+
+     Los huecos van vacíos: las piezas las trae motor/dibujo.js con fetch desde
+     arte/, que es donde se pueden abrir con un editor vectorial. Todo esto es
+     decoración y va aria-hidden: lo que cuenta la historia es el texto.
+     ═══════════════════════════════════════════════════════════════════════ -->
+<div class="dibujo" id="dibujo" aria-hidden="true">
+  <div class="d-fondo">
+    <div class="d-banda" data-banda="ciudad"></div>
+    <div class="d-banda" data-banda="bosque"></div>
+    <div class="d-banda" data-banda="bosque-nevado"></div>
+  </div>
+  <div class="d-suelo"></div>
+  <!-- El orden manda: lo de más abajo se pinta por delante -->
+  <div class="d-pieza" data-pieza="tren"></div>
+  <div class="d-pieza" data-pieza="mostrador"></div>
+  <div class="d-pieza" data-pieza="coche"></div>
+  <div class="d-pieza" data-pieza="cuatro"></div>
+  <div class="d-pieza" data-pieza="llave"></div>
+  <div class="nieve" id="campo-nieve"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════════════
      RAÍL DE PROGRESO
      ═══════════════════════════════════════════════════════════════════════ -->
 <nav class="rail" id="rail" aria-label="Los capítulos del viaje">
   <ol>
     <li><a href="#vuelo"   data-rail="vuelo"><span>El vuelo</span></a></li>
     <li><a href="#llegada" data-rail="llegada"><span>La llegada</span></a></li>
+    <li><a href="#al-coche" data-rail="al-coche"><span>Al coche</span></a></li>
     <li><a href="#nieve"   data-rail="nieve"><span>La nieve</span></a></li>
     <li><a href="#kioto"   data-rail="kioto"><span>Kioto</span></a></li>
     <li><a href="#tokio-2" data-rail="tokio-2"><span>Año Nuevo</span></a></li>
@@ -228,6 +258,64 @@
     </div>
   </section>
 
+  <!-- ══════════════════  A3 · AL COCHE  ══════════════════
+       El acto más largo de los ocho, y el primero con dibujo de caricatura en
+       color. La línea Keio se completa hasta Shinjuku, el mapa se disuelve en
+       un zoom, y a partir de ahí es todo dibujo: el tren, los cuatro, el
+       mostrador, la llave, el coche, la ciudad, el bosque y la nieve.
+
+       🚨 TODO EL CONTENIDO VA EN PLACEHOLDER, por orden de Kiko: «primero
+       vamos con la estructura de la película y todas las animaciones y tal».
+       Ni una fecha, ni un precio, ni un nombre de empresa inventado.
+       Dato: investigacion/021-rutas-de-la-pelicula.md · viaje/00-brief.md -->
+  <section class="acto" id="al-coche" style="--largo: 2100" aria-labelledby="t-al-coche">
+    <div class="escena">
+
+      <div class="titular-acto">
+        <p class="sobre"><span class="num">03</span> Al coche</p>
+        <h2 id="t-al-coche">Vuelta a Shinjuku a por el coche</h2>
+      </div>
+
+      <ul class="tramos">
+        <li class="tramo-ficha" data-tramo>
+          <p class="t-codigo">KO</p>
+          <p class="t-nombre">Línea Keio</p>
+          <p class="t-pie">Meidaimae <span aria-hidden="true">&rarr;</span> Shinjuku · 7 min
+            <span class="marca m-ok">✓ verificado</span></p>
+        </li>
+        <li class="tramo-ficha" data-tramo>
+          <p class="t-codigo">El coche</p>
+          <p class="t-nombre">Se recoge en Shinjuku</p>
+          <p class="t-pie">La oficina exacta está sin decidir
+            <span class="marca m-duda">? por verificar</span></p>
+        </li>
+      </ul>
+
+      <ul class="rotulos">
+        <li class="rotulo">
+          <p class="r-dato">Cuatro</p>
+          <p class="r-pie">Tres llegaron de Madrid; el cuarto esperaba aquí
+            <span class="marca m-ok">✓ verificado</span></p>
+        </li>
+        <li class="rotulo rotulo-ancho">
+          <p class="r-dato r-dato-corto">El coche de alquiler</p>
+          <p class="r-pie">Empresa, modelo y precio, por cerrar
+            <span class="marca m-pend">○ pendiente</span></p>
+        </li>
+        <li class="rotulo rotulo-ancho">
+          <p class="r-dato r-dato-corto">Y hacia el norte</p>
+          <p class="r-pie">De Tokio a la montaña
+            <span class="marca m-pend">○ pendiente</span></p>
+        </li>
+        <li class="rotulo rotulo-ancho">
+          <p class="r-dato r-dato-corto">Empieza a nevar</p>
+          <p class="r-pie">Y ya no para hasta Matsumoto
+            <span class="marca m-pend">○ pendiente</span></p>
+        </li>
+      </ul>
+    </div>
+  </section>
+
   <div class="documento">
 
   <!-- ══════════════════  Lo que todavía no es película  ══════════════════
@@ -250,9 +338,9 @@
     </div>
 
     <div class="cap-cuerpo">
-      <p class="texto vacio">Este capítulo está por filmar. Aquí irán el tren de cercanías, el
-        mostrador del alquiler, el coche cruzando el bosque hasta que nieva, y los tres
-        alojamientos.</p>
+      <p class="texto vacio">Este capítulo está por filmar. El viaje hasta aquí ya lo cuenta
+        el acto anterior; lo que falta son los tres alojamientos de la montaña, el esquí, el
+        onsen y los monos.</p>
 
       <div class="aviso">
         <p><strong>De Kusatsu a Yamanouchi no se puede ir por donde parece.</strong> La carretera
@@ -418,6 +506,6 @@
     <span class="marca m-pend">○ pendiente</span>. Lo que no está marcado, no está comprobado.</p>
 </footer>
 
-<script type="module" src="js/principal.js?v=24e7ec13"></script>
+<script type="module" src="js/principal.js?v=96c428d5"></script>
 </body>
 </html>
