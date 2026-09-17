@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 330" class="a-matsumoto" aria-hidden="true" focusable="false">
+  <!-- 松本城 · EL CASTILLO DE MATSUMOTO. Final del acto 6.
+       Kiko: «cuando estoy llegando a Matsumoto, igual que como con el hotel
+       anterior, que ahora en este caso muestre el castillo de Matsumoto y las
+       montañas que ya estan al fondo. Y el castillo de Matsumoto, pues bueno,
+       miralo para ver como es y demas. Investigalo para hacerlo bien».
+
+       ✅ INVESTIGADO Y VERIFICADO el 17 de septiembre de 2026 en la Wikipedia
+       japonesa de 松本城 y en la ficha del Ayuntamiento de Matsumoto:
+
+         · 国宝 (Tesoro Nacional) desde 1936, reconfirmado en 1952. Son CINCO
+           edificios declarados, no uno.
+         · 複合連結式天守: la torre principal (大天守) es 層塔型 5重6階 —cinco
+           tejados por fuera, seis plantas por dentro— y es el tenshu de madera
+           mas antiguo que se conserva de esa clase.
+         · Por el NORTE se le une el 乾小天守 (torre pequeña) a traves del 渡櫓,
+           un pasillo cubierto.
+         · Por el ESTE se le pegan el 辰巳附櫓 (入母屋造, dos alturas) y el
+           月見櫓, el torreon de contemplar la luna.
+         · 🚨 LOS COLORES SON UN DATO, NO UNA ELECCION: las paredes llevan los
+           DOS TERCIOS DE ABAJO en 下見板張 lacado NEGRO y el tercio de arriba en
+           白漆喰, estuco blanco. Por eso lo llaman 烏城, el castillo cuervo.
+           Los 破風 (frontones) van en blanco.
+         · 🚨 Y EL UNICO COLOR DE TODO EL EDIFICIO es el 朱塗 del 月見櫓: la
+           galeria del torreon de la luna lleva barandilla laqueada en BERMELLON
+           por sus tres lados. Es lo que lo hace reconocible de un vistazo, igual
+           que el karahafu hace reconocible el hotel de Yamanouchi.
+
+       🚨 LO QUE HAY QUE DIBUJAR PARA QUE SE LE RECONOZCA, en este orden:
+       la silueta escalonada de cinco tejados; el negro de abajo con el blanco de
+       arriba; la torre pequeña a la izquierda mas baja y unida; y la barandilla
+       roja a la derecha, abajo. Lo demas es relleno.
+
+       📄 En los comentarios de un `.svg` las variables de CSS se nombran
+       entrecomilladas y sin sus dos guiones: dos guiones seguidos son XML
+       invalido y estos archivos se abren en un editor vectorial. -->
+
+  <!-- ══════ EL 乾小天守, la torre pequeña del noroeste ══════
+       Mas baja que la principal y unida por el pasillo. Tres tejados. -->
+  <path class="ma-tejado" d="M46 176 L96 150 L146 176 L152 184 L40 184 Z"/>
+  <rect class="ma-negro" x="56" y="184" width="80" height="30"/>
+  <path class="ma-tejado" d="M40 214 L96 194 L152 214 L158 222 L34 222 Z"/>
+  <rect class="ma-blanco" x="50" y="222" width="92" height="20"/>
+  <rect class="ma-negro" x="50" y="242" width="92" height="46"/>
+  <path class="ma-tejado" d="M30 288 L96 268 L162 288 L168 296 L24 296 Z"/>
+
+  <!-- El 渡櫓, el pasillo cubierto que une las dos torres -->
+  <rect class="ma-negro" x="140" y="252" width="60" height="36"/>
+  <path class="ma-tejado" d="M134 252 L170 238 L206 252 L210 258 L130 258 Z"/>
+
+  <!-- ══════ EL 大天守 · cinco tejados, seis plantas ══════
+       De arriba abajo, y cada cuerpo mas ancho que el de encima: eso es lo que
+       hace la silueta escalonada que se reconoce a cien metros. -->
+  <!-- 1 · la cumbre, con sus dos 鯱 -->
+  <path class="ma-shachi" d="M232 60 q4 -12 10 -4 q-6 1 -10 4 z"/>
+  <path class="ma-shachi" d="M298 60 q-4 -12 -10 -4 q6 1 10 4 z"/>
+  <path class="ma-tejado" d="M216 62 L265 40 L314 62 L320 70 L210 70 Z"/>
+  <rect class="ma-blanco" x="228" y="70" width="74" height="24"/>
+  <!-- 2 -->
+  <path class="ma-tejado" d="M204 94 L265 76 L326 94 L332 102 L198 102 Z"/>
+  <rect class="ma-blanco" x="216" y="102" width="98" height="26"/>
+  <!-- 🚨 EL 破風 DE LA FACHADA, blanco: el fronton triangular del centro. Es lo
+       que rompe la caja y hace que se lea «castillo» y no «torre» -->
+  <path class="ma-hafu" d="M240 102 L265 78 L290 102 Z"/>
+  <!-- 3 -->
+  <path class="ma-tejado" d="M188 128 L265 108 L342 128 L348 136 L182 136 Z"/>
+  <rect class="ma-negro" x="200" y="136" width="130" height="34"/>
+  <!-- 4 -->
+  <path class="ma-tejado" d="M170 170 L265 148 L360 170 L368 178 L162 178 Z"/>
+  <rect class="ma-negro" x="184" y="178" width="162" height="42"/>
+  <path class="ma-hafu" d="M236 178 L265 150 L294 178 Z"/>
+  <!-- 5 · el cuerpo de abajo, el mas ancho -->
+  <path class="ma-tejado" d="M150 220 L265 196 L380 220 L390 230 L140 230 Z"/>
+  <rect class="ma-blanco" x="164" y="230" width="202" height="22"/>
+  <rect class="ma-negro" x="164" y="252" width="202" height="44"/>
+  <path class="ma-tejado" d="M138 296 L265 274 L392 296 L400 304 L130 304 Z"/>
+
+  <!-- Las troneras y ventanas, en blanco sobre el negro: son lo que da escala -->
+  <g class="ma-vano">
+    <rect x="216" y="146" width="14" height="16"/>
+    <rect x="258" y="146" width="14" height="16"/>
+    <rect x="300" y="146" width="14" height="16"/>
+    <rect x="198" y="262" width="16" height="20"/>
+    <rect x="248" y="262" width="16" height="20"/>
+    <rect x="298" y="262" width="16" height="20"/>
+    <rect x="66" y="252" width="14" height="18"/>
+    <rect x="112" y="252" width="14" height="18"/>
+  </g>
+
+  <!-- ══════ EL 辰巳附櫓 Y EL 月見櫓, al este ══════
+       El de la luna es el de abajo a la derecha, y lleva la galería. -->
+  <rect class="ma-negro" x="366" y="230" width="66" height="58"/>
+  <path class="ma-tejado" d="M358 230 L399 212 L440 230 L446 238 L352 238 Z"/>
+
+  <!-- 🚨 LA GALERÍA DEL 月見櫓, EN BERMELLÓN. Es el único color del castillo y
+       lo que lo hace reconocible: 朱塗 por sus tres lados. -->
+  <rect class="ma-negro" x="424" y="258" width="74" height="30"/>
+  <path class="ma-tejado" d="M416 258 L461 242 L506 258 L512 266 L410 266 Z"/>
+  <rect class="ma-roja" x="418" y="286" width="86" height="6" rx="3"/>
+  <g class="ma-baranda">
+    <path d="M422 292 v10 M446 292 v10 M470 292 v10 M494 292 v10"/>
+  </g>
+  <rect class="ma-roja" x="418" y="300" width="86" height="5" rx="2.5"/>
+
+  <!-- ══════ LA BASE DE PIEDRA (石垣) Y EL FOSO ══════
+       El muro de sillería en talud sobre el que se apoya todo. -->
+  <path class="ma-piedra" d="M110 304 L420 304 L444 330 L86 330 Z"/>
+  <path class="ma-piedra" d="M410 292 L512 292 L520 330 L400 330 Z"/>
+  <!-- Su nieve encima: lleva nevando cuatro actos -->
+  <path class="ma-nieve" d="M180 300 q80 -12 160 0 q-40 8 -80 8 q-40 0 -80 -8 z"/>
+</svg>

@@ -64,20 +64,20 @@
    quedaron así del acto 4.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=d2b235f8';
-import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=d2b235f8';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=d2b235f8';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=d2b235f8';
-import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena, perfilDe, altura } from '../motor/dibujo.js?v=d2b235f8';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=d2b235f8';
-import { tenderRuta } from '../motor/ruta.js?v=d2b235f8';
-import { LUGARES, RUTA_A_YAMANOUCHI, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=d2b235f8';
+import { registrarActo } from '../motor/escenario.js?v=959e3741';
+import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=959e3741';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=959e3741';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=959e3741';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena, perfilDe, altura } from '../motor/dibujo.js?v=959e3741';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=959e3741';
+import { tenderRuta } from '../motor/ruta.js?v=959e3741';
+import { LUGARES, RUTA_A_YAMANOUCHI, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=959e3741';
 /* 🚨 LO ÚNICO QUE ESTE ACTO IMPORTA DE OTRO ACTO, y es a propósito: son los
    cuatro números con los que acaba el acto 5, o sea el fotograma del que este
    arranca (ley 5). Escritos a mano aquí serían el mismo número en dos archivos
    —regla 1 del repositorio—, y el día que alguien mueva la tabla o cambie lo
    ancho del onsen, el acto 6 abriría con las cosas en otro sitio que el 5. */
-import { HUNDIDO_U, ONSEN_ANCHO_U, X_TABLA_CAE, X_ROCA_PARA, FONDO_AL_FINAL } from './05-kusatsu.js?v=d2b235f8';
+import { HUNDIDO_U, ONSEN_ANCHO_U, X_TABLA_CAE, X_ROCA_PARA, FONDO_AL_FINAL } from './05-kusatsu.js?v=959e3741';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -177,7 +177,12 @@ const F = {
      nosotros». O sea que el mono deja de ser algo que llega y pasa a ser algo
      que YA ESTABA y que de pronto se mueve — que da bastante más susto.
      El salto es un solo movimiento: sale del agua, crece y baja hacia delante. */
-  monoSalta:  [0.574, 0.642],
+  /* 🔁 Y EL SALTO SE ALARGA, porque ahora el muneco reacciona A MITAD DE LA
+     BAJADA en vez de al final. Kiko: «el muñeco se deberia asustar antes, ya
+     segun esta a mitad de la ladera el mono… y luego, cuando el mono este casi
+     abajo, el muñeco casi que esta en el coche». O sea que las dos cosas dejan
+     de ir en fila y pasan a ir a la vez: es una persecucion, no dos turnos. */
+  monoSalta:  [0.574, 0.706],
 
   /* D · el susto y la huida.
      🚨 TRES VENTANAS QUE SE RELEVAN EN EL MISMO NÚMERO, no solapadas. Es el
@@ -186,7 +191,7 @@ const F = {
      coordenada y el muñeco despegaba sin haber llegado a la roca. Aquí el
      respingo, la salida del agua y la carrera mandan todos sobre su `y` o su
      `x`, así que casan exactos. */
-  susto:      [0.642, 0.670],
+  susto:      [0.616, 0.644],
   /* 🚨 LA SALIDA DEL AGUA Y LA CARRERA SE SOLAPAN A PROPÓSITO, y esto se vio en
      la captura: con la subida terminando antes de que empezara la carrera había
      medio golpe entero con el muñeco DE PIE DENTRO DEL ONSEN, tapado de cintura
@@ -196,9 +201,9 @@ const F = {
      DISTINTAS —una sobre la altura y otra sobre la posición—, que es justo
      cuando el solape es bueno. Lo que no puede solaparse son dos ventanas que
      manden sobre lo mismo, que es lo que costó el golpe de la roca del acto 5. */
-  saleDelAgua:[0.670, 0.738],
-  corre:      [0.686, 0.814],
-  seMete:     [0.814, 0.828],
+  saleDelAgua:[0.644, 0.700],
+  corre:      [0.660, 0.788],
+  seMete:     [0.788, 0.802],
 
   /* 🔁 Y AQUÍ YA NO SE VA NADIE. En la primera versión el onsen y el mono se
      deslizaban hacia la derecha mientras él corría, que es lo que decía el
@@ -232,16 +237,27 @@ const F = {
      el coche se mueva hacia la derecha». O sea que no hay ventana de arranque:
      hay UNA sola cosa moviendose —el mundo— y el coche va con el hasta que
      llega al centro, donde se queda. Se ve en el codigo del coche, mas abajo. */
-  viaja:      [0.842, 1.000],
+  viaja:      [0.818, 1.000],
 
   /* 🚨 LOS ÁRBOLES SE APAGAN UNO A UNO, y esta ventana es la del acto entero
      que más despacio va a propósito: son nueve ranuras en pantalla y pico, o
      sea que cada árbol tiene su momento. Con la mitad de sitio se lee como un
      fundido, que es justo lo que Kiko NO quería. */
-  pelaBosque: [0.880, 0.952],
-  mapa2Entra: [0.890, 0.932],
-  ruta2:      [0.934, 0.990],
-  viaje2Dent: [0.942, 0.976]
+  pelaBosque: [0.850, 0.928],
+  mapa2Entra: [0.862, 0.908],
+  ruta2:      [0.910, 0.990],
+  viaje2Dent: [0.918, 0.962],
+
+  /* 🏔️ Y EL FONDO DE MATSUMOTO. Kiko: «la montaña grande que hay al fondo se
+     deberia quedar segun se va desplegando a Matsumoto, porque Matsumoto tiene
+     vista de los Alpes japoneses… segun nos vamos desplazando en la ruta a
+     Matsumoto, que vayan apareciendo mas montañas».
+     Las dos filas de sierra entran POR LA DERECHA con el viaje, a velocidades
+     distintas: la de delante mas deprisa que la de detras. Eso es paralaje, y
+     es lo unico que hace que un fondo parezca profundo cuando se mueve. */
+  sierras:    [0.826, 0.960],
+  /* 🏯 Y el castillo, al llegar. Igual que el hotel: llega, no aparece. */
+  castillo:   [0.906, 0.972]
 };
 
 /* --------------------------------------------------------------------------
@@ -270,7 +286,14 @@ const ZOOM_FIN = 0.60;
    📐 En un portátil se ve algo de cielo a la derecha del pico: la unidad es
    `vmin` y la pantalla mide 160 unidades en vez de 100. Se compone para el
    móvil, que es la prioridad (NORMAS § 1). */
-const X_PICO = 20;
+/* 🔁 LA MONTAÑA GRANDE YA NO TIENE SITIO FIJO: SE CALCULA.
+   Su pico esta dibujado en el borde derecho de su caja, asi que para que caiga
+   en el borde de la pantalla basta con poner su costado derecho ahi. Y donde
+   esta el borde depende del ZOOM y del ancho de la pantalla, no de un numero:
+   escrito a mano para el zoom de la ronda anterior, al alejar la camara se
+   quedo corto y dejo un hueco de papel entre la montaña y el canto. Lo vio
+   Kiko. Lo unico que hace falta escribir es lo ancha que es la pieza. */
+const PICO_ANCHO_U = 96;
 
 /* La poza de los monos, al pie de la montaña. Va entre la roca que dejó el acto
    5 —en +25 y 16u de ancho, o sea que llega hasta +33— y el borde derecho. */
@@ -374,6 +397,16 @@ const ENTRADA_MONTE = 96;
    descuadrado. */
 const X_HOTEL = 0;
 
+/* 🏯 Donde se planta el castillo de Matsumoto. A la izquierda del medio: a la
+   derecha estan los Alpes entrando, y la estampa de Matsumoto es el castillo
+   con la cordillera detras y a un lado, no delante. */
+/* 🔁 A la izquierda del todo, y no en -16: el coche se queda en el centro
+   rodando, y el castillo se pinta DESPUES que el, asi que centrado se lo comia
+   entero. Se vio en la captura. Aqui el coche queda a su derecha, delante, que
+   ademas es la estampa: el castillo al fondo y nosotros llegando. */
+const X_CASTILLO = -40;
+const ENTRADA_CASTILLO = 130;
+
 /* 🚨 CUÁNTOS ÁRBOLES HAY, Y POR QUÉ ESTE NÚMERO ESTÁ AQUÍ.
    Es RANURAS, de 03-al-coche.js: con --mezcla a 12 están los nueve árboles de
    bosque-nevado.svg encendidos, y bajándola se van apagando de uno en uno por
@@ -406,7 +439,8 @@ function escenaHeredada(altoPantalla) {
      tocar una línea de este archivo. */
   limpiarPiezas('monigote', 'tabla', 'roca', 'onsen', 'onsen-fondo',
                 'mono', 'coche', 'pico', 'poza', 'poza-fondo',
-                'yorozuya', 'monte-mono');
+                'yorozuya', 'monte-mono', 'sierra', 'sierra-lejos',
+                'matsumoto');
   variable('--halo', 0);
   variable('--luces', 0);
   variable('--puertas', 0);
@@ -635,9 +669,40 @@ export function montarActoYamanouchi() {
          Las dos aparecen por opacidad DENTRO de la ventana del zoom, no
          después: son lo que el zoom out está enseñando. Si entraran cuando la
          cámara ya se ha parado, se leería como que alguien las ha puesto ahí. */
-      const opPico = suave(tramo(p, F.entraPico[0], F.entraPico[1]));
-      const xPico = X_PICO + arrastre * 0.16;
-      colocar('pico', { x: xPico, y: 0, op: xPico < 200 ? opPico : 0, escala: 1 });
+      /* 🔁 LA MONTAÑA GRANDE SE QUEDA, Y AHORA LLEGA AL BORDE.
+         Dos cosas de la cuarta ronda de Kiko:
+
+         🚨 «Hay un hueco entre la mitad de la montaña y el borde derecho.» Lo
+         había: la montaña se colocó para que su pico cayera en el borde de un
+         móvil con el zoom al 0,74, y al alejar el zoom al 0,60 la pantalla se
+         ensanchó y la montaña se quedó corta. Ahora su sitio SE CALCULA del
+         zoom en vez de estar escrito a mano, así que el pico cae en el borde
+         con cualquier zoom y en cualquier pantalla.
+
+         🚨 «La montaña grande se debería quedar según se va desplegando a
+         Matsumoto, porque Matsumoto tiene vista de los Alpes japoneses.» Así
+         que deja de irse con el arrastre: se queda donde está mientras todo lo
+         demás se va, y es la primera de las montañas del fondo. */
+      const bordeU = (window.innerWidth / unidad) / 2 / zoom;
+      const xPico = bordeU - PICO_ANCHO_U / 2;
+      colocar('pico', { x: xPico, y: 0, op: 1, escala: 1 });
+
+      /* 🏔️ Y LOS ALPES, QUE VAN ENTRANDO SEGÚN SE VIAJA.
+         «Que vayan apareciendo más montañas, para que dé el efecto de que se
+         ven las montañas al fondo.» Entran por la derecha con el viaje y a
+         velocidades distintas: la fila de delante más deprisa que la de detrás.
+         🚨 Eso es paralaje, y es lo único que hace que un fondo parezca
+         profundo cuando se mueve. Con las dos a la misma velocidad serían una
+         sola valla pintada. */
+      const tSierras = suave(tramo(p, F.sierras[0], F.sierras[1]));
+      colocar('sierra', {
+        x: 130 * (1 - tSierras),
+        y: 0, op: 1, escala: 1
+      });
+      colocar('sierra-lejos', {
+        x: 80 * (1 - tSierras),
+        y: 0, op: 1, escala: 1
+      });
 
       /* 🔁 LA MONTAÑA DE LOS MONOS YA NO ENTRA POR OPACIDAD: LLEGA ANDANDO.
          Kiko, segunda ronda: «aparece como también de la nada, ya con el mono; y
@@ -927,6 +992,22 @@ export function montarActoYamanouchi() {
         x: xHotel,
         y: 0,
         op: xHotel < 190 ? 1 : 0,
+        escala: 1
+      });
+
+      /* 🏯 Y AL FINAL DEL TODO, EL CASTILLO DE MATSUMOTO.
+         Kiko: «cuando estoy llegando a Matsumoto, igual que como con el hotel
+         anterior, que ahora en este caso muestre el castillo de Matsumoto y las
+         montañas que ya están al fondo».
+         Así que hace lo mismo que el hotel: **llega por la derecha** con el
+         mundo y frena. Ni un fundido — es la regla del acto.
+         🚨 Y se queda: es el último fotograma de la película por ahora, y el
+         acto 7 empieza justo ahí, haciendo zoom a la estación. */
+      const tCastillo = suave(tramo(p, F.castillo[0], F.castillo[1]));
+      colocar('matsumoto', {
+        x: X_CASTILLO + ENTRADA_CASTILLO * (1 - tCastillo),
+        y: 0,
+        op: tCastillo > 0 ? 1 : 0,
         escala: 1
       });
 

@@ -129,6 +129,19 @@
   /* 稲田石, el granito gris claro de la bañera de verdad */
   --c-inada: #c9ccc9;
 
+  /* 🏯 松本城 · el castillo de Matsumoto, final del acto 6.
+     🚨 LOS COLORES SON UN DATO Y ESTÁN VERIFICADOS: las paredes llevan los dos
+     tercios de abajo en tabla lacada NEGRA (下見板張) y el tercio de arriba en
+     estuco BLANCO (白漆喰). Por eso lo llaman 烏城, el castillo cuervo. Y el
+     único color de todo el edificio es el BERMELLÓN (朱塗) de la galería del
+     月見櫓, el torreón de la luna: es lo que lo hace reconocible de un vistazo.
+     Ver la cabecera de arte/matsumoto.svg. */
+  --c-castillo-negro: #2b2f36;
+  --c-castillo-blanco: #f2f2ee;
+  --c-castillo-teja: #59606b;
+  --c-bermellon: #c0392b;
+  --c-silleria: #9aa3a9;
+
   --c-mono-pelo: #a8998a;
   --c-mono-pelo-hondo: #8a7c6e;
   --c-mono-cara: #d2705f;
@@ -308,6 +321,30 @@
    hay sombras ni degradados (NORMAS § 1), así que la profundidad solo se puede
    hacer con el peso del trazo. Con el trazo normal, la montaña se ponía a la
    misma distancia que el coche y la escena se quedaba plana. */
+/* --- Los Alpes japoneses, al fondo de Matsumoto (acto 6) ---
+   🚨 LA DE DETRÁS ES EL MISMO DIBUJO MÁS PÁLIDO, y eso es todo lo que hay para
+   decir «está más lejos» en una película sin sombras ni degradados. Si algún
+   día se le pone trazo a la de atrás, las dos filas se ponen a la misma
+   distancia y la cordillera se convierte en una valla. */
+.s-roca  { fill: var(--c-monte-lejos); stroke: var(--c-nieve-trazo); stroke-width: 1.1; }
+.s-nieve { fill: #fbfdff; stroke: none; }
+.a-sierra-lejos .s-roca  { fill: #f6fafd; stroke: #cfe0ec; stroke-width: .9; }
+.a-sierra-lejos .s-nieve { fill: #ffffff; }
+
+/* --- 松本城 · el castillo de Matsumoto (acto 6) --- */
+.ma-tejado  { fill: var(--c-castillo-teja); stroke: var(--trazo); stroke-width: 1.8; stroke-linejoin: round; }
+.ma-negro   { fill: var(--c-castillo-negro); stroke: var(--trazo); stroke-width: 1.4; }
+.ma-blanco  { fill: var(--c-castillo-blanco); stroke: var(--trazo); stroke-width: 1.4; }
+.ma-hafu    { fill: var(--c-castillo-blanco); stroke: var(--trazo); stroke-width: 1.6; }
+.ma-vano    { fill: var(--c-castillo-blanco); }
+.ma-shachi  { fill: var(--c-llave); }
+/* 🚨 El único color del castillo, y no es decoración: la galería del 月見櫓 va
+   laqueada en bermellón por sus tres lados. Sin esto no se le reconoce. */
+.ma-roja    { fill: var(--c-bermellon); stroke: var(--trazo); stroke-width: 1.2; }
+.ma-baranda { fill: none; stroke: var(--c-bermellon); stroke-width: 3.4; stroke-linecap: round; }
+.ma-piedra  { fill: var(--c-silleria); stroke: var(--trazo); stroke-width: 1.6; }
+.ma-nieve   { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 1.4; }
+
 .p-roca  { fill: var(--c-monte-lejos); stroke: var(--c-nieve-trazo); stroke-width: 1.1; }
 .p-nieve { fill: var(--c-nieve-manto); stroke: none; }
 .p-veta  { fill: none; stroke: var(--c-nieve-trazo); stroke-width: 1; stroke-linecap: round; opacity: .55; }

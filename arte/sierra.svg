@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 200" preserveAspectRatio="none" class="a-sierra" aria-hidden="true" focusable="false">
+  <!-- LOS ALPES JAPONESES · el fondo del final del acto 6.
+       Kiko: «la montaña grande que hay al fondo se deberia quedar segun se va
+       desplegando a Matsumoto, porque Matsumoto tiene vista de los Alpes
+       japoneses. Incluso a la izquierda de esta, como mas pequeña y mas al
+       fondo, para que parezca que esta como mas lejos. Segun nos vamos
+       desplazando en la ruta a Matsumoto, que vayan apareciendo mas montañas».
+
+       ✅ Y es verdad: Matsumoto esta al pie de los 北アルプス y su castillo se
+       fotografia siempre con la cordillera detras.
+
+       🚨 ESTO ES UNA CORDILLERA, NO UNA MONTAÑA, y por eso es un solo dibujo con
+       cinco cimas en vez de cinco piezas. Lo que hace que una cordillera parezca
+       lejos no es que sea pequeña: es que sus cimas se solapan y no se sabe cual
+       esta delante. Cinco picos de alturas distintas en un trazado y ya esta.
+
+       🚨 SE USA DOS VECES, con dos piezas distintas y a dos tamaños: una mas
+       grande y menos palida delante, y otra mas pequeña y mas palida detras. Lo
+       unico que cambia entre las dos es el CSS. En un dibujo sin sombras ni
+       degradados, eso —tamaño y palidez— es lo unico que hay para decir «lejos».
+
+       📄 En los comentarios de un `.svg` las variables de CSS se nombran
+       entrecomilladas y sin sus dos guiones: dos guiones seguidos son XML
+       invalido y estos archivos se abren en un editor vectorial. -->
+
+  <path class="s-roca" d="M0 200
+    L46 140 L92 168 L150 88 L196 128 L244 72 L300 118
+    L352 60 L410 116 L462 84 L518 132 L562 104 L600 148
+    L600 200 Z"/>
+
+  <!-- Las cumbres nevadas: solo las tres mas altas, que es lo que pasa de
+       verdad. Nevarlas todas las aplana y deja de haber cordillera. -->
+  <path class="s-nieve" d="M150 88 L196 128 L172 132 L150 118 L128 130 Z"/>
+  <path class="s-nieve" d="M244 72 L300 118 L272 122 L244 104 L216 120 Z"/>
+  <path class="s-nieve" d="M352 60 L410 116 L380 118 L352 96 L322 114 Z"/>
+</svg>

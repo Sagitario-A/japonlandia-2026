@@ -23,18 +23,18 @@
    podría verlas, la URL no cambiaría nunca y una publicación serviría el dibujo
    viejo durante los diez minutos de caché de GitHub Pages. */
 const PIEZAS = [
-  ['tren', 'arte/tren.svg?v=d2b235f8'],
-  ['cuatro', 'arte/cuatro.svg?v=d2b235f8'],
-  ['mostrador', 'arte/mostrador.svg?v=d2b235f8'],
-  ['llave', 'arte/llave.svg?v=d2b235f8'],
-  ['coche', 'arte/coche.svg?v=d2b235f8'],
+  ['tren', 'arte/tren.svg?v=959e3741'],
+  ['cuatro', 'arte/cuatro.svg?v=959e3741'],
+  ['mostrador', 'arte/mostrador.svg?v=959e3741'],
+  ['llave', 'arte/llave.svg?v=959e3741'],
+  ['coche', 'arte/coche.svg?v=959e3741'],
   /* 🚨 EL ACTO 4 EN ADELANTE. Van aquí y no en el acto por lo de siempre: el
      monigote sigue puesto en el acto 5 («el muñequito sigue ahí esquiando») y
      en el 6. Y estando en esta lista, apagarDibujo() los apaga: sin eso, al
      volver del acto 4 al 3 la montaña se quedaba flotando sobre el bosque,
      porque el acto 3 no sabe que existen.
      El tercer campo dice de qué trazado sale el perfil que se muestrea. */
-  ['monte', 'arte/monte.svg?v=d2b235f8', '.mo-perfil'],
+  ['monte', 'arte/monte.svg?v=959e3741', '.mo-perfil'],
   /* 🚨 LA TABLA ES UNA PIEZA APARTE DESDE EL ACTO 5, y hasta entonces vivía
      dentro del muñeco. La partió Kiko al describir el acto 5: «se cae de la
      tabla y sube hacia arriba en diagonal». A partir del golpe cada uno va por
@@ -42,7 +42,7 @@ const PIEZAS = [
      mueven por separado no pueden ser el mismo dibujo. Comparten `viewBox` y
      tamaño, así que mientras van pegadas basta con darles la misma x, la misma
      y y el mismo giro: ver arte/tabla.svg. */
-  ['tabla', 'arte/tabla.svg?v=d2b235f8'],
+  ['tabla', 'arte/tabla.svg?v=959e3741'],
   /* 🚨 EL ACTO 5. Y EL ORDEN DE ESTAS TRES NO ES NEGOCIABLE: el onsen está
      partido en dos mitades con el muñeco EN MEDIO, que es lo que hace que se le
      vea metido en el agua y no sentado delante de un barreño. Aquí solo se
@@ -50,11 +50,18 @@ const PIEZAS = [
   /* 🚨 EL ACTO 6 · LA MONTAÑA VA LA PRIMERA DE TODAS, porque es el fondo del
      fondo: más lejos incluso que el bosque. Kiko: «a la derecha una especie de
      montaña que se vea como en la mitad». */
-  ['pico', 'arte/pico.svg?v=d2b235f8'],
-  ['roca', 'arte/roca.svg?v=d2b235f8'],
-  ['onsen-fondo', 'arte/onsen-fondo.svg?v=d2b235f8'],
-  ['monigote', 'arte/monigote.svg?v=d2b235f8'],
-  ['onsen', 'arte/onsen.svg?v=d2b235f8'],
+  /* 🚨 Y DETRÁS DE LA MONTAÑA GRANDE, LOS ALPES. Kiko: «Matsumoto tiene vista
+     de los Alpes japoneses… según nos vamos desplazando en la ruta a Matsumoto,
+     que vayan apareciendo más montañas». Son el MISMO dibujo dos veces, a dos
+     tamaños y dos palideces: la de lejos va la primera de toda la lista, que es
+     el fondo del fondo. */
+  ['sierra-lejos', 'arte/sierra-lejos.svg?v=959e3741'],
+  ['sierra', 'arte/sierra.svg?v=959e3741'],
+  ['pico', 'arte/pico.svg?v=959e3741'],
+  ['roca', 'arte/roca.svg?v=959e3741'],
+  ['onsen-fondo', 'arte/onsen-fondo.svg?v=959e3741'],
+  ['monigote', 'arte/monigote.svg?v=959e3741'],
+  ['onsen', 'arte/onsen.svg?v=959e3741'],
   /* 🚨 EL ACTO 6. El mono de Jigokudani va DESPUÉS del onsen en esta lista y en
      el HTML, porque entra por delante de todo: se acerca al onsen por la
      derecha, y quien está dentro del agua es el muñeco. Si fuera por detrás, el
@@ -66,22 +73,25 @@ const PIEZAS = [
   /* 🚨 EL HOTEL, Y VA ENTRE EL BOSQUE Y EL ONSEN. Kiko: «que quede detrás del
      onsen con el muñeco y delante de los árboles». Esa posición ES la escena:
      hace que parezca que nos estamos bañando enfrente del edificio. */
-  ['yorozuya', 'arte/yorozuya.svg?v=d2b235f8'],
+  ['yorozuya', 'arte/yorozuya.svg?v=959e3741'],
+  /* 🏯 Y EL CASTILLO DE MATSUMOTO, en el mismo sitio de la lista que el hotel y
+     por lo mismo: es el remate del viaje, delante de los árboles. */
+  ['matsumoto', 'arte/matsumoto.svg?v=959e3741'],
   /* 🚨 LA MONTAÑA DE LOS MONOS, y va DELANTE de los árboles: «que esté como
      traída al frente, de hecho puede estar delante de los árboles». El tercer
      campo dice de qué trazado sale el perfil que se muestrea: el mono BAJA por
      esta ladera, así que su curva se mide del dibujo (ley 18), igual que la
      montaña del acto 4 con el monigote. */
-  ['monte-mono', 'arte/monte-mono.svg?v=d2b235f8', '.mm-perfil'],
-  ['poza-fondo', 'arte/poza-fondo.svg?v=d2b235f8'],
-  ['mono', 'arte/mono.svg?v=d2b235f8'],
-  ['poza', 'arte/poza.svg?v=d2b235f8']
+  ['monte-mono', 'arte/monte-mono.svg?v=959e3741', '.mm-perfil'],
+  ['poza-fondo', 'arte/poza-fondo.svg?v=959e3741'],
+  ['mono', 'arte/mono.svg?v=959e3741'],
+  ['poza', 'arte/poza.svg?v=959e3741']
 ];
 
 const BANDAS = [
-  ['ciudad', 'arte/ciudad.svg?v=d2b235f8'],
-  ['bosque', 'arte/bosque.svg?v=d2b235f8'],
-  ['bosque-nevado', 'arte/bosque-nevado.svg?v=d2b235f8']
+  ['ciudad', 'arte/ciudad.svg?v=959e3741'],
+  ['bosque', 'arte/bosque.svg?v=959e3741'],
+  ['bosque-nevado', 'arte/bosque-nevado.svg?v=959e3741']
 ];
 
 /* Cuántas veces se repite cada banda en fila. Una copia mide 118vmin de ancho,

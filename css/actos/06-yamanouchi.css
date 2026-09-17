@@ -109,6 +109,37 @@
   aspect-ratio: auto;
 }
 
+/* 🏔️ Los Alpes japoneses, al fondo del final.
+   🚨 LAS DOS FILAS SON EL MISMO DIBUJO Y SOLO CAMBIAN DE TAMAÑO. La de atrás es
+   más pequeña y más baja —y en color.css, más pálida—, que es lo único que dice
+   «está más lejos» en una película sin sombras ni degradados.
+   Y las dos van DETRÁS del bosque, como la montaña grande: son el fondo. */
+[data-pieza='sierra'],
+[data-pieza='sierra-lejos'] {
+  aspect-ratio: auto;
+  z-index: -1;
+}
+[data-pieza='sierra'] {
+  width: calc(150 * var(--u));
+  height: min(26svh, calc(38 * var(--u)));
+}
+[data-pieza='sierra-lejos'] {
+  width: calc(190 * var(--u));
+  height: min(18svh, calc(27 * var(--u)));
+}
+
+/* 🏯 El castillo de Matsumoto.
+   🚨 MÁS PEQUEÑO QUE EL HOTEL, y eso es deliberado: el hotel es donde dormimos y
+   el muñeco se baña delante; el castillo es lo que se ve al llegar al final del
+   viaje, con la cordillera detrás. A 62 unidades cabe con los Alpes a la vista,
+   que es la estampa de Matsumoto. */
+[data-pieza='matsumoto'] {
+  /* 🔁 52 y no 62: con 62 el castillo subia hasta el dato del tramo y se lo
+     comia. Se vio en la captura. */
+  width: calc(52 * var(--u));
+  aspect-ratio: 520 / 330;
+}
+
 /* ==========================================================================
    2 · El texto del acto
    --------------------------------------------------------------------------
@@ -141,7 +172,16 @@
   pointer-events: none;
 }
 #yamanouchi .viaje[data-viaje='uno'] { opacity: var(--p-viaje-1, 0); }
-#yamanouchi .viaje[data-viaje='dos'] { opacity: var(--p-viaje-2, 0); }
+/* 🚨 EL SEGUNDO VA MÁS ARRIBA QUE EL PRIMERO, y no es un capricho: cuando sale
+   este, debajo está el CASTILLO DE MATSUMOTO, que es la pieza más alta de todo
+   el acto. A la altura del primero, el dato le caía encima de los tejados y las
+   dos cosas se hacían ilegibles. Se vio en la captura.
+   Y va atado a `--banda-alto` como el otro, no a un número suelto: el día que
+   el bosque cambie de alto, los dos se mueven con él. */
+#yamanouchi .viaje[data-viaje='dos'] {
+  top: calc(100% - var(--banda-alto) - 22svh);
+  opacity: var(--p-viaje-2, 0);
+}
 
 /* El panel se queda ARRIBA, igual que en el acto 5 y por lo mismo: abajo está
    el onsen con el muñeco dentro, y después el mono, la huida y el coche. Todo
