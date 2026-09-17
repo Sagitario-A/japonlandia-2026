@@ -93,7 +93,7 @@
    Y va con un `z-index` en medio: DELANTE de las bandas del bosque y DETRÁS del
    onsen. Como el HTML ya lo pone ahí, no hace falta tocarle la capa. */
 [data-pieza='yorozuya'] {
-  width: calc(78 * var(--u));
+  width: calc(68 * var(--u));
   aspect-ratio: 600 / 330;
 }
 
@@ -104,7 +104,7 @@
    tamaño y el `viewBox` del dibujo son la misma cosa: si se toca uno, la tabla
    de alturas que muestrea dibujo.js deja de cuadrar (ley 18). */
 [data-pieza='monte-mono'] {
-  width: calc(54 * var(--u));
+  width: calc(56 * var(--u));
   height: min(30svh, calc(40 * var(--u)));
   aspect-ratio: auto;
 }

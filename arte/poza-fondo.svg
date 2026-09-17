@@ -1,38 +1,30 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150" class="a-poza-fondo" aria-hidden="true" focusable="false">
-  <!-- LA POZA DE LOS MONOS · la mitad de ATRAS. Acto 6.
-       Kiko: «una especie de mini base o de mini onsen, tipico de onsen de
-       montania donde estan los monos estos que se bañan en la nieve, y que este
-       el mono ahi dentro del agua».
+  <!-- EL CHARCO DE LA CIMA · la mitad de ATRAS. Acto 6.
 
-       🚨 POR QUE ES UNA PIEZA NUEVA Y NO EL ONSEN DEL ACTO 5 MAS PEQUEÑO.
-       Porque el onsen del acto 5 esta EN LA PANTALLA A LA VEZ QUE ESTE: el
-       muñeco sigue metido en el suyo mientras el mono esta en este. Una pieza
-       es un elemento del DOM y no puede estar en dos sitios. Y ademas no
-       tendrian que parecerse: el del muñeco es una poza de pueblo, con su borde
-       de piedra labrada; esta es una charca de montania entre rocas sueltas.
+       🔁 ESTO ERA UN ONSEN CON BORDE DE PIEDRAS Y AHORA ES UN CHARCO, y lo
+       cambio Kiko en la segunda ronda: «quita el resto del onsen antiguo ese,
+       que no tiene nada que ver. Que la base sea el charco, no ese que existe».
+       Tenia razon: con su borde de rocas era una version pequeña del onsen del
+       muñeco, y entonces habia DOS onsen iguales en la misma pantalla y ninguno
+       de los dos contaba nada. Un charco de agua en el llano de la cima si: es
+       lo que hay de verdad donde se bañan estos monos.
 
-       🚨 VA PARTIDA EN DOS, igual que la del acto 5 y por el mismo motivo: para
-       que se vea al mono DENTRO del agua y no sentado delante de un barreño.
-       Esta mitad va DETRAS de el; arte/poza.svg va delante. Las dos comparten
-       `viewBox`, caja y posicion, y SI SE TOCA UNA SE TOCA LA OTRA.
-       Se parten por el eje del agua, y=104, el mismo que la del acto 5: asi la
-       cuenta de cuanto se hunde el que se meta dentro es la misma para las dos.
+       🚨 ASI QUE AQUI NO HAY BORDE: solo agua. La cima llana de
+       arte/monte-mono.svg hace de orilla, y por eso el charco se coloca con su
+       altura sacada del perfil de la montaña — es literalmente la base de la
+       cima.
+
+       🚨 VA PARTIDO EN DOS, igual que el onsen del acto 5 y por el mismo motivo:
+       para que se vea al mono DENTRO del agua. Esta mitad va DETRAS de el;
+       arte/poza.svg va delante. Las dos comparten `viewBox`, caja y posicion, y
+       SI SE TOCA UNA SE TOCA LA OTRA. Se parten por el eje del agua, y=104, el
+       mismo que la del acto 5: asi la cuenta de cuanto se hunde el que se meta
+       dentro es la misma para las dos.
 
        📄 En los comentarios de un `.svg` las variables de CSS se nombran
        entrecomilladas y sin sus dos guiones: dos guiones seguidos son XML
        invalido y estos archivos se abren en un editor vectorial. -->
 
-  <!-- El agua, mitad de atras: la elipse recortada por su eje -->
+  <!-- El agua, mitad de atras: la elipse recortada por su eje. Y nada mas. -->
   <path class="o-agua" d="M42 104 A108 34 0 0 1 258 104 Z"/>
-
-  <!-- Las rocas del borde de atras. Sueltas y desiguales, que es lo que la
-       separa de la poza labrada del acto 5: aqui no ha puesto las piedras
-       nadie. -->
-  <ellipse class="z-roca" cx="62" cy="100" rx="26" ry="14"/>
-  <ellipse class="z-roca" cx="132" cy="88" rx="30" ry="16"/>
-  <ellipse class="z-roca" cx="208" cy="92" rx="26" ry="15"/>
-  <ellipse class="z-roca" cx="256" cy="102" rx="20" ry="12"/>
-  <!-- Y su caperuza de nieve: lleva nevando cuatro actos -->
-  <path class="z-nieve" d="M104 80 q28 -14 56 0 q-14 7 -28 7 q-14 0 -28 -7 z"/>
-  <path class="z-nieve" d="M186 86 q22 -11 44 0 q-11 6 -22 6 q-11 0 -22 -6 z"/>
 </svg>

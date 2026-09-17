@@ -202,7 +202,12 @@ html:not(.anim) .dibujo { display: none; }
      exactamente la pantalla pasa a medir menos: el bosque se quedaba pintado
      solo en la franja central y a los lados salía el papel en blanco.
 
-     40u a cada lado es lo que hace falta para el zoom al que llega el acto 6, y
+     🔁 100u A CADA LADO DESDE LA SEGUNDA RONDA, y con una copia de banda mas.
+     Con 40 y tres copias el zoom no podia bajar de 0,68, y Kiko lo pidio mas
+     lejos —«hace el zoom out un poquito mas lejos, para que el coche no se
+     pegue con el hotel»—. La cuenta que manda esta en 06-yamanouchi.js.
+     Lo que habia antes, y por que:
+     40u a cada lado era lo que hacia falta para el zoom de la primera ronda, y
      no es un número redondo: la fila son tres copias de 118,2u y se desplaza
      hasta una copia entera, así que el borde izquierdo de la fila tiene que
      estar por delante del borde visible con el zoom puesto Y el derecho por
@@ -211,8 +216,8 @@ html:not(.anim) .dibujo { display: none; }
      🚨 A tamaño natural esto NO cambia nada: lo que sobra queda fuera de la
      pantalla. Y si algún día el zoom baja más, hace falta una copia más de
      banda, no más caja. */
-  left: calc(-40 * var(--u));
-  right: calc(-40 * var(--u));
+  left: calc(-100 * var(--u));
+  right: calc(-100 * var(--u));
   /* 🚨 LA BANDA ACABA EXACTAMENTE EN LA LÍNEA DEL SUELO. Los tres SVG están
      recortados a ras de su propia línea de carretera —viewBox 600×274 y no
      600×300—, así que el coche y los árboles se apoyan en la MISMA línea y por

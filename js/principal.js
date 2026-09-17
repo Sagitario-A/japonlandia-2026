@@ -5,20 +5,20 @@
    Todo lo que este archivo hace es coser: la lógica vive en motor/ y actos/.
    ============================================================================= */
 
-import { registrarGlobal, arrancar } from './motor/escenario.js?v=a17f41b7';
-import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=a17f41b7';
-import { desvanecerDibujo } from './motor/dibujo.js?v=a17f41b7';
-import { nevar } from './motor/nieve.js?v=a17f41b7';
+import { registrarGlobal, arrancar } from './motor/escenario.js?v=d2b235f8';
+import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=d2b235f8';
+import { desvanecerDibujo } from './motor/dibujo.js?v=d2b235f8';
+import { nevar } from './motor/nieve.js?v=d2b235f8';
 /* 🚨 `tope` lo usa el desvanecido del final, ahi abajo. Lo quite una vez al
    limpiar codigo muerto y el final de la pelicula dejo de ejecutarse entero,
    sin que saltara ninguna comprobacion: ver el aviso de capturas-web.js. */
-import { tope } from './motor/util.js?v=a17f41b7';
-import { montarActoVuelo } from './actos/01-vuelo.js?v=a17f41b7';
-import { montarActoLlegada } from './actos/02-llegada.js?v=a17f41b7';
-import { montarActoAlCoche } from './actos/03-al-coche.js?v=a17f41b7';
-import { montarActoTakaragawa } from './actos/04-takaragawa.js?v=a17f41b7';
-import { montarActoKusatsu } from './actos/05-kusatsu.js?v=a17f41b7';
-import { montarActoYamanouchi } from './actos/06-yamanouchi.js?v=a17f41b7';
+import { tope } from './motor/util.js?v=d2b235f8';
+import { montarActoVuelo } from './actos/01-vuelo.js?v=d2b235f8';
+import { montarActoLlegada } from './actos/02-llegada.js?v=d2b235f8';
+import { montarActoAlCoche } from './actos/03-al-coche.js?v=d2b235f8';
+import { montarActoTakaragawa } from './actos/04-takaragawa.js?v=d2b235f8';
+import { montarActoKusatsu } from './actos/05-kusatsu.js?v=d2b235f8';
+import { montarActoYamanouchi } from './actos/06-yamanouchi.js?v=d2b235f8';
 
 /* --------------------------------------------------------------------------
    1 · El escenario y los actos

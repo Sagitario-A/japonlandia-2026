@@ -317,6 +317,9 @@
    termales— porque es la misma clase de agua; lo que cambia es el borde: allí
    son piedras labradas y aquí son rocas sueltas, que es lo que separa una poza
    de pueblo de una charca de montaña. */
+/* 🚨 La orilla del charco: es la nieve de la cima, y es lo que tapa al mono
+   hundido. Sin trazo por arriba, que ahi la tapa el agua. */
+.z-orilla { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 1.4; }
 .z-roca  { fill: var(--c-roca); stroke: var(--trazo); stroke-width: 1.6; }
 .z-nieve { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 1.4; }
 

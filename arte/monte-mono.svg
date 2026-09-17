@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" class="a-monte-mono" aria-hidden="true" focusable="false">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" preserveAspectRatio="none" class="a-monte-mono" aria-hidden="true" focusable="false">
   <!-- LA MONTAÑA DE LOS MONOS · acto 6, primera ronda de correcciones.
        Kiko: «justo delante de esa montaña grande, yo te diria de hacer una
        pequeña, pero que este como traida al frente, de hecho puede estar delante
@@ -34,28 +34,28 @@
   <!-- El cuerpo de la montaña. Es el mismo recorrido que `.mm-perfil`, cerrado
        por abajo para poder rellenarlo. 🚨 Si se toca uno, se toca el otro. -->
   <path class="mm-roca" d="M0 260
-    L34 236 L72 208 L104 176 L134 140 L162 110 L192 92
-    L300 92
-    L330 114 L352 150 L370 190 L386 224 L400 260 Z"/>
+    L34 236 L72 208 L104 176 L128 172 L164 140 L204 106
+    L320 106
+    L352 140 L372 180 L386 220 L400 260 Z"/>
 
   <!-- 🚨 EL PERFIL, ABIERTO Y SOLO EL BORDE DE ARRIBA. De aqui sale la tabla de
        alturas por la que baja el mono. Va de izquierda a derecha y NO se cierra:
        cerrarlo metería la base en el muestreo y el mono bajaría por el suelo. -->
   <path class="mm-perfil" fill="none" stroke="none" d="M0 260
-    L34 236 L72 208 L104 176 L134 140 L162 110 L192 92
-    L300 92
-    L330 114 L352 150 L370 190 L386 224 L400 260"/>
+    L34 236 L72 208 L104 176 L128 172 L164 140 L204 106
+    L320 106
+    L352 140 L372 180 L386 220 L400 260"/>
 
   <!-- El manto de nieve de la cima y de la ladera de arriba, que es lo que la
        ata con el resto de la pelicula: lleva nevando cuatro actos -->
-  <path class="mm-nieve" d="M134 140 L162 110 L192 92 L300 92 L330 114 L352 150
-    q-30 14 -60 6 q-40 -10 -78 -4 q-34 6 -50 -8 z"/>
+  <path class="mm-nieve" d="M128 172 L164 140 L204 106 L320 106 L352 140 L372 180
+    q-34 16 -64 6 q-46 -14 -92 -6 q-38 8 -56 -6 z"/>
 
   <!-- El repecho llano de la cima, donde se apoya la poza -->
-  <rect class="mm-repecho" x="188" y="88" width="116" height="8" rx="4"/>
+  <rect class="mm-repecho" x="200" y="102" width="124" height="8" rx="4"/>
 
   <!-- Dos vetas en la roca, que es lo unico que dice que es piedra y no un
        carton recortado. Lineas de pelo, como las costas del mapa. -->
-  <path class="mm-veta" d="M72 208 L112 186 L138 196"/>
-  <path class="mm-veta" d="M330 114 L342 152 L366 160"/>
+  <path class="mm-veta" d="M66 214 L106 190 L132 200"/>
+  <path class="mm-veta" d="M352 140 L360 176 L380 186"/>
 </svg>

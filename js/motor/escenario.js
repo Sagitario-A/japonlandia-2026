@@ -10,7 +10,7 @@
    ser lenta.
    ============================================================================= */
 
-import { tope } from './util.js?v=a17f41b7';
+import { tope } from './util.js?v=d2b235f8';
 
 const actos = [];
 const globales = [];
