@@ -1,111 +1,119 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 330" class="a-matsumoto" aria-hidden="true" focusable="false">
-  <!-- 松本城 · EL CASTILLO DE MATSUMOTO. Final del acto 6.
-       Kiko: «cuando estoy llegando a Matsumoto, igual que como con el hotel
-       anterior, que ahora en este caso muestre el castillo de Matsumoto y las
-       montañas que ya estan al fondo. Y el castillo de Matsumoto, pues bueno,
-       miralo para ver como es y demas. Investigalo para hacerlo bien».
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 470" class="a-matsumoto" aria-hidden="true" focusable="false">
+  <!-- 松本城 · EL 大天守 DE MATSUMOTO. Final del acto 6.
+       🔁 SEGUNDA VERSION. La primera dibujaba los CINCO edificios del conjunto
+       —la torre principal, el 乾小天守, el 渡櫓 y los dos torreones del este— y
+       Kiko la corrigio: «haz solamente la torre principal, y hazla mas detallada
+       y mas grande, que tenga mas presencia… y solo la plena torre y con mas
+       nivel de detalle, no tan minimalista como hemos acostumbrado a hacer los
+       dibujos».
 
-       ✅ INVESTIGADO Y VERIFICADO el 17 de septiembre de 2026 en la Wikipedia
+       🚨 Y TIENE RAZON POR UN MOTIVO QUE NO ES DE GUSTO: a 52 unidades de ancho,
+       cinco edificios son cinco manchas pequeñas y ninguna se lee. Una sola
+       torre al mismo ancho es el triple de alta, y entonces si se reconoce. En
+       una pelicula que se ve en un movil, el detalle no se consigue dibujando
+       mas cosas: se consigue dibujando MENOS cosas mas grandes.
+
+       ✅ LOS DATOS, verificados el 17 de septiembre de 2026 en la Wikipedia
        japonesa de 松本城 y en la ficha del Ayuntamiento de Matsumoto:
+         · 国宝 (Tesoro Nacional) desde 1936, reconfirmado en 1952.
+         · 層塔型 5重6階: CINCO tejados por fuera y seis plantas por dentro. Es
+           el tenshu de madera mas antiguo que se conserva de esa clase.
+         · 🚨 LOS COLORES SON UN DATO: los DOS TERCIOS DE ABAJO de cada cuerpo
+           van en 下見板張 —tabla lacada NEGRA— y el tercio de arriba en 白漆喰,
+           estuco blanco. Por eso lo llaman 烏城, el castillo cuervo.
+         · Los 破風 (frontones) van en blanco, y en la fachada hay de dos clases:
+           三角 (千鳥破風) y el CURVO (唐破風), que es el mismo tipo de fronton que
+           el hotel de Yamanouchi. Los dos estan dibujados aqui.
+         · En el caballete, dos 鯱 (shachi), los peces-dragon dorados.
 
-         · 国宝 (Tesoro Nacional) desde 1936, reconfirmado en 1952. Son CINCO
-           edificios declarados, no uno.
-         · 複合連結式天守: la torre principal (大天守) es 層塔型 5重6階 —cinco
-           tejados por fuera, seis plantas por dentro— y es el tenshu de madera
-           mas antiguo que se conserva de esa clase.
-         · Por el NORTE se le une el 乾小天守 (torre pequeña) a traves del 渡櫓,
-           un pasillo cubierto.
-         · Por el ESTE se le pegan el 辰巳附櫓 (入母屋造, dos alturas) y el
-           月見櫓, el torreon de contemplar la luna.
-         · 🚨 LOS COLORES SON UN DATO, NO UNA ELECCION: las paredes llevan los
-           DOS TERCIOS DE ABAJO en 下見板張 lacado NEGRO y el tercio de arriba en
-           白漆喰, estuco blanco. Por eso lo llaman 烏城, el castillo cuervo.
-           Los 破風 (frontones) van en blanco.
-         · 🚨 Y EL UNICO COLOR DE TODO EL EDIFICIO es el 朱塗 del 月見櫓: la
-           galeria del torreon de la luna lleva barandilla laqueada en BERMELLON
-           por sus tres lados. Es lo que lo hace reconocible de un vistazo, igual
-           que el karahafu hace reconocible el hotel de Yamanouchi.
-
-       🚨 LO QUE HAY QUE DIBUJAR PARA QUE SE LE RECONOZCA, en este orden:
-       la silueta escalonada de cinco tejados; el negro de abajo con el blanco de
-       arriba; la torre pequeña a la izquierda mas baja y unida; y la barandilla
-       roja a la derecha, abajo. Lo demas es relleno.
+       🚨 QUE ES «MAS DETALLE» EN ESTA PELICULA, Y QUE NO.
+       NORMAS § 1 prohibe degradados, sombras y texturas, y eso NO se ha tocado:
+       aqui sigue todo en manchas planas y trazo. Lo que sube es la CANTIDAD de
+       piezas dibujadas —las hiladas de tabla, las troneras, las mensulas bajo
+       los aleros, las barandillas, la curva de los aleros en vez de rectas— que
+       es detalle de dibujo, no de acabado. Es la unica pieza de la pelicula con
+       este nivel, y es a proposito: es el remate del viaje.
 
        📄 En los comentarios de un `.svg` las variables de CSS se nombran
        entrecomilladas y sin sus dos guiones: dos guiones seguidos son XML
        invalido y estos archivos se abren en un editor vectorial. -->
 
-  <!-- ══════ EL 乾小天守, la torre pequeña del noroeste ══════
-       Mas baja que la principal y unida por el pasillo. Tres tejados. -->
-  <path class="ma-tejado" d="M46 176 L96 150 L146 176 L152 184 L40 184 Z"/>
-  <rect class="ma-negro" x="56" y="184" width="80" height="30"/>
-  <path class="ma-tejado" d="M40 214 L96 194 L152 214 L158 222 L34 222 Z"/>
-  <rect class="ma-blanco" x="50" y="222" width="92" height="20"/>
-  <rect class="ma-negro" x="50" y="242" width="92" height="46"/>
-  <path class="ma-tejado" d="M30 288 L96 268 L162 288 L168 296 L24 296 Z"/>
-
-  <!-- El 渡櫓, el pasillo cubierto que une las dos torres -->
-  <rect class="ma-negro" x="140" y="252" width="60" height="36"/>
-  <path class="ma-tejado" d="M134 252 L170 238 L206 252 L210 258 L130 258 Z"/>
-
-  <!-- ══════ EL 大天守 · cinco tejados, seis plantas ══════
-       De arriba abajo, y cada cuerpo mas ancho que el de encima: eso es lo que
-       hace la silueta escalonada que se reconoce a cien metros. -->
-  <!-- 1 · la cumbre, con sus dos 鯱 -->
-  <path class="ma-shachi" d="M232 60 q4 -12 10 -4 q-6 1 -10 4 z"/>
-  <path class="ma-shachi" d="M298 60 q-4 -12 -10 -4 q6 1 10 4 z"/>
-  <path class="ma-tejado" d="M216 62 L265 40 L314 62 L320 70 L210 70 Z"/>
-  <rect class="ma-blanco" x="228" y="70" width="74" height="24"/>
-  <!-- 2 -->
-  <path class="ma-tejado" d="M204 94 L265 76 L326 94 L332 102 L198 102 Z"/>
-  <rect class="ma-blanco" x="216" y="102" width="98" height="26"/>
-  <!-- 🚨 EL 破風 DE LA FACHADA, blanco: el fronton triangular del centro. Es lo
-       que rompe la caja y hace que se lea «castillo» y no «torre» -->
-  <path class="ma-hafu" d="M240 102 L265 78 L290 102 Z"/>
-  <!-- 3 -->
-  <path class="ma-tejado" d="M188 128 L265 108 L342 128 L348 136 L182 136 Z"/>
-  <rect class="ma-negro" x="200" y="136" width="130" height="34"/>
-  <!-- 4 -->
-  <path class="ma-tejado" d="M170 170 L265 148 L360 170 L368 178 L162 178 Z"/>
-  <rect class="ma-negro" x="184" y="178" width="162" height="42"/>
-  <path class="ma-hafu" d="M236 178 L265 150 L294 178 Z"/>
-  <!-- 5 · el cuerpo de abajo, el mas ancho -->
-  <path class="ma-tejado" d="M150 220 L265 196 L380 220 L390 230 L140 230 Z"/>
-  <rect class="ma-blanco" x="164" y="230" width="202" height="22"/>
-  <rect class="ma-negro" x="164" y="252" width="202" height="44"/>
-  <path class="ma-tejado" d="M138 296 L265 274 L392 296 L400 304 L130 304 Z"/>
-
-  <!-- Las troneras y ventanas, en blanco sobre el negro: son lo que da escala -->
-  <g class="ma-vano">
-    <rect x="216" y="146" width="14" height="16"/>
-    <rect x="258" y="146" width="14" height="16"/>
-    <rect x="300" y="146" width="14" height="16"/>
-    <rect x="198" y="262" width="16" height="20"/>
-    <rect x="248" y="262" width="16" height="20"/>
-    <rect x="298" y="262" width="16" height="20"/>
-    <rect x="66" y="252" width="14" height="18"/>
-    <rect x="112" y="252" width="14" height="18"/>
+  <!-- ══════════ EL 石垣 · el muro de silleria en talud ══════════ -->
+  <path class="ma-piedra" d="M52 400 L308 400 L338 470 L22 470 Z"/>
+  <g class="ma-junta">
+    <path d="M40 436 H320 M30 458 H330"/>
+    <path d="M96 400 L88 470 M160 400 L156 470 M200 400 L204 470 M264 400 L272 470"/>
   </g>
+  <!-- La nieve encima del muro: lleva nevando cuatro actos -->
+  <path class="ma-nieve" d="M52 400 q64 -14 128 0 q64 14 128 0 l6 12 q-64 12 -134 0 q-70 -12 -134 0 z"/>
 
-  <!-- ══════ EL 辰巳附櫓 Y EL 月見櫓, al este ══════
-       El de la luna es el de abajo a la derecha, y lleva la galería. -->
-  <rect class="ma-negro" x="366" y="230" width="66" height="58"/>
-  <path class="ma-tejado" d="M358 230 L399 212 L440 230 L446 238 L352 238 Z"/>
-
-  <!-- 🚨 LA GALERÍA DEL 月見櫓, EN BERMELLÓN. Es el único color del castillo y
-       lo que lo hace reconocible: 朱塗 por sus tres lados. -->
-  <rect class="ma-negro" x="424" y="258" width="74" height="30"/>
-  <path class="ma-tejado" d="M416 258 L461 242 L506 258 L512 266 L410 266 Z"/>
-  <rect class="ma-roja" x="418" y="286" width="86" height="6" rx="3"/>
-  <g class="ma-baranda">
-    <path d="M422 292 v10 M446 292 v10 M470 292 v10 M494 292 v10"/>
+  <!-- ══════════ CUERPO 5 · el mas ancho, el de abajo ══════════ -->
+  <rect class="ma-blanco" x="60" y="336" width="240" height="26"/>
+  <rect class="ma-negro" x="60" y="362" width="240" height="40"/>
+  <!-- 🚨 LAS HILADAS DE TABLA (下見板張). Son lo que convierte una mancha negra
+       en un muro de madera, y es el detalle que mas se nota a este tamaño. -->
+  <g class="ma-tabla">
+    <path d="M60 372 H300 M60 382 H300 M60 392 H300"/>
   </g>
-  <rect class="ma-roja" x="418" y="300" width="86" height="5" rx="2.5"/>
+  <!-- Ventanas enrejadas y troneras cuadradas -->
+  <g class="ma-vano"><rect x="84" y="340" width="20" height="18"/><rect x="132" y="340" width="20" height="18"/><rect x="208" y="340" width="20" height="18"/><rect x="256" y="340" width="20" height="18"/></g>
+  <g class="ma-reja"><path d="M94 340 v18 M84 349 h20 M142 340 v18 M132 349 h20 M218 340 v18 M208 349 h20 M266 340 v18 M256 349 h20"/></g>
+  <g class="ma-tronera"><rect x="170" y="368" width="14" height="14"/><rect x="112" y="368" width="14" height="14"/><rect x="228" y="368" width="14" height="14"/></g>
+  <!-- El alero, con su curva y sus mensulas -->
+  <path class="ma-tejado" d="M38 336 Q54 314 180 306 Q306 314 322 336 L332 348 L28 348 Z"/>
+  <g class="ma-mensula"><rect x="70" y="330" width="8" height="14"/><rect x="176" y="326" width="8" height="18"/><rect x="282" y="330" width="8" height="14"/></g>
 
-  <!-- ══════ LA BASE DE PIEDRA (石垣) Y EL FOSO ══════
-       El muro de sillería en talud sobre el que se apoya todo. -->
-  <path class="ma-piedra" d="M110 304 L420 304 L444 330 L86 330 Z"/>
-  <path class="ma-piedra" d="M410 292 L512 292 L520 330 L400 330 Z"/>
-  <!-- Su nieve encima: lleva nevando cuatro actos -->
-  <path class="ma-nieve" d="M180 300 q80 -12 160 0 q-40 8 -80 8 q-40 0 -80 -8 z"/>
+  <!-- ══════════ CUERPO 4 ══════════ -->
+  <rect class="ma-blanco" x="76" y="272" width="208" height="22"/>
+  <rect class="ma-negro" x="76" y="294" width="208" height="30"/>
+  <g class="ma-tabla"><path d="M76 304 H284 M76 314 H284"/></g>
+  <g class="ma-vano"><rect x="100" y="276" width="18" height="16"/><rect x="146" y="276" width="18" height="16"/><rect x="196" y="276" width="18" height="16"/><rect x="242" y="276" width="18" height="16"/></g>
+  <g class="ma-reja"><path d="M109 276 v16 M100 284 h18 M155 276 v16 M146 284 h18 M205 276 v16 M196 284 h18 M251 276 v16 M242 284 h18"/></g>
+  <!-- 🚨 EL 唐破風, el fronton CURVO de la fachada. Es la misma figura que hace
+       reconocible el hotel de Yamanouchi, y tambien aqui hay que dibujarla con
+       el centro ALTO: sube por los lados, baja, y vuelve a levantarse. -->
+  <path class="ma-hafu" d="M126 294 q22 -34 46 -36 q10 -1 8 -12 q-2 11 8 12 q24 2 46 36 z"/>
+  <path class="ma-tejado" d="M58 272 Q74 252 180 246 Q286 252 302 272 L312 284 L48 284 Z"/>
+  <g class="ma-mensula"><rect x="88" y="266" width="7" height="14"/><rect x="176" y="262" width="8" height="18"/><rect x="265" y="266" width="7" height="14"/></g>
+
+  <!-- ══════════ CUERPO 3 ══════════ -->
+  <rect class="ma-blanco" x="92" y="214" width="176" height="20"/>
+  <rect class="ma-negro" x="92" y="234" width="176" height="24"/>
+  <g class="ma-tabla"><path d="M92 243 H268 M92 251 H268"/></g>
+  <g class="ma-vano"><rect x="116" y="218" width="16" height="14"/><rect x="172" y="218" width="16" height="14"/><rect x="228" y="218" width="16" height="14"/></g>
+  <g class="ma-reja"><path d="M124 218 v14 M116 225 h16 M180 218 v14 M172 225 h16 M236 218 v14 M228 225 h16"/></g>
+  <!-- 🚨 EL 千鳥破風, el fronton TRIANGULAR, que es el otro tipo. Que haya de las
+       dos clases en la misma fachada es lo que hace que se lea «castillo» y no
+       «torre de varios pisos». -->
+  <path class="ma-hafu" d="M142 234 L180 196 L218 234 Z"/>
+  <path class="ma-hafu-ojo" d="M180 210 L196 228 L164 228 Z"/>
+  <path class="ma-tejado" d="M74 214 Q90 196 180 190 Q270 196 286 214 L294 224 L66 224 Z"/>
+  <g class="ma-mensula"><rect x="104" y="208" width="7" height="13"/><rect x="176" y="204" width="8" height="17"/><rect x="249" y="208" width="7" height="13"/></g>
+
+  <!-- ══════════ CUERPO 2 ══════════ -->
+  <rect class="ma-blanco" x="108" y="160" width="144" height="18"/>
+  <rect class="ma-negro" x="108" y="178" width="144" height="22"/>
+  <g class="ma-tabla"><path d="M108 186 H252 M108 194 H252"/></g>
+  <g class="ma-vano"><rect x="132" y="164" width="15" height="13"/><rect x="172" y="164" width="15" height="13"/><rect x="212" y="164" width="15" height="13"/></g>
+  <g class="ma-reja"><path d="M139 164 v13 M132 170 h15 M179 164 v13 M172 170 h15 M219 164 v13 M212 170 h15"/></g>
+  <path class="ma-tejado" d="M92 160 Q108 144 180 138 Q252 144 268 160 L276 170 L84 170 Z"/>
+  <g class="ma-mensula"><rect x="120" y="154" width="7" height="12"/><rect x="176" y="150" width="8" height="16"/><rect x="233" y="154" width="7" height="12"/></g>
+
+  <!-- ══════════ CUERPO 1 · el 望楼 de arriba, con su barandilla ══════════ -->
+  <rect class="ma-blanco" x="126" y="98" width="108" height="34"/>
+  <g class="ma-vano"><rect x="140" y="104" width="18" height="20"/><rect x="171" y="104" width="18" height="20"/><rect x="202" y="104" width="18" height="20"/></g>
+  <g class="ma-reja"><path d="M149 104 v20 M140 114 h18 M180 104 v20 M171 114 h18 M211 104 v20 M202 114 h18"/></g>
+  <!-- La galeria de la ultima planta -->
+  <rect class="ma-negro" x="118" y="132" width="124" height="8"/>
+  <g class="ma-baranda"><path d="M124 140 v10 M150 140 v10 M180 140 v10 M210 140 v10 M236 140 v10"/></g>
+  <rect class="ma-negro" x="114" y="148" width="132" height="6"/>
+  <!-- El tejado de la cumbre, a dos aguas -->
+  <path class="ma-tejado" d="M110 98 Q126 72 180 64 Q234 72 250 98 L258 108 L102 108 Z"/>
+  <!-- El caballete -->
+  <rect class="ma-caballete" x="150" y="58" width="60" height="9" rx="4"/>
+
+  <!-- 🚨 LOS DOS 鯱, los peces-dragon del caballete. Son lo mas pequeño del
+       dibujo y lo primero que se busca al mirar un castillo japones. -->
+  <path class="ma-shachi" d="M152 58 q-4 -14 4 -20 q6 -4 8 2 q-8 2 -6 8 q2 6 -6 10 z"/>
+  <path class="ma-shachi" d="M208 58 q4 -14 -4 -20 q-6 -4 -8 2 q8 2 6 8 q-2 6 6 10 z"/>
 </svg>

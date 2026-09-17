@@ -64,20 +64,20 @@
    quedaron así del acto 4.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=959e3741';
-import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=959e3741';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=959e3741';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=959e3741';
-import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena, perfilDe, altura } from '../motor/dibujo.js?v=959e3741';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=959e3741';
-import { tenderRuta } from '../motor/ruta.js?v=959e3741';
-import { LUGARES, RUTA_A_YAMANOUCHI, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=959e3741';
+import { registrarActo } from '../motor/escenario.js?v=47c92712';
+import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=47c92712';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=47c92712';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=47c92712';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena, perfilDe, altura } from '../motor/dibujo.js?v=47c92712';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=47c92712';
+import { tenderRuta } from '../motor/ruta.js?v=47c92712';
+import { LUGARES, RUTA_A_YAMANOUCHI, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=47c92712';
 /* 🚨 LO ÚNICO QUE ESTE ACTO IMPORTA DE OTRO ACTO, y es a propósito: son los
    cuatro números con los que acaba el acto 5, o sea el fotograma del que este
    arranca (ley 5). Escritos a mano aquí serían el mismo número en dos archivos
    —regla 1 del repositorio—, y el día que alguien mueva la tabla o cambie lo
    ancho del onsen, el acto 6 abriría con las cosas en otro sitio que el 5. */
-import { HUNDIDO_U, ONSEN_ANCHO_U, X_TABLA_CAE, X_ROCA_PARA, FONDO_AL_FINAL } from './05-kusatsu.js?v=959e3741';
+import { HUNDIDO_U, ONSEN_ANCHO_U, X_TABLA_CAE, X_ROCA_PARA, FONDO_AL_FINAL } from './05-kusatsu.js?v=47c92712';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -257,7 +257,10 @@ const F = {
      es lo unico que hace que un fondo parezca profundo cuando se mueve. */
   sierras:    [0.826, 0.960],
   /* 🏯 Y el castillo, al llegar. Igual que el hotel: llega, no aparece. */
-  castillo:   [0.906, 0.972]
+  /* 🔁 MAS TARDE. Kiko: «hazlo mas cuando ya estemos llegando a Matsumoto». La
+     ventana empieza ahora cuando la linea del mapa ya lleva mas de media ruta
+     dibujada, no al principio del tramo: llegar es llegar. */
+  castillo:   [0.944, 0.988]
 };
 
 /* --------------------------------------------------------------------------
@@ -404,8 +407,14 @@ const X_HOTEL = 0;
    rodando, y el castillo se pinta DESPUES que el, asi que centrado se lo comia
    entero. Se vio en la captura. Aqui el coche queda a su derecha, delante, que
    ademas es la estampa: el castillo al fondo y nosotros llegando. */
-const X_CASTILLO = -40;
-const ENTRADA_CASTILLO = 130;
+/* 🔁 Y SU SITIO SE CALCULA, COMO EL DE LA MONTAÑA GRANDE. Kiko: «que en el lado
+   izquierdo, pues al igual que la montaña grande, que sea así un poco más
+   consistente». O sea, simetría: la montaña pesa en el borde derecho y el
+   castillo pesa en el izquierdo. Y se calcula del zoom por la misma razón que
+   ella —una posición que depende del encuadre escrita a mano se rompe en cuanto
+   se mueve la cámara—, que ya costó un hueco de papel una vez. */
+const CASTILLO_ANCHO_U = 46;
+const ENTRADA_CASTILLO = 160;
 
 /* 🚨 CUÁNTOS ÁRBOLES HAY, Y POR QUÉ ESTE NÚMERO ESTÁ AQUÍ.
    Es RANURAS, de 03-al-coche.js: con --mezcla a 12 están los nueve árboles de
@@ -1005,7 +1014,7 @@ export function montarActoYamanouchi() {
          acto 7 empieza justo ahí, haciendo zoom a la estación. */
       const tCastillo = suave(tramo(p, F.castillo[0], F.castillo[1]));
       colocar('matsumoto', {
-        x: X_CASTILLO + ENTRADA_CASTILLO * (1 - tCastillo),
+        x: -bordeU + CASTILLO_ANCHO_U / 2 + ENTRADA_CASTILLO * (1 - tCastillo),
         y: 0,
         op: tCastillo > 0 ? 1 : 0,
         escala: 1

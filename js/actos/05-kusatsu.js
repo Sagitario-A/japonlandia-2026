@@ -49,14 +49,14 @@
    montaña, que ya venía en píxeles.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=959e3741';
-import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=959e3741';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=959e3741';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=959e3741';
-import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena } from '../motor/dibujo.js?v=959e3741';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=959e3741';
-import { tenderRuta } from '../motor/ruta.js?v=959e3741';
-import { LUGARES, RUTA_A_KUSATSU, ENCUADRES } from '../datos/rutas.js?v=959e3741';
+import { registrarActo } from '../motor/escenario.js?v=47c92712';
+import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=47c92712';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=47c92712';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=47c92712';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena } from '../motor/dibujo.js?v=47c92712';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=47c92712';
+import { tenderRuta } from '../motor/ruta.js?v=47c92712';
+import { LUGARES, RUTA_A_KUSATSU, ENCUADRES } from '../datos/rutas.js?v=47c92712';
 
 function vista(clave) {
   const e = ENCUADRES[clave];

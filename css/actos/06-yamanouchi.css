@@ -134,10 +134,16 @@
    viaje, con la cordillera detrás. A 62 unidades cabe con los Alpes a la vista,
    que es la estampa de Matsumoto. */
 [data-pieza='matsumoto'] {
-  /* 🔁 52 y no 62: con 62 el castillo subia hasta el dato del tramo y se lo
-     comia. Se vio en la captura. */
-  width: calc(52 * var(--u));
-  aspect-ratio: 520 / 330;
+  /* 🔁 SOLO LA TORRE, Y MÁS GRANDE. Kiko: «haz solamente la torre principal y
+     hazla más detallada y más grande, que tenga más presencia». La versión
+     anterior dibujaba los cinco edificios del conjunto a 52 unidades de ancho, y
+     a ese tamaño eran cinco manchas pequeñas: ninguna se leía. Una sola torre al
+     mismo ancho es el TRIPLE de alta, y entonces sí se reconoce.
+     🚨 Su alto va atado a la PANTALLA y no a la caja, como las montañas y por lo
+     mismo: en un portátil ancho una altura en unidades se sale por arriba. */
+  width: calc(46 * var(--u));
+  height: min(44svh, calc(62 * var(--u)));
+  aspect-ratio: auto;
 }
 
 /* ==========================================================================

@@ -340,7 +340,22 @@
 .ma-shachi  { fill: var(--c-llave); }
 /* 🚨 El único color del castillo, y no es decoración: la galería del 月見櫓 va
    laqueada en bermellón por sus tres lados. Sin esto no se le reconoce. */
-.ma-roja    { fill: var(--c-bermellon); stroke: var(--trazo); stroke-width: 1.2; }
+/* 🚨 Y EL NIVEL DE DETALLE DE ESTA PIEZA ES EL MAS ALTO DE LA PELICULA, a
+   proposito. Kiko: «con mas nivel de detalle, no tan minimalista como hemos
+   acostumbrado a hacer los dibujos». Lo que sube es la CANTIDAD de piezas
+   dibujadas —hiladas de tabla, troneras, mensulas, rejas—, no el acabado:
+   siguen siendo manchas planas y trazo, sin un solo degradado ni sombra
+   (NORMAS § 1). Todo lo de aqui abajo es esa diferencia. */
+.ma-tabla   { fill: none; stroke: #4a5058; stroke-width: 1.1; opacity: .8; }
+.ma-junta   { fill: none; stroke: #7d868d; stroke-width: 1.1; }
+.ma-reja    { fill: none; stroke: var(--c-castillo-negro); stroke-width: 1.6; }
+.ma-tronera { fill: var(--c-castillo-blanco); stroke: var(--trazo); stroke-width: 1.2; }
+.ma-mensula { fill: var(--c-castillo-negro); }
+.ma-caballete { fill: var(--c-castillo-teja); stroke: var(--trazo); stroke-width: 1.4; }
+.ma-hafu-ojo { fill: var(--c-castillo-negro); }
+/* 🚨 La barandilla del ultimo piso, en BERMELLON: es el unico color del
+   castillo y lo que lo hace reconocible de un vistazo. Estaba en el 月見櫓 de
+   la version anterior; al quedarse solo la torre, se queda en su galeria. */
 .ma-baranda { fill: none; stroke: var(--c-bermellon); stroke-width: 3.4; stroke-linecap: round; }
 .ma-piedra  { fill: var(--c-silleria); stroke: var(--trazo); stroke-width: 1.6; }
 .ma-nieve   { fill: var(--c-nieve-manto); stroke: var(--c-nieve-trazo); stroke-width: 1.4; }
