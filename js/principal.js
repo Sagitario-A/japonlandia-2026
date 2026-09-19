@@ -5,21 +5,21 @@
    Todo lo que este archivo hace es coser: la lógica vive en motor/ y actos/.
    ============================================================================= */
 
-import { registrarGlobal, arrancar } from './motor/escenario.js?v=0191c20d';
-import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=0191c20d';
-import { desvanecerDibujo } from './motor/dibujo.js?v=0191c20d';
-import { nevar } from './motor/nieve.js?v=0191c20d';
+import { registrarGlobal, arrancar } from './motor/escenario.js?v=fd6072d8';
+import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=fd6072d8';
+import { desvanecerDibujo } from './motor/dibujo.js?v=fd6072d8';
+import { nevar } from './motor/nieve.js?v=fd6072d8';
 /* 🚨 `tope` lo usa el desvanecido del final, ahi abajo. Lo quite una vez al
    limpiar codigo muerto y el final de la pelicula dejo de ejecutarse entero,
    sin que saltara ninguna comprobacion: ver el aviso de capturas-web.js. */
-import { tope } from './motor/util.js?v=0191c20d';
-import { montarActoVuelo } from './actos/01-vuelo.js?v=0191c20d';
-import { montarActoLlegada } from './actos/02-llegada.js?v=0191c20d';
-import { montarActoAlCoche } from './actos/03-al-coche.js?v=0191c20d';
-import { montarActoTakaragawa } from './actos/04-takaragawa.js?v=0191c20d';
-import { montarActoKusatsu } from './actos/05-kusatsu.js?v=0191c20d';
-import { montarActoYamanouchi } from './actos/06-yamanouchi.js?v=0191c20d';
-import { montarActoTren } from './actos/07-tren.js?v=0191c20d';
+import { tope } from './motor/util.js?v=fd6072d8';
+import { montarActoVuelo } from './actos/01-vuelo.js?v=fd6072d8';
+import { montarActoLlegada } from './actos/02-llegada.js?v=fd6072d8';
+import { montarActoAlCoche } from './actos/03-al-coche.js?v=fd6072d8';
+import { montarActoTakaragawa } from './actos/04-takaragawa.js?v=fd6072d8';
+import { montarActoKusatsu } from './actos/05-kusatsu.js?v=fd6072d8';
+import { montarActoYamanouchi } from './actos/06-yamanouchi.js?v=fd6072d8';
+import { montarActoTren } from './actos/07-tren.js?v=fd6072d8';
 
 /* --------------------------------------------------------------------------
    1 · El escenario y los actos

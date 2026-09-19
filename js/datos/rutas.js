@@ -17,10 +17,10 @@
    [lon, lat]. Se guardan sueltos porque unos son marcadores y otros solo son
    puntos de paso por los que la línea tiene que doblar.
    -------------------------------------------------------------------------- */
-import { EJE_KANETSU } from './carretera-norte.js?v=0191c20d';
-import { RUTA_KUSATSU } from './carretera-kusatsu.js?v=0191c20d';
-import { RUTA_YAMANOUCHI } from './carretera-yamanouchi.js?v=0191c20d';
-import { RUTA_MATSUMOTO } from './carretera-matsumoto.js?v=0191c20d';
+import { EJE_KANETSU } from './carretera-norte.js?v=fd6072d8';
+import { RUTA_KUSATSU } from './carretera-kusatsu.js?v=fd6072d8';
+import { RUTA_YAMANOUCHI } from './carretera-yamanouchi.js?v=fd6072d8';
+import { RUTA_MATSUMOTO } from './carretera-matsumoto.js?v=fd6072d8';
 
 export const LUGARES = {
   /* España */

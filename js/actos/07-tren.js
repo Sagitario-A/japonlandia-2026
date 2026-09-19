@@ -52,20 +52,20 @@
    se calcula con ese número y no con uno escrito a mano (ley 27).
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=0191c20d';
-import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=0191c20d';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=0191c20d';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=0191c20d';
-import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, zoomEscena } from '../motor/dibujo.js?v=0191c20d';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=0191c20d';
-import { tenderRuta } from '../motor/ruta.js?v=0191c20d';
-import { LUGARES, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=0191c20d';
+import { registrarActo } from '../motor/escenario.js?v=fd6072d8';
+import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=fd6072d8';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=fd6072d8';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=fd6072d8';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, zoomEscena } from '../motor/dibujo.js?v=fd6072d8';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=fd6072d8';
+import { tenderRuta } from '../motor/ruta.js?v=fd6072d8';
+import { LUGARES, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=fd6072d8';
 /* 🚨 LO ÚNICO QUE ESTE ACTO IMPORTA DE OTRO, y es a propósito, igual que el
    acto 6 importa cinco números del 5: son el fotograma del que arranca (ley 5).
    Escritos a mano aquí serían el mismo número en dos archivos —regla 1 del
    repositorio— y el día que alguien mueva el zoom del acto 6 o el ancho del
    castillo, este acto abriría con las cosas en otro sitio. */
-import { ZOOM_FIN, PICO_ANCHO_U, CASTILLO_ANCHO_U, FONDO_AL_FINAL_6 } from './06-yamanouchi.js?v=0191c20d';
+import { ZOOM_FIN, PICO_ANCHO_U, CASTILLO_ANCHO_U, FONDO_AL_FINAL_6 } from './06-yamanouchi.js?v=fd6072d8';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -104,14 +104,14 @@ const RUTA_MATSUMOTO = tenderRuta(RUTA_A_MATSUMOTO, 0.2);
    lea como un trayecto largo y no como un apeadero.
 
    El reparto, en pantallas de las diecisiete:
-     la estación        4,0   se va el coche, se hunde el paisaje y el mapa
+     la estación        2,9   se va el coche, se hunde el paisaje y el mapa
                               crece, hace zoom sobre la estación y se disuelve
-     el trayecto        4,6   llegan la vía y el tren, corre la vía, y a la
+     el trayecto        5,0   llegan la vía y el tren, corre la vía, y a la
                               izquierda se cuenta el tramo hasta Nagoya
-     el transbordo      2,9   el segundo tren sube por la izquierda y el
+     el transbordo      3,1   el segundo tren sube por la izquierda y el
                               primero se va hacia arriba
-     el segundo tramo   3,7   corre otra vez, más deprisa, y llega el andén
-     Kioto              1,8   zoom out, se hunde la vía y aparece el mapa
+     el segundo tramo   3,9   corre otra vez, más deprisa, y llega el andén
+     Kioto              2,2   zoom out, se hunde la vía y aparece el mapa
 
    (suman más de diecisiete porque las ventanas SE SOLAPAN a propósito: una cosa
    entra mientras la anterior se está yendo)
