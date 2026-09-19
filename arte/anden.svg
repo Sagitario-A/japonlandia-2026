@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130 1100" preserveAspectRatio="none" class="a-anden" aria-hidden="true" focusable="false">
+  <!-- EL ANDÉN, VISTO DESDE ARRIBA · acto 7.
+       «Llega a una estación», que es lo último que pasa antes del zoom out.
+
+       🚨 LLEGA, NO APARECE. Entra desde abajo con el resto del mundo y frena
+       con él: es la regla del acto 6 —en esta película las cosas llegan— y aquí
+       además es lo único que dice «hemos llegado». El tren no puede pararse en
+       pantalla, porque ocupa la pantalla entera; lo que se para es el suelo, y
+       lo que aparece al lado es esto.
+
+       🚨 LO QUE LO HACE RECONOCIBLE SON LAS DOS FRANJAS AMARILLAS, y no es
+       decoración: es el 点字ブロック, el pavimento táctil que en Japón recorre
+       el borde de todos los andenes. Desde arriba, una losa gris con dos
+       franjas amarillas paralelas al borde es un andén y no puede ser otra
+       cosa. Sin ellas, esto es un rectángulo.
+
+       📐 Proporción: 130 × 1100, y la pieza mide 26u × 220u. Los dos ejes van a
+       la misma escala. -->
+
+  <!-- La losa -->
+  <rect class="v7-anden" x="4" y="0" width="122" height="1100"/>
+
+  <!-- 🚨 El pavimento táctil de los dos bordes: las dos franjas amarillas -->
+  <rect class="v7-tactil" x="14" y="0" width="12" height="1100"/>
+  <rect class="v7-tactil" x="104" y="0" width="12" height="1100"/>
+
+  <!-- La marquesina, por encima del centro. Desde arriba de una estación es lo
+       que de verdad se ve; las vigas son lo que le da el ritmo. -->
+  <rect class="v7-marquesina" x="32" y="120" width="66" height="820"/>
+  <g class="v7-viga">
+    <rect x="32" y="180" width="66" height="7"/>
+    <rect x="32" y="330" width="66" height="7"/>
+    <rect x="32" y="480" width="66" height="7"/>
+    <rect x="32" y="630" width="66" height="7"/>
+    <rect x="32" y="780" width="66" height="7"/>
+  </g>
+
+  <!-- Los bancos, a un lado y a otro del eje -->
+  <g class="v7-banco">
+    <rect x="40" y="250" width="14" height="46" rx="4"/>
+    <rect x="76" y="400" width="14" height="46" rx="4"/>
+    <rect x="40" y="550" width="14" height="46" rx="4"/>
+    <rect x="76" y="700" width="14" height="46" rx="4"/>
+  </g>
+
+  <!-- La escalera de bajada, que es el otro detalle que dice estación -->
+  <g class="v7-escalera">
+    <rect x="46" y="860" width="38" height="120"/>
+    <rect x="46" y="880" width="38" height="4"/>
+    <rect x="46" y="900" width="38" height="4"/>
+    <rect x="46" y="920" width="38" height="4"/>
+    <rect x="46" y="940" width="38" height="4"/>
+    <rect x="46" y="960" width="38" height="4"/>
+  </g>
+</svg>

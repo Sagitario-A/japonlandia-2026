@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 1200" preserveAspectRatio="none" class="a-via" aria-hidden="true" focusable="false">
+  <!-- LA VÍA, VISTA DESDE ARRIBA · acto 7.
+
+       🚨 ESTO ES LO QUE HACE QUE EL TREN ANDE, y es el truco del coche del acto
+       3 girado noventa grados: el tren no se mueve —ocupa la pantalla de arriba
+       abajo, así que no puede—, y lo que corre es el suelo. Allí era una banda
+       horizontal de árboles; aquí es una banda vertical de vía.
+
+       🚨 SE REPITE CADA 100 UNIDADES DE ESTE viewBox, Y ESO NO ES DECORATIVO:
+       es lo que permite que el desplazamiento dé la vuelta sin que se vea la
+       costura, igual que las copias de la banda del bosque. La pieza mide 360u
+       de alto para 1200 de viewBox, o sea que un período son 30u — y ese número
+       vive en 07-tren.js como PERIODO_VIA. Si alguien cambia el ritmo de las
+       traviesas o de los postes, hay que cambiarlo allí.
+
+       🚨 Y ES MÁS ALTA QUE LA PANTALLA A PROPÓSITO: 360u cubren hasta un móvil
+       muy alargado (un 360×1000 mide 278u de alto) con un período de sobra por
+       arriba para que el salto del bucle nunca enseñe el canto de la pieza.
+
+       🚨 EL RITMO NO ES LIBRE: es lo único que se mueve en toda la pantalla, así
+       que si las marcas están demasiado juntas, al hacer scroll deprisa
+       parpadean y hasta parecen ir hacia atrás. Las traviesas van cada 50 —15u,
+       medio período— y los postes cada 200 —60u—: uno rápido para la velocidad
+       y otro lento para que el ojo tenga de dónde agarrarse.
+
+       📐 Proporción: 100 × 1200, y la pieza mide 30u × 360u. Los dos ejes van a
+       la misma escala, así que el dibujo no se deforma. Lleva
+       preserveAspectRatio="none" igual que las montañas del acto 6 (fila 68 del
+       inventario): la caja manda, y aquí la caja es exacta. -->
+
+  <!-- El balasto: la franja de grava sobre la que va la vía. Es lo que separa
+       la vía del papel en blanco y le da un ancho reconocible desde arriba. -->
+  <rect class="v7-balasto" x="12" y="0" width="76" height="1200"/>
+
+  <!-- Las traviesas, cada 50. Van ANTES que los carriles para que los carriles
+       se pinten por encima, que es como se ven de verdad desde arriba. -->
+  <g class="v7-traviesa">
+    <rect x="18" y="0" width="64" height="6"/>
+    <rect x="18" y="50" width="64" height="6"/>
+    <rect x="18" y="100" width="64" height="6"/>
+    <rect x="18" y="150" width="64" height="6"/>
+    <rect x="18" y="200" width="64" height="6"/>
+    <rect x="18" y="250" width="64" height="6"/>
+    <rect x="18" y="300" width="64" height="6"/>
+    <rect x="18" y="350" width="64" height="6"/>
+    <rect x="18" y="400" width="64" height="6"/>
+    <rect x="18" y="450" width="64" height="6"/>
+    <rect x="18" y="500" width="64" height="6"/>
+    <rect x="18" y="550" width="64" height="6"/>
+    <rect x="18" y="600" width="64" height="6"/>
+    <rect x="18" y="650" width="64" height="6"/>
+    <rect x="18" y="700" width="64" height="6"/>
+    <rect x="18" y="750" width="64" height="6"/>
+    <rect x="18" y="800" width="64" height="6"/>
+    <rect x="18" y="850" width="64" height="6"/>
+    <rect x="18" y="900" width="64" height="6"/>
+    <rect x="18" y="950" width="64" height="6"/>
+    <rect x="18" y="1000" width="64" height="6"/>
+    <rect x="18" y="1050" width="64" height="6"/>
+    <rect x="18" y="1100" width="64" height="6"/>
+    <rect x="18" y="1150" width="64" height="6"/>
+  </g>
+
+  <!-- Los dos carriles. Continuos a propósito: son lo que dice «vía» de un
+       vistazo, y como no se repiten no pueden parpadear. -->
+  <rect class="v7-carril" x="30" y="0" width="5" height="1200"/>
+  <rect class="v7-carril" x="65" y="0" width="5" height="1200"/>
+
+  <!-- 🚨 LOS POSTES DE LA CATENARIA, Y SON EL RITMO LENTO.
+       Cada 200 y alternando de lado, que es como van de verdad. Son lo que hace
+       que se lea la velocidad sin que nada parpadee: las traviesas pasan
+       demasiado rápido para contarlas, y estos no. -->
+  <g class="v7-poste">
+    <rect x="3" y="56" width="7" height="14"/><rect class="v7-brazo" x="10" y="60" width="26" height="4"/>
+    <rect x="90" y="156" width="7" height="14"/><rect class="v7-brazo" x="64" y="160" width="26" height="4"/>
+    <rect x="3" y="256" width="7" height="14"/><rect class="v7-brazo" x="10" y="260" width="26" height="4"/>
+    <rect x="90" y="356" width="7" height="14"/><rect class="v7-brazo" x="64" y="360" width="26" height="4"/>
+    <rect x="3" y="456" width="7" height="14"/><rect class="v7-brazo" x="10" y="460" width="26" height="4"/>
+    <rect x="90" y="556" width="7" height="14"/><rect class="v7-brazo" x="64" y="560" width="26" height="4"/>
+    <rect x="3" y="656" width="7" height="14"/><rect class="v7-brazo" x="10" y="660" width="26" height="4"/>
+    <rect x="90" y="756" width="7" height="14"/><rect class="v7-brazo" x="64" y="760" width="26" height="4"/>
+    <rect x="3" y="856" width="7" height="14"/><rect class="v7-brazo" x="10" y="860" width="26" height="4"/>
+    <rect x="90" y="956" width="7" height="14"/><rect class="v7-brazo" x="64" y="960" width="26" height="4"/>
+    <rect x="3" y="1056" width="7" height="14"/><rect class="v7-brazo" x="10" y="1060" width="26" height="4"/>
+    <rect x="90" y="1156" width="7" height="14"/><rect class="v7-brazo" x="64" y="1160" width="26" height="4"/>
+  </g>
+</svg>

@@ -17,10 +17,10 @@
    [lon, lat]. Se guardan sueltos porque unos son marcadores y otros solo son
    puntos de paso por los que la línea tiene que doblar.
    -------------------------------------------------------------------------- */
-import { EJE_KANETSU } from './carretera-norte.js?v=47c92712';
-import { RUTA_KUSATSU } from './carretera-kusatsu.js?v=47c92712';
-import { RUTA_YAMANOUCHI } from './carretera-yamanouchi.js?v=47c92712';
-import { RUTA_MATSUMOTO } from './carretera-matsumoto.js?v=47c92712';
+import { EJE_KANETSU } from './carretera-norte.js?v=0191c20d';
+import { RUTA_KUSATSU } from './carretera-kusatsu.js?v=0191c20d';
+import { RUTA_YAMANOUCHI } from './carretera-yamanouchi.js?v=0191c20d';
+import { RUTA_MATSUMOTO } from './carretera-matsumoto.js?v=0191c20d';
 
 export const LUGARES = {
   /* España */
@@ -346,5 +346,41 @@ export const ENCUADRES = {
   /* El segundo tramo del acto 6: de Yamanouchi a la estación de Matsumoto, que
      es donde se deja el coche y empieza el acto 7. La ruta va de 137,93 a
      138,47 y de 36,20 a 36,75; centro en 138,20 · 36,47. */
-  matsumoto: [138.20, 36.475, 1.20]
+  matsumoto: [138.20, 36.475, 1.20],
+
+  /* 🚃 EL ACTO 7 · adonde entra la cámara y adónde sale.
+     El acto empieza haciendo zoom «hacia la estación» de Matsumoto hasta que el
+     mapa se disuelve y detrás queda el tren, que es el mismo gesto que hace el
+     acto 3 con el mapa de Tokio.
+
+     🚨 A 0,34° no queda casi nada que dibujar —la costa se desvanece pasado
+     R≈18.000 y allí no hay ni bahía ni callejero—, y eso está bien: aquí el
+     mapa se está yendo, no tiene que relevar a nadie. Es justo lo contrario del
+     acto 3, donde el callejero tenía que entrar antes de que la costa se fuera
+     porque el mapa seguía después.
+     ✅ Y comprobado en pantalla a 390 y a 1440: en mitad de este zoom se
+     enciende la red de autopistas, cuya caja se acaba en 137,56 —a un suspiro
+     de Matsumoto—, y NO se le ve el canto, porque al oeste de la ciudad no hay
+     autopistas que dibujar: están los Alpes. */
+  matsumotoEstacion: [137.9644, 36.2307, 0.34],
+
+  /* Y el final: la cámara se echa atrás sobre Kioto hasta que cabe la región.
+     🚨 2,0° Y NO MENOS, y el motivo es qué se reconoce: a ese ancho entran las
+     DOS COSTAS a la vez —la del mar de Japón por el norte y la bahía de Osaka
+     con el mar Interior por el sur—, que es exactamente lo que sitúa Kioto: la
+     ciudad está en la cintura estrecha de Honshu, entre las dos. Más cerca es
+     un mapa sin nada dentro; más lejos, Kioto deja de ser el sujeto.
+     🚨 Y NO, NO SE VE EL LAGO BIWA, aunque sea lo primero que uno buscaría al
+     lado de Kioto: **el dataset de Natural Earth que usa esta web es `land`, y
+     `land` no trae lagos**. Comprobado contando puntos dentro de su caja el 19
+     de septiembre: cero. Vale para todos los mapas de la película, así que
+     ningún encuadre puede apoyarse en agua interior — ni este ni el del acto 8.
+     ✅ Y no hace falta ningún dataset nuevo, aunque NORMAS listara un
+     `kioto.js` que nunca existió: `kanto.js` tiene el nombre engañoso y su caja
+     de recorte llega de 133 a 147, o sea que cubre Kansai entero al máximo
+     detalle de la fuente. Medido y mirado en pantalla el 18 de septiembre:
+     672 puntos a 2°. Y como el motor conmuta a `japon.js` por encima de 7,1° de
+     ancho, este encuadre nunca llega a cambiar de dataset. */
+  kiotoCerca: [135.7587, 34.9867, 0.35],
+  kioto: [135.7587, 34.9867, 2.00]
 };

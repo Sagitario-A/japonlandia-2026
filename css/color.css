@@ -426,3 +426,87 @@
 .o-riza  { fill: none; stroke: var(--c-agua-trazo); stroke-width: 1.8; stroke-linecap: round; }
 /* El vaho, lo único de todo el dibujo que va a media tinta: es vapor */
 .o-vaho  { fill: none; stroke: var(--c-vaho); stroke-width: 2.6; stroke-linecap: round; opacity: .65; }
+
+/* ==========================================================================
+   🚃 EL ACTO 7 · los trenes vistos desde arriba
+   --------------------------------------------------------------------------
+   🚨 ESTE ACTO SE SALE DEL COLOR A PROPÓSITO, y lo dice NORMAS § 9: «blanco
+   otra vez, dos barras verticales y los datos a un lado». Después de cuatro
+   actos de nieve azul, el tren a Kioto es la pantalla más limpia de la
+   película — y por eso el poco color que queda tiene que estar bien puesto.
+
+   Los trenes reutilizan la paleta del cercanías del acto 3 (--c-tren,
+   --c-tren-banda, --c-cristal): es el mismo país, la misma mano y el mismo
+   material. Lo único nuevo es el suelo por el que corren.
+
+   ⚠️ Y LA BANDA NO ES LA LIBREA DE NINGUNA LÍNEA REAL. Los colores de línea de
+   este viaje siguen sin verificar (PENDIENTE W4), y en esta web el color de una
+   línea es un dato. Esto es caricatura, igual que el tren del acto 3.
+   ========================================================================== */
+#dibujo {
+  /* La vía. El balasto va apenas más oscuro que el papel: tiene que decir «por
+     aquí pasa algo» sin convertirse en una mancha gris que parta la pantalla */
+  --c-balasto: #eef1f4;
+  /* 🚨 LAS TRAVIESAS SON LO ÚNICO QUE SE MUEVE EN LA PANTALLA, así que hay que
+     verlas — pero no pueden pesar más que el tren, que es lo que hay que mirar.
+     La primera versión las tenía tan marcadas que la vía se leía como una
+     ESCALERA y competía con el tren entero. Se vio en la captura. */
+  --c-traviesa: #d9e0e7;
+  --c-carril: #8d979f;
+  --c-poste: #6f7981;
+
+  /* El andén. La losa es gris de hormigón, y el amarillo es el 点字ブロック:
+     el pavimento táctil del borde, que es lo que lo hace un andén japonés y no
+     un rectángulo cualquiera. */
+  --c-anden: #dfe4e9;
+  --c-tactil: #e8b93a;
+  --c-marquesina: #f4f7fa;
+}
+
+/* --- Los dos trenes (acto 7) ---
+   🚨 LAS DOS PIEZAS SE PINTAN EXACTAMENTE IGUAL, y es la mitad de la decisión
+   que tomó Kiko: *mismo tamaño, morro distinto*. Si alguien le da un color
+   propio a uno de los dos, en el transbordo dejan de leerse como un espejo y la
+   escena pasa a ser «dos trenes» en vez de «el cambio de tren». Lo único que
+   los distingue es la forma de la punta. */
+.v7-cuerpo  { fill: var(--c-tren); stroke: var(--trazo); stroke-width: var(--grosor); stroke-linejoin: round; }
+.v7-cristal { fill: var(--c-cristal); stroke: var(--trazo); stroke-width: 1.8; }
+.v7-banda   { fill: var(--c-tren-banda); }
+.v7-lomo    { fill: var(--c-metal); opacity: .55; }
+.v7-junta   { fill: var(--c-metal); }
+.v7-equipo  { fill: var(--c-metal); opacity: .75; }
+.v7-puerta  { fill: var(--c-cristal); }
+/* 🚨 EL PANTÓGRAFO ES LA FIRMA DE UN TREN ELÉCTRICO VISTO DESDE ARRIBA, pero no
+   puede pesar más que el tren. La primera versión eran dos brazos en V con
+   trazo grueso y en pantalla salía una FLECHA negra apuntando hacia delante: a
+   24 unidades de ancho, tres de trazo son una señal de tráfico. Ahora es el
+   marco carenado en gris y solo la PLETINA —la barra que roza el cable— va con
+   el trazo oscuro, que es lo único que de verdad hay que reconocer. */
+.v7-panto    { fill: var(--c-carril); }
+.v7-pletina  { fill: var(--trazo); }
+
+/* --- La vía (acto 7) ---
+   🚨 SIN TRAZO NEGRO EN NINGUNA DE SUS PARTES, y esto es deliberado: la vía se
+   repite decenas de veces en pantalla y corre deprisa. Con el contorno de todo
+   el dibujo, la pantalla entera vibraba y se comía al tren, que es lo único que
+   hay que mirar. Es el mismo criterio que la nieve: lo que se repite mucho va
+   a media tinta. */
+.v7-balasto  { fill: var(--c-balasto); }
+.v7-traviesa { fill: var(--c-traviesa); }
+.v7-carril   { fill: var(--c-carril); }
+/* 🚨 EL POSTE LLEVA SU BRAZO, y no es un adorno: sin él, en una pantalla ancha
+   —donde la unidad mide el doble que en un móvil— los postes se leían como
+   bloques grises sueltos flotando al lado de la vía. Un mástil con su ménsula
+   sobre el carril se reconoce; un rectángulo suelto, no. Se vio en la captura
+   de escritorio, no en la del móvil. */
+.v7-poste    { fill: var(--c-poste); }
+.v7-brazo    { fill: var(--c-poste); opacity: .55; }
+
+/* --- El andén (acto 7) --- */
+.v7-anden      { fill: var(--c-anden); stroke: var(--trazo); stroke-width: 1.6; }
+.v7-tactil     { fill: var(--c-tactil); }
+.v7-marquesina { fill: var(--c-marquesina); stroke: var(--c-carril); stroke-width: 1.4; }
+.v7-viga       { fill: var(--c-carril); opacity: .6; }
+.v7-banco      { fill: var(--c-madera); }
+.v7-escalera   { fill: var(--c-marquesina); stroke: var(--c-carril); stroke-width: 1.4; }
+.v7-escalera rect + rect { fill: var(--c-carril); stroke: none; }

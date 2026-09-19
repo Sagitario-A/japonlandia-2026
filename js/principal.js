@@ -5,20 +5,21 @@
    Todo lo que este archivo hace es coser: la lógica vive en motor/ y actos/.
    ============================================================================= */
 
-import { registrarGlobal, arrancar } from './motor/escenario.js?v=47c92712';
-import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=47c92712';
-import { desvanecerDibujo } from './motor/dibujo.js?v=47c92712';
-import { nevar } from './motor/nieve.js?v=47c92712';
+import { registrarGlobal, arrancar } from './motor/escenario.js?v=0191c20d';
+import { montarLienzo, mostrarLienzo, desvanecerMapa } from './motor/lienzo.js?v=0191c20d';
+import { desvanecerDibujo } from './motor/dibujo.js?v=0191c20d';
+import { nevar } from './motor/nieve.js?v=0191c20d';
 /* 🚨 `tope` lo usa el desvanecido del final, ahi abajo. Lo quite una vez al
    limpiar codigo muerto y el final de la pelicula dejo de ejecutarse entero,
    sin que saltara ninguna comprobacion: ver el aviso de capturas-web.js. */
-import { tope } from './motor/util.js?v=47c92712';
-import { montarActoVuelo } from './actos/01-vuelo.js?v=47c92712';
-import { montarActoLlegada } from './actos/02-llegada.js?v=47c92712';
-import { montarActoAlCoche } from './actos/03-al-coche.js?v=47c92712';
-import { montarActoTakaragawa } from './actos/04-takaragawa.js?v=47c92712';
-import { montarActoKusatsu } from './actos/05-kusatsu.js?v=47c92712';
-import { montarActoYamanouchi } from './actos/06-yamanouchi.js?v=47c92712';
+import { tope } from './motor/util.js?v=0191c20d';
+import { montarActoVuelo } from './actos/01-vuelo.js?v=0191c20d';
+import { montarActoLlegada } from './actos/02-llegada.js?v=0191c20d';
+import { montarActoAlCoche } from './actos/03-al-coche.js?v=0191c20d';
+import { montarActoTakaragawa } from './actos/04-takaragawa.js?v=0191c20d';
+import { montarActoKusatsu } from './actos/05-kusatsu.js?v=0191c20d';
+import { montarActoYamanouchi } from './actos/06-yamanouchi.js?v=0191c20d';
+import { montarActoTren } from './actos/07-tren.js?v=0191c20d';
 
 /* --------------------------------------------------------------------------
    1 · El escenario y los actos
@@ -30,6 +31,7 @@ montarActoAlCoche();
 montarActoTakaragawa();
 montarActoKusatsu();
 montarActoYamanouchi();
+montarActoTren();
 
 /* --------------------------------------------------------------------------
    2 · La barra de arriba y el raíl
@@ -44,7 +46,7 @@ const rail = document.getElementById('rail');
    el escenario se apagaba A MITAD DEL ACTO 3: los globales corren DESPUES de
    los actos, asi que ganan, y el mapa se iba justo mientras se trazaba la linea
    Keio hacia Shinjuku. */
-const finPelicula = document.getElementById('yamanouchi');
+const finPelicula = document.getElementById('tren');
 
 registrarGlobal(function (scroll, alto, sinMovimiento) {
   const pasadaLaPortada = sinMovimiento || scroll > alto * 0.9;

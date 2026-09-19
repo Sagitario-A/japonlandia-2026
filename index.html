@@ -9,14 +9,15 @@
 <meta name="theme-color" content="#ffffff">
 
 <link rel="preload" href="tipo/shippori-mincho-500-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/base.css?v=47c92712">
-<link rel="stylesheet" href="css/texto.css?v=47c92712">
-<link rel="stylesheet" href="css/escena.css?v=47c92712">
-<link rel="stylesheet" href="css/color.css?v=47c92712">
-<link rel="stylesheet" href="css/actos/03-al-coche.css?v=47c92712">
-<link rel="stylesheet" href="css/actos/04-takaragawa.css?v=47c92712">
-<link rel="stylesheet" href="css/actos/05-kusatsu.css?v=47c92712">
-<link rel="stylesheet" href="css/actos/06-yamanouchi.css?v=47c92712">
+<link rel="stylesheet" href="css/base.css?v=0191c20d">
+<link rel="stylesheet" href="css/texto.css?v=0191c20d">
+<link rel="stylesheet" href="css/escena.css?v=0191c20d">
+<link rel="stylesheet" href="css/color.css?v=0191c20d">
+<link rel="stylesheet" href="css/actos/03-al-coche.css?v=0191c20d">
+<link rel="stylesheet" href="css/actos/04-takaragawa.css?v=0191c20d">
+<link rel="stylesheet" href="css/actos/05-kusatsu.css?v=0191c20d">
+<link rel="stylesheet" href="css/actos/06-yamanouchi.css?v=0191c20d">
+<link rel="stylesheet" href="css/actos/07-tren.css?v=0191c20d">
 </head>
 
 <body>
@@ -138,6 +139,19 @@
       <text x="0" y="22" text-anchor="middle">Matsumoto</text>
     </g>
 
+    <!-- 🚃 Kioto, donde acaba el acto 7 y empieza el 8. Centrada y ENCIMA del
+         punto (ley 22), que es por donde no pasa nada: la ciudad está en la
+         cintura estrecha de Honshu, con el mar de Japón al norte y la bahía de
+         Osaka al sur, y son esas dos costas las que hacen reconocible el
+         encuadre. 🚨 NO el lago Biwa, aunque sea lo primero que uno buscaría al
+         lado de Kioto: el dataset de costas de esta web es `land`, y `land` no
+         trae lagos. Comprobado contando puntos dentro de su caja: cero.
+         Cinco letras, la etiqueta más corta de toda la película. -->
+    <g data-hito="kioto" class="m-hito m-destino">
+      <circle class="m-halo" r="10"/><circle r="3.4"/>
+      <text x="0" y="-14" text-anchor="middle">Kioto</text>
+    </g>
+
     <g data-hito="casa" class="m-hito m-destino">
       <circle class="m-halo" r="10"/><circle r="3.4"/>
       <!-- A la izquierda del punto: con la etiqueta a la derecha se comia la de
@@ -226,6 +240,16 @@
   <div class="d-pieza" data-pieza="poza-fondo"></div>
   <div class="d-pieza" data-pieza="mono"></div>
   <div class="d-pieza" data-pieza="poza"></div>
+  <!-- 🚃 EL ACTO 7, Y ES EL ÚNICO GRUPO QUE NO SE APOYA EN EL SUELO: se mira
+       desde arriba, así que estas cinco cuelgan del borde de ARRIBA y cruzan la
+       pantalla entera. Su regla de posición vive en css/actos/07-tren.css.
+       El orden es la escena: las vías son el suelo por el que pasa todo, el
+       andén se posa encima, y los trenes van por delante de los tres. -->
+  <div class="d-pieza" data-pieza="via-izq"></div>
+  <div class="d-pieza" data-pieza="via-der"></div>
+  <div class="d-pieza" data-pieza="anden"></div>
+  <div class="d-pieza" data-pieza="tren-shinano"></div>
+  <div class="d-pieza" data-pieza="tren-shinkansen"></div>
   <div class="nieve" id="campo-nieve"></div>
 </div>
 
@@ -240,6 +264,7 @@
     <li><a href="#takaragawa" data-rail="takaragawa"><span>Takaragawa</span></a></li>
     <li><a href="#kusatsu" data-rail="kusatsu"><span>Kusatsu</span></a></li>
     <li><a href="#yamanouchi" data-rail="yamanouchi"><span>Yamanouchi</span></a></li>
+    <li><a href="#tren" data-rail="tren"><span>El tren a Kioto</span></a></li>
   </ol>
 </nav>
 
@@ -652,6 +677,72 @@
     </div>
   </section>
 
+  <!-- ══════════════════  A7 · EL TREN A KIOTO  ══════════════════
+       Empieza en el fotograma exacto en que acaba el 6 —el castillo de
+       Matsumoto en el borde izquierdo, los Alpes al fondo, el coche rodando
+       sobre la carretera nevada sin bosque, el zoom out puesto y arriba el mapa
+       con la ruta completa— y cambia el punto de vista de toda la película: a
+       partir de aquí se mira DESDE ARRIBA.
+
+       🚨 Y ES EL PRIMER ACTO SIN ALOJAMIENTO. No hay panel porque aquí no se
+       duerme: se viaja. Lo único que se cuenta son los dos tramos del tren, y
+       los dos están verificados —al revés que los tramos en coche de los actos
+       3, 5 y 6, donde los kilómetros son reales pero el tiempo es una
+       estimación a velocidad libre—. Fuente: investigacion/021 § 3. -->
+  <section class="acto" id="tren" style="--largo: 1700" aria-labelledby="t-tren">
+    <div class="escena">
+
+      <div class="titular-acto">
+        <p class="sobre"><span class="num">07</span> El tren a Kioto</p>
+        <h2 id="t-tren">Se acaba la nieve y empieza el sur</h2>
+      </div>
+
+      <!-- 🚨 LOS DOS DATOS VAN ENFRENTE DEL TREN Y CAMBIAN DE LADO, que es
+           literal de Kiko: «en el lado izquierdo va apareciendo la duración y
+           demás del trayecto», y después del transbordo «los otros datos
+           aparecen en el lado de la derecha». O sea que ocupan el hueco que
+           deja el tren que no está — el mismo hueco que él pidió dejar vacío al
+           principio, «como si tuviese que ver un tren también, pero no lo hay».
+
+           ✅ AQUÍ EL TIEMPO SÍ ES UN DATO, y es el único acto de viaje donde lo
+           es: los tramos en coche llevan ⚠️ porque su tiempo sale de medir la
+           carretera a velocidad libre, y un tren tiene horario publicado.
+           Dato: investigacion/021 § 3. -->
+      <!-- 🚨 EL SALTO DE LÍNEA ESTÁ PUESTO A MANO, y hace falta: en media
+           pantalla de un móvil el renglón se parte solo por donde le toca, y
+           donde le tocaba era justo detrás del punto medio, así que la segunda
+           línea empezaba por «· Limited Express». Se vio en la captura. -->
+      <p class="viaje" data-viaje="uno">
+        <span class="v-dato">2 h</span>
+        <span class="v-pie">Matsumoto <span aria-hidden="true">&rarr;</span> Nagoya<br>
+          Limited Express Shinano (しなの)
+          <span class="marca m-ok">✓ verificado</span></span>
+      </p>
+
+      <p class="viaje" data-viaje="dos">
+        <span class="v-dato">35 min</span>
+        <!-- 🚨 El nombre japonés va en su propio renglón: en la columna estrecha
+             de la derecha, 東海道新幹線 se partía por la mitad —el japonés corta
+             por cualquier carácter— y quedaba «東海道新 / 幹線». -->
+        <span class="v-pie">Nagoya <span aria-hidden="true">&rarr;</span> Kioto<br>
+          Shinkansen Tōkaidō<br>(東海道新幹線)
+          <span class="marca m-ok">✓ verificado</span></span>
+      </p>
+
+      <!-- El total, debajo del todo: es la suma de los dos tramos y el único
+           sitio del acto donde se dice lo que cuesta.
+           ⚠️ Los horarios exactos de diciembre de 2026 no salen hasta noviembre,
+           y eso se dice en vez de inventar una hora de salida (regla 3). -->
+      <p class="total-viaje">
+        Un solo transbordo, en Nagoya<br>
+        <strong>~3 h</strong> · ¥11.000 por persona
+        <span class="marca m-ok">✓ verificado</span><br>
+        Los horarios de diciembre salen en noviembre
+        <span class="marca m-duda">? por verificar</span>
+      </p>
+    </div>
+  </section>
+
   <!-- ══════════════════  Y AQUÍ SE CORTA  ══════════════════
        🚨 AQUÍ HABÍA CUATRO CAPÍTULOS DE TEXTO —la nieve, Kioto, Año Nuevo y la
        vuelta— y los quitó Kiko el 17 de septiembre: «que borre "la nieve" o las
@@ -693,6 +784,6 @@
     <span class="marca m-pend">○ pendiente</span>. Lo que no está marcado, no está comprobado.</p>
 </footer>
 
-<script type="module" src="js/principal.js?v=47c92712"></script>
+<script type="module" src="js/principal.js?v=0191c20d"></script>
 </body>
 </html>

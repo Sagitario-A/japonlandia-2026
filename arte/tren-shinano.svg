@@ -1,0 +1,104 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 1500" preserveAspectRatio="none" class="a-tren7" aria-hidden="true" focusable="false">
+  <!-- EL LIMITED EXPRESS SHINANO (しなの), VISTO DESDE ARRIBA · acto 7.
+       Matsumoto → Nagoya, ~2 h ✅ — investigacion/021 § 3.
+
+       🚨 ESTE DIBUJO Y EL DEL SHINKANSEN SON EL MISMO CUERPO, Y SOLO CAMBIA EL
+       MORRO. Lo decidió Kiko el 18 de septiembre, viendo el problema: el guion
+       decía «se pone en paralelo con un tren igual» y no son iguales —uno es un
+       limited express y el otro un shinkansen—, así que eligió el camino de en
+       medio: *mismo tamaño, morro distinto*. Las dos barras miden lo mismo y
+       las divisiones de coche caen en los mismos sitios, de manera que en el
+       transbordo siguen leyéndose como un espejo; lo único que cambia es la
+       punta.
+
+       🚨 Y ESO SIGNIFICA QUE LA GEOMETRÍA DEL CUERPO ESTÁ ESCRITA DOS VECES,
+       aquí y en tren-shinkansen.svg. Es el mismo caso que bosque.svg y
+       bosque-nevado.svg, que tienen los árboles en las mismas coordenadas
+       exactas: **no se puede tocar uno sin tocar el otro**. Las divisiones van
+       en 380, 610, 840, 1070 y 1300 en los dos.
+
+       🚨 EL MORRO TIENE QUE VERSE, y por eso el tren no empieza en el borde de
+       arriba de la pantalla: el acto lo planta con la punta un poco por debajo
+       del canto y el cuerpo se va por abajo. «Como una barra de arriba abajo»
+       se sigue leyendo igual, y a cambio en el transbordo se pueden comparar
+       los dos morros, que es justo la comparación que Kiko eligió hacer.
+
+       ⚠️ LOS COLORES NO SON LA LIBREA DE VERDAD. El 383 series lleva blanco con
+       una banda, pero los colores de línea de este viaje están sin verificar
+       (PENDIENTE W4) y en esta web el color de una línea es un dato. Esto es
+       caricatura, con la misma paleta de tren que el cercanías del acto 3.
+
+       📐 Proporción: 120 × 1500, y la pieza mide 24u × 300u. Los dos ejes van a
+       la misma escala. preserveAspectRatio="none" por lo mismo que las montañas
+       del acto 6 (fila 68 del inventario): la caja manda. -->
+
+  <!-- 🚨 EL MORRO, QUE ES LO ÚNICO DISTINTO: CORTO Y REDONDEADO.
+       Un limited express convencional tiene la cabina justo delante del primer
+       coche, así que desde arriba la punta es un hocico ancho que se resuelve
+       en muy poca longitud. Comparado con el del shinkansen, que baja hasta
+       y=25 estrechándose, este se planta en y=52 de golpe. -->
+  <path class="v7-cuerpo" d="M6 1500 V190 C6 110 26 52 60 52 C94 52 114 110 114 190 V1500 Z"/>
+
+  <!-- El parabrisas de la cabina: desde arriba es lo que dice «por aquí va
+       delante». Sin él, la punta es una barra redondeada y nada más. -->
+  <path class="v7-cristal" d="M20 150 C24 96 38 72 60 72 C82 72 96 96 100 150 Z"/>
+
+  <!-- Las dos bandas del costado. Desde arriba de un tren se ve el techo y un
+       filo de los costados: estas dos franjas son ese filo. -->
+  <rect class="v7-banda" x="6" y="190" width="9" height="1310"/>
+  <rect class="v7-banda" x="105" y="190" width="9" height="1310"/>
+
+  <!-- El lomo del techo, la línea que recorre el tren de punta a punta -->
+  <rect class="v7-lomo" x="58" y="120" width="4" height="1380"/>
+
+  <!-- Las divisiones entre coches. 🚨 EN LOS MISMOS SITIOS QUE EL SHINKANSEN -->
+  <g class="v7-junta">
+    <rect x="6" y="376" width="108" height="8"/>
+    <rect x="6" y="606" width="108" height="8"/>
+    <rect x="6" y="836" width="108" height="8"/>
+    <rect x="6" y="1066" width="108" height="8"/>
+    <rect x="6" y="1296" width="108" height="8"/>
+  </g>
+
+  <!-- Los equipos del techo: el aire acondicionado de cada coche. Son lo que
+       hace que esto se lea como un techo de tren y no como una tabla. -->
+  <g class="v7-equipo">
+    <rect x="34" y="230" width="52" height="34" rx="6"/>
+    <rect x="34" y="300" width="52" height="34" rx="6"/>
+    <rect x="34" y="460" width="52" height="34" rx="6"/>
+    <rect x="34" y="530" width="52" height="34" rx="6"/>
+    <rect x="34" y="690" width="52" height="34" rx="6"/>
+    <rect x="34" y="760" width="52" height="34" rx="6"/>
+    <rect x="34" y="920" width="52" height="34" rx="6"/>
+    <rect x="34" y="990" width="52" height="34" rx="6"/>
+    <rect x="34" y="1150" width="52" height="34" rx="6"/>
+    <rect x="34" y="1220" width="52" height="34" rx="6"/>
+    <rect x="34" y="1380" width="52" height="34" rx="6"/>
+  </g>
+
+  <!-- 🚨 LOS PANTOGRAFOS, que son la firma de un tren electrico visto desde
+       arriba: el marco carenado y, cruzada, la pletina que roza el cable. Sin
+       ellos, desde arriba, esto podria ser un autobus muy largo.
+       🔁 Estaban dibujados como dos brazos en V y en pantalla parecian una
+       FLECHA negra apuntando hacia delante: a 24u de ancho, un trazo de tres
+       unidades pesa como una señal de trafico. Se vio en la captura. -->
+  <g class="v7-panto">
+    <rect x="38" y="672" width="44" height="30" rx="3"/>
+    <rect class="v7-pletina" x="32" y="680" width="56" height="6"/>
+    <rect x="38" y="1132" width="44" height="30" rx="3"/>
+    <rect class="v7-pletina" x="32" y="1140" width="56" height="6"/>
+  </g>
+
+  <!-- Las puertas, en los extremos de cada coche. Marcas cortas en el filo -->
+  <g class="v7-puerta">
+    <rect x="6" y="410" width="9" height="40"/><rect x="105" y="410" width="9" height="40"/>
+    <rect x="6" y="560" width="9" height="40"/><rect x="105" y="560" width="9" height="40"/>
+    <rect x="6" y="640" width="9" height="40"/><rect x="105" y="640" width="9" height="40"/>
+    <rect x="6" y="790" width="9" height="40"/><rect x="105" y="790" width="9" height="40"/>
+    <rect x="6" y="870" width="9" height="40"/><rect x="105" y="870" width="9" height="40"/>
+    <rect x="6" y="1020" width="9" height="40"/><rect x="105" y="1020" width="9" height="40"/>
+    <rect x="6" y="1100" width="9" height="40"/><rect x="105" y="1100" width="9" height="40"/>
+    <rect x="6" y="1250" width="9" height="40"/><rect x="105" y="1250" width="9" height="40"/>
+    <rect x="6" y="1330" width="9" height="40"/><rect x="105" y="1330" width="9" height="40"/>
+  </g>
+</svg>

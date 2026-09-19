@@ -64,20 +64,20 @@
    quedaron así del acto 4.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=47c92712';
-import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=47c92712';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=47c92712';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=47c92712';
-import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena, perfilDe, altura } from '../motor/dibujo.js?v=47c92712';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=47c92712';
-import { tenderRuta } from '../motor/ruta.js?v=47c92712';
-import { LUGARES, RUTA_A_YAMANOUCHI, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=47c92712';
+import { registrarActo } from '../motor/escenario.js?v=0191c20d';
+import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=0191c20d';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=0191c20d';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=0191c20d';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena, perfilDe, altura } from '../motor/dibujo.js?v=0191c20d';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=0191c20d';
+import { tenderRuta } from '../motor/ruta.js?v=0191c20d';
+import { LUGARES, RUTA_A_YAMANOUCHI, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=0191c20d';
 /* 🚨 LO ÚNICO QUE ESTE ACTO IMPORTA DE OTRO ACTO, y es a propósito: son los
    cuatro números con los que acaba el acto 5, o sea el fotograma del que este
    arranca (ley 5). Escritos a mano aquí serían el mismo número en dos archivos
    —regla 1 del repositorio—, y el día que alguien mueva la tabla o cambie lo
    ancho del onsen, el acto 6 abriría con las cosas en otro sitio que el 5. */
-import { HUNDIDO_U, ONSEN_ANCHO_U, X_TABLA_CAE, X_ROCA_PARA, FONDO_AL_FINAL } from './05-kusatsu.js?v=47c92712';
+import { HUNDIDO_U, ONSEN_ANCHO_U, X_TABLA_CAE, X_ROCA_PARA, FONDO_AL_FINAL } from './05-kusatsu.js?v=0191c20d';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -247,6 +247,15 @@ const F = {
   mapa2Entra: [0.862, 0.908],
   ruta2:      [0.910, 0.990],
   viaje2Dent: [0.918, 0.962],
+  /* 🔁 Y SE DESVANECE AL FINAL, QUE ES LO QUE PEDÍA LA COSTURA CON EL ACTO 7.
+     Hasta el 18 de septiembre este dato se quedaba encendido en el último
+     fotograma del acto, y mientras el 6 era el último de la película no se
+     notaba. Con el 7 detrás sí: en cuanto el scroll pasa la costura, el acto 6
+     sale de su tramo, `salir()` pone la variable a cero y el rótulo DESAPARECÍA
+     DE GOLPE. Se vio en la primera captura del acto 7, en su fotograma cero.
+     Ahora se va como se van los datos en los actos 3, 4 y 5: desvaneciéndose
+     quieto, y antes de llegar al final. */
+  viaje2Fuer: [0.968, 0.998],
 
   /* 🏔️ Y EL FONDO DE MATSUMOTO. Kiko: «la montaña grande que hay al fondo se
      deberia quedar segun se va desplegando a Matsumoto, porque Matsumoto tiene
@@ -279,7 +288,7 @@ const F = {
    unidades por lado para este acto (ver 03-al-coche.css) y con eso aguanta
    hasta aquí. Para bajar más haría falta una CUARTA copia de banda, que es
    justo lo que se quitó del acto 3 para que fuera a 60 fps. */
-const ZOOM_FIN = 0.60;
+export const ZOOM_FIN = 0.60;
 
 /* La montaña, a la derecha. Kiko: «que empiece en la base y el pico se corte
    justo en el lateral derecho». El pico está dibujado en el borde derecho de su
@@ -296,7 +305,7 @@ const ZOOM_FIN = 0.60;
    escrito a mano para el zoom de la ronda anterior, al alejar la camara se
    quedo corto y dejo un hueco de papel entre la montaña y el canto. Lo vio
    Kiko. Lo unico que hace falta escribir es lo ancha que es la pieza. */
-const PICO_ANCHO_U = 96;
+export const PICO_ANCHO_U = 96;
 
 /* La poza de los monos, al pie de la montaña. Va entre la roca que dejó el acto
    5 —en +25 y 16u de ancho, o sea que llega hasta +33— y el borde derecho. */
@@ -378,6 +387,16 @@ const VIAJE = 560;
    contrario que al final del acto. */
 const CORRIDA = 760;
 
+/* 🚨 DÓNDE SE QUEDA EL FONDO AL ACABAR ESTE ACTO, que es donde tiene que
+   arrancar el 7. Se exporta por lo mismo que el acto 5 exporta el suyo: escrito
+   a mano allí, el paisaje pegaría un salto en la costura el día que se tocara
+   cualquiera de los tres números de los que sale. Con `corriendo` y `viajando`
+   los dos a 1 —que es el último fotograma— la cuenta de `pintar` es esta.
+   🚨 Y VA DESPUÉS DE `CORRIDA` A PROPÓSITO: con `const` no hay elevación, así
+   que escrito más arriba el módulo revienta al cargarse. */
+export const FONDO_AL_FINAL_6 = FONDO_AL_FINAL + CORRIDA - VIAJE;
+
+
 /* 🔁 POR DONDE ENTRAN EL HOTEL Y LA MONTAÑA, Y POR QUE NO ES UN FUNDIDO.
    Kiko, segunda ronda: «el edificio aparece de la nada, como de desvanecido, y
    deberia venir por la derecha, junto con los arboles, hasta que se queda en el
@@ -413,7 +432,7 @@ const X_HOTEL = 0;
    castillo pesa en el izquierdo. Y se calcula del zoom por la misma razón que
    ella —una posición que depende del encuadre escrita a mano se rompe en cuanto
    se mueve la cámara—, que ya costó un hueco de papel una vez. */
-const CASTILLO_ANCHO_U = 46;
+export const CASTILLO_ANCHO_U = 46;
 const ENTRADA_CASTILLO = 160;
 
 /* 🚨 CUÁNTOS ÁRBOLES HAY, Y POR QUÉ ESTE NÚMERO ESTÁ AQUÍ.
@@ -427,7 +446,7 @@ const ENTRADA_CASTILLO = 160;
    forma limpia de que un acto exporte una constante de maquetación a otro sin
    que el 3 dependa del 6; si alguien añade una ranura al dibujo, se tocan los
    dos. */
-const RANURAS = 12;
+export const RANURAS = 12;
 
 /* --------------------------------------------------------------------------
    La escena que se hereda del acto 5
@@ -1079,7 +1098,9 @@ export function montarActoYamanouchi() {
       acto.v('--p-viaje-1',
         suave(tramo(p, F.viaje1Dent[0], F.viaje1Dent[1])) *
         (1 - suave(tramo(p, F.viaje1Fuer[0], F.viaje1Fuer[1]))));
-      acto.v('--p-viaje-2', suave(tramo(p, F.viaje2Dent[0], F.viaje2Dent[1])));
+      acto.v('--p-viaje-2',
+        suave(tramo(p, F.viaje2Dent[0], F.viaje2Dent[1])) *
+        (1 - suave(tramo(p, F.viaje2Fuer[0], F.viaje2Fuer[1]))));
 
       acto.v('--p-sube', suave(tramo(p, F.datosSube[0], F.datosSube[1])));
       acto.v('--p-datos',

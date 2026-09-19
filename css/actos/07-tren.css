@@ -1,0 +1,207 @@
+@charset "utf-8";
+/* ==========================================================================
+   actos/07-tren.css · El tren a Kioto
+   --------------------------------------------------------------------------
+   El color vive en color.css. Aquí vive dónde está cada cosa y cómo se mueve.
+
+   🚨 ESTE ACTO CAMBIA EL PUNTO DE VISTA, Y POR ESO SUS PIEZAS NO SE PARECEN A
+   NINGUNA DE LAS ANTERIORES. Los seis actos de antes se miran de lado y todo se
+   apoya en la línea del suelo: el coche, el muñeco, el onsen, el castillo.
+   Aquí se mira DESDE ARRIBA, y un tren visto desde arriba no se apoya en nada:
+   cruza la pantalla de canto a canto. Kiko: «lo único que queda es un tren que
+   se ve desde en vertical, desde arriba hasta abajo, como una barra».
+
+   Así que estas cinco piezas se salen a propósito de la regla de `.d-pieza`
+   —`top: var(--suelo)` y `translate(-50%, -100%)`, o sea apoyada por su base en
+   el suelo— y se cuelgan del borde de ARRIBA de la pantalla. Y con eso dejan de
+   llevar `--baja-px`, que es exactamente lo que hace falta: cuando el acto
+   hunde el paisaje de la nieve por debajo del canto de abajo, los trenes no se
+   hunden con él, porque ya no están en ese mundo.
+
+   🚨 Y LA HERENCIA DE ESTE ACTO ES LA MÁS LARGA DE LA PELÍCULA: llega con el
+   zoom al 0,60, el suelo abajo del todo, los árboles apagados, nevando, y con
+   el coche, el castillo y los Alpes puestos. Las cinco cosas se vuelven a
+   escribir en cada fotograma (leyes 24 y 26). Ver ESTADO § 5.8.
+   ========================================================================== */
+
+/* ==========================================================================
+   1 · Las piezas que cruzan la pantalla en vertical
+   --------------------------------------------------------------------------
+   🚨 `top: 0` Y SU PROPIO `transform`: cuelgan del borde de arriba y --y las
+   baja desde ahí. El `transform-origin` va en el borde superior para que el
+   zoom out del final las encoja hacia arriba, que es de donde cuelgan, y no
+   hacia un suelo que en este acto no existe.
+   ========================================================================== */
+[data-pieza='via-izq'],
+[data-pieza='via-der'],
+[data-pieza='tren-shinano'],
+[data-pieza='tren-shinkansen'],
+[data-pieza='anden'] {
+  top: 0;
+  aspect-ratio: auto;
+  transform-origin: 50% 0;
+  transform:
+    translateX(-50%)
+    translate(calc(var(--x, 0) * var(--u)), calc(var(--y, 0) * var(--u)))
+    scale(var(--s, 1));
+}
+
+/* 🚨 LA VÍA ES MÁS ALTA QUE LA PANTALLA, Y ESO NO ES DE SOBRA: ES EL BUCLE.
+   360u para un viewBox de 1200, o sea 30u por período. El acto la desliza y le
+   da la vuelta cada 30u, así que la pieza tiene que cubrir la pantalla entera
+   MÁS un período por arriba, o en el salto del bucle se vería su canto.
+   Un móvil muy alargado (360×1000) mide 278u de alto: 278 + 30 = 308 < 360 ✅ */
+[data-pieza='via-izq'],
+[data-pieza='via-der'] {
+  width: calc(30 * var(--u));
+  height: calc(360 * var(--u));
+}
+
+/* 🚨 LOS DOS TRENES MIDEN EXACTAMENTE LO MISMO, y esa es la decisión que tomó
+   Kiko el 18 de septiembre: *mismo tamaño, morro distinto*. Si alguien le
+   cambia el ancho o el alto a uno de los dos, en el transbordo dejan de leerse
+   como un espejo y se pierde el gesto entero. Lo único que los distingue es la
+   punta, y eso vive en los dos .svg.
+
+   24u de ancho: tres cuartos de lo que mide el mono del acto 6 y la mitad del
+   coche. Un tren de verdad visto desde arriba sería un pelo, porque mide tres
+   metros de ancho y cien de largo; a 24u es una barra que se lee como un tren,
+   que es lo que pidió. Y 300u de alto para que cruce la pantalla entera de
+   cualquier móvil aunque la punta se plante ocho unidades por debajo del canto
+   de arriba. */
+[data-pieza='tren-shinano'],
+[data-pieza='tren-shinkansen'] {
+  width: calc(24 * var(--u));
+  height: calc(300 * var(--u));
+}
+
+/* El andén: cabe justo entre las dos vías —cada una llega hasta 11u de su eje,
+   y los ejes están en ±26—, así que 20u de ancho lo dejan centrado sin tocar
+   ninguna de las dos. */
+[data-pieza='anden'] {
+  width: calc(20 * var(--u));
+  height: calc(170 * var(--u));
+}
+
+/* ==========================================================================
+   2 · El texto del acto
+   --------------------------------------------------------------------------
+   🚨 LOS DATOS VAN EN EL HUECO QUE DEJA EL TREN, Y CAMBIAN DE LADO EN EL
+   TRANSBORDO. Es literal de Kiko: «en el lado izquierdo va apareciendo la
+   duración y demás del trayecto», y después del transbordo «el tren de la
+   izquierda es el que continúa… y los otros datos aparecen en el lado de la
+   derecha». O sea que los datos van SIEMPRE enfrente del tren, y el hueco de la
+   izquierda del principio —«como si tuviese que ver un tren también, pero no lo
+   hay»— es el sitio donde se cuenta el viaje.
+
+   Los dos bloques son la misma pieza `.viaje` de los actos 3, 5 y 6; lo único
+   propio de aquí es que ocupan MEDIA pantalla en vez de toda, y que uno va a un
+   lado y el otro al otro.
+   ========================================================================== */
+#tren { --acento: #2e7aa8; }
+
+/* 🚨 LA MITAD LIBRE ES MÁS ANCHA QUE MEDIA PANTALLA, y por eso el bloque mide
+   la mitad y no el 42 % que tenía al principio: la vía del tren ocupa de 11 a
+   41 unidades de su lado, así que del otro lado quedan libres 61 de las 100 que
+   mide un móvil. Con 42 % el texto salía en cuatro renglones cortos; con 50 %
+   entra en dos o tres y se lee de un vistazo. Medido en pantalla. */
+#tren .viaje {
+  position: absolute;
+  top: 28%;
+  width: 50%;
+  text-align: center;
+  pointer-events: none;
+}
+/* 🚨 El primero a la IZQUIERDA, que es donde está el hueco mientras el tren va
+   a la derecha. El segundo a la DERECHA, que es donde queda el hueco cuando el
+   que sigue es el de la izquierda. Nunca coinciden: el acto se encarga. */
+#tren .viaje[data-viaje='uno'] { left: 2%; opacity: var(--p-viaje-1, 0); }
+
+/* 🚨 LA COLUMNA DE LA DERECHA ES MÁS ESTRECHA QUE LA DE LA IZQUIERDA, y no es
+   un descuido: son dos huecos distintos. Mientras el tren va a la derecha, a la
+   izquierda hay 61 unidades de papel en blanco. Pero después del transbordo el
+   tren va a la izquierda Y EL ANDÉN LLEGA AL CENTRO, así que a la derecha solo
+   quedan 40 desde el canto del andén. Con la misma anchura que la izquierda, el
+   rótulo se imprimía encima de la losa y no se leía ni el texto ni el andén.
+   Se vio en la captura de la llegada. */
+#tren .viaje[data-viaje='dos'],
+#tren .total-viaje {
+  right: 8%;
+  width: 36%;
+}
+#tren .viaje[data-viaje='dos'] { opacity: var(--p-viaje-2, 0); }
+
+/* 🚨 MÁS PEQUEÑO QUE EN LOS ACTOS DE COCHE, y no es un capricho: allí el dato
+   cruzaba la pantalla entera y aquí vive en media. En un móvil de 390 px, media
+   pantalla son 195 px menos el margen, así que «2 h» a 2 rem ya casi la llena y
+   el pie de dos líneas se desborda. Medido en pantalla, no calculado. */
+#tren .v-dato { font-size: clamp(1.4rem, 5.6vw, 1.8rem); }
+#tren .v-pie { font-size: .72rem; }
+
+/* El total del viaje: la suma de los dos tramos, debajo del segundo dato.
+   🚨 VA EN LA MISMA COLUMNA QUE ÉL Y NO CRUZANDO LA PANTALLA POR ABAJO, que es
+   donde estaba: ahí se imprimía encima del andén y del tren y no se leía ni él
+   ni ellos. Se vio en la captura de la llegada. La regla del acto es una sola y
+   vale también para esto: el texto vive en el lado donde NO hay tren. */
+#tren .total-viaje {
+  position: absolute;
+  top: 52%;
+  text-align: center;
+  font-size: .72rem;
+  line-height: 1.55;
+  opacity: var(--p-total, 0);
+  pointer-events: none;
+}
+
+/* Halo, como todo el texto que flota sobre el dibujo (ley 9: halo, nunca velo) */
+.anim #tren .viaje,
+.anim #tren .total-viaje {
+  text-shadow: 0 0 .5rem var(--papel), 0 0 .25rem var(--papel), 0 0 .1rem var(--papel);
+}
+
+/* ==========================================================================
+   3 · Movimiento reducido y sin JavaScript
+   --------------------------------------------------------------------------
+   Lo genérico ya lo hace escena.css: los actos se aplanan y el texto sale
+   entero. Aquí solo hay que evitar que las piezas se queden plantadas encima
+   del texto —el acto pinta su fotograma final, y ese fotograma tiene los trenes
+   puestos— y que los dos datos dejen de estar en una posición absoluta que sin
+   animación ya no significa nada.
+
+   🚨 Y AQUÍ LOS DOS DATOS SÍ SALEN A LA VEZ, uno debajo del otro, igual que en
+   el acto 6: sin animación no hay «antes» ni «después», hay una página que se
+   lee, y los dos tramos son dos datos del viaje.
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  [data-pieza='via-izq'],
+  [data-pieza='via-der'],
+  [data-pieza='tren-shinano'],
+  [data-pieza='tren-shinkansen'],
+  [data-pieza='anden'] { display: none !important; }
+  /* 🚨 HAY QUE NOMBRAR TAMBIÉN EL SEGUNDO RÓTULO CON SU ATRIBUTO, y esto costó
+     un fallo: la regla que lo estrecha al 36 % lleva id + clase + atributo, o
+     sea más peso que un `#tren .viaje` a secas, así que aquí seguía ganando y
+     el dato del shinkansen salía metido en una columna de cuatro palabras de
+     ancho mientras el del Shinano salía entero. Se vio en la captura de
+     movimiento reducido. */
+  #tren .viaje,
+  #tren .viaje[data-viaje='uno'],
+  #tren .viaje[data-viaje='dos'],
+  #tren .total-viaje {
+    position: static;
+    width: auto;
+    opacity: 1 !important;
+    text-align: left;
+    margin-top: 1.6rem;
+  }
+}
+html:not(.anim) #tren .viaje,
+html:not(.anim) #tren .viaje[data-viaje='uno'],
+html:not(.anim) #tren .viaje[data-viaje='dos'],
+html:not(.anim) #tren .total-viaje {
+  position: static;
+  width: auto;
+  opacity: 1;
+  text-align: left;
+  margin-top: 1.6rem;
+}
