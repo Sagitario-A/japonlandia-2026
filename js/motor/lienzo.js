@@ -15,10 +15,10 @@
    Narita, Meidaimae— están escritos en el HTML; aquí solo se mueven.
    ============================================================================= */
 
-import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=e35a8a27';
-import { dibujarCostas, dibujarReticula, opacidadReticula, dibujarCalles, opacidadCalles, dibujarAutopistas, opacidadAutopistas, dibujarVias, opacidadVias } from './mapa.js?v=e35a8a27';
-import { trazarRuta, cabezaDeRuta } from './ruta.js?v=e35a8a27';
-import { r1 } from './util.js?v=e35a8a27';
+import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=a3f6e416';
+import { dibujarCostas, dibujarReticula, opacidadReticula, dibujarCalles, opacidadCalles, dibujarAutopistas, opacidadAutopistas, dibujarVias, opacidadVias } from './mapa.js?v=a3f6e416';
+import { trazarRuta, cabezaDeRuta } from './ruta.js?v=a3f6e416';
+import { r1 } from './util.js?v=a3f6e416';
 
 let raiz = null;
 let svg = null;

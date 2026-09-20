@@ -81,20 +81,20 @@
    se calcula con ese número y no con uno escrito a mano (ley 27).
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=e35a8a27';
-import { tramo, suave, tope, frena, mezcla, mezclaEscala, RAD } from '../motor/util.js?v=e35a8a27';
-import { encuadrar, viajarDeVista, mirarA } from '../motor/proyeccion.js?v=e35a8a27';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos, engordarVias, verEtiqueta } from '../motor/lienzo.js?v=e35a8a27';
-import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, zoomEscena } from '../motor/dibujo.js?v=e35a8a27';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=e35a8a27';
-import { tenderRuta } from '../motor/ruta.js?v=e35a8a27';
-import { LUGARES, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=e35a8a27';
+import { registrarActo } from '../motor/escenario.js?v=a3f6e416';
+import { tramo, suave, tope, frena, mezcla, mezclaEscala, RAD } from '../motor/util.js?v=a3f6e416';
+import { encuadrar, viajarDeVista, mirarA } from '../motor/proyeccion.js?v=a3f6e416';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos, engordarVias, verEtiqueta } from '../motor/lienzo.js?v=a3f6e416';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, zoomEscena } from '../motor/dibujo.js?v=a3f6e416';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=a3f6e416';
+import { tenderRuta } from '../motor/ruta.js?v=a3f6e416';
+import { LUGARES, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=a3f6e416';
 /* 🚨 LO ÚNICO QUE ESTE ACTO IMPORTA DE OTRO, y es a propósito, igual que el
    acto 6 importa cinco números del 5: son el fotograma del que arranca (ley 5).
    Escritos a mano aquí serían el mismo número en dos archivos —regla 1 del
    repositorio— y el día que alguien mueva el zoom del acto 6 o el ancho del
    castillo, este acto abriría con las cosas en otro sitio. */
-import { ZOOM_FIN, PICO_ANCHO_U, CASTILLO_ANCHO_U, FONDO_AL_FINAL_6 } from './06-yamanouchi.js?v=e35a8a27';
+import { ZOOM_FIN, PICO_ANCHO_U, CASTILLO_ANCHO_U, FONDO_AL_FINAL_6 } from './06-yamanouchi.js?v=a3f6e416';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -213,27 +213,29 @@ const F = {
      shinkansen ya esperando en ella— ha llegado ANTES, de frente, mientras
      todavía nos movíamos. Cuando paramos, lo único que se mueve es nuestro tren
      yéndose. */
-  /* 🚨 Y EL SHINKANSEN ENTRA CUANDO YA ESTAMOS PARADOS, del norte, con su
-     morro cruzando la pantalla de arriba abajo. Kiko, segunda ronda: «debería
-     ser la parte de arriba la que se ve, y luego hacia abajo que continúa el
-     tren» — así que se para con la cola arriba y el cuerpo saliéndose por
-     abajo, y la única vez que se le ve el morro es entrando.
-     🚨 Y EL SHINANO NO SE VA: SE QUEDA EN NAGOYA. «El otro tren se debería
-     quedar en la otra estación.» El que se va somos nosotros, así que él se
-     aleja con el mundo —y con su vía y el andén— en cuanto arranca el segundo
-     tramo. Por eso ya no hay ninguna ventana de salida. */
-  trenLlega2: [0.614, 0.692],
+  /* 🔁 EL SHINKANSEN YA ESTÁ EN NAGOYA, Y LO QUE TIENE VENTANA ES SU SALIDA.
+     Kiko, tercera ronda: «en la otra estación ya tiene que estar el tren, pero
+     al revés, con la punta mirando hacia abajo y que sea la punta la que se
+     queda arriba». Así que llega con la estación, espera con el morro asomando
+     por arriba —y con eso los dos morros se ven a la vez en el transbordo— y
+     lo que pasa aquí es que ARRANCA: se desliza respecto al andén hasta la
+     postura del que viaja.
+     🚨 Y esta ventana acaba justo cuando empieza la del segundo tramo, no se
+     solapan: primero se mueve el tren con la estación quieta, y después se
+     mueve el mundo con el tren quieto. Si las dos corrieran a la vez, el tren
+     avanzaría el doble y no se leería ni una cosa ni la otra. */
+  sale2: [0.712, 0.764],
   /* 🚨 Y EL DATO DEL SEGUNDO TRAMO ENTRA CUANDO LA DERECHA YA ESTÁ LIMPIA: el
      Shinano y su vía tardan casi un tercio del segundo tramo en salir por el
      canto de arriba, y hasta entonces ese lado es un dibujo, no un sitio
      donde escribir. */
-  viaje2Dent: [0.800, 0.845],
+  viaje2Dent: [0.814, 0.856],
 
   /* D · el segundo tramo: Nagoya → Kioto, 35 minutos para 135 km. Va MUCHO más
      deprisa que el primero y esa diferencia es el dato: son los mismos golpes
      de vía pasando al doble y medio de ritmo. */
-  tramo2: [0.736, 0.934],
-  total: [0.856, 0.896],
+  tramo2: [0.764, 0.930],
+  total: [0.866, 0.902],
   /* 🚨 Y LOS DOS DATOS SE VAN ANTES DE QUE ENTRE EL MAPA DE KIOTO. Se vio en la
      captura: con el tren hundiéndose y el mapa apareciendo, el rótulo del
      segundo tramo se quedaba encima de los dos y no se leía ninguno de los
@@ -290,24 +292,33 @@ const Y_VIA = -PERIODO_VIA;
 const ALTO_TREN = 300;
 const ALTO_ANDEN = 170;
 
-/* 🚨 DÓNDE SE PARA UN TREN, Y ESTO LO CORRIGIÓ KIKO EN LA SEGUNDA RONDA.
-   *«El tren a la izquierda apunta hacia abajo, pero debería ser la parte de
-   arriba la que se ve, y luego hacia abajo que continúa el tren.»*
+/* 🚨 UN TREN PARADO TIENE DOS POSTURAS, Y LA DIFERENCIA ES SI YA HA LLEGADO O
+   SI TODAVÍA ESPERA. Lo afinó Kiko en la tercera ronda, y es lo que hace que en
+   el transbordo se vean LOS DOS MORROS a la vez:
 
-   O sea: un tren parado en un andén no enseña la punta en medio de la pantalla
-   con vía vacía por debajo —eso se lee como un tren que se acaba ahí—, sino su
-   PARTE DE ARRIBA, con el cuerpo siguiendo hacia abajo y saliéndose por el
-   canto. Eso es lo que dice «este tren continúa».
+     · EL QUE HA LLEGADO enseña la punta ABAJO. *«Debería llegar la punta y la
+       punta quedarse casi abajo del todo y ya quedarse en esa posición
+       bajando.»* Es un tren que ha entrado en la estación hasta el tope: el
+       morro casi en el canto de abajo y el cuerpo saliéndose por arriba.
+     · EL QUE ESPERA enseña la punta ARRIBA. *«En la otra estación ya tiene que
+       estar el tren, pero al revés, con la punta mirando hacia abajo y que sea
+       la punta la que se queda arriba, pero que da la sensación de que esté
+       bajando.»* Está más atrás en el andén, con el morro apuntando hacia donde
+       va: listo para salir.
 
-   Así que lo que se planta a 28 unidades del borde de arriba es la COLA, y el
-   morro queda 300 más abajo, fuera de la pantalla.
+   🔁 Y ASÍ SE ARREGLA LO QUE ÉL VIO: antes el tren seguía bajando hasta meter la
+   punta fuera de cuadro y lo que quedaba en pantalla era «el final del tren, que
+   es plano». Ahora la punta llega y se para.
 
-   🚨 Y ENTONCES, ¿CUÁNDO SE VE EL MORRO? Al entrar en la estación: el tren
-   llega desde arriba —de donde venimos— y su punta cruza la pantalla entera de
-   arriba abajo antes de que la cola se pare aquí. Así el morro se ve una vez
-   por tren, en movimiento, que es cuando de verdad se mira — y no se pierde la
-   decisión que tomó Kiko el 18 de septiembre: mismo tamaño, morro distinto. */
-const Y_COLA = 28;
+   🚨 Las dos son la posición del BORDE DE ARRIBA de la pieza —que es la cola—,
+   así que las dos salen de restarle lo que mide el tren a donde va el morro. Y
+   la primera depende del alto de la pantalla, así que se calcula (ley 27). */
+const MORRO_ABAJO = 24;   /* unidades por encima del canto de abajo */
+/* 🚨 56 Y NO 40: el morro del shinkansen es una parábola de casi ochenta
+   unidades, así que con la punta a 40 del canto se veía solo el último tercio y
+   encima rozando la barra de arriba. A 56 se le ve tres cuartos y sigue estando
+   claramente ARRIBA, que es lo que pidió Kiko. */
+const MORRO_ARRIBA = 56;
 
 /* Lo que recorre la vía en cada tramo, en unidades.
    🚨 LA PROPORCIÓN ENTRE LOS DOS ES EL DATO, y por eso no son dos números
@@ -781,10 +792,12 @@ export function montarActoTren() {
          que es la regla, y «solo queda el mapa de Kioto», que es el guion. */
       const hundeVia = suave(tramo(p, F.hundeVia[0], F.hundeVia[1])) * (altoU + ALTO_VIA + 40);
 
-      /* Dónde se para un tren: su COLA a 28 unidades del canto de arriba, y el
-         cuerpo siguiendo hacia abajo hasta salirse de la pantalla. La pieza se
-         coloca por su borde de arriba, que es justo la cola. */
-      const yTrenParado = Y_COLA;
+      /* Las dos posturas de un tren parado, las dos dadas por el borde de
+         ARRIBA de la pieza, que es donde `colocar` la ancla:
+           · el que HA LLEGADO, con el morro casi en el canto de abajo
+           · el que ESPERA, con el morro arriba y el cuerpo fuera por encima */
+      const yTrenLlegado = altoU - MORRO_ABAJO - ALTO_TREN;
+      const yTrenEspera = MORRO_ARRIBA - ALTO_TREN;
 
       /* ================================================================
          B · LA VÍA DE LA DERECHA · la que entrega el mapa
@@ -823,7 +836,7 @@ export function montarActoTren() {
          🚨 Y DESPUÉS SE QUEDA EN NAGOYA: durante el primer tramo es el nuestro y
          no se mueve; en cuanto nos cambiamos, se va con el mundo hacia arriba. */
       const tLlega = frena(tramo(p, F.trenLlega[0], F.trenLlega[1]));
-      const yTren1 = mezcla(yTrenParado - (altoU + ALTO_TREN + 40), yTrenParado, tLlega) - rec2;
+      const yTren1 = mezcla(yTrenLlegado - (altoU + ALTO_TREN), yTrenLlegado, tLlega) - rec2;
       colocar('tren-shinano', {
         x: X_VIA,
         y: yTren1,
@@ -859,23 +872,32 @@ export function montarActoTren() {
         escala: 1
       });
 
-      /* --- El segundo tren: el shinkansen, que entra cuando ya estamos --
-         🚨 NO ESTÁ ESPERANDO: LLEGA, Y LLEGA DESPUÉS DE NOSOTROS. Es la única
-         forma de que se le vea el morro —cruza la pantalla de arriba abajo al
-         entrar— y a la vez quede como lo pidió Kiko: «debería ser la parte de
-         arriba la que se ve, y luego hacia abajo que continúa el tren».
-         Y no contradice lo que dijo de la vía: la vía SÍ viene desde abajo, con
-         la estación, porque es de la estación. El tren viene por su cuenta, del
-         norte, como vienen los trenes.
-         🚨 Entra cuando ya estamos parados, así que en el momento del transbordo
-         ese lado está quieto: «debería parecer que está estática». */
-      const tLlega2 = frena(tramo(p, F.trenLlega2[0], F.trenLlega2[1]));
-      const yTren2 = mezcla(yTrenParado - (altoU + ALTO_TREN + 40), yTrenParado, tLlega2)
+      /* --- El segundo tren: el shinkansen, que YA ESTÁ ESPERANDO ---------
+         🔁 Kiko, tercera ronda: *«en la otra estación ya tiene que estar el
+         tren, pero al revés, con la punta mirando hacia abajo y que sea la punta
+         la que se queda arriba, pero que da la sensación de que esté bajando»*.
+
+         Así que llega CON la estación —de frente, mientras todavía nos movemos—
+         y está más atrás en el andén, con el morro asomando arriba y apuntando
+         hacia donde va. 🚨 Y eso es lo que pone LOS DOS MORROS en la misma
+         pantalla en el transbordo: el nuestro abajo, porque ha entrado hasta el
+         tope, y el suyo arriba, porque todavía no ha salido. Es la única postura
+         desde la que se pueden comparar, que era la decisión del 18 de
+         septiembre: mismo tamaño, morro distinto.
+
+         🚨 Y AL SALIR, SE DESLIZA HASTA LA POSTURA DEL QUE VIAJA. Un tren que
+         arranca se mueve RESPECTO AL ANDÉN —eso es salir de una estación— y solo
+         después empieza a correr el mundo. Las dos cosas van seguidas y no a la
+         vez: primero el tren se adelanta con la estación quieta, y cuando ya está
+         colocado, el mundo se pone en marcha. */
+      const saliendo2 = suave(tramo(p, F.sale2[0], F.sale2[1]));
+      const yTren2 = mezcla(yTrenEspera, yTrenLlegado, saliendo2)
+        + Math.max(0, LARGO_1 - rec1) * (1 - saliendo2)
         + hundeVia;
       colocar('tren-shinkansen', {
         x: -X_VIA,
         y: yTren2,
-        op: (tLlega2 > 0 && yTren2 < altoU && yTren2 > -(ALTO_TREN + 20)) ? 1 : 0,
+        op: (yTren2 < altoU && yTren2 > -(ALTO_TREN + 20)) ? 1 : 0,
         escala: 1
       });
 

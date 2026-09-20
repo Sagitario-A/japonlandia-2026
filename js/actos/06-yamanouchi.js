@@ -64,20 +64,20 @@
    quedaron así del acto 4.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=e35a8a27';
-import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=e35a8a27';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=e35a8a27';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=e35a8a27';
-import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena, perfilDe, altura } from '../motor/dibujo.js?v=e35a8a27';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=e35a8a27';
-import { tenderRuta } from '../motor/ruta.js?v=e35a8a27';
-import { LUGARES, RUTA_A_YAMANOUCHI, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=e35a8a27';
+import { registrarActo } from '../motor/escenario.js?v=a3f6e416';
+import { tramo, suave, tope, frena, mezcla } from '../motor/util.js?v=a3f6e416';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=a3f6e416';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=a3f6e416';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena, perfilDe, altura } from '../motor/dibujo.js?v=a3f6e416';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=a3f6e416';
+import { tenderRuta } from '../motor/ruta.js?v=a3f6e416';
+import { LUGARES, RUTA_A_YAMANOUCHI, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=a3f6e416';
 /* 🚨 LO ÚNICO QUE ESTE ACTO IMPORTA DE OTRO ACTO, y es a propósito: son los
    cuatro números con los que acaba el acto 5, o sea el fotograma del que este
    arranca (ley 5). Escritos a mano aquí serían el mismo número en dos archivos
    —regla 1 del repositorio—, y el día que alguien mueva la tabla o cambie lo
    ancho del onsen, el acto 6 abriría con las cosas en otro sitio que el 5. */
-import { HUNDIDO_U, ONSEN_ANCHO_U, X_TABLA_CAE, X_ROCA_PARA, FONDO_AL_FINAL } from './05-kusatsu.js?v=e35a8a27';
+import { HUNDIDO_U, ONSEN_ANCHO_U, X_TABLA_CAE, X_ROCA_PARA, FONDO_AL_FINAL } from './05-kusatsu.js?v=a3f6e416';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
