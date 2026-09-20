@@ -17,10 +17,10 @@
    [lon, lat]. Se guardan sueltos porque unos son marcadores y otros solo son
    puntos de paso por los que la línea tiene que doblar.
    -------------------------------------------------------------------------- */
-import { EJE_KANETSU } from './carretera-norte.js?v=822ac628';
-import { RUTA_KUSATSU } from './carretera-kusatsu.js?v=822ac628';
-import { RUTA_YAMANOUCHI } from './carretera-yamanouchi.js?v=822ac628';
-import { RUTA_MATSUMOTO } from './carretera-matsumoto.js?v=822ac628';
+import { EJE_KANETSU } from './carretera-norte.js?v=e35a8a27';
+import { RUTA_KUSATSU } from './carretera-kusatsu.js?v=e35a8a27';
+import { RUTA_YAMANOUCHI } from './carretera-yamanouchi.js?v=e35a8a27';
+import { RUTA_MATSUMOTO } from './carretera-matsumoto.js?v=e35a8a27';
 
 export const LUGARES = {
   /* España */
@@ -389,10 +389,14 @@ export const ENCUADRES = {
      —por la estación misma pasan con 22° de inclinación, que ya se nota—. Es el
      sitio de todo Matsumoto donde el empalme no se ve. ⚠️ Si alguien regenera
      vias-matsumoto.js con otra caja o más detalle, hay que volver a medirlo.
-     🚨 Y a 0,008° de ancho —890 m— las cuatro vías del haz de la estación caen
-     a menos de quince unidades de mapa unas de otras, así que al engordar se
-     funden en una sola banda: eso es lo que se convierte en la vía del tren. */
-  matsumotoEmpalme: [137.96440, 36.22824, 0.008],
+     🔁 Y EL ENCUADRE FINAL SE CERRÓ DE 0,008° A 0,0055°, que son 610 m de ancho,
+     porque a 890 entraban en cuadro el ramal de la Kamikōchi y las vías muertas
+     del haz: al engordar, cada una por su lado y cruzándose en ángulo, lo que
+     salía no era una vía sino un puñado de MANCHAS grises. Lo vio Kiko —«esas
+     vías se hacen muy grandes y la transición es fea»— y se arregla por los dos
+     lados: cerrando el encuadre hasta que solo quedan las vías de los andenes, y
+     engordando mucho menos. */
+  matsumotoEmpalme: [137.96440, 36.22824, 0.0055],
 
   /* Y el final: la cámara se echa atrás sobre Kioto hasta que cabe la región.
      🚨 2,0° Y NO MENOS, y el motivo es qué se reconoce: a ese ancho entran las

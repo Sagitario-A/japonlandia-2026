@@ -13,15 +13,15 @@
    Ver herramientas/generar-costas.js.
    ============================================================================= */
 
-import { COSTAS as MUNDO } from '../datos/mundo.js?v=822ac628';
-import { COSTAS as JAPON } from '../datos/japon.js?v=822ac628';
-import { COSTAS as KANTO } from '../datos/kanto.js?v=822ac628';
-import { CALLES } from '../datos/calles.js?v=822ac628';
-import { CALLES_MATSUMOTO } from '../datos/calles-matsumoto.js?v=822ac628';
-import { VIAS_MATSUMOTO } from '../datos/vias-matsumoto.js?v=822ac628';
-import { AUTOPISTAS } from '../datos/autopistas.js?v=822ac628';
-import { aVectores, envolvente, asomaEnPantalla, trazar, radioActual } from './proyeccion.js?v=822ac628';
-import { tope, tramo } from './util.js?v=822ac628';
+import { COSTAS as MUNDO } from '../datos/mundo.js?v=e35a8a27';
+import { COSTAS as JAPON } from '../datos/japon.js?v=e35a8a27';
+import { COSTAS as KANTO } from '../datos/kanto.js?v=e35a8a27';
+import { CALLES } from '../datos/calles.js?v=e35a8a27';
+import { CALLES_MATSUMOTO } from '../datos/calles-matsumoto.js?v=e35a8a27';
+import { VIAS_MATSUMOTO } from '../datos/vias-matsumoto.js?v=e35a8a27';
+import { AUTOPISTAS } from '../datos/autopistas.js?v=e35a8a27';
+import { aVectores, envolvente, asomaEnPantalla, trazar, radioActual } from './proyeccion.js?v=e35a8a27';
+import { tope, tramo } from './util.js?v=e35a8a27';
 
 /* --------------------------------------------------------------------------
    1 · Preparar los datasets

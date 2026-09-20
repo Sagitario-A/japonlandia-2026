@@ -15,10 +15,10 @@
    Narita, Meidaimae— están escritos en el HTML; aquí solo se mueven.
    ============================================================================= */
 
-import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=822ac628';
-import { dibujarCostas, dibujarReticula, opacidadReticula, dibujarCalles, opacidadCalles, dibujarAutopistas, opacidadAutopistas, dibujarVias, opacidadVias } from './mapa.js?v=822ac628';
-import { trazarRuta, cabezaDeRuta } from './ruta.js?v=822ac628';
-import { r1 } from './util.js?v=822ac628';
+import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=e35a8a27';
+import { dibujarCostas, dibujarReticula, opacidadReticula, dibujarCalles, opacidadCalles, dibujarAutopistas, opacidadAutopistas, dibujarVias, opacidadVias } from './mapa.js?v=e35a8a27';
+import { trazarRuta, cabezaDeRuta } from './ruta.js?v=e35a8a27';
+import { r1 } from './util.js?v=e35a8a27';
 
 let raiz = null;
 let svg = null;
@@ -254,6 +254,24 @@ export function marcar(nombre, lonlat, opacidad = 1) {
   }
   el.setAttribute('transform', 'translate(' + r1(px) + ' ' + r1(py) + ')');
   el.style.opacity = opacidad.toFixed(3);
+}
+
+/**
+ * 🚨 LA ETIQUETA DE UN MARCADOR, SIN APAGAR EL PUNTO. Existe desde el acto 7 y
+ * la pidió Kiko sin nombrarla: *«el punto azul debe recaer sobre la estación;
+ * si te das cuenta, hay un momento en el que se desvanece y parece que se
+ * descuadra todo»*.
+ *
+ * El problema era que punto y rótulo se apagaban juntos, y son dos cosas
+ * distintas: **el punto es adónde vamos** —el ojo lo sigue durante todo el zoom
+ * y es lo que da la referencia— y el rótulo solo es su nombre, que a escala de
+ * calle ocupa media estación y estorba. Ahora se pueden separar.
+ */
+export function verEtiqueta(nombre, opacidad) {
+  const el = hitos.get(nombre);
+  if (!el) return;
+  const t = el.querySelector('text');
+  if (t) t.style.opacity = opacidad.toFixed(3);
 }
 
 /** Esconde un marcador sin moverlo. */

@@ -81,20 +81,20 @@
    se calcula con ese número y no con uno escrito a mano (ley 27).
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=822ac628';
-import { tramo, suave, tope, frena, mezcla, RAD } from '../motor/util.js?v=822ac628';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=822ac628';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos, engordarVias } from '../motor/lienzo.js?v=822ac628';
-import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, zoomEscena } from '../motor/dibujo.js?v=822ac628';
-import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=822ac628';
-import { tenderRuta } from '../motor/ruta.js?v=822ac628';
-import { LUGARES, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=822ac628';
+import { registrarActo } from '../motor/escenario.js?v=e35a8a27';
+import { tramo, suave, tope, frena, mezcla, mezclaEscala, RAD } from '../motor/util.js?v=e35a8a27';
+import { encuadrar, viajarDeVista, mirarA } from '../motor/proyeccion.js?v=e35a8a27';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos, engordarVias, verEtiqueta } from '../motor/lienzo.js?v=e35a8a27';
+import { mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, zoomEscena } from '../motor/dibujo.js?v=e35a8a27';
+import { nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=e35a8a27';
+import { tenderRuta } from '../motor/ruta.js?v=e35a8a27';
+import { LUGARES, RUTA_A_MATSUMOTO, ENCUADRES } from '../datos/rutas.js?v=e35a8a27';
 /* 🚨 LO ÚNICO QUE ESTE ACTO IMPORTA DE OTRO, y es a propósito, igual que el
    acto 6 importa cinco números del 5: son el fotograma del que arranca (ley 5).
    Escritos a mano aquí serían el mismo número en dos archivos —regla 1 del
    repositorio— y el día que alguien mueva el zoom del acto 6 o el ancho del
    castillo, este acto abriría con las cosas en otro sitio. */
-import { ZOOM_FIN, PICO_ANCHO_U, CASTILLO_ANCHO_U, FONDO_AL_FINAL_6 } from './06-yamanouchi.js?v=822ac628';
+import { ZOOM_FIN, PICO_ANCHO_U, CASTILLO_ANCHO_U, FONDO_AL_FINAL_6 } from './06-yamanouchi.js?v=e35a8a27';
 
 function vista(clave) {
   const e = ENCUADRES[clave];
@@ -104,7 +104,6 @@ function vista(clave) {
 /* Los encuadres del acto: de donde lo deja el 6, la parada en escala de calle
    sobre Matsumoto, el empalme con la vía y Kioto, que es donde acaba. */
 const V_MATSUMOTO = vista('matsumoto');
-const V_CALLE = vista('matsumotoCalle');
 const V_KIOTO_CERCA = vista('kiotoCerca');
 const V_KIOTO = vista('kioto');
 
@@ -214,20 +213,33 @@ const F = {
      shinkansen ya esperando en ella— ha llegado ANTES, de frente, mientras
      todavía nos movíamos. Cuando paramos, lo único que se mueve es nuestro tren
      yéndose. */
-  seVa1: [0.628, 0.700],
-  viaje2Dent: [0.700, 0.750],
+  /* 🚨 Y EL SHINKANSEN ENTRA CUANDO YA ESTAMOS PARADOS, del norte, con su
+     morro cruzando la pantalla de arriba abajo. Kiko, segunda ronda: «debería
+     ser la parte de arriba la que se ve, y luego hacia abajo que continúa el
+     tren» — así que se para con la cola arriba y el cuerpo saliéndose por
+     abajo, y la única vez que se le ve el morro es entrando.
+     🚨 Y EL SHINANO NO SE VA: SE QUEDA EN NAGOYA. «El otro tren se debería
+     quedar en la otra estación.» El que se va somos nosotros, así que él se
+     aleja con el mundo —y con su vía y el andén— en cuanto arranca el segundo
+     tramo. Por eso ya no hay ninguna ventana de salida. */
+  trenLlega2: [0.614, 0.692],
+  /* 🚨 Y EL DATO DEL SEGUNDO TRAMO ENTRA CUANDO LA DERECHA YA ESTÁ LIMPIA: el
+     Shinano y su vía tardan casi un tercio del segundo tramo en salir por el
+     canto de arriba, y hasta entonces ese lado es un dibujo, no un sitio
+     donde escribir. */
+  viaje2Dent: [0.800, 0.845],
 
   /* D · el segundo tramo: Nagoya → Kioto, 35 minutos para 135 km. Va MUCHO más
      deprisa que el primero y esa diferencia es el dato: son los mismos golpes
      de vía pasando al doble y medio de ritmo. */
-  tramo2: [0.742, 0.930],
-  total: [0.800, 0.850],
+  tramo2: [0.736, 0.934],
+  total: [0.856, 0.896],
   /* 🚨 Y LOS DOS DATOS SE VAN ANTES DE QUE ENTRE EL MAPA DE KIOTO. Se vio en la
      captura: con el tren hundiéndose y el mapa apareciendo, el rótulo del
      segundo tramo se quedaba encima de los dos y no se leía ninguno de los
      tres. El final es «hasta que solo queda el mapa de Kioto», y solo quiere
      decir solo. */
-  datosFuer: [0.906, 0.942],
+  datosFuer: [0.912, 0.946],
 
   /* E · Kioto.
      🚨 EL FINAL RIMA CON EL PRINCIPIO: el acto empieza hundiendo el paisaje de
@@ -252,6 +264,12 @@ const F = {
    el tren que no está: media pantalla. */
 const X_VIA = 26;
 const ANCHO_VIA_U = 30;
+/* 🚨 LO QUE SEPARA LOS DOS CARRILES de la vía dibujada, y de aquí sale hasta
+   dónde engorda la línea del mapa en el empalme. Sale del dibujo: en
+   arte/via.svg los carriles van en x=30 y x=65 de un viewBox de 100, y la pieza
+   mide 30u de ancho, así que están a (65-30)/100 × 30 = 10,5 unidades.
+   ⚠️ Si alguien mueve los carriles en el .svg, este número se mueve con ellos. */
+const CARRILES_U = 10.5;
 
 /* 🚨 EL PERÍODO DE LA VÍA, Y ESTE NÚMERO VIVE EN DOS SITIOS.
    arte/via.svg repite su dibujo cada 100 unidades de un viewBox de 1200, y la
@@ -272,13 +290,24 @@ const Y_VIA = -PERIODO_VIA;
 const ALTO_TREN = 300;
 const ALTO_ANDEN = 170;
 
-/* 🚨 EL MORRO TIENE QUE VERSE, Y AHORA VA ABAJO.
-   Kiko eligió el 18 de septiembre dibujar los dos trenes del mismo tamaño y con
-   el morro distinto, y el 20 corrigió el sentido del viaje: baja. Así que el
-   morro apunta al sur y se planta unas unidades por encima del canto de abajo,
-   que es lo que permite compararlos en el transbordo. El cuerpo se va por
-   arriba: «de arriba abajo, como una barra» se sigue leyendo igual. */
-const MARGEN_MORRO = 30;
+/* 🚨 DÓNDE SE PARA UN TREN, Y ESTO LO CORRIGIÓ KIKO EN LA SEGUNDA RONDA.
+   *«El tren a la izquierda apunta hacia abajo, pero debería ser la parte de
+   arriba la que se ve, y luego hacia abajo que continúa el tren.»*
+
+   O sea: un tren parado en un andén no enseña la punta en medio de la pantalla
+   con vía vacía por debajo —eso se lee como un tren que se acaba ahí—, sino su
+   PARTE DE ARRIBA, con el cuerpo siguiendo hacia abajo y saliéndose por el
+   canto. Eso es lo que dice «este tren continúa».
+
+   Así que lo que se planta a 28 unidades del borde de arriba es la COLA, y el
+   morro queda 300 más abajo, fuera de la pantalla.
+
+   🚨 Y ENTONCES, ¿CUÁNDO SE VE EL MORRO? Al entrar en la estación: el tren
+   llega desde arriba —de donde venimos— y su punta cruza la pantalla entera de
+   arriba abajo antes de que la cola se pare aquí. Así el morro se ve una vez
+   por tren, en movimiento, que es cuando de verdad se mira — y no se pierde la
+   decisión que tomó Kiko el 18 de septiembre: mismo tamaño, morro distinto. */
+const Y_COLA = 28;
 
 /* Lo que recorre la vía en cada tramo, en unidades.
    🚨 LA PROPORCIÓN ENTRE LOS DOS ES EL DATO, y por eso no son dos números
@@ -300,7 +329,10 @@ const LARGO_2 = 1150;
    Kioto ya solo queda una vía, la de la izquierda, y el andén se le pega por su
    costado derecho — que además es lo que deja sitio al texto. */
 const X_ANDEN_NAGOYA = 0;
-const X_ANDEN_KIOTO = -3;
+/* 🆕 En Matsumoto y en Kioto el andén va al lado de la única vía que hay; en
+   Nagoya, entre las dos. El de Matsumoto lo pidió Kiko en la segunda ronda:
+   «en Matsumoto también debería haber estación». */
+const X_ANDEN_LADO = -3;
 const Y_ANDEN = 26;
 
 /* Cuánto mundo pasa mientras se va el coche y con él el decorado de la nieve.
@@ -348,13 +380,46 @@ const ZOOM_FUERA = 0.45;
    -------------------------------------------------------------------------- */
 const MAPA_POR_UNIDAD = 2.6;
 
-function vistaEmpalme() {
-  const e = ENCUADRES.matsumotoEmpalme;
-  const R = encuadrar(e[2]);
-  const dLon = (X_VIA * MAPA_POR_UNIDAD / R) / Math.cos(e[1] * RAD) / RAD;
-  return [e[0] - dLon, e[1], R];
+/* 🚨 LAS DOS PARADAS MIRAN AL MISMO PUNTO, Y ESO CONVIERTE EL VIAJE DE CÁMARA
+   EN UN ZOOM PURO. Lo pidió Kiko en la segunda ronda: «se desplaza hacia la
+   izquierda, y luego te vuelves a desplazar otra vez a Matsumoto; al final, que
+   se vea que estamos haciendo zoom ahí».
+
+   Y tenía razón: la parada en escala de calle apuntaba al centro de la estación
+   y la del empalme a un punto corrido al oeste, así que la cámara se iba a un
+   sitio y luego se corregía. Ahora las dos apuntan al MISMO punto y con el
+   MISMO corrimiento, y como el corrimiento está definido en unidades de
+   pantalla —26, el eje de la vía dibujada—, el punto se queda clavado ahí
+   mientras el radio crece. En pantalla eso es exactamente un zoom sobre él.
+
+   🚨 Y POR ESO EL PUNTO AZUL ACABA SOBRE LA ESTACIÓN, que es lo otro que pidió:
+   el marcador de Matsumoto y el punto del empalme tienen la MISMA longitud
+   —137,9644: el empalme está 273 m al sur, sobre la misma vía— así que el punto
+   cae en el eje de la vía, que es justo donde el dibujo planta la suya. */
+const P_EMPALME = ENCUADRES.matsumotoEmpalme;
+const R_CALLE = encuadrar(ENCUADRES.matsumotoCalle[2]);
+const R_EMPALME = encuadrar(P_EMPALME[2]);
+
+/**
+ * Dónde tiene que estar el CENTRO de la cámara para que el punto del empalme
+ * caiga exactamente en el eje de la vía dibujada, con este radio.
+ *
+ * 🚨 Y ESTO HAY QUE RECALCULARLO EN CADA FOTOGRAMA, no interpolar entre dos
+ * encuadres. Aquí estaba el descuadre que vio Kiko —«hay un momento en el que
+ * se desvanece y parece que se descuadra todo»— y la causa es que el motor
+ * mueve el centro en LÍNEA RECTA mientras el radio crece en LOGARÍTMICO: a
+ * mitad de camino el punto se iba a 45 unidades del eje y volvía. Un zoom que
+ * se va y vuelve no es un zoom, es un bandazo.
+ *
+ * Calculando el centro a partir del radio de cada fotograma, el punto se queda
+ * CLAVADO en el mismo sitio de la pantalla mientras la cámara se acerca. Eso es
+ * un zoom puro sobre él, que es lo que pidió: «que se vea que estamos haciendo
+ * zoom ahí».
+ */
+function centroPara(R) {
+  const dLon = (X_VIA * MAPA_POR_UNIDAD / R) / Math.cos(P_EMPALME[1] * RAD) / RAD;
+  return [P_EMPALME[0] - dLon, P_EMPALME[1]];
 }
-const V_EMPALME = vistaEmpalme();
 
 /* 🚦 LA VELOCIDAD DE CRUCERO CON FRENADA, y esto es una curva y no un `suave`.
    Un `suave` arranca despacio, acelera y frena: eso es lo que hace una cosa que
@@ -464,6 +529,10 @@ export function montarActoTren() {
       limpiarRutas(0);
       empequeñecerMapa(0);
       engordarVias(1.2);
+      /* 🚨 Y LA ETIQUETA DE MATSUMOTO, que este acto apaga para que no tape la
+         estación. Es de una capa compartida y no la escribe nadie más: si no se
+         devuelve, el acto 6 se queda con su destino sin nombre (ley 26). */
+      verEtiqueta('matsumoto', 1);
     },
 
     pintar(p, acto) {
@@ -609,27 +678,50 @@ export function montarActoTren() {
         } else {
           /* A · MATSUMOTO, en dos paradas */
           empequeñecerMapa(1 - suave(tramo(p, F.mapaCrece[0], F.mapaCrece[1])));
+          /* 🚨 UN ZOOM PURO SOBRE EL PUNTO AZUL, Y POR ESO NO SE USA
+             `viajarDeVista`. El motor interpola el centro en línea recta y el
+             radio en logarítmico, y esas dos curvas no casan: a mitad de camino
+             el punto se iba a 45 unidades de su sitio y luego volvía. Eso es lo
+             que Kiko vio como «se desplaza hacia la izquierda y luego te vuelves
+             a desplazar otra vez» y como «parece que se descuadra todo».
+             Aquí el radio manda y el centro SALE DE ÉL en cada fotograma, así
+             que el punto no se mueve ni una unidad mientras la cámara se acerca.
+             Lo único que se desplaza es el resto que queda del encuadre del acto
+             6, y se va a cero durante la primera parte: un solo movimiento. */
+          const tCiudad = suave(tramo(p, F.zoomCiudad[0], F.zoomCiudad[1]));
           const tEstacion = suave(tramo(p, F.zoomEstacion[0], F.zoomEstacion[1]));
-          if (tEstacion > 0) {
-            viajarDeVista(V_CALLE, V_EMPALME, tEstacion);
-          } else {
-            viajarDeVista(V_MATSUMOTO, V_CALLE, suave(tramo(p, F.zoomCiudad[0], F.zoomCiudad[1])));
-          }
+          const R = tEstacion > 0
+            ? mezclaEscala(R_CALLE, R_EMPALME, tEstacion)
+            : mezclaEscala(V_MATSUMOTO[2], R_CALLE, tCiudad);
+          const centro = centroPara(R);
+          const resto = 1 - tCiudad;
+          mirarA(mezcla(centro[0], V_MATSUMOTO[0], resto),
+            mezcla(centro[1], V_MATSUMOTO[1], resto), R);
           pintarMapa();
 
-          /* 🚨 LA RUTA Y LAS ETIQUETAS SE VAN ANTES DE ENTRAR EN LA ESTACIÓN.
-             Vienen del acto 6 —es el fotograma del que arranca este (ley 5)— y
-             a escala de ciudad ya no dicen nada: la carretera se convierte en
-             una raya que cruza la pantalla y la etiqueta de Matsumoto se planta
-             encima de la estación justo cuando hay que mirarla. */
-          const seVanLosDatos = suave(tramo(p, F.zoomCiudad[0], F.zoomCiudad[1]));
-          const opRuta = 1 - seVanLosDatos;
+          /* 🚨 EL PUNTO AZUL SE QUEDA HASTA EL FINAL, Y ACABA SOBRE LA ESTACIÓN.
+             Kiko, segunda ronda: «en Matsumoto hay un punto azul que es el que
+             completa la ruta… y el punto azul debe recaer sobre la estación. Si
+             te das cuenta, hay un momento en el que se desvanece y parece que se
+             descuadra todo».
+             🔁 Antes se apagaba a mitad del zoom, y eso era justo lo que
+             descuadraba: el ojo estaba siguiendo ese punto —es el final de la
+             ruta, el sitio adonde vamos— y de pronto desaparecía, así que el
+             resto del movimiento no tenía referencia. Ahora se queda, y como la
+             cámara hace un zoom puro sobre él, acaba cayendo exactamente en el
+             eje de la vía dibujada.
+             La ETIQUETA sí se va: son nueve letras y a escala de calle se comen
+             la estación entera. Lo que se queda es el punto. */
+          const seVanLosDatos = tCiudad;
           marcar('yamanouchi', LUGARES.yamanouchi,
             1 - suave(tramo(p, F.hitoYamanouchi[0], F.hitoYamanouchi[1])));
-          marcar('matsumoto', LUGARES.matsumoto, opRuta);
+          marcar('matsumoto', LUGARES.matsumoto, 1);
+          verEtiqueta('matsumoto', 1 - seVanLosDatos);
           limpiarHitos('yamanouchi', 'matsumoto');
+          /* La ruta se va con la etiqueta: a escala de calle es una raya que
+             cruza la pantalla y ya no dice nada. */
           pintarRuta(0, RUTA_MATSUMOTO, 1,
-            { color: 'var(--acento)', guion: false, opacidad: opRuta });
+            { color: 'var(--acento)', guion: false, opacidad: 1 - seVanLosDatos });
           cerrarHalo('matsumoto', 1);
           limpiarRutas(1);
 
@@ -639,12 +731,22 @@ export function montarActoTren() {
              vías del haz de la estación caen a menos de quince unidades unas de
              otras, así que al engordar se funden en una sola banda: **esa banda
              es la que el dibujo recoge**. Ver engordarVias() en lienzo.js. */
-          /* 🔁 Y no llega al ancho entero del balasto, sino a algo menos: a este
-             zoom hay cuatro vias paralelas en el haz de la estacion, y si cada
-             una engorda hasta 78 unidades lo que queda no es una via, es una
-             pared. Con 62 se funden en una banda del ancho de la via dibujada
-             y todavia se les nota que son varias. */
-          engordarVias(mezcla(1.2, ANCHO_VIA_U * MAPA_POR_UNIDAD * 0.8,
+          /* 🔁 Y ENGORDA MUCHO MENOS QUE ANTES: AL ANCHO DEL PAR DE CARRILES,
+             NO DEL BALASTO. Kiko, segunda ronda: «esas vías se hacen muy grandes
+             y al final la transición a las vías es fea». Y tenía razón: con cada
+             línea del haz estirada a 62 unidades y cruzándose en ángulo con las
+             demás, lo que salía no era una vía — eran MANCHAS grises.
+             Los dos carriles de la vía dibujada están a 10,5 unidades uno de
+             otro, o sea 27 del mapa. Engordando hasta ahí, la línea se convierte
+             exactamente en el corredor por el que van los carriles, y cuando el
+             dibujo entra, sus dos carriles caen en los cantos de esa banda.
+             🔁 Y AUN ASÍ SE HA QUEDADO EN UN TERCIO DE ESO —nueve unidades de
+             mapa, que es una línea gruesa y no una banda—, porque por la garganta
+             de la estación pasan seis o siete vías abriéndose en abanico: con
+             cualquier grosor de verdad se solapan entre ellas y lo que queda es
+             una mancha. Lo que hace el empalme no es el grosor: es que el trazo
+             esté EXACTAMENTE donde el dibujo va a plantar su vía. */
+          engordarVias(mezcla(1.2, CARRILES_U * MAPA_POR_UNIDAD * 0.34,
             suave(tramo(p, F.viasEngordan[0], F.viasEngordan[1]))));
         }
       } else {
@@ -679,10 +781,10 @@ export function montarActoTren() {
          que es la regla, y «solo queda el mapa de Kioto», que es el guion. */
       const hundeVia = suave(tramo(p, F.hundeVia[0], F.hundeVia[1])) * (altoU + ALTO_VIA + 40);
 
-      /* Dónde se para un tren: con el morro unas unidades por encima del canto
-         de abajo. La pieza se coloca por su borde de ARRIBA, así que hay que
-         restarle lo que mide (ley 27: se calcula con la pantalla). */
-      const yTrenParado = altoU - MARGEN_MORRO - ALTO_TREN;
+      /* Dónde se para un tren: su COLA a 28 unidades del canto de arriba, y el
+         cuerpo siguiendo hacia abajo hasta salirse de la pantalla. La pieza se
+         coloca por su borde de arriba, que es justo la cola. */
+      const yTrenParado = Y_COLA;
 
       /* ================================================================
          B · LA VÍA DE LA DERECHA · la que entrega el mapa
@@ -693,27 +795,35 @@ export function montarActoTren() {
          pantalla, en el mismo sitio y con el mismo ancho. El mapa se disuelve
          encima mientras tanto. */
       const empalme = suave(tramo(p, F.empalme[0], F.empalme[1]));
-      const yendose1 = suave(tramo(p, F.seVa1[0], F.seVa1[1]));
       /* 🚨 SE VA HACIA ABAJO, que es la otra mitad de la corrección: «es la de
          la derecha la que baja hasta abajo». */
-      const bajaDer = yendose1 * (altoU + ALTO_VIA + 60);
-      const yViaDer = Y_VIA - (rec1 % PERIODO_VIA) + bajaDer;
+      /* 🚨 Y AL SALIR DE NAGOYA SE VA HACIA ARRIBA CON EL MUNDO, no hacia abajo.
+         Kiko, segunda ronda: «el otro tren se debería quedar en la otra
+         estación». Y es lo cierto: nosotros nos bajamos y nos cambiamos, así que
+         el que se va somos nosotros — el Shinano se queda en su andén y lo vemos
+         alejarse por el canto de arriba, como todo lo que está plantado en la
+         estación. Antes se deslizaba hacia abajo él solo, que es un tren
+         arrancando cuando el que arranca es el otro. */
+      const yViaDer = Y_VIA - (rec1 % PERIODO_VIA) - rec2;
       colocar('via-der', {
         x: X_VIA,
         y: yViaDer,
-        op: (empalme > 0.004 && yViaDer < altoU) ? empalme : 0,
+        op: (empalme > 0.004 && yViaDer < altoU && yViaDer > -(ALTO_VIA + 20)) ? empalme : 0,
         escala: 1
       });
 
       /* --- El primer tren: el Limited Express Shinano -------------------
-         🚨 LLEGA DESDE ARRIBA, QUE ES DE DONDE VENIMOS. Estamos parados en el
-         andén de Matsumoto —la cámara acaba de meterse ahí— y el tren entra en
-         la estación frenando. Con el viaje bajando por la pantalla, un tren que
+         🚨 LLEGA DESDE ARRIBA, QUE ES DE DONDE VENIMOS, y su morro cruza la
+         pantalla entera antes de que la cola se pare arriba. Estamos en el andén
+         de Matsumoto —la cámara acaba de meterse ahí— y el tren entra en la
+         estación frenando. Con el viaje bajando por la pantalla, un tren que
          entra en una estación entra por arriba; las estaciones, en cambio, nos
-         vienen de frente, porque los que nos movemos somos nosotros. */
+         vienen de frente, porque los que nos movemos somos nosotros.
+
+         🚨 Y DESPUÉS SE QUEDA EN NAGOYA: durante el primer tramo es el nuestro y
+         no se mueve; en cuanto nos cambiamos, se va con el mundo hacia arriba. */
       const tLlega = frena(tramo(p, F.trenLlega[0], F.trenLlega[1]));
-      const yTren1 = mezcla(yTrenParado - (altoU + ALTO_TREN), yTrenParado, tLlega)
-        + yendose1 * (altoU + ALTO_TREN + 80);
+      const yTren1 = mezcla(yTrenParado - (altoU + ALTO_TREN + 40), yTrenParado, tLlega) - rec2;
       colocar('tren-shinano', {
         x: X_VIA,
         y: yTren1,
@@ -728,11 +838,9 @@ export function montarActoTren() {
          del otro tren no tiene que venir junto desde abajo; sí tiene que venir
          desde abajo, pero **tiene que estar junto a la estación**».
 
-         🚨 ASÍ QUE LA ESTACIÓN ES UN BLOQUE: el andén, la vía de la izquierda y
-         el shinkansen ya esperando en ella. Las tres cosas llegan JUNTAS y de
-         frente mientras todavía nos movemos —porque los que nos movemos somos
-         nosotros—, frenan con la vía y se paran. Cuando llega el transbordo, ahí
-         no se mueve nada: «debería parecer que está estática».
+         🚨 ASÍ QUE LA ESTACIÓN ES UN BLOQUE: el andén y la vía de la izquierda
+         llegan JUNTOS y de frente mientras todavía nos movemos —porque los que
+         nos movemos somos nosotros—, frenan con la vía y se paran.
 
          🚨 Y SU SITIO NO ES UNA VENTANA DE SCROLL: ES LA DISTANCIA QUE FALTA.
          Sale de restar lo recorrido a lo que mide el tramo, así que frena
@@ -751,35 +859,56 @@ export function montarActoTren() {
         escala: 1
       });
 
-      /* --- El segundo tren: el shinkansen, esperando en su andén ---------
-         🚨 Y NO «APARECE»: ESTÁ. Llega con la estación, de frente, y se queda.
-         Kiko: «se pone en paralelo con un tren igual» — y el 18 de septiembre
-         eligió cómo: *mismo tamaño, morro distinto*. Las dos barras miden lo
-         mismo y sus divisiones de coche caen en los mismos sitios, así que el
-         paralelo se lee como un espejo; lo único que cambia es la punta, que es
-         lo que distingue un limited express de un shinkansen desde arriba. */
-      const yTren2 = yTrenParado + faltaNagoya + hundeVia;
+      /* --- El segundo tren: el shinkansen, que entra cuando ya estamos --
+         🚨 NO ESTÁ ESPERANDO: LLEGA, Y LLEGA DESPUÉS DE NOSOTROS. Es la única
+         forma de que se le vea el morro —cruza la pantalla de arriba abajo al
+         entrar— y a la vez quede como lo pidió Kiko: «debería ser la parte de
+         arriba la que se ve, y luego hacia abajo que continúa el tren».
+         Y no contradice lo que dijo de la vía: la vía SÍ viene desde abajo, con
+         la estación, porque es de la estación. El tren viene por su cuenta, del
+         norte, como vienen los trenes.
+         🚨 Entra cuando ya estamos parados, así que en el momento del transbordo
+         ese lado está quieto: «debería parecer que está estática». */
+      const tLlega2 = frena(tramo(p, F.trenLlega2[0], F.trenLlega2[1]));
+      const yTren2 = mezcla(yTrenParado - (altoU + ALTO_TREN + 40), yTrenParado, tLlega2)
+        + hundeVia;
       colocar('tren-shinkansen', {
         x: -X_VIA,
         y: yTren2,
-        op: yTren2 < altoU ? 1 : 0,
+        op: (tLlega2 > 0 && yTren2 < altoU && yTren2 > -(ALTO_TREN + 20)) ? 1 : 0,
         escala: 1
       });
 
-      /* --- El andén, que sirve a las DOS estaciones ----------------------
-         🚨 Nunca están las dos en pantalla: cuando el de Kioto asoma por abajo,
-         el de Nagoya lleva mil unidades por encima del canto de arriba. Así que
-         es la misma pieza, en dos sitios del mundo y en dos momentos.
-         En Nagoya va en el CENTRO —es un andén de isla, con una vía a cada
-         lado— y en Kioto a la IZQUIERDA, pegado a la única vía que queda. */
+      /* --- El andén, que sirve a las TRES estaciones ---------------------
+         🚨 Nunca hay dos en pantalla: cuando la de Nagoya asoma por abajo, la de
+         Matsumoto lleva seiscientas unidades por encima del canto de arriba, y
+         lo mismo pasa con la de Kioto. Así que es la misma pieza, en tres sitios
+         del mundo y en tres momentos.
+         🆕 La de Matsumoto la pidió Kiko en la segunda ronda —«en Matsumoto
+         también debería haber estación»— y aparece con el empalme, porque es lo
+         que el mapa estaba enseñando: la entrega del mapa al dibujo trae la vía
+         Y el andén.
+         En Nagoya el andén va en el CENTRO —es de isla, con una vía a cada
+         lado— y en Matsumoto y Kioto a la izquierda de la única vía que hay. */
+      const yAndenMatsumoto = Y_ANDEN - rec1;
       const yAndenNagoya = Y_ANDEN + faltaNagoya - rec2;
       const yAndenKioto = Y_ANDEN + (LARGO_2 - rec2) + hundeVia;
-      const enKiotoAnden = yAndenKioto < altoU;
-      const yAnden = enKiotoAnden ? yAndenKioto : yAndenNagoya;
+      let xAnden = X_ANDEN_LADO;
+      let yAnden = yAndenMatsumoto;
+      let opAnden = empalme;
+      if (yAndenKioto < altoU) {
+        xAnden = X_ANDEN_LADO;
+        yAnden = yAndenKioto;
+        opAnden = 1;
+      } else if (yAndenNagoya < altoU) {
+        xAnden = X_ANDEN_NAGOYA;
+        yAnden = yAndenNagoya;
+        opAnden = 1;
+      }
       colocar('anden', {
-        x: enKiotoAnden ? X_ANDEN_KIOTO : X_ANDEN_NAGOYA,
+        x: xAnden,
         y: yAnden,
-        op: (yAnden < altoU && yAnden > -(ALTO_ANDEN + 20)) ? 1 : 0,
+        op: (opAnden > 0.004 && yAnden < altoU && yAnden > -(ALTO_ANDEN + 20)) ? opAnden : 0,
         escala: 1
       });
 
