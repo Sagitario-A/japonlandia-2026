@@ -17,10 +17,10 @@
    [lon, lat]. Se guardan sueltos porque unos son marcadores y otros solo son
    puntos de paso por los que la línea tiene que doblar.
    -------------------------------------------------------------------------- */
-import { EJE_KANETSU } from './carretera-norte.js?v=fd6072d8';
-import { RUTA_KUSATSU } from './carretera-kusatsu.js?v=fd6072d8';
-import { RUTA_YAMANOUCHI } from './carretera-yamanouchi.js?v=fd6072d8';
-import { RUTA_MATSUMOTO } from './carretera-matsumoto.js?v=fd6072d8';
+import { EJE_KANETSU } from './carretera-norte.js?v=822ac628';
+import { RUTA_KUSATSU } from './carretera-kusatsu.js?v=822ac628';
+import { RUTA_YAMANOUCHI } from './carretera-yamanouchi.js?v=822ac628';
+import { RUTA_MATSUMOTO } from './carretera-matsumoto.js?v=822ac628';
 
 export const LUGARES = {
   /* España */
@@ -362,7 +362,37 @@ export const ENCUADRES = {
      enciende la red de autopistas, cuya caja se acaba en 137,56 —a un suspiro
      de Matsumoto—, y NO se le ve el canto, porque al oeste de la ciudad no hay
      autopistas que dibujar: están los Alpes. */
-  matsumotoEstacion: [137.9644, 36.2307, 0.34],
+  /* 🚦 LA PARADA EN ESCALA DE CALLE, sobre la estación de Matsumoto. Es la
+     misma que hace el acto 3 sobre Shinjuku y por lo mismo: sin ella, el
+     callejero aparecería con el mapa ya medio disuelto y no daría tiempo a
+     verlo. A 0,055° —6 km de ancho— el callejero llena la pantalla de un móvil
+     y se lee la ciudad, que es lo que pidió Kiko: «al hacer zoom en Matsumoto,
+     al igual que antes pasaba en Tokio, tienen que aparecer las calles».
+     🚨 Y el ancho es el mismo que el de Tokio a propósito: las dos cajas de
+     callejero miden 0,16° de alto, así que el relevo entra al mismo radio. */
+  matsumotoCalle: [137.9644, 36.2307, 0.055],
+
+  /* 🚨 EL EMPALME, Y ESTAS DOS COORDENADAS SON EL GOLPE DEL ACTO.
+     Kiko, el 20 de septiembre: «hasta tal punto en el que se amplía el punto
+     donde está la estación de Matsumoto, donde se coge el tren, y sea el propio
+     trazo de la línea de las vías lo que acaba siendo la vía donde está el
+     tren». Para que una línea del mapa pueda convertirse en la vía dibujada del
+     acto hacen falta dos cosas, y las dos son geografía, no gusto:
+
+       · que la línea salga VERTICAL en pantalla, porque la vía dibujada lo es;
+       · y que esté en el eje donde va esa vía, que es lo que hace el acto
+         corriendo la cámara (ver vistaEmpalme() en 07-tren.js).
+
+     ✅ Este punto se MIDIÓ sobre los datos de OpenStreetMap el 20 de septiembre
+     de 2026: es el tramo recto de la línea Shinonoi **273 m al sur de la
+     estación**, donde las vías corren a 0,2° de la vertical a lo largo de 273 m
+     —por la estación misma pasan con 22° de inclinación, que ya se nota—. Es el
+     sitio de todo Matsumoto donde el empalme no se ve. ⚠️ Si alguien regenera
+     vias-matsumoto.js con otra caja o más detalle, hay que volver a medirlo.
+     🚨 Y a 0,008° de ancho —890 m— las cuatro vías del haz de la estación caen
+     a menos de quince unidades de mapa unas de otras, así que al engordar se
+     funden en una sola banda: eso es lo que se convierte en la vía del tren. */
+  matsumotoEmpalme: [137.96440, 36.22824, 0.008],
 
   /* Y el final: la cámara se echa atrás sobre Kioto hasta que cabe la región.
      🚨 2,0° Y NO MENOS, y el motivo es qué se reconoce: a ese ancho entran las

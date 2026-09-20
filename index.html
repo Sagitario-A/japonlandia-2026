@@ -9,15 +9,15 @@
 <meta name="theme-color" content="#ffffff">
 
 <link rel="preload" href="tipo/shippori-mincho-500-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="css/base.css?v=fd6072d8">
-<link rel="stylesheet" href="css/texto.css?v=fd6072d8">
-<link rel="stylesheet" href="css/escena.css?v=fd6072d8">
-<link rel="stylesheet" href="css/color.css?v=fd6072d8">
-<link rel="stylesheet" href="css/actos/03-al-coche.css?v=fd6072d8">
-<link rel="stylesheet" href="css/actos/04-takaragawa.css?v=fd6072d8">
-<link rel="stylesheet" href="css/actos/05-kusatsu.css?v=fd6072d8">
-<link rel="stylesheet" href="css/actos/06-yamanouchi.css?v=fd6072d8">
-<link rel="stylesheet" href="css/actos/07-tren.css?v=fd6072d8">
+<link rel="stylesheet" href="css/base.css?v=822ac628">
+<link rel="stylesheet" href="css/texto.css?v=822ac628">
+<link rel="stylesheet" href="css/escena.css?v=822ac628">
+<link rel="stylesheet" href="css/color.css?v=822ac628">
+<link rel="stylesheet" href="css/actos/03-al-coche.css?v=822ac628">
+<link rel="stylesheet" href="css/actos/04-takaragawa.css?v=822ac628">
+<link rel="stylesheet" href="css/actos/05-kusatsu.css?v=822ac628">
+<link rel="stylesheet" href="css/actos/06-yamanouchi.css?v=822ac628">
+<link rel="stylesheet" href="css/actos/07-tren.css?v=822ac628">
 </head>
 
 <body>
@@ -60,6 +60,12 @@
          pasa. Las dos capas se relevan según el zoom, ver js/motor/mapa.js. -->
     <path data-mapa="autopistas" class="m-autopista" d=""/>
     <path data-mapa="calles" class="m-calle" d=""/>
+    <!-- 🚃 Las vías de tren de Matsumoto, y NO son una calle más: son la
+         costura entre el mapa y el dibujo del acto 7. Al final del zoom esta
+         línea engorda hasta el ancho de la vía dibujada, que se planta encima
+         en el mismo sitio mientras el mapa se disuelve. Por eso va DESPUÉS del
+         callejero —por encima— y por eso su grosor es una variable. -->
+    <path data-mapa="vias" class="m-via" d=""/>
 
     <path data-mapa="ruta" class="m-ruta" d=""/>
     <path data-mapa="ruta" class="m-ruta" d=""/>
@@ -689,7 +695,7 @@
        los dos están verificados —al revés que los tramos en coche de los actos
        3, 5 y 6, donde los kilómetros son reales pero el tiempo es una
        estimación a velocidad libre—. Fuente: investigacion/021 § 3. -->
-  <section class="acto" id="tren" style="--largo: 1700" aria-labelledby="t-tren">
+  <section class="acto" id="tren" style="--largo: 2000" aria-labelledby="t-tren">
     <div class="escena">
 
       <div class="titular-acto">
@@ -784,6 +790,6 @@
     <span class="marca m-pend">○ pendiente</span>. Lo que no está marcado, no está comprobado.</p>
 </footer>
 
-<script type="module" src="js/principal.js?v=fd6072d8"></script>
+<script type="module" src="js/principal.js?v=822ac628"></script>
 </body>
 </html>

@@ -122,6 +122,21 @@ html:not(.anim) .escenario { display: none; }
   stroke-linejoin: round;
 }
 
+/* 🚃 LA VÍA DE TREN, Y SU GROSOR ES UNA VARIABLE PORQUE ES UNA COSTURA.
+   Kiko, el 20 de septiembre: «que sea el propio trazo de la línea de las vías
+   lo que acaba siendo la vía donde está el tren». Así que al final del zoom del
+   acto 7 esta línea engorda desde un pelo hasta el ancho de la vía dibujada,
+   que se planta encima en el mismo sitio mientras el mapa se disuelve.
+   🚨 `stroke-linecap: butt` y no `round`: al engordar a treinta unidades, una
+   punta redonda convierte el final de cada tramo en un pegote. */
+.m-via {
+  fill: none;
+  stroke: var(--mapa-linea);
+  stroke-width: var(--grosor-via, 1);
+  stroke-linecap: butt;
+  stroke-linejoin: round;
+}
+
 .m-ruta {
   fill: none;
   stroke: var(--acento);

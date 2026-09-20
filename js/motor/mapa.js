@@ -13,13 +13,15 @@
    Ver herramientas/generar-costas.js.
    ============================================================================= */
 
-import { COSTAS as MUNDO } from '../datos/mundo.js?v=fd6072d8';
-import { COSTAS as JAPON } from '../datos/japon.js?v=fd6072d8';
-import { COSTAS as KANTO } from '../datos/kanto.js?v=fd6072d8';
-import { CALLES } from '../datos/calles.js?v=fd6072d8';
-import { AUTOPISTAS } from '../datos/autopistas.js?v=fd6072d8';
-import { aVectores, envolvente, asomaEnPantalla, trazar, radioActual } from './proyeccion.js?v=fd6072d8';
-import { tope, tramo } from './util.js?v=fd6072d8';
+import { COSTAS as MUNDO } from '../datos/mundo.js?v=822ac628';
+import { COSTAS as JAPON } from '../datos/japon.js?v=822ac628';
+import { COSTAS as KANTO } from '../datos/kanto.js?v=822ac628';
+import { CALLES } from '../datos/calles.js?v=822ac628';
+import { CALLES_MATSUMOTO } from '../datos/calles-matsumoto.js?v=822ac628';
+import { VIAS_MATSUMOTO } from '../datos/vias-matsumoto.js?v=822ac628';
+import { AUTOPISTAS } from '../datos/autopistas.js?v=822ac628';
+import { aVectores, envolvente, asomaEnPantalla, trazar, radioActual } from './proyeccion.js?v=822ac628';
+import { tope, tramo } from './util.js?v=822ac628';
 
 /* --------------------------------------------------------------------------
    1 · Preparar los datasets
@@ -89,7 +91,14 @@ const R_INVISIBLE = 75000;
    en la cabecera de datos/calles.js y en el pie de index.html, y de ahí no se
    quita. Ver herramientas/generar-calles.js.
    -------------------------------------------------------------------------- */
-const CALLEJERO = preparar(CALLES);
+/* 🚨 HAY UN CALLEJERO POR CIUDAD, Y SE DIBUJAN TODOS: el de Shinjuku para el
+   acto 3 y el de Matsumoto para el acto 7, que lo pidió Kiko el 20 de
+   septiembre —«al hacer zoom en Matsumoto, al igual que antes pasaba en Tokio,
+   tienen que aparecer las calles»—. No hay que elegir cuál toca: cada tramo
+   lleva delante su caja envolvente, así que el que está a 200 km de la cámara
+   se descarta sin recorrerlo y no cuesta nada. El acto 8 añadirá el de Kioto
+   aquí mismo, y no habrá que tocar nada más. */
+const CALLEJEROS = [preparar(CALLES), preparar(CALLES_MATSUMOTO)];
 
 /* Aparece a la vez que la costa se retira, para que haya relevo y no hueco */
 /* 🚨 ESTOS DOS NÚMEROS SALEN DE LA CAJA DEL DATASET, no del gusto.
@@ -147,8 +156,53 @@ export function dibujarAutopistas() {
 export function dibujarCalles() {
   if (opacidadCalles() <= 0.001) return '';
   let d = '';
-  for (const c of CALLEJERO) {
-    if (!asomaEnPantalla(c.env)) continue;      /* el tramo entero, de un vistazo */
+  for (const ciudad of CALLEJEROS) {
+    for (const c of ciudad) {
+      if (!asomaEnPantalla(c.env)) continue;    /* el tramo entero, de un vistazo */
+      d += trazar(c.v);
+    }
+  }
+  return d;
+}
+
+/* --------------------------------------------------------------------------
+   Las vías de tren · el relevo entre el mapa y el dibujo
+   --------------------------------------------------------------------------
+   🚨 ESTO NO ES DECORACIÓN: ES UNA COSTURA. Lo pidió Kiko el 20 de septiembre
+   para el acto 7: «hasta tal punto en el que se amplía el punto donde está la
+   estación de Matsumoto, donde se coge el tren, y **sea el propio trazo de la
+   línea de las vías lo que acaba siendo la vía donde está el tren**».
+
+   O sea que esta línea no se limita a salir en el mapa: al final del zoom
+   ENGORDA hasta tener el ancho de la vía dibujada del acto, que se planta
+   encima en el mismo sitio mientras el mapa se disuelve. El mapa entrega el
+   trazo y el dibujo lo recoge.
+
+   🚨 Y POR ESO LA GEOMETRÍA TIENE QUE SER LA DE VERDAD (ley 10): el acto apunta
+   la cámara a un tramo concreto de la línea Shinonoi, 273 m al sur de la
+   estación, porque es donde las vías corren rectas de norte a sur —0,2° de la
+   vertical— y por tanto salen verticales en pantalla, que es como está dibujada
+   la vía del acto. Con una línea inventada no habría dónde empalmar.
+
+   📄 Datos de OpenStreetMap bajo ODbL, igual que el callejero.
+   -------------------------------------------------------------------------- */
+const VIAS = preparar(VIAS_MATSUMOTO);
+
+/* 🚨 ENTRA MÁS TARDE QUE LAS CALLES, y a propósito: primero se lee la ciudad y
+   después, ya encima de la estación, aparece por dónde pasa el tren. Con las
+   dos a la vez, la vía es una calle más. */
+const R_VIAS = [260000, 520000];
+
+export function opacidadVias(radio) {
+  const r = radio === undefined ? radioActual() : radio;
+  return tope((r - R_VIAS[0]) / (R_VIAS[1] - R_VIAS[0]));
+}
+
+export function dibujarVias() {
+  if (opacidadVias() <= 0.001) return '';
+  let d = '';
+  for (const c of VIAS) {
+    if (!asomaEnPantalla(c.env)) continue;
     d += trazar(c.v);
   }
   return d;

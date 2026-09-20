@@ -25,14 +25,14 @@
    está en css/actos/03-al-coche.css § 1.
    ============================================================================= */
 
-import { registrarActo } from '../motor/escenario.js?v=fd6072d8';
-import { tramo, suave, tope } from '../motor/util.js?v=fd6072d8';
-import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=fd6072d8';
-import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=fd6072d8';
-import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena } from '../motor/dibujo.js?v=fd6072d8';
-import { montarNieve, nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=fd6072d8';
-import { tenderRuta } from '../motor/ruta.js?v=fd6072d8';
-import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=fd6072d8';
+import { registrarActo } from '../motor/escenario.js?v=822ac628';
+import { tramo, suave, tope } from '../motor/util.js?v=822ac628';
+import { encuadrar, viajarDeVista } from '../motor/proyeccion.js?v=822ac628';
+import { pintarMapa, pintarRuta, limpiarRutas, marcar, mostrarLienzo, opacidadMapa, cerrarHalo, alzarLienzo, empequeñecerMapa, limpiarHitos } from '../motor/lienzo.js?v=822ac628';
+import { montarDibujo, mostrarDibujo, colocar, variable, verBanda, desplazarFondo, bajarSuelo, limpiarPiezas, postura, zoomEscena } from '../motor/dibujo.js?v=822ac628';
+import { montarNieve, nevar, nieveHastaElSuelo } from '../motor/nieve.js?v=822ac628';
+import { tenderRuta } from '../motor/ruta.js?v=822ac628';
+import { LUGARES, TRAMO_AL_COCHE, RUTA_NORTE, ENCUADRES } from '../datos/rutas.js?v=822ac628';
 
 function vista(clave) {
   const e = ENCUADRES[clave];

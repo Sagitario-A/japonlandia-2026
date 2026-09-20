@@ -2,10 +2,15 @@
   <!-- EL SHINKANSEN TŌKAIDŌ (東海道新幹線), VISTO DESDE ARRIBA · acto 7.
        Nagoya → Kioto, ~35 min ✅ — investigacion/021 § 3.
 
+       🚨 EL MORRO VA ABAJO, igual que el del Shinano y por lo mismo: el viaje
+       baja por la pantalla porque baja por el mapa —Matsumoto al norte, Kioto
+       al sur—. Lo corrigió Kiko el 20 de septiembre: «tendría que continuar
+       para abajo, porque al final es un viaje unidireccional en una dirección».
+
        🚨 ES EL MISMO CUERPO QUE tren-shinano.svg Y SOLO CAMBIA EL MORRO.
        Kiko, el 18 de septiembre: *mismo tamaño, morro distinto*. Las dos barras
        miden lo mismo, las bandas del costado son las mismas y las divisiones de
-       coche caen en 380, 610, 840, 1070 y 1300 en los dos, para que en el
+       coche caen en 196, 426, 656, 886 y 1116 en los dos, para que en el
        transbordo las dos se lean como un espejo. Lo único que cambia es la
        punta — que es, además, lo único que de verdad distingue a estos dos
        trenes cuando se miran desde arriba.
@@ -25,67 +30,63 @@
   <!-- 🚨 EL MORRO, Y AQUÍ ESTÁ TODA LA DIFERENCIA: LARGO Y AFILADO.
        El morro de un N700 mide casi la mitad de un coche entero, y desde arriba
        es una parábola que se estrecha muchísimo antes de llegar a la punta.
-       El del Shinano se planta en y=52; este baja hasta y=25 y empieza a
-       estrecharse ya desde y=420, o sea más de un coche antes. Puesto al lado
-       del otro, se reconoce sin que nadie lo explique. -->
-  <path class="v7-cuerpo" d="M6 1500 V420 C6 250 22 90 60 25 C98 90 114 250 114 420 V1500 Z"/>
+       El del Shinano se planta en y=1448; este llega hasta y=1475 y empieza a
+       estrecharse ya en y=1080, o sea más de un coche antes. Puesto al lado del
+       otro, se reconoce sin que nadie lo explique. -->
+  <path class="v7-cuerpo" d="M6 0 V1080 C6 1250 22 1410 60 1475 C98 1410 114 1250 114 1080 V0 Z"/>
 
   <!-- El parabrisas, muy por detrás de la punta: en un shinkansen la cabina va
        detrás de todo ese morro, y eso también se ve desde arriba. -->
-  <path class="v7-cristal" d="M26 395 C30 300 42 250 60 250 C78 250 90 300 94 395 Z"/>
+  <path class="v7-cristal" d="M26 1105 C30 1200 42 1250 60 1250 C78 1250 90 1200 94 1105 Z"/>
 
-  <!-- Las dos bandas del costado, IGUALES que las del Shinano, y empiezan donde
-       el cuerpo se pone recto -->
-  <rect class="v7-banda" x="6" y="420" width="9" height="1080"/>
-  <rect class="v7-banda" x="105" y="420" width="9" height="1080"/>
+  <!-- Las dos bandas del costado, IGUALES que las del Shinano, y acaban donde
+       el cuerpo empieza a estrecharse -->
+  <rect class="v7-banda" x="6" y="0" width="9" height="1080"/>
+  <rect class="v7-banda" x="105" y="0" width="9" height="1080"/>
 
-  <!-- El lomo del techo, de la punta al final -->
-  <rect class="v7-lomo" x="58" y="120" width="4" height="1380"/>
+  <!-- El lomo del techo, del final a la punta -->
+  <rect class="v7-lomo" x="58" y="0" width="4" height="1380"/>
 
   <!-- Las divisiones entre coches. 🚨 EN LOS MISMOS SITIOS QUE EL SHINANO -->
   <g class="v7-junta">
-    <rect x="6" y="376" width="108" height="8"/>
-    <rect x="6" y="606" width="108" height="8"/>
-    <rect x="6" y="836" width="108" height="8"/>
-    <rect x="6" y="1066" width="108" height="8"/>
-    <rect x="6" y="1296" width="108" height="8"/>
+    <rect x="6" y="196" width="108" height="8"/>
+    <rect x="6" y="426" width="108" height="8"/>
+    <rect x="6" y="656" width="108" height="8"/>
+    <rect x="6" y="886" width="108" height="8"/>
+    <rect x="6" y="1116" width="108" height="8"/>
   </g>
 
-  <!-- Los equipos del techo. El primer coche va limpio: ahí está el morro -->
+  <!-- Los equipos del techo. El coche de cabeza va limpio: ahí está el morro -->
   <g class="v7-equipo">
-    <rect x="34" y="460" width="52" height="34" rx="6"/>
-    <rect x="34" y="530" width="52" height="34" rx="6"/>
-    <rect x="34" y="690" width="52" height="34" rx="6"/>
-    <rect x="34" y="760" width="52" height="34" rx="6"/>
-    <rect x="34" y="920" width="52" height="34" rx="6"/>
-    <rect x="34" y="990" width="52" height="34" rx="6"/>
-    <rect x="34" y="1150" width="52" height="34" rx="6"/>
-    <rect x="34" y="1220" width="52" height="34" rx="6"/>
-    <rect x="34" y="1380" width="52" height="34" rx="6"/>
+    <rect x="34" y="86" width="52" height="34" rx="6"/>
+    <rect x="34" y="246" width="52" height="34" rx="6"/>
+    <rect x="34" y="316" width="52" height="34" rx="6"/>
+    <rect x="34" y="476" width="52" height="34" rx="6"/>
+    <rect x="34" y="546" width="52" height="34" rx="6"/>
+    <rect x="34" y="706" width="52" height="34" rx="6"/>
+    <rect x="34" y="776" width="52" height="34" rx="6"/>
+    <rect x="34" y="936" width="52" height="34" rx="6"/>
+    <rect x="34" y="1006" width="52" height="34" rx="6"/>
   </g>
 
-  <!-- 🚨 LOS PANTOGRAFOS, que son la firma de un tren electrico visto desde
-       arriba: el marco carenado y, cruzada, la pletina que roza el cable. Sin
-       ellos, desde arriba, esto podria ser un autobus muy largo.
-       🔁 Estaban dibujados como dos brazos en V y en pantalla parecian una
-       FLECHA negra apuntando hacia delante: a 24u de ancho, un trazo de tres
-       unidades pesa como una señal de trafico. Se vio en la captura. -->
+  <!-- 🚨 LOS PANTÓGRAFOS, la firma de un tren eléctrico visto desde arriba: el
+       marco carenado y, cruzada, la pletina que roza el cable. -->
   <g class="v7-panto">
-    <rect x="38" y="672" width="44" height="30" rx="3"/>
-    <rect class="v7-pletina" x="32" y="680" width="56" height="6"/>
-    <rect x="38" y="1132" width="44" height="30" rx="3"/>
-    <rect class="v7-pletina" x="32" y="1140" width="56" height="6"/>
+    <rect x="38" y="798" width="44" height="30" rx="3"/>
+    <rect class="v7-pletina" x="32" y="814" width="56" height="6"/>
+    <rect x="38" y="338" width="44" height="30" rx="3"/>
+    <rect class="v7-pletina" x="32" y="354" width="56" height="6"/>
   </g>
 
   <!-- Las puertas. Un shinkansen tiene menos por coche que un cercanías: dos -->
   <g class="v7-puerta">
-    <rect x="6" y="560" width="9" height="40"/><rect x="105" y="560" width="9" height="40"/>
-    <rect x="6" y="640" width="9" height="40"/><rect x="105" y="640" width="9" height="40"/>
-    <rect x="6" y="790" width="9" height="40"/><rect x="105" y="790" width="9" height="40"/>
-    <rect x="6" y="870" width="9" height="40"/><rect x="105" y="870" width="9" height="40"/>
-    <rect x="6" y="1020" width="9" height="40"/><rect x="105" y="1020" width="9" height="40"/>
-    <rect x="6" y="1100" width="9" height="40"/><rect x="105" y="1100" width="9" height="40"/>
-    <rect x="6" y="1250" width="9" height="40"/><rect x="105" y="1250" width="9" height="40"/>
-    <rect x="6" y="1330" width="9" height="40"/><rect x="105" y="1330" width="9" height="40"/>
+    <rect x="6" y="900" width="9" height="40"/><rect x="105" y="900" width="9" height="40"/>
+    <rect x="6" y="820" width="9" height="40"/><rect x="105" y="820" width="9" height="40"/>
+    <rect x="6" y="670" width="9" height="40"/><rect x="105" y="670" width="9" height="40"/>
+    <rect x="6" y="590" width="9" height="40"/><rect x="105" y="590" width="9" height="40"/>
+    <rect x="6" y="440" width="9" height="40"/><rect x="105" y="440" width="9" height="40"/>
+    <rect x="6" y="360" width="9" height="40"/><rect x="105" y="360" width="9" height="40"/>
+    <rect x="6" y="210" width="9" height="40"/><rect x="105" y="210" width="9" height="40"/>
+    <rect x="6" y="130" width="9" height="40"/><rect x="105" y="130" width="9" height="40"/>
   </g>
 </svg>

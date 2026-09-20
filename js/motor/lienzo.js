@@ -15,16 +15,17 @@
    Narita, Meidaimae— están escritos en el HTML; aquí solo se mueven.
    ============================================================================= */
 
-import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=fd6072d8';
-import { dibujarCostas, dibujarReticula, opacidadReticula, dibujarCalles, opacidadCalles, dibujarAutopistas, opacidadAutopistas } from './mapa.js?v=fd6072d8';
-import { trazarRuta, cabezaDeRuta } from './ruta.js?v=fd6072d8';
-import { r1 } from './util.js?v=fd6072d8';
+import { proyectarGrados, px, py, radioActual, trazar, ajustarViewport } from './proyeccion.js?v=822ac628';
+import { dibujarCostas, dibujarReticula, opacidadReticula, dibujarCalles, opacidadCalles, dibujarAutopistas, opacidadAutopistas, dibujarVias, opacidadVias } from './mapa.js?v=822ac628';
+import { trazarRuta, cabezaDeRuta } from './ruta.js?v=822ac628';
+import { r1 } from './util.js?v=822ac628';
 
 let raiz = null;
 let svg = null;
 let capasCosta = [];
 let pathReticula = null;
 let pathCalles = null;
+let pathVias = null;
 let pathAutopistas = null;
 let limbo = null;
 let capasRuta = [];
@@ -54,6 +55,7 @@ export function montarLienzo() {
 
   pathReticula = raiz.querySelector('[data-mapa="reticula"]');
   pathCalles = raiz.querySelector('[data-mapa="calles"]');
+  pathVias = raiz.querySelector('[data-mapa="vias"]');
   pathAutopistas = raiz.querySelector('[data-mapa="autopistas"]');
   limbo = raiz.querySelector('[data-mapa="limbo"]');
   capasCosta = Array.from(raiz.querySelectorAll('[data-mapa="costa"]'));
@@ -91,6 +93,21 @@ export function empequeñecerMapa(v) {
  *  pelicula, el mapa pequenio del viaje al norte tambien se tiene que ir. */
 export function desvanecerMapa(v) {
   if (raiz) raiz.style.setProperty('--fin', v.toFixed(3));
+}
+
+/**
+ * 🚨 LO GORDA QUE SE DIBUJA LA LÍNEA DE LA VÍA, Y ES UNA COSTURA, NO UN ESTILO.
+ * Kiko, el 20 de septiembre: *«que sea el propio trazo de la línea de las vías
+ * lo que acaba siendo la vía donde está el tren»*. Así que al final del zoom del
+ * acto 7 esta línea engorda desde un pelo hasta el ancho de la vía dibujada, que
+ * se planta encima en el mismo sitio mientras el mapa se disuelve.
+ *
+ * Va en unidades del `viewBox` del mapa, donde el lado corto de la pantalla mide
+ * 260 — o sea que una unidad del dibujo (de las 100 que mide la pantalla) son
+ * 2,6 de estas. El acto hace esa cuenta; aquí solo se escribe.
+ */
+export function engordarVias(u) {
+  if (raiz) raiz.style.setProperty('--grosor-via', u.toFixed(2));
 }
 
 /** La opacidad global del mapa, para poder disolverlo al final de un acto. */
@@ -143,6 +160,16 @@ export function pintarMapa() {
     const opCalles = opacidadCalles();
     pathCalles.setAttribute('d', opCalles > 0.001 ? dibujarCalles() : '');
     pathCalles.style.opacity = opCalles.toFixed(3);
+  }
+
+  /* 🚨 Y LAS VÍAS DE TREN, QUE VAN POR ENCIMA DEL CALLEJERO. Son el relevo con
+     el dibujo del acto 7 —la línea que acaba siendo la vía por la que va el
+     tren—, así que no pueden quedar por debajo de una calle cualquiera. Lo
+     gordo que se dibujan lo manda el acto con `engordarVias()`. */
+  if (pathVias) {
+    const opVias = opacidadVias();
+    pathVias.setAttribute('d', opVias > 0.001 ? dibujarVias() : '');
+    pathVias.style.opacity = opVias.toFixed(3);
   }
 
   const opReticula = opacidadReticula();
